@@ -1,6 +1,6 @@
 {
-	"title": "TodayCMS Documentation",
+	"title": "TM-Docs the Todaymade Documentation Generator",
 	"homepage": "/Getting_Started",
-	"theme": "simplex",
+	"theme": "spacelab",
 	"hightlight": "dark"
 }
