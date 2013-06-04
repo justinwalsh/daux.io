@@ -18,7 +18,7 @@ This is a list of sites using TM-Docs:
 
 * [TodayCMS Docs](http://docs.todaymade.com)
 
-Use TM-Docs? Send me a pull request or open an issue and I will add you to the list.
+Do you use TM-Docs? Send me a pull request or open an [issue](https://github.com/justinwalsh/tm-docs/issues) and I will add you to the list.
 
 ## Download
 
