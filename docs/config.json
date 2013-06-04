@@ -2,5 +2,12 @@
 	"title": "TM-Docs the Todaymade Documentation Generator",
 	"homepage": "/Getting_Started",
 	"theme": "spacelab",
-	"hightlight": "dark"
+	"hightlight": "dark",
+	"repo": "justinwalsh/tm-docs",
+	"twitter": ["justin_walsh", "todaymade"],
+	"links": {
+		"Github Repo": "https://github.com/justinwalsh/tm-docs",
+		"Help/Support/Bugs": "https://github.com/justinwalsh/tm-docs/issues",
+		"Todaymade": "http://todaymade.com"
+	}
 }
