@@ -1,4 +1,4 @@
-TM Docs is a auto documentation generator that uses your folder structure and markdown files to create custom documentation on the fly. It helps create great looking documentation in a developer frendly way.
+**TM Docs** is a auto documentation generator that uses your folder structure and markdown files to create custom documentation on the fly. It helps create great looking documentation in a developer frendly way.
 
 ## Features
 
