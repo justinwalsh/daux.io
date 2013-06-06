@@ -859,10 +859,6 @@ $tree = get_tree("docs");
 			padding: 0;
 		}
 
-		table {
-			width: 100%;
-		}
-
 		.footer {
 			position: fixed;
 			bottom:0;
@@ -891,6 +887,9 @@ $tree = get_tree("docs");
 				$(this).parent().siblings().find('ul').slideUp();
 				$(this).next().slideToggle();
 			});
+
+			// Bootstrap Table Class
+			$('table').addClass('table');
 		});
 	</script>
 </head>
@@ -927,6 +926,8 @@ $tree = get_tree("docs");
 						</div>
 					<? } ?>
 				<? } ?>
+
+				<!-- Footer -->
 				<div class="footer">Generate by <a href="https://github.com/justinwalsh/tm-docs">TM-Docs</a></div>
 			</div>
 			<div class="span10 content-area">
