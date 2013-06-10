@@ -823,6 +823,7 @@ $tree = get_tree("docs");
 	<!-- Custom  -->
 	<link href='http://fonts.googleapis.com/css?family=Roboto+Slab:400,700,300,100' rel='stylesheet' type='text/css'>
 	<link rel="stylesheet" href="/css/daux-blue.css">
+	
 
 	<!-- hightlight.js -->
 	<script src="http://yandex.st/highlightjs/7.3/highlight.min.js"></script>
@@ -837,6 +838,9 @@ $tree = get_tree("docs");
 				$(this).parent().siblings().find('ul').slideUp();
 				$(this).next().slideToggle();
 			});
+
+			// Bootstrap Table Class
+			$('table').addClass('table');
 		});
 	</script>
 </head>
@@ -878,15 +882,13 @@ $tree = get_tree("docs");
 							<? if (!empty($options['twitter'])) { ?>
 								<? foreach($options['twitter'] as $handle) { ?>
 									<div class="twitter">
-										<hr/>
+												<hr/>
 										<iframe allowtransparency="true" frameborder="0" scrolling="no" style="width:162px; height:20px;" src="https://platform.twitter.com/widgets/follow_button.html?screen_name=<?=$handle;?>&amp;show_count=false"></iframe>
 									</div>
 								<? } ?>
 							<? } ?>
 						</div>
 					<? } ?>
-
-					
 				</div>
 			</div>
 			<div class="right-column float-view content-area span9">
