@@ -1,8 +1,8 @@
 {
-	"title": "TM-Docs the Todaymade Documentation Generator",
+	"title": "DAUX.IO",
 	"homepage": "/Getting_Started",
-	"theme": "spacelab",
-	"hightlight": "dark",
+	"theme": "bootstrap",
+	"hightlight": "none",
 	"repo": "justinwalsh/tm-docs",
 	"twitter": ["justin_walsh", "todaymade"],
 	"links": {
