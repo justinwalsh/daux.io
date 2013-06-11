@@ -4,9 +4,7 @@
   "private": true,
   "dependencies": {
     "grunt": "~0.4.1",
-    "grunt-php": "~0.1.1"
-  },
-  "devDependencies": {
+    "grunt-php": "~0.1.1",
     "grunt-contrib-less": "~0.5.2"
   }
 }

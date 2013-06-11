@@ -1,8 +1,8 @@
 {
 	"title": "DAUX.IO",
-	"homepage": "/Getting_Started",
-	"theme": "bootstrap",
-	"hightlight": "none",
+	"tagline": "The Easiest Way To Document Your App",
+	"image": "/img/app.png",
+	"theme": "blue",
 	"repo": "justinwalsh/tm-docs",
 	"twitter": ["justin_walsh", "todaymade"],
 	"links": {

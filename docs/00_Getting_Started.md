@@ -1,24 +1,26 @@
-**TM Docs** is an auto documentation generator that uses your folder structure and Markdown files to create custom documentation on the fly. It helps create great looking documentation in a developer friendly way.
+**Daux.io** is an documentation generator that uses a simple folder structure and Markdown files to create custom documentation on the fly. It helps you create great looking documentation in a developer friendly way.
 
 ## Features
 
+* 100% Mobile responsive
 * Supports GitHub Flavored Markdown
+* Auto created homepage/landing page
 * Auto Syntax Highlighting
 * Auto Generated Navigation
-* 12 Built-In Bootstrap Themes
-* 35 Syntax Highlighting Themes
+* 4 Built-In Themes or roll your own
 * Shareable/Linkable SEO Friendly URLs
 * Built On Bootstrap
 * No Build Step
 * Git/SVN Friendly
+* Optional code float layout
 
 ## Demos
 
-This is a list of sites using TM-Docs:
+This is a list of sites using Daux.io:
 
 * [TodayCMS Docs](http://docs.todaymade.com)
 
-Do you use TM-Docs? Send me a pull request or open an [issue](https://github.com/justinwalsh/tm-docs/issues) and I will add you to the list.
+Do you use Daux.io? Send me a pull request or open an [issue](https://github.com/justinwalsh/tm-docs/issues) and I will add you to the list.
 
 ## Download
 
@@ -26,13 +28,13 @@ Download this repository as a zip, and unpack. Copy the files to a web server th
 
 ## Folders
 
-The generator will look for folders in the `/docs` folder. Add your folders inside the `/docs` folder. This project contains some example folders and files to get you started. It also contains a `Markdown Tests` folder which contains the official suite of tests for checking the functionality of the Markdown parser.
+The generator will look for folders in the `/docs` folder. Add your folders inside the `/docs` folder. This project contains some example folders and files to get you started.
 
-You can nest the folders any number of levels to get the exact structure you want. The folder structure will be converted to the nested navigation.
+You can nest folders any number of levels to get the exact structure you want. The folder structure will be converted to the nested navigation.
 
 ## Files
 
-The generator will look for Markdown files inside the `/docs` folder and any of your subfolders.
+The generator will look for Markdown files inside the `/docs` folder and any of the subfolders within /docs.
 
 You must use the `.md` file extension for your files. Also, you must use underscores instead of spaces. Here are some example file names and what they will be converted to:
 
@@ -49,61 +51,82 @@ You must use the `.md` file extension for your files. Also, you must use undersc
 
 ## Sorting
 
-To sort your files and folders in a specific way, you can prefix them with a number and underscore, e.g. `/docs/01_Hello_World.md` and `/docs/05_Features.md` This will list *Hello World* before *Features*, overriding the alpha-numeric sorting, which is the default. The numbers will be stripped out of the navigation.
+To sort your files and folders in a specific way, you can prefix them with a number and underscore, e.g. `/docs/01_Hello_World.md` and `/docs/05_Features.md` This will list *Hello World* before *Features*, overriding the deafult alpha-numeric sorting. The numbers will be stripped out of the navigation and urls.
 
 ## Configuration
 
 To customize the look and feel of your documentation, you can create a `config.json` file in the of the `/docs` folder. The `config.json` file is a simple JSON object that you can use to change some of the basic settings of the documentation.
 
-**Title:**
+###Title:
 Change the title bar in the docs
 
 	{
-		"title": "TM-Docs the Todaymade Documentation Generator"
+		"title": "Daux.io"
 	}
 
-**Default Homepage:**
+###Default Homepage:
 Set the default page someone is redirected to if they visit `/`
 
 	{
 		"homepage": "/Getting_Started"
 	}
 
-**Bootstrap Theme:**
-We support the 12 Bootstrap themes from Bootswatch. To use on of the themes, just set this option to the lowercase name of the theme.
+###Themes:
+We have 4 built-in Bootstrap themes. To use one of the themes, just set the `theme` option to one of the following:
 
-View the <a href="http://bootswatch.com/" target="_blank">**Demos**</a>
+* blue
+* green
+* navy
+* red
 
+```
+{
+	"theme": "blue"
+}
+```
+
+###Custom Theme:
+To create a custom color scheme, set the `theme` property to `custom` and then define the required colors. Copy the following configuration to get started:
 
 	{
-		"theme": "spacelab"
+		"theme": "custom",
+		"colors": {
+			"sidebar-background": "#f7f7f7",
+			"sidebar-hover": "#c5c5cb",
+			"lines": "#e7e7e9",
+			"dark": "#3f4657",
+			"light": "#82becd",
+			"text": "#2d2d2d",
+			"syntax-string": "#022e99",
+			"syntax-comment": "#84989b",
+			"syntax-number": "#2f9b92",
+			"syntax-label": "#840d7a"
+		}
 	}
 
-**Syntax Highlighting:**
-We support all of the available themes for highlight.js. To use one of the themes, set this option to one of the available style names.
-
-View the <a href="http://softwaremaniacs.org/media/soft/highlight/test.html" target="_blank">**Demos**</a>
-View the <a href="https://github.com/isagalaev/highlight.js/tree/master/src/styles" target="_blank">**Possible Option Values**</a>
+###Code Floating:
+By deafult your code blocks will be floated to a column on the right side of your content. To disable this feature, set the `float` property to `false`.
 
 	{
-		"hightlight": "dark"
+		"float": false
 	}
 
-**Github Repo:**
+
+###Github Repo:
 Add a 'Fork me on Github' ribbon.
 
 	{
 		"repo": "justinwalsh/tm-docs"
 	}
 
-**Twitter:**
+###Twitter:
 Include twitter follow buttons in the sidebar.
 
 	{
 		"twitter": ["justin_walsh", "todaymade"]
 	}
 
-**Links:**
+###Links:
 Include custom links in the sidebar.
 
 	{
@@ -116,7 +139,7 @@ Include custom links in the sidebar.
 
 ## Running Locally
 
-You can run the docs locally using <a href="http://gruntjs.com/" target="_blank">Grunt.js</a>
+You can run the docs locally using <a href="http://gruntjs.com/" target="_blank">Grunt.js</a> I assume you are familiar with how to use Grunt and have the latest version of PHP 5.4 installed which is able to run a webserver.
 
 **Requirements:**
 
@@ -129,4 +152,4 @@ This project contains a package.json file, so once you have the requirements ins
 
 ## Support
 
-If you need help using TM Docs, or have found a bug, please create an issue on the <a href="http://localhost:8085" target="_blank">Github repo</a>.
+If you need help using Daux.io, or have found a bug, please create an issue on the <a href="https://github.com/justinwalsh/tm-docs/issues" target="_blank">Github repo</a>.
