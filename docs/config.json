@@ -2,7 +2,7 @@
 	"title": "DAUX.IO",
 	"tagline": "The Easiest Way To Document Your App",
 	"image": "/img/app.png",
-	"theme": "blue",
+	"theme": "navy",
 	"repo": "justinwalsh/tm-docs",
 	"twitter": ["justin_walsh", "todaymade"],
 	"links": {
