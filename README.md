@@ -18,7 +18,7 @@
 
 This is a list of sites using Daux.io:
 
-* [TodayCMS Docs](http://docs.todaymade.com)
+* [Daux.io](http://daux.io)
 
 Do you use Daux.io? Send me a pull request or open an [issue](https://github.com/justinwalsh/daux.io/issues) and I will add you to the list.
 
@@ -47,7 +47,6 @@ You must use the `.md` file extension for your files. Also, you must use undersc
 **Bad:**
 
 * File Name With Space.md = FAIL
-
 
 ## Sorting
 
