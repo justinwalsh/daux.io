@@ -34,7 +34,7 @@ You can nest folders any number of levels to get the exact structure you want. T
 
 ## Files
 
-The generator will look for Markdown files inside the `/docs` folder and any of the subfolders within /docs.
+The generator will look for Markdown `*.md` files inside the `/docs` folder and any of the subfolders within /docs.
 
 You must use the `.md` file extension for your files. Also, you must use underscores instead of spaces. Here are some example file names and what they will be converted to:
 
@@ -52,6 +52,18 @@ You must use the `.md` file extension for your files. Also, you must use undersc
 
 To sort your files and folders in a specific way, you can prefix them with a number and underscore, e.g. `/docs/01_Hello_World.md` and `/docs/05_Features.md` This will list *Hello World* before *Features*, overriding the deafult alpha-numeric sorting. The numbers will be stripped out of the navigation and urls.
 
+## Landing page
+
+If you want to create a beautiful landing page for your project, simply create a `index.md` file in the root of the `/docs` folder. This file will then be used to create a landing page. You can also add a tagline and image to this page using the config file like this:
+
+	{
+		"title": "Daux.io",
+		"tagline": "The Easiest Way To Document Your Project",
+		"image": "/img/app.png"
+	}
+
+Note: The image can be a local or remote image.
+
 ## Configuration
 
 To customize the look and feel of your documentation, you can create a `config.json` file in the of the `/docs` folder. The `config.json` file is a simple JSON object that you can use to change some of the basic settings of the documentation.
@@ -61,13 +73,6 @@ Change the title bar in the docs
 
 	{
 		"title": "Daux.io"
-	}
-
-###Default Homepage:
-Set the default page someone is redirected to if they visit `/`
-
-	{
-		"homepage": "/Getting_Started"
 	}
 
 ###Themes:
