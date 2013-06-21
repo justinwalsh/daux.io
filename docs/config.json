@@ -3,7 +3,6 @@
 	"tagline": "The Easiest Way To Document Your Project",
 	"image": "/img/app.png",
 	"theme": "navy",
-	"float": false,
 	"repo": "justinwalsh/daux.io",
 	"twitter": ["justin_walsh", "todaymade"],
 	"links": {
