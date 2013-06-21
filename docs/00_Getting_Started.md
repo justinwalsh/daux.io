@@ -141,6 +141,13 @@ Include custom links in the sidebar.
 		}
 	}
 
+###Google Analytics:
+This will embed the google analytics tracking code.
+
+	{
+		"google_analytics": "UA-XXXXXXXXX-XX"
+	}
+
 ## Running Locally
 
 You can run the docs locally using <a href="http://gruntjs.com/" target="_blank">Grunt.js</a> I assume you are familiar with how to use Grunt and have the latest version of PHP 5.4 installed which is able to run a webserver.

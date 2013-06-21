@@ -34,7 +34,8 @@ function get_options() {
 		'repo' => false,
 		'twitter' => array(),
 		'links' => array(),
-		'colors' => false
+		'colors' => false,
+		'google_analytics' => false
 	);
 
 	// Load User Config
