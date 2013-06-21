@@ -4,6 +4,7 @@
 
 * 100% Mobile responsive
 * Supports GitHub Flavored Markdown
+* Auto created homepage/landing page
 * Auto Syntax Highlighting
 * Auto Generated Navigation
 * 4 Built-In Themes or roll your own
@@ -19,7 +20,7 @@ This is a list of sites using Daux.io:
 
 * [TodayCMS Docs](http://docs.todaymade.com)
 
-Do you use Daux.io? Send me a pull request or open an [issue](https://github.com/justinwalsh/tm-docs/issues) and I will add you to the list.
+Do you use Daux.io? Send me a pull request or open an [issue](https://github.com/justinwalsh/daux.io/issues) and I will add you to the list.
 
 ## Download
 
@@ -88,7 +89,7 @@ We have 4 built-in Bootstrap themes. To use one of the themes, just set the `the
 To create a custom color scheme, set the `theme` property to `custom` and then define the required colors. Copy the following configuration to get started:
 
 	{
-		"theme": "custom"
+		"theme": "custom",
 		"colors": {
 			"sidebar-background": "#f7f7f7",
 			"sidebar-hover": "#c5c5cb",
@@ -115,7 +116,7 @@ By deafult your code blocks will be floated to a column on the right side of you
 Add a 'Fork me on Github' ribbon.
 
 	{
-		"repo": "justinwalsh/tm-docs"
+		"repo": "justinwalsh/daux.io"
 	}
 
 ###Twitter:
@@ -130,9 +131,9 @@ Include custom links in the sidebar.
 
 	{
 		"links": {
-			"Github Repo": "https://github.com/justinwalsh/tm-docs",
-			"Help/Support/Bugs": "https://github.com/justinwalsh/tm-docs/issues",
-			"Todaymade": "http://todaymade.com"
+			"Github Repo": "https://github.com/justinwalsh/daux.io",
+			"Help/Support/Bugs": "https://github.com/justinwalsh/daux.io/issues",
+			"Made by Todaymade": "http://todaymade.com"
 		}
 	}
 
@@ -151,4 +152,4 @@ This project contains a package.json file, so once you have the requirements ins
 
 ## Support
 
-If you need help using Daux.io, or have found a bug, please create an issue on the <a href="https://github.com/justinwalsh/tm-docs/issues" target="_blank">Github repo</a>.
+If you need help using Daux.io, or have found a bug, please create an issue on the <a href="https://github.com/justinwalsh/daux.io/issues" target="_blank">Github repo</a>.

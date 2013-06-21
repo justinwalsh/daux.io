@@ -3,11 +3,12 @@
 	"tagline": "The Easiest Way To Document Your App",
 	"image": "/img/app.png",
 	"theme": "navy",
-	"repo": "justinwalsh/tm-docs",
+	"float": false,
+	"repo": "justinwalsh/daux.io",
 	"twitter": ["justin_walsh", "todaymade"],
 	"links": {
-		"Github Repo": "https://github.com/justinwalsh/tm-docs",
-		"Help/Support/Bugs": "https://github.com/justinwalsh/tm-docs/issues",
+		"Github Repo": "https://github.com/justinwalsh/daux.io",
+		"Help/Support/Bugs": "https://github.com/justinwalsh/daux.io/issues",
 		"Todaymade": "http://todaymade.com"
 	}
 }

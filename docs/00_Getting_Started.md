@@ -20,7 +20,7 @@ This is a list of sites using Daux.io:
 
 * [TodayCMS Docs](http://docs.todaymade.com)
 
-Do you use Daux.io? Send me a pull request or open an [issue](https://github.com/justinwalsh/tm-docs/issues) and I will add you to the list.
+Do you use Daux.io? Send me a pull request or open an [issue](https://github.com/justinwalsh/daux.io/issues) and I will add you to the list.
 
 ## Download
 
@@ -47,7 +47,6 @@ You must use the `.md` file extension for your files. Also, you must use undersc
 **Bad:**
 
 * File Name With Space.md = FAIL
-
 
 ## Sorting
 
@@ -116,7 +115,7 @@ By deafult your code blocks will be floated to a column on the right side of you
 Add a 'Fork me on Github' ribbon.
 
 	{
-		"repo": "justinwalsh/tm-docs"
+		"repo": "justinwalsh/daux.io"
 	}
 
 ###Twitter:
@@ -131,9 +130,9 @@ Include custom links in the sidebar.
 
 	{
 		"links": {
-			"Github Repo": "https://github.com/justinwalsh/tm-docs",
-			"Help/Support/Bugs": "https://github.com/justinwalsh/tm-docs/issues",
-			"Todaymade": "http://todaymade.com"
+			"Github Repo": "https://github.com/justinwalsh/daux.io",
+			"Help/Support/Bugs": "https://github.com/justinwalsh/daux.io/issues",
+			"Made by Todaymade": "http://todaymade.com"
 		}
 	}
 
@@ -152,4 +151,4 @@ This project contains a package.json file, so once you have the requirements ins
 
 ## Support
 
-If you need help using Daux.io, or have found a bug, please create an issue on the <a href="https://github.com/justinwalsh/tm-docs/issues" target="_blank">Github repo</a>.
+If you need help using Daux.io, or have found a bug, please create an issue on the <a href="https://github.com/justinwalsh/daux.io/issues" target="_blank">Github repo</a>.

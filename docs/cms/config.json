@@ -1,0 +1,12 @@
+{
+	"title": "TodayCMS Documentation",
+	"homepage": "/Getting_Started",
+	"theme": "simplex",
+	"hightlight": "dark",
+	"twitter": ["todaymade"],
+	"links": {
+		"Todaymade": "http://todaymade.com",
+		"Help/Support": "http://todaymade.com/contact",
+		"Submit a Bug": "https://github.com/justinwalsh/todaycms-docs/issues"
+	}
+}
