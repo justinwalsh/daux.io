@@ -6486,6 +6486,11 @@ body {
   width: 76.4866339334%;
   margin-left: 0px;
 }
+@media (min-width: 1200px) {
+  .columns .right-column.span9 {
+    width: 76.8866339334%;
+  }
+}
 .columns .right-column .content-page {
   padding: 20px;
   min-height: 100%;
@@ -6641,7 +6646,7 @@ code {
 }
 @media (max-width: 767px) {
   .navbar .navbar-inner {
-    padding: 6px 30px;
+    padding: 6px 10px;
   }
   .navbar .navbar-inner .navbar-text {
     line-height: 16px;
@@ -6652,6 +6657,12 @@ code {
 @media (min-width: 768px) and (max-width: 979px) {
   .navbar.navbar-fixed-top {
     position: fixed;
+  }
+}
+@media (max-width: 767px) {
+  .navbar.navbar-fixed-top {
+    margin-left: 0px;
+    margin-right: 0px;
   }
 }
 .nav.nav-list {
@@ -6714,7 +6725,7 @@ code {
 }
 .page-header {
   margin: 10px 0px;
-  padding: 0px 20px;
+  padding: 0px;
 }
 .page-header h1 {
   margin-top: 0px;
