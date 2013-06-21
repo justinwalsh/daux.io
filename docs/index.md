@@ -19,6 +19,7 @@
 * Built On Bootstrap
 * No Build Step
 * Git/SVN Friendly
+* Google Analytics
 * Optional code float layout
 
 <div class="clear"></div>
