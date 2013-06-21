@@ -202,8 +202,21 @@ function get_tree($path = '.', $clean_path = '', $title = ''){
     $dh = @opendir($path);
     $index = 0;
 
-    // Loop through the directory
+    // Build array of paths
+    $paths = array();
     while(false !== ($file = readdir($dh))){
+		$paths[$file] = $file;
+	}
+
+	// Close the directory handle
+	closedir($dh);
+
+	// Sort paths
+	sort($paths);
+
+    // Loop through the paths
+    // while(false !== ($file = readdir($dh))){
+	foreach($paths as $file) {
 
      	// Check that this file is not to be ignored
         if(!in_array($file, $ignore)) {
@@ -244,9 +257,6 @@ function get_tree($path = '.', $clean_path = '', $title = ''){
         }
      	$index++;
     }
-
-    // Close the directory handle
-    closedir($dh);
 
     return $tree;
 }
