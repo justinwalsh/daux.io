@@ -6314,11 +6314,6 @@ Homepage
 .homepage-hero h2 {
   margin: 20px 0px;
 }
-.homepage-hero .homepage-image {
-  -moz-box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
-  -webkit-box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
-}
 .hero-buttons.container-fluid {
   padding: 20px 0px;
   background-color: #c5c5cb;
@@ -6792,6 +6787,7 @@ pre code {
   .float-view .content-page p,
   .float-view .content-page ul,
   .float-view .content-page ol,
+  .float-view .content-page dl,
   .float-view .content-page h2,
   .float-view .content-page h3,
   .float-view .content-page h4,
@@ -6808,6 +6804,7 @@ pre code {
   .float-view .content-page p:before,
   .float-view .content-page ul:before,
   .float-view .content-page ol:before,
+  .float-view .content-page dl:before,
   .float-view .content-page h2:before,
   .float-view .content-page h3:before,
   .float-view .content-page h4:before,
