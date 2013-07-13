@@ -5,13 +5,13 @@ Highlight.js highlights syntax in code examples on blogs, forums and in fact on 
 	@requires_authorization
 	def somefunc(param1='', param2=0):
 	    r'''A docstring'''
-	    if param1 &gt; param2: # interesting
+	    if param1 > param2: # interesting
 	        print 'Gre\'ater'
 	    return (param2 - param1 + 1) or None
 
 	class SomeClass:<br>    pass
 
-	&gt;&gt;&gt; message = '''interpreter
+	>>> message = '''interpreter
 	... prompt'''
 
 
@@ -29,7 +29,7 @@ Highlight.js highlights syntax in code examples on blogs, forums and in fact on 
 
 **Ruby**
 
-	class A &lt; B; def self.create(object = User) object end end
+	class A < B; def self.create(object = User) object end end
 	class Zebra; def inspect; "X#{2 + self.object_id}" end end
 
 	module ABC::DEF
@@ -39,7 +39,7 @@ Highlight.js highlights syntax in code examples on blogs, forums and in fact on 
 	  # @return [String] nothing
 	  def foo(test)
 	    Thread.new do |blockvar|
-	      ABC::DEF.reverse(:a_symbol, :'a symbol', :&lt;=&gt;, 'test' + test)
+	      ABC::DEF.reverse(:a_symbol, :'a symbol', :<=>, 'test' + test)
 	    end.join
 	  end
 
@@ -56,7 +56,7 @@ Highlight.js highlights syntax in code examples on blogs, forums and in fact on 
 	!!! XML
 	%html
 	  %body
-	    %h1.jumbo{:id=&gt;"a", :style=&gt;'font-weight: normal', :title=&gt;title} highlight.js
+	    %h1.jumbo{:id=>"a", :style=>'font-weight: normal', :title=>title} highlight.js
 	    /html comment
 	    -# ignore this line
 	    %ul(style='margin: 0')
@@ -73,25 +73,25 @@ Highlight.js highlights syntax in code examples on blogs, forums and in fact on 
 	# loads object
 	sub load
 	{
-	  my $flds = $c-&gt;db_load($id,@_) || do {
+	  my $flds = $c->db_load($id,@_) || do {
 	    Carp::carp "Can`t load (class: $c, id: $id): '$!'"; return undef
 	  };
-	  my $o = $c-&gt;_perl_new();
+	  my $o = $c->_perl_new();
 	  $id12 = $id / 24 / 3600;
-	  $o-&gt;{'ID'} = $id12 + 123;
-	  #$o-&gt;{'SHCUT'} = $flds-&gt;{'SHCUT'};
-	  my $p = $o-&gt;props;
+	  $o->{'ID'} = $id12 + 123;
+	  #$o->{'SHCUT'} = $flds->{'SHCUT'};
+	  my $p = $o->props;
 	  my $vt;
 	  $string =~ m/^sought_text$/;
 	  $items = split //, 'abc';
 	  for my $key (keys %$p)
 	  {
 	    if(${$vt.'::property'}) {
-	      $o-&gt;{$key . '_real'} = $flds-&gt;{$key};
-	      tie $o-&gt;{$key}, 'CMSBuilder::Property', $o, $key;
+	      $o->{$key . '_real'} = $flds->{$key};
+	      tie $o->{$key}, 'CMSBuilder::Property', $o, $key;
 	    }
 	  }
-	  $o-&gt;save if delete $o-&gt;{'_save_after_load'};
+	  $o->save if delete $o->{'_save_after_load'};
 	  return $o;
 	}
 
@@ -145,24 +145,24 @@ Highlight.js highlights syntax in code examples on blogs, forums and in fact on 
 	/** Turn command line arguments to uppercase */
 	object Main {
 	  def main(args: Array[String]) {
-	    val res = for (a &lt;- args) yield a.toUpperCase
+	    val res = for (a <- args) yield a.toUpperCase
 	    println("Arguments: " + res.toString)
 	  }
 	}
 
 	/** Maps are easy to use in Scala. */
 	object Maps {
-	  val colors = Map("red" -&gt; 0xFF0000,
-	                   "turquoise" -&gt; 0x00FFFF,
-	                   "black" -&gt; 0x000000,
-	                   "orange" -&gt; 0xFF8040,
-	                   "brown" -&gt; 0x804000)
+	  val colors = Map("red" -> 0xFF0000,
+	                   "turquoise" -> 0x00FFFF,
+	                   "black" -> 0x000000,
+	                   "orange" -> 0xFF8040,
+	                   "brown" -> 0x804000)
 	  def main(args: Array[String]) {
-	    for (name &lt;- args) println(
+	    for (name <- args) println(
 	      colors.get(name) match {
-	        case Some(code) =&gt;
+	        case Some(code) =>
 	          name + " has code: " + code
-	        case None =&gt;
+	        case None =>
 	          "Unknown color: " + name
 	      }
 	    )
@@ -200,8 +200,8 @@ Highlight.js highlights syntax in code examples on blogs, forums and in fact on 
 
 	func main() {
 	    ch := make(chan int)
-	    ch &lt;- 1
-	    x, ok := &lt;- ch
+	    ch <- 1
+	    x, ok := <- ch
 	    ok = true
 	    x = nil
 	    float_var := 1.0e10
@@ -214,77 +214,77 @@ Highlight.js highlights syntax in code examples on blogs, forums and in fact on 
 
 **XML**
 
-	&lt;?xml version="1.0"?&gt;
-	&lt;response value="ok" xml:lang="en"&gt;
-	  &lt;text&gt;Ok&lt;/text&gt;
-	  &lt;comment html_allowed="true"/&gt;
-	  &lt;ns1:description&gt;&lt;![CDATA[
-	  CDATA is &lt;not&gt; magical.
-	  ]]&gt;&lt;/ns1:description&gt;
-	  &lt;a&gt;&lt;/a&gt; &lt;a/&gt;
-	&lt;/response&gt;
+	<?xml version="1.0"?>
+	<response value="ok" xml:lang="en">
+	  <text>Ok</text>
+	  <comment html_allowed="true"/>
+	  <ns1:description><![CDATA[
+	  CDATA is <not> magical.
+	  ]]></ns1:description>
+	  <a></a> <a/>
+	</response>
 
 
 **HTML (with inline css and javascript)**
 
-	&lt;!DOCTYPE html&gt;
-	&lt;title&gt;Title&lt;/title&gt;
+	<!DOCTYPE html>
+	<title>Title</title>
 
-	&lt;style&gt;body {width: 500px;}&lt;/style&gt;
+	<style>body {width: 500px;}</style>
 
-	&lt;script type="application/javascript"&gt;
+	<script type="application/javascript">
 	  function $init() {return true;}
-	&lt;/script&gt;
+	</script>
 
-	&lt;body&gt;
-	  &lt;p checked class="title" id='title'&gt;Title&lt;/p&gt;
-	  &lt;!-- here goes the rest of the page --&gt;
-	&lt;/body&gt;
+	<body>
+	  <p checked class="title" id='title'>Title</p>
+	  <!-- here goes the rest of the page -->
+	</body>
 
 **Lasso**
 
-	&lt;?LassoScript
+	<?LassoScript
 	/* Lasso 8 */
-	  local('query' = 'SELECT * FROM `'+var:'table'+'` WHERE `id` &gt; 10
+	  local('query' = 'SELECT * FROM `'+var:'table'+'` WHERE `id` > 10
 	    ORDER BY `Name` LIMIT 30');
 	  Inline: -Username=$DBuser, -Password=$DBpass, -Database=$DBname, -sql=#query;
 	    var("class.name" = (found_count != 0 ? `subtotal` | `nonefound`));
 	    records;
-	      output: ?&gt;&lt;tr&gt;[loop_count]&lt;/tr&gt;&lt;?=;
+	      output: ?><tr>[loop_count]</tr><?=;
 	    /records;
 	  /Inline;
-	?&gt;&lt;div class="[$class.name]"&gt;[found_count]&lt;/div&gt;
+	?><div class="[$class.name]">[found_count]</div>
 	[noprocess] causes [delimiters] to be skipped until the next [/noprocess]
-	&lt;?lasso
+	<?lasso
 	/* Lasso 9 */
-	  define strings_combine(value::string, ...other)::string =&gt; {
-	    local(result = #value-&gt;append(#other-&gt;asString))
+	  define strings_combine(value::string, ...other)::string => {
+	    local(result = #value->append(#other->asString))
 	    return #result
 	  }
 	  /**! descriptive text */
-	  define person =&gt; type {
+	  define person => type {
 	    data name::string, protected nickname
 	    data birthdate::date
 	    data private ssn = null
-	    public showName() =&gt; return .'name'
-	    protected fullName() =&gt; '"' + .nickname + '"' + .'name'
-	    public ssnListed =&gt; .ssn ? true | false
+	    public showName() => return .'name'
+	    protected fullName() => '"' + .nickname + '"' + .'name'
+	    public ssnListed => .ssn ? true | false
 	  }
-	  define person-&gt;name=(value) =&gt; {
+	  define person->name=(value) => {
 	    .'name' = #value
-	    return self-&gt;'name'
+	    return self->'name'
 	  }
 	  // query expression
 	  with n in array(-1, 0xABCD, 3.14159e14)
-	  let swapped = pair(#n-&gt;second, #n-&gt;first)
-	  group #swapped by #n-&gt;first into t
-	  let key = #t-&gt;key
+	  let swapped = pair(#n->second, #n->first)
+	  group #swapped by #n->first into t
+	  let key = #t->key
 	  order by #key
 	  select pair(#key, #t)
 	  do {^
-	    #n-&gt;upperCase
+	    #n->upperCase
 	  ^}
-	?&gt;
+	?>
 
 **Markdown**
 
@@ -300,9 +300,9 @@ Highlight.js highlights syntax in code examples on blogs, forums and in fact on 
 	hello world
 	===========
 
-	&lt;this_is inline="xml"&gt;&lt;/this_is&gt;
+	<this_is inline="xml"></this_is>
 
-	&gt; markdown is so cool
+	> markdown is so cool
 
 	    so are code segments
 
@@ -313,7 +313,7 @@ Highlight.js highlights syntax in code examples on blogs, forums and in fact on 
 
 	Hello, World!
 	============
-	Author Name, &lt;author@domain.foo&gt;
+	Author Name, <author@domain.foo>
 
 	you can write text http://example.com[with links], optionally
 	using an explicit link:http://example.com[link prefix].
@@ -347,7 +347,7 @@ Highlight.js highlights syntax in code examples on blogs, forums and in fact on 
 
 	.Nested highlighting
 	++++
-	&lt;this_is inline="xml"&gt;&lt;/this_is&gt;
+	<this_is inline="xml"></this_is>
 	++++
 
 	____
@@ -381,10 +381,10 @@ Highlight.js highlights syntax in code examples on blogs, forums and in fact on 
 	{% for article in articles %}
 
 	{# Striped table #}
-	&lt;tr class="{% cycle odd,even %}"&gt;
-	  &lt;td&gt;{{ article|default:"Hi... "|escape }}&lt;/td&gt;
-	  &lt;td {% if article.today %}class="today"{% endif %}&gt;{{ article.date|date:"d.m.Y" }}&lt;/td&gt;
-	&lt;/tr&gt;
+	<tr class="{% cycle odd,even %}">
+	  <td>{{ article|default:"Hi... "|escape }}</td>
+	  <td {% if article.today %}class="today"{% endif %}>{{ article.date|date:"d.m.Y" }}</td>
+	</tr>
 
 	{% endfor %}
 	{% endif %}
@@ -396,13 +396,13 @@ Highlight.js highlights syntax in code examples on blogs, forums and in fact on 
 
 **Handlebars**
 
-	&lt;h3&gt;Hours&lt;/h3&gt;
+	<h3>Hours</h3>
 
-	&lt;ul&gt;
+	<ul>
 	  {{#each content.users}}
-	  &lt;li {{bindAttr hello="world"}}&gt;{{firstName}}&lt;/li&gt;
+	  <li {{bindAttr hello="world"}}>{{firstName}}</li>
 	  {{/each}}
-	&lt;/ul&gt;
+	</ul>
 
 **CSS**
 
@@ -492,8 +492,8 @@ Highlight.js highlights syntax in code examples on blogs, forums and in fact on 
 
 	a {
 	  color: $colorGreen;
-	  &amp;:hover { color: $colorGreenDark; }
-	  &amp;:visited { color: #c458cb; }
+	  &:hover { color: $colorGreenDark; }
+	  &:visited { color: #c458cb; }
 	}
 
 	@for $i from 1 through 5 {
@@ -533,10 +533,10 @@ Highlight.js highlights syntax in code examples on blogs, forums and in fact on 
 	    /* handle exception */
 
 	    var e4x =
-	        &lt;div&gt;Example
-	            &lt;p&gt;1234&lt;/p&gt;&lt;/div&gt;;
+	        <div>Example
+	            <p>1234</p></div>;
 	  }
-	  for (var i = 0 / 2; i &lt; classes.length; i++) { // "0 / 2" should not be parsed as regexp
+	  for (var i = 0 / 2; i < classes.length; i++) { // "0 / 2" should not be parsed as regexp
 	    if (checkCondition(classes[i]) === undefined)
 	      return /\d+[\s/]/g;
 	  }
@@ -558,7 +558,7 @@ Highlight.js highlights syntax in code examples on blogs, forums and in fact on 
 	x = f /foo * 2/gm
 	x = if true then /\n/ else /[.,]+/
 
-	grade = (student, period=(if b? then 7 else 6), messages={"A": "Excellent"}) -&gt;
+	grade = (student, period=(if b? then 7 else 6), messages={"A": "Excellent"}) ->
 	  if student.excellentWork
 	    "A+"
 	  else if student.okayStuff
@@ -638,7 +638,7 @@ Highlight.js highlights syntax in code examples on blogs, forums and in fact on 
 	    s = trim(ini_strings(i))
 
 	    ' skipping empty strings and comments
-	    if mid(s, 1, 1) &lt;&gt; "#" and len(s) &gt; 0 then
+	    if mid(s, 1, 1) <> "#" and len(s) > 0 then
 	      ' obtaining key and value
 	      parts = split(s, "=", -1, 1)
 
@@ -667,14 +667,14 @@ Highlight.js highlights syntax in code examples on blogs, forums and in fact on 
 	#Const DEBUG = True
 
 	Namespace Highlighter.Test
-	  ''' &lt;summary&gt;This is an example class.&lt;/summary&gt;
+	  ''' <summary>This is an example class.</summary>
 	  Public Class Program
 	    Protected Shared hello As Integer = 3
 	    Private Const ABC As Boolean = False
 
 	#Region "Code"
 	    ' Cheers!
-	    &lt;STAThread()&gt; _
+	    <STAThread()> _
 	    Public Shared Sub Main(ByVal args() As String, ParamArray arr As Object) Handles Form1.Click
 	      On Error Resume Next
 	      If ABC Then
@@ -689,7 +689,7 @@ Highlight.js highlights syntax in code examples on blogs, forums and in fact on 
 	          End Try
 	        Next
 	      Else
-	        Dim l As New System.Collections.List&lt;String&gt;()
+	        Dim l As New System.Collections.List<String>()
 	        SyncLock l
 	          If TypeOf l Is Decimal And l IsNot Nothing Then
 	            RemoveHandler button1.Paint, delegate
@@ -793,7 +793,7 @@ Highlight.js highlights syntax in code examples on blogs, forums and in fact on 
 	    Repeat
 	      ReadBufSize:=InFile.Read(Buffer,BufSize);
 	      OutFile.Write(Buffer,ReadBufSize);
-	    Until ReadBufSize&lt;&gt;BufSize;
+	    Until ReadBufSize<>BufSize;
 	    Log('File '''+InFileName+''' copied'#13#10);
 	  Finally
 	    InFile.Free;
@@ -804,7 +804,7 @@ Highlight.js highlights syntax in code examples on blogs, forums and in fact on 
 **Java**
 
 	/**
-	 * @author John Smith &lt;john.smith@example.com&gt;
+	 * @author John Smith <john.smith@example.com>
 	 * @version 1.0
 	*/
 	package l2f.gameserver.model;
@@ -817,7 +817,7 @@ Highlight.js highlights syntax in code examples on blogs, forums and in fact on 
 	  public void moveTo(int x, int y, int z) {
 	    _ai = null;
 	    _log.warning("Should not be called");
-	    if (1 &gt; 5) {
+	    if (1 > 5) {
 	      return;
 	    }
 	  }
@@ -839,16 +839,16 @@ Highlight.js highlights syntax in code examples on blogs, forums and in fact on 
 
 **C++**
 
-	#include &lt;iostream&gt;
+	#include <iostream>
 
 	int main(int argc, char *argv[]) {
 
 	  /* An annoying "Hello World" example */
-	  for (auto i = 0; i &lt; 0xFFFF; i++)
-	    cout &lt;&lt; "Hello, World!" &lt;&lt; endl;
+	  for (auto i = 0; i < 0xFFFF; i++)
+	    cout << "Hello, World!" << endl;
 
 	  char c = '\n';
-	  unordered_map &lt;string, vector&lt;string&gt; &gt; m;
+	  unordered_map <string, vector<string> > m;
 	  m["key"] = "\\\\"; // this is an error
 
 	  return -2e3 + 12l;
@@ -856,7 +856,7 @@ Highlight.js highlights syntax in code examples on blogs, forums and in fact on 
 
 **Objective C**
 
-	#import &lt;UIKit/UIKit.h&gt;
+	#import <UIKit/UIKit.h>
 	#import "Dependency.h"
 
 	@protocol WorldDataSource
@@ -866,7 +866,7 @@ Highlight.js highlights syntax in code examples on blogs, forums and in fact on 
 	- (BOOL)allowsToLive;
 	@end
 
-	@interface Test : NSObject &lt;HelloDelegate, WorldDataSource&gt; {
+	@interface Test : NSObject <HelloDelegate, WorldDataSource> {
 	  NSString *_greeting;
 	}
 
@@ -927,7 +927,7 @@ Highlight.js highlights syntax in code examples on blogs, forums and in fact on 
 
 	var t = new Track();      // same as: Track t = new Track();
 	var s = "hello";          // same as: string s = "hello";
-	var l = new List&lt;int&gt;();       // same as: List&lt;int&gt; l = new List&lt;int&gt;();
+	var l = new List<int>();       // same as: List<int> l = new List<int>();
 	var i = 10;               // same as: int i = 10;
 
 
@@ -957,7 +957,7 @@ Highlight.js highlights syntax in code examples on blogs, forums and in fact on 
 
 	public class Program
 	{
-	    /// &lt;summary&gt;The entry point to the program.&lt;/summary&gt;
+	    /// <summary>The entry point to the program.</summary>
 	    public static int Main(string[] args)
 	    {
 	        Console.WriteLine("Hello, World!");
@@ -970,7 +970,7 @@ Highlight.js highlights syntax in code examples on blogs, forums and in fact on 
 	    }
 	}
 
-	async Task&lt;int&gt; AccessTheWebAsync()
+	async Task<int> AccessTheWebAsync()
 	{
 	    // ...
 	    string urlContents = await getStringTask;
@@ -988,16 +988,16 @@ Highlight.js highlights syntax in code examples on blogs, forums and in fact on 
 	*)
 	let checkList alist =
 	    match alist with
-	    | [] -&gt; 0
-	    | [a] -&gt; 1
-	    | [a; b] -&gt; 2
-	    | [a; b; c] -&gt; 3
-	    | _ -&gt; failwith "List is too big!"
+	    | [] -> 0
+	    | [a] -> 1
+	    | [a; b] -> 2
+	    | [a; b; c] -> 3
+	    | _ -> failwith "List is too big!"
 
 
 	type IEncoding =
-	    abstract Encode : string -&gt; string
-	    abstract Decode : string -&gt; string
+	    abstract Encode : string -> string
+	    abstract Decode : string -> string
 
 	let text = "Some text..."
 	let text2 = @"A ""verbatim"" string..."
@@ -1005,18 +1005,18 @@ Highlight.js highlights syntax in code examples on blogs, forums and in fact on 
 	Some "long" string...
 	"""
 
-	let rec fib x = if x &lt;= 2 then 1 else fib(x-1) + fib(x-2)
+	let rec fib x = if x <= 2 then 1 else fib(x-1) + fib(x-2)
 
 	let fibs =
-	    Async.Parallel [ for i in 0..40 -&gt; async { return fib(i) } ]
-	    |&gt; Async.RunSynchronously
+	    Async.Parallel [ for i in 0..40 -> async { return fib(i) } ]
+	    |> Async.RunSynchronously
 
 	type Sprocket(gears) =
 	  member this.Gears : int = gears
 
-	[&lt;AbstractClass&gt;]
+	[<AbstractClass>]
 	type Animal =
-	  abstract Speak : unit -&gt; unit
+	  abstract Speak : unit -> unit
 
 	type Widget =
 	  | RedWidget
@@ -1024,9 +1024,9 @@ Highlight.js highlights syntax in code examples on blogs, forums and in fact on 
 
 	type Point = {X: float; Y: float;}
 
-	[&lt;Measure&gt;]
+	[<Measure>]
 	type s
-	let minutte = 60&lt;s&gt;
+	let minutte = 60<s>
 
 **D**
 
@@ -1041,7 +1041,7 @@ Highlight.js highlights syntax in code examples on blogs, forums and in fact on 
 	enum COMPILED_ON = __TIMESTAMP__;  // special token
 
 	enum character = '©';
-	enum copy_valid = '&amp;copy;';
+	enum copy_valid = '&copy;';
 	enum backslash_escaped = '\\';
 
 	// string literals
@@ -1097,7 +1097,7 @@ Highlight.js highlights syntax in code examples on blogs, forums and in fact on 
 
 	FrameBegin 0
 	Display "Scene" "framebuffer" "rgb"
-	Option "searchpath" "shader" "+&amp;:/home/kew"
+	Option "searchpath" "shader" "+&:/home/kew"
 	Option "trace" "int maxdepth" [4]
 	Attribute "visibility" "trace" [1]
 	Attribute "irradiance" "maxerror" [0.1]
@@ -1137,7 +1137,7 @@ Highlight.js highlights syntax in code examples on blogs, forums and in fact on 
 	    string $class[] = getClassification( `nodeType $shape` );
 
 
-	    if ( ( `size $class` ) &gt; 0 &amp;&amp; ( "light" == $class[0] ) )
+	    if ( ( `size $class` ) > 0 && ( "light" == $class[0] ) )
 	    {
 	      $selectedLights[ `size $selectedLights` ] = $shape;
 	    }
@@ -1170,7 +1170,7 @@ Highlight.js highlights syntax in code examples on blogs, forums and in fact on 
 	layout(triangle_strip, max_vertices = 3) out;
 
 	void main() {
-	  for(int i = 0; i &lt; gl_in.length(); i++) {
+	  for(int i = 0; i < gl_in.length(); i++) {
 	    gl_Position = gl_in[i].gl_Position;
 	    EmitVertex();
 	  }
@@ -1209,7 +1209,7 @@ Highlight.js highlights syntax in code examples on blogs, forums and in fact on 
 
 **SmallTalk**
 
-	Object&gt;&gt;method: num
+	Object>>method: num
 	    "comment 123"
 	    | var1 var2 |
 	    (1 to: num) do: [:i | |var| ^i].
@@ -1257,7 +1257,7 @@ Highlight.js highlights syntax in code examples on blogs, forums and in fact on 
 	   "Prompts
 	    for CD"
 	   (prompt-read "Title" 1.53 1 2/4 1.7 1.7e0 2.9E-4 +42 -7 #b001 #b001/100 #o777 #O777 #xabc55 #c(0 -5.6))
-	   (prompt-read "Artist" &amp;rest)
+	   (prompt-read "Artist" &rest)
 	   (or (parse-integer (prompt-read "Rating") :junk-allowed t) 0)
 	  (if x (format t "yes") (format t "no" nil) ;and here comment
 	  )
@@ -1287,11 +1287,11 @@ Highlight.js highlights syntax in code examples on blogs, forums and in fact on 
 	(def
 	  ^{:macro true
 	    :added "1.0"}
-	  let (fn* let [&amp;form &amp;env &amp; decl] (cons 'let* decl)))
+	  let (fn* let [&form &env & decl] (cons 'let* decl)))
 
 	(def
 
-	 defn (fn defn [&amp;form &amp;env name &amp; fdecl]
+	 defn (fn defn [&form &env name & fdecl]
 	        (let [m (conj {:arglists (list 'quote (sigs fdecl))} m)
 	              m (let [inline (:inline m)
 	                      ifn (first inline)
@@ -1337,13 +1337,13 @@ Highlight.js highlights syntax in code examples on blogs, forums and in fact on 
 	ExpiresActive On
 	ExpiresByType application/x-javascript  "access plus 1 days"
 
-	&lt;Location /maps/&gt;
+	<Location /maps/>
 	  RewriteMap map txt:map.txt
 	  RewriteMap lower int:tolower
 	  RewriteCond %{REQUEST_URI} ^/([^/.]+)\.html$ [NC]
 	  RewriteCond ${map:${lower:%1}|NOT_FOUND} !NOT_FOUND
 	  RewriteRule .? /index.php?q=${map:${lower:%1}} [NC,L]
-	&lt;/Location&gt;
+	</Location>
 
 **nginx**
 
@@ -1653,25 +1653,25 @@ Highlight.js highlights syntax in code examples on blogs, forums and in fact on 
 	        subtype RS is std_logic_vector (1 downto 0);
 	    begin
 	        if reset = '0' then
-	            QT &lt;= '0';
+	            QT <= '0';
 	        else
 	            if rising_edge(C) then
 	                if not (R'stable(T) and S'stable(T)) then
-	                    QT &lt;= 'X';
+	                    QT <= 'X';
 	                else
-	                    case RS'(R&amp;S) is
-	                        when "01" =&gt; QT &lt;= '1';
-	                        when "10" =&gt; QT &lt;= '0';
-	                        when "11" =&gt; QT &lt;= 'X';
-	                        when others =&gt; null;
+	                    case RS'(R&S) is
+	                        when "01" => QT <= '1';
+	                        when "10" => QT <= '0';
+	                        when "11" => QT <= 'X';
+	                        when others => null;
 	                    end case;
 	                end if;
 	            end if;
 	        end if;
 	    end process;
 
-	    Q  &lt;= QT;
-	    nQ &lt;= not QT;
+	    Q  <= QT;
+	    nQ <= not QT;
 	end architecture behaviour;
 
 **Parser 3**
@@ -1689,7 +1689,7 @@ Highlight.js highlights syntax in code examples on blogs, forums and in fact on 
 	@create[aParam1;aParam2][local1;local2]
 	  ^connect[mysql://host/database?ClientCharset=windows-1251]
 	  ^for[i](1;10){
-	    &lt;p class=&quot;paragraph&quot;&gt;^eval($i+10)&lt;/p&gt;
+	    <p class="paragraph">^eval($i+10)</p>
 	    ^connect[mysql://host/database]{
 	      $tab[^table::sql{select * from `table` where a='1'}]
 	      $var_Name[some${value}]
@@ -1722,7 +1722,7 @@ Highlight.js highlights syntax in code examples on blogs, forums and in fact on 
 	\begin{document}
 	\section*{Highlight.js}
 	\begin{table}[c|c]
-	$\frac 12\, + \, \frac 1{x^3}\text{Hello \! world}$ &amp; \textbf{Goodbye\~ world} \\\eTiX $ \pi=400 $
+	$\frac 12\, + \, \frac 1{x^3}\text{Hello \! world}$ & \textbf{Goodbye\~ world} \\\eTiX $ \pi=400 $
 	\end{table}
 	Ch\'erie, \c{c}a ne me pla\^\i t pas! % comment \b
 	G\"otterd\"ammerung~45\%=34.
@@ -1754,8 +1754,8 @@ Highlight.js highlights syntax in code examples on blogs, forums and in fact on 
 
 	-- Type class for converting StringLike types to and from strict ByteStrings
 	class DataPacket a where
-	  toStrictBS :: a -&gt; Strict.ByteString
-	  fromStrictBS :: Strict.ByteString -&gt; a
+	  toStrictBS :: a -> Strict.ByteString
+	  fromStrictBS :: Strict.ByteString -> a
 
 	instance DataPacket Strict.ByteString where
 	  toStrictBS = id
@@ -1763,16 +1763,16 @@ Highlight.js highlights syntax in code examples on blogs, forums and in fact on 
 	  fromStrictBS = id
 	  {-# INLINE fromStrictBS #-}
 
-	openBoundUDPPort :: String -&gt; Int -&gt; IO Socket
+	openBoundUDPPort :: String -> Int -> IO Socket
 	openBoundUDPPort uri port = do
-	  s &lt;- getUDPSocket
-	  bindAddr &lt;- inet_addr uri
+	  s <- getUDPSocket
+	  bindAddr <- inet_addr uri
 	  let a = SockAddrInet (toEnum port) bindAddr
 	  bindSocket s a
 	  return s
 
-	pingUDPPort :: Socket -&gt; SockAddr -&gt; IO ()
-	pingUDPPort s a = sendTo s (Strict.singleton 0) a &gt;&gt; return ()
+	pingUDPPort :: Socket -> SockAddr -> IO ()
+	pingUDPPort s a = sendTo s (Strict.singleton 0) a >> return ()
 
 **Erlang**
 
@@ -1790,36 +1790,36 @@ Highlight.js highlights syntax in code examples on blogs, forums and in fact on 
 	    channel
 	   }).
 
-	test(Foo)-&gt;Foo.
+	test(Foo)->Foo.
 
-	init([Shell, Exec]) -&gt;
+	init([Shell, Exec]) ->
 	    {ok, #state{shell = Shell, exec = Exec}};
-	init([Shell]) -&gt;
+	init([Shell]) ->
 	    false = not true,
 	    io:format("Hello, \"~p!~n", [atom_to_list('World')]),
 	    {ok, #state{shell = Shell}}.
 
-	concat([Single]) -&gt; Single;
-	concat(RList) -&gt;
+	concat([Single]) -> Single;
+	concat(RList) ->
 	    EpsilonFree = lists:filter(
-	        fun (Element) -&gt;
+	        fun (Element) ->
 	            case Element of
-	                epsilon -&gt; false;
-	                _ -&gt; true
+	                epsilon -> false;
+	                _ -> true
 	            end
 	        end,
 	        RList),
 	    case EpsilonFree of
-	        [Single] -&gt; Single;
-	        Other -&gt; {concat, Other}
+	        [Single] -> Single;
+	        Other -> {concat, Other}
 	    end.
 
-	union_dot_union({union, _}=U1, {union, _}=U2) -&gt;
+	union_dot_union({union, _}=U1, {union, _}=U2) ->
 	    union(lists:flatten(
 	        lists:map(
-	            fun (X1) -&gt;
+	            fun (X1) ->
 	                lists:map(
-	                    fun (X2) -&gt;
+	                    fun (X2) ->
 	                        concat([X1, X2])
 	                    end,
 	                    union_to_list(U2)
@@ -1831,32 +1831,32 @@ Highlight.js highlights syntax in code examples on blogs, forums and in fact on 
 
 **Erlang REPL**
 
-	1&gt; Str = "abcd".
+	1> Str = "abcd".
 	"abcd"
-	2&gt; L = test:length(Str).
+	2> L = test:length(Str).
 	4
-	3&gt; Descriptor = {L, list_to_atom(Str)}.
+	3> Descriptor = {L, list_to_atom(Str)}.
 	{4,abcd}
-	4&gt; L.
+	4> L.
 	4
-	5&gt; b().
+	5> b().
 	Descriptor = {4,abcd}
 	L = 4
 	Str = "abcd"
 	ok
-	6&gt; f(L).
+	6> f(L).
 	ok
-	7&gt; b().
+	7> b().
 	Descriptor = {4,abcd}
 	Str = "abcd"
 	ok
-	8&gt; {L, _} = Descriptor.
+	8> {L, _} = Descriptor.
 	{4,abcd}
-	9&gt; L.
+	9> L.
 	4
-	10&gt; 2#101.
+	10> 2#101.
 	5
-	11&gt; 1.85e+3.
+	11> 1.85e+3.
 	1850
 
 **Rust**
@@ -1879,7 +1879,7 @@ Highlight.js highlights syntax in code examples on blogs, forums and in fact on 
 	12E+99_f64;                        // type f64
 
 	/* Factorial */
-	fn fac(n: int) -&gt; int {
+	fn fac(n: int) -> int {
 	    let s: str = "This is
 	a multi-line string.
 
@@ -1887,39 +1887,39 @@ Highlight.js highlights syntax in code examples on blogs, forums and in fact on 
 	    let c: char = 'Ф';
 
 	    let result = 1, i = 1;
-	    while i &lt;= n { // No parens around the condition
+	    while i <= n { // No parens around the condition
 	        result *= i;
 	        i += 1;
 	    }
 	    ret result;
 	}
 
-	pure fn pure_length&lt;T&gt;(ls: list&lt;T&gt;) -&gt; uint { /* ... */ }
+	pure fn pure_length<T>(ls: list<T>) -> uint { /* ... */ }
 
-	type t = map::hashtbl&lt;int,str&gt;;
-	let x = id::&lt;int&gt;(10);
+	type t = map::hashtbl<int,str>;
+	let x = id::<int>(10);
 
 	// Define some modules.
 	#[path = "foo.rs"]
 	mod foo;
 
-	iface seq&lt;T&gt; {
-	    fn len() -&gt; uint;
+	iface seq<T> {
+	    fn len() -> uint;
 	}
 
-	impl &lt;T&gt; of seq&lt;T&gt; for [T] {
-	    fn len() -&gt; uint { vec::len(self) }
+	impl <T> of seq<T> for [T] {
+	    fn len() -> uint { vec::len(self) }
 	    fn iter(b: fn(T)) {
 	        for elt in self { b(elt); }
 	    }
 	}
 
-	enum list&lt;T&gt; {
+	enum list<T> {
 	    nil;
-	    cons(T, @list&lt;T&gt;);
+	    cons(T, @list<T>);
 	}
 
-	let a: list&lt;int&gt; = cons(7, @cons(13, @nil));
+	let a: list<int> = cons(7, @cons(13, @nil));
 
 **Matlab**
 
@@ -1932,7 +1932,7 @@ Highlight.js highlights syntax in code examples on blogs, forums and in fact on 
 	for i = 1: n-1
 	    len(i) = points(i + 1, 1) - points(i, 1);
 	end
-	while(max(len) &gt; 2 * min(len))
+	while(max(len) > 2 * min(len))
 	    [d, i] = max(len);
 	    k = on_margin(points, i, d, -1);
 	    m = on_margin(points, i + 1, d, 1);
@@ -1966,7 +1966,7 @@ Highlight.js highlights syntax in code examples on blogs, forums and in fact on 
 
 	library(ggplot2)
 
-	centre &lt;- function(x, type, ...) {
+	centre <- function(x, type, ...) {
 	  switch(type,
 	         mean = mean(x),
 	         median = median(x),
@@ -1995,8 +1995,8 @@ Highlight.js highlights syntax in code examples on blogs, forums and in fact on 
 	1L + 30
 	plot(cars, xlim=20)
 	plot(cars, xlim=0x20)
-	foo&lt;-30
-	my.data.3 &lt;- read() # not a number
+	foo<-30
+	my.data.3 <- read() # not a number
 	c(1,2,3)
 	1%%2
 
@@ -2025,8 +2025,8 @@ Highlight.js highlights syntax in code examples on blogs, forums and in fact on 
 	For If In Else Next Break .. .... "NULL" `NULL` 'NULL'
 
 	# operators
-	+, -, *, /, %%, ^, &gt;, &gt;=, &lt;, &lt;=, ==, !=, !, &amp;, |, ~,
-	-&gt;, &lt;-, &lt;&lt;-, $, :, ::
+	+, -, *, /, %%, ^, >, >=, <, <=, ==, !=, !, &, |, ~,
+	->, <-, <<-, $, :, ::
 
 	# infix operator
 	foo %union% bar
@@ -2056,17 +2056,17 @@ Highlight.js highlights syntax in code examples on blogs, forums and in fact on 
 	  let D;
 
 	  attr D is LambdaTerm-like means
-	    (dom D qua Tree) is finite &amp;
-	::&gt;                          *143,306
+	    (dom D qua Tree) is finite &
+	::>                          *143,306
 	    for r st r in dom D holds
-	      r is FinSequence of {0,1} &amp;
-	      r^&lt;*0*&gt; in dom D implies D.r = 0;
+	      r is FinSequence of {0,1} &
+	      r^<*0*> in dom D implies D.r = 0;
 	end;
 
 	registration
 	  cluster LambdaTerm-like for DecoratedTree of NAT;
 	  existence;
-	::&gt;       *4
+	::>       *4
 	end;
 
 	definition
@@ -2080,22 +2080,22 @@ Highlight.js highlights syntax in code examples on blogs, forums and in fact on 
 
 	  pred M beta N means
 	    ex p st
-	      M|p beta_shallow N|p &amp;
+	      M|p beta_shallow N|p &
 	      for q st not p is_a_prefix_of q holds
 	        [r,x] in M iff [r,x] in N;
 	end;
 
 	theorem Th4:
-	  ProperPrefixes (v^&lt;*x*&gt;) = ProperPrefixes v \/ {v}
+	  ProperPrefixes (v^<*x*>) = ProperPrefixes v \/ {v}
 	proof
-	  thus ProperPrefixes (v^&lt;*x*&gt;) c= ProperPrefixes v \/ {v}
+	  thus ProperPrefixes (v^<*x*>) c= ProperPrefixes v \/ {v}
 	  proof
 	    let y;
-	    assume y in ProperPrefixes (v^&lt;*x*&gt;);
+	    assume y in ProperPrefixes (v^<*x*>);
 	    then consider v1 such that
 	A1: y = v1 and
-	A2: v1 is_a_proper_prefix_of v^&lt;*x*&gt; by TREES_1:def 2;
-	 v1 is_a_prefix_of v &amp; v1 &lt;&gt; v or v1 = v by A2,TREES_1:9;
+	A2: v1 is_a_proper_prefix_of v^<*x*> by TREES_1:def 2;
+	 v1 is_a_prefix_of v & v1 <> v or v1 = v by A2,TREES_1:9;
 	then
 	 v1 is_a_proper_prefix_of v or v1 in {v} by TARSKI:def 1,XBOOLE_0:def 8;
 	then  y in ProperPrefixes v or y in {v} by A1,TREES_1:def 2;
@@ -2109,15 +2109,15 @@ Highlight.js highlights syntax in code examples on blogs, forums and in fact on 
 	    then consider v1 such that
 	A5: y = v1 and
 	A6: v1 is_a_proper_prefix_of v by TREES_1:def 2;
-	 v is_a_prefix_of v^&lt;*x*&gt; by TREES_1:1;
-	then  v1 is_a_proper_prefix_of v^&lt;*x*&gt; by A6,XBOOLE_1:58;
+	 v is_a_prefix_of v^<*x*> by TREES_1:1;
+	then  v1 is_a_proper_prefix_of v^<*x*> by A6,XBOOLE_1:58;
 	    hence thesis by A5,TREES_1:def 2;
 	  end;
 	 v^{} = v by FINSEQ_1:34;
 	  then
-	 v is_a_prefix_of v^&lt;*x*&gt; &amp; v &lt;&gt; v^&lt;*x*&gt; by FINSEQ_1:33,TREES_1:1;
-	then  v is_a_proper_prefix_of v^&lt;*x*&gt; by XBOOLE_0:def 8;
-	then  y in ProperPrefixes v or y = v &amp; v in ProperPrefixes (v^&lt;*x*&gt;)
+	 v is_a_prefix_of v^<*x*> & v <> v^<*x*> by FINSEQ_1:33,TREES_1:1;
+	then  v is_a_proper_prefix_of v^<*x*> by XBOOLE_0:def 8;
+	then  y in ProperPrefixes v or y = v & v in ProperPrefixes (v^<*x*>)
 	  by A3,TARSKI:def 1,TREES_1:def 2;
 	  hence thesis by A4;
 	end;
@@ -2132,7 +2132,7 @@ Explicit Python highlighting
 	  count(x)
 
 
-Language set on &lt;pre&gt;
+Language set on <pre>
 
 	for x in [1, 2, 3]:
 	  count(x)
@@ -2149,9 +2149,9 @@ Replacing TAB with 4 spaces
 
 Custom markup
 
-	&lt;<a href="http://dev.w3.org/html5/spec/Overview.html#the-div-element">div</a> id="contents"&gt;
-	  <del>&lt;p&gt;Hello, World!</del><!-- A comment should not break merging --><ins>Goodbye, cruel world!</ins>
-	&lt;/div&gt;
+	<<a href="http://dev.w3.org/html5/spec/Overview.html#the-div-element">div</a> id="contents">
+	  <del><p>Hello, World!</del><!-- A comment should not break merging --><ins>Goodbye, cruel world!</ins>
+	</div>
 
 Custom markup + TAB replacement
 
