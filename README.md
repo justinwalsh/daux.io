@@ -52,7 +52,7 @@ You must use the `.md` file extension for your files. Also, you must use undersc
 
 ## Sorting
 
-To sort your files and folders in a specific way, you can prefix them with a number and underscore, e.g. `/docs/01_Hello_World.md` and `/docs/05_Features.md` This will list *Hello World* before *Features*, overriding the deafult alpha-numeric sorting. The numbers will be stripped out of the navigation and urls.
+To sort your files and folders in a specific way, you can prefix them with a number and underscore, e.g. `/docs/01_Hello_World.md` and `/docs/05_Features.md` This will list *Hello World* before *Features*, overriding the default alpha-numeric sorting. The numbers will be stripped out of the navigation and urls.
 
 ## Landing page
 
