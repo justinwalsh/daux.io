@@ -202,8 +202,7 @@ Docs Body & Page Structure
 html, body {
 	margin: 0;
     padding: 0;
-    height: 100%;
-    background-color: @light;
+    background-color: @sidebar-background;
     color: @text;
 }
 
@@ -214,12 +213,8 @@ html, body {
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
-    &.fluid-height {
-    	height: 100%;
-    }
 }
 .columns {
-    height: 100%;
     .left-column,
     .right-column {
     	padding-top: 50px;
@@ -489,7 +484,7 @@ pre {
 	margin-right: -20px;
 	padding-right: 30px;
 	code {
-		background: transparent;
+		background: @light;
 		border: none;
 	}
 }

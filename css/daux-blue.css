@@ -6444,8 +6444,7 @@ html,
 body {
   margin: 0;
   padding: 0;
-  height: 100%;
-  background-color: #82becd;
+  background-color: #f7f7f7;
   color: #2d2d2d;
 }
 .container-fluid {
@@ -6454,12 +6453,6 @@ body {
   -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
-}
-.container-fluid.fluid-height {
-  height: 100%;
-}
-.columns {
-  height: 100%;
 }
 .columns .left-column,
 .columns .right-column {
@@ -6738,7 +6731,7 @@ pre {
   padding-right: 30px;
 }
 pre code {
-  background: transparent;
+  background: #82becd;
   border: none;
 }
 @media (min-width: 1150px) {
