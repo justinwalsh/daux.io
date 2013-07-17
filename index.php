@@ -24,7 +24,7 @@ Feedback & Suggestions
 ----
 
 To give us feedback or to suggest an idea, please create an request on the the
-Github issue tracker:
+GitHub issue tracker:
 
 https://github.com/justinwalsh/daux.io/issues
 
