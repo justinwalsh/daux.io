@@ -118,8 +118,8 @@ By deafult your code blocks will be floated to a column on the right side of you
 	}
 
 
-###Github Repo:
-Add a 'Fork me on Github' ribbon.
+###GitHub Repo:
+Add a 'Fork me on GitHub' ribbon.
 
 	{
 		"repo": "justinwalsh/daux.io"
@@ -137,7 +137,7 @@ Include custom links in the sidebar.
 
 	{
 		"links": {
-			"Github Repo": "https://github.com/justinwalsh/daux.io",
+			"GitHub Repo": "https://github.com/justinwalsh/daux.io",
 			"Help/Support/Bugs": "https://github.com/justinwalsh/daux.io/issues",
 			"Made by Todaymade": "http://todaymade.com"
 		}
@@ -165,4 +165,4 @@ This project contains a package.json file, so once you have the requirements ins
 
 ## Support
 
-If you need help using Daux.io, or have found a bug, please create an issue on the <a href="https://github.com/justinwalsh/daux.io/issues" target="_blank">Github repo</a>.
+If you need help using Daux.io, or have found a bug, please create an issue on the <a href="https://github.com/justinwalsh/daux.io/issues" target="_blank">GitHub repo</a>.
