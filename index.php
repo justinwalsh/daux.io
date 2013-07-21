@@ -81,7 +81,7 @@ if ($homepage && $homepage_url !== '/') {
 <!--[if IE 7]>    <html class="no-js ie7 oldie" lang="en"> <![endif]-->
 <!--[if IE 8]>    <html class="no-js ie8 oldie" lang="en"> <![endif]-->
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
-<html>
+
 <head>
 	<title><?php echo $options['title']; ?></title>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
