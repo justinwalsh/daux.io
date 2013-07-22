@@ -26,7 +26,7 @@ Do you use Daux.io? Send me a pull request or open an [issue](https://github.com
 
 ## Download
 
-Download this repository as a zip, and unpack. Copy the files to a web server that can run PHP. You can also run the documentation locally using Grunt.js, which is covered at the end of this readme.
+Download this repository as a zip, and unpack. Copy the files to a web server that can run PHP 5.3 or greater. You can also run the documentation locally using Grunt.js, which is covered at the end of this readme.
 
 ## Folders
 
@@ -167,16 +167,22 @@ Set custom files and entire folders to ignore within your `/docs` folder. For fi
 		}
 	}
 
+## Running Remotely
+
+Copy the files from the repo to a web server that can run PHP 5.3 or greater.
+
 ## Running Locally
 
-You can run the docs locally using <a href="http://gruntjs.com/" target="_blank">Grunt.js</a> I assume you are familiar with how to use Grunt and have the latest version of PHP 5.4 installed which is able to run a webserver.
+There are several ways to run the docs locally. You can use something like <a href="http://www.mamp.info/en/index.html" target="_blank">MAMP</a> or <a href="http://www.wampserver.com/en/" target="_blank">WAMP</a>. If you are like me and use alot of Node.js and <a href="http://gruntjs.com/" target="_blank">Grunt.js</a>, then you can use the optional grunt command I have packaged with the project which will start a PHP web server for you in the project folder.
 
-**Requirements:**
+The Grunt.js task uses the built in web server in PHP 5.4 to host the docs on your local machine. This is really only intended be used when you are writing/updating a ton of docs and want to preview the changes locally.
+
+**To use the optional Grunt command you will need:**
 
 * Node.js
 * npm
 * Grunt.js
-* PHP 5.4 or greater
+* PHP 5.4 or greater (This is because of the built-in web server packaged in 5.4)
 
 This project contains a package.json file, so once you have the requirements installed, you can simply run a `npm install` and then `grunt` in the projects folder to start the local web server. By default the server will run at: <a href="http://localhost:8085" target="_blank">http://localhost:8085</a>
 
