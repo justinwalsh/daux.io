@@ -35,7 +35,8 @@ function get_options() {
 		'twitter' => array(),
 		'links' => array(),
 		'colors' => false,
-		'google_analytics' => false
+		'google_analytics' => false,
+		'piwik_analytics' => false
 	);
 
 	// Load User Config
