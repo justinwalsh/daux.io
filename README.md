@@ -13,7 +13,7 @@
 * Built On Bootstrap
 * No Build Step
 * Git/SVN Friendly
-* Google Analytics
+* Supports Google Analytics and Piwik Analytics
 * Optional code float layout
 
 ## Demos
@@ -149,7 +149,7 @@ This will embed the google analytics tracking code.
 	{
 		"google_analytics": "UA-XXXXXXXXX-XX"
 	}
-	
+
 ###Piwik Analytics:
 This will embed the piwik tracking code.
 
