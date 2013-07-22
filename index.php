@@ -87,7 +87,7 @@ if ($homepage && $homepage_url !== '/') {
 	<meta name="description" content="<?php echo $options['tagline'];?>" />
 	<meta name="author" content="<?php echo $options['title']; ?>">
 	<?php if ($options['colors']) { ?>
-	<link rel="icon" `<?php echo $base_url ?>img/favicon.png" type="image/x-icon">
+	<link rel="icon" href="<?php echo $base_url ?>/img/favicon.png" type="image/x-icon">
 	<?php } else { ?>
 	<link rel="icon" href="<?php echo $base_url ?>/img/favicon-<?php echo $options['theme'];?>.png" type="image/x-icon">
 	<?php } ?>
