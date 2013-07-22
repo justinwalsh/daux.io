@@ -3,7 +3,7 @@ php_flag display_errors on
 php_flag html_errors on
 
 RewriteEngine On
-RewriteBase /
+#RewriteBase /
 
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
