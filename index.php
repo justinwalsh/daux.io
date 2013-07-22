@@ -81,16 +81,15 @@ if ($homepage && $homepage_url !== '/') {
 <!--[if IE 7]>    <html class="no-js ie7 oldie" lang="en"> <![endif]-->
 <!--[if IE 8]>    <html class="no-js ie8 oldie" lang="en"> <![endif]-->
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
-<html>
 <head>
 	<title><?php echo $options['title']; ?></title>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<meta name="description" content="<?php echo $options['tagline'];?>" />
 	<meta name="author" content="<?php echo $options['title']; ?>">
 	<?php if ($options['colors']) { ?>
-	<link rel="icon" href="/img/favicon.png" type="image/x-icon">
+	<link rel="icon" href="img/favicon.png" type="image/x-icon">
 	<?php } else { ?>
-	<link rel="icon" href="/img/favicon-<?php echo $options['theme'];?>.png" type="image/x-icon">
+	<link rel="icon" href="img/favicon-<?php echo $options['theme'];?>.png" type="image/x-icon">
 	<?php } ?>
 	<!-- Mobile -->
 	<meta name="apple-mobile-web-app-capable" content="yes" />
@@ -105,20 +104,20 @@ if ($homepage && $homepage_url !== '/') {
 			<?php foreach($options['colors'] as $k => $v) { ?>
 		    @<?php echo $k;?>: <?php echo $v;?>;
 		    <?php } ?>
-		    @import "/less/import/daux-base.less";
+		    @import "less/import/daux-base.less";
 		</style>
-		<script src="/js/less.min.js"></script>
+		<script src="js/less.min.js"></script>
 	<?php } else { ?>
-		<link rel="stylesheet" href="/css/daux-<?php echo $options['theme'];?>.css">
+		<link rel="stylesheet" href="css/daux-<?php echo $options['theme'];?>.css">
 	<?php } ?>
 
 	<!-- hightlight.js -->
-	<script src="/js/highlight.min.js"></script>
+	<script src="js/highlight.min.js"></script>
 	<script>hljs.initHighlightingOnLoad();</script>
 
 	<!-- Navigation -->
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.0/jquery.min.js"></script>
-	<script src="/js/custom.js"></script>
+	<script src="js/custom.js"></script>
 	<!--[if lt IE 9]>
 	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
 	<![endif]-->
