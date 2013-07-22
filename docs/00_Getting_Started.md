@@ -157,6 +157,16 @@ This will embed the piwik tracking code.
 		"piwik_analytics": "my-url-for-piwik.com"
 	}
 
+###Ignore:
+Set custom files and entire folders to ignore within your `/docs` folder. For files make sure to include the file extension in the name. For both files and folders, names are case-sensitive.
+
+	{
+		"ignore": {
+			files: ["Work_In_Progress.md"],
+			folders: ["99_Not_Ready"]
+		}
+	}
+
 ## Running Locally
 
 You can run the docs locally using <a href="http://gruntjs.com/" target="_blank">Grunt.js</a> I assume you are familiar with how to use Grunt and have the latest version of PHP 5.4 installed which is able to run a webserver.
