@@ -104,7 +104,19 @@ function load_page($tree) {
 	if (isset($branch['type']) && $branch['type'] == 'file') {
 		$html = '';
 		if ($branch['name'] !== 'index') {
-			$html .= '<div class="page-header"><h1>'. $branch['title'] . '</h1></div>';
+			$html .= '<div class="page-header">';
+			$html .= '<h1>'. $branch['title'] . '</h1>';
+
+			// Show last modified time for docs. Needs to be cleaned up and use template colours.
+			$modified = filemtime($branch['path']);
+			$html .= '<span style="float: left; font-size: 10px; color: gray;">';
+			$html .= date ("l, F j, Y", $modified);
+			$html .= '</span><span style="float: right; font-size: 10px; color: gray;">';
+			$html .= date ("g:i A", $modified);
+			$html .= '</span>';
+
+			$html .= '</div>';
+
 		}
 		$html .= MarkdownExtended(file_get_contents($branch['path']));
 		return $html;
