@@ -6720,7 +6720,7 @@ code {
 }
 .page-header {
   margin: 10px 0px;
-  padding: 0px;
+  padding: 0px 0 20px;
 }
 .page-header h1 {
   margin-top: 0px;
