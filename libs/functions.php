@@ -258,9 +258,6 @@ function get_tree($path = '.', $clean_path = '', $title = '', $first = true){
             $clean_sort = clean_sort($file);
 
             // If clean_urls is set to false and this is the first branch of the tree, append index.php to the clean_path.
-
-            print_r($options['clean_urls']);
-
             if($options['clean_urls'] == false)
             {
                 if($first)
