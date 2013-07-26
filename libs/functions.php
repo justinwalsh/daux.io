@@ -39,6 +39,7 @@ function get_options() {
 		'twitter' => array(),
 		'links' => array(),
 		'colors' => false,
+		'clean_urls' => true,
 		'google_analytics' => false,
 		'piwik_analytics' => false,
         'ignore' => array()
@@ -228,8 +229,9 @@ function get_ignored() {
 	return $all_ignored;
 }
 
-function get_tree($path = '.', $clean_path = '', $title = ''){
-	$tree = array();
+function get_tree($path = '.', $clean_path = '', $title = '', $first = true){
+    $options = get_options();
+    $tree = array();
     $ignore = get_ignored();
     $dh = @opendir($path);
     $index = 0;
@@ -252,9 +254,29 @@ function get_tree($path = '.', $clean_path = '', $title = ''){
 
      	// Check that this file or folder is not to be ignored
         if(!in_array($file, $ignore)) {
-        	$full_path = "$path/$file";
-        	$clean_sort = clean_sort($file);
-        	$url = $clean_path . '/' . $clean_sort;
+            $full_path = "$path/$file";
+            $clean_sort = clean_sort($file);
+
+            // If clean_urls is set to false and this is the first branch of the tree, append index.php to the clean_path.
+
+            print_r($options['clean_urls']);
+
+            if($options['clean_urls'] == false)
+            {
+                if($first)
+                {
+                    $url = $clean_path . '/index.php/' . $clean_sort;
+                }
+                else
+                {
+                    $url = $clean_path . '/' . $clean_sort;
+                }
+            }
+            else
+            {
+            	$url = $clean_path . '/' . $clean_sort;
+            }
+
         	$clean_name = clean_name($clean_sort);
 
         	// Title
@@ -273,7 +295,7 @@ function get_tree($path = '.', $clean_path = '', $title = ''){
             		'path' => $full_path,
             		'clean' => $clean_sort,
             		'url' => $url,
-            		'tree'=> get_tree($full_path, $url, $full_title)
+            		'tree'=> get_tree($full_path, $url, $full_title, false)
             	);
             } else {
             	// File
