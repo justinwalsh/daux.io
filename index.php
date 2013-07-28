@@ -70,6 +70,13 @@ $tree = get_tree("docs", $base_url);
 $homepage_url = homepage_url($tree);
 $docs_url = docs_url($tree);
 
+// If a timezone has been set in the config file, override the default PHP timezone for this application.
+if(isset($options['timezone']))
+{
+	date_default_timezone_set($options['timezone']);
+}
+
+
 // Redirect to docs, if there is no homepage
 if ($homepage && $homepage_url !== '/') {
 	header('Location: '.$homepage_url);
