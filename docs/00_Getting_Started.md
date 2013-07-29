@@ -167,6 +167,15 @@ Set custom files and entire folders to ignore within your `/docs` folder. For fi
 		}
 	}
 
+###Date Modified
+By default, daux.io will display the last modified time as reported by the system underneath the title for each document. To disable this, change the option in your config.json to false.
+
+```json
+{
+	"date_modified": false
+} 
+```
+
 ## Running Remotely
 
 Copy the files from the repo to a web server that can run PHP 5.3 or greater.

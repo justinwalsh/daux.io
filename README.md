@@ -174,6 +174,14 @@ If your server does not have a default timezone set in php.ini, it may return er
         "timezone": "America/Los_Angeles"
     }
 
+###Date Modified
+By default, daux.io will display the last modified time as reported by the system underneath the title for each document. To disable this, change the option in your config.json to false.
+
+```json
+{
+	"date_modified": false
+} 
+```
 
 ## Running Remotely
 
