@@ -214,6 +214,51 @@ The Grunt.js task uses the built in web server in PHP 5.4 to host the docs on yo
 
 This project contains a package.json file, so once you have the requirements installed, you can simply run a `npm install` and then `grunt` in the projects folder to start the local web server. By default the server will run at: <a href="http://localhost:8085" target="_blank">http://localhost:8085</a>
 
+## Running on IIS
+
+If you have set up a local or remote IIS web site, you may need a `web.config` with:
+
+* A rewrite configuration, for handling clean urls.
+* A mime type handler for less files, if using a custom theme.
+
+### Clean URLs
+
+The `web.config` needs an entry for `<rewrite>` under `<system.webServer>`:
+
+```xml
+<configuration> 
+	<system.webServer>
+		<rewrite>
+			<rules>
+				<rule name="Main Rule" stopProcessing="true">
+					<match url=".*" />
+					<conditions logicalGrouping="MatchAll">
+						<add input="{REQUEST_FILENAME}" matchType="IsFile" negate="true" />
+						<add input="{REQUEST_FILENAME}" matchType="IsDirectory" negate="true" />
+					</conditions>
+					<action type="Rewrite" url="index.php" appendQueryString="false" />
+				</rule>
+			</rules>
+		</rewrite>
+	</system.webServer>
+</configuration>
+```
+
+*Note*: To have clean URLs with IIS6, you will need to use a custom URL rewrite module, such as [URL Rewriter](http://urlrewriter.net/).
+
+### Less Mime Type
+
+The `web.config` needs a new `<mimeMap>` entry, under `<staticContent>` in `<system.webServer>`:
+
+```xml
+<staticContent>
+	<mimeMap fileExtension=".less" mimeType="text/css" />
+</staticContent>
+```
+
+*Note*: Only add the mime map entry if you are using a custom theme and receive 404s for `.less` files.
+	If you have a global mime map entry for less files set, you will receive an internal server (500) error for having duplicate mime map entries.
+
 ## Support
 
 If you need help using Daux.io, or have found a bug, please create an issue on the <a href="https://github.com/justinwalsh/daux.io/issues" target="_blank">GitHub repo</a>.
