@@ -191,9 +191,11 @@ Set custom files and entire folders to ignore within your `/docs` folder. For fi
 ###Disabling clean URLs
 By default, Daux.io will create clean url's that do not include index.php. On servers running Apache, uploading the included .htaccess file should be enough for them to work properly. On servers that are not running Apache or that do not allow custom .htaccess files, you may need to disable clean_urls:
 
-	{
+```json
+{
 		"clean_urls": false
-	}
+}
+```
 
 ###Date Modified
 By default, daux.io will display the last modified time as reported by the system underneath the title for each document. To disable this, change the option in your config.json to false.
