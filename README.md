@@ -244,7 +244,7 @@ The `web.config` needs an entry for `<rewrite>` under `<system.webServer>`:
 </configuration>
 ```
 
-*Note*: To have clean URLs with IIS6, you will need to use a custom URL rewrite module, such as [URL Rewriter](http://urlrewriter.net/).
+To use clean URLs on IIS 6, you will need to use a custom URL rewrite module, such as [URL Rewriter](http://urlrewriter.net/).
 
 ### Less Mime Type
 
@@ -256,8 +256,9 @@ The `web.config` needs a new `<mimeMap>` entry, under `<staticContent>` in `<sys
 </staticContent>
 ```
 
-*Note*: Only add the mime map entry if you are using a custom theme and receive 404s for `.less` files.
-	If you have a global mime map entry for less files set, you will receive an internal server (500) error for having duplicate mime map entries.
+You will only need the mime map entry if you are using a custom theme and receive 404s for `.less` files.
+
+If you have a global mime map entry for `.less` files set for the server, you will receive an internal server (500) error for having duplicate mime map entries.
 
 ## Support
 
