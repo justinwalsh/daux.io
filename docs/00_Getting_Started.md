@@ -176,6 +176,15 @@ By default, daux.io will display the last modified time as reported by the syste
 } 
 ```
 
+###Timezone
+If your server does not have a default timezone set in php.ini, it may return errors when it tries to generate the last modified date/time for docs. To fix these errors, specify a timezone in your config file. Valid options are available in the [PHP Manual](http://php.net/manual/en/timezones.php).
+
+```json
+{
+        "timezone": "America/Los_Angeles"
+}
+```
+
 ## Running Remotely
 
 Copy the files from the repo to a web server that can run PHP 5.3 or greater.
