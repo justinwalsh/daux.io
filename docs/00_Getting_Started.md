@@ -21,6 +21,7 @@
 This is a list of sites using Daux.io:
 
 * [Daux.io](http://daux.io)
+* [Munee: Standalone PHP 5.3 Asset Optimisation & Manipulation](http://mun.ee)
 
 Do you use Daux.io? Send me a pull request or open an [issue](https://github.com/justinwalsh/daux.io/issues) and I will add you to the list.
 
@@ -58,11 +59,13 @@ To sort your files and folders in a specific way, you can prefix them with a num
 
 If you want to create a beautiful landing page for your project, simply create a `index.md` file in the root of the `/docs` folder. This file will then be used to create a landing page. You can also add a tagline and image to this page using the config file like this:
 
-	{
-		"title": "Daux.io",
-		"tagline": "The Easiest Way To Document Your Project",
-		"image": "img/app.png"
-	}
+```json
+{
+	"title": "Daux.io",
+	"tagline": "The Easiest Way To Document Your Project",
+	"image": "img/app.png"
+}
+```
 
 Note: The image can be a local or remote image.
 
@@ -73,9 +76,11 @@ To customize the look and feel of your documentation, you can create a `config.j
 ###Title:
 Change the title bar in the docs
 
-	{
-		"title": "Daux.io"
-	}
+```json
+{
+	"title": "Daux.io"
+}
+```
 
 ###Themes:
 We have 4 built-in Bootstrap themes. To use one of the themes, just set the `theme` option to one of the following:
@@ -85,7 +90,7 @@ We have 4 built-in Bootstrap themes. To use one of the themes, just set the `the
 * navy
 * red
 
-```
+```json
 {
 	"theme": "blue"
 }
@@ -94,78 +99,94 @@ We have 4 built-in Bootstrap themes. To use one of the themes, just set the `the
 ###Custom Theme:
 To create a custom color scheme, set the `theme` property to `custom` and then define the required colors. Copy the following configuration to get started:
 
-	{
-		"theme": "custom",
-		"colors": {
-			"sidebar-background": "#f7f7f7",
-			"sidebar-hover": "#c5c5cb",
-			"lines": "#e7e7e9",
-			"dark": "#3f4657",
-			"light": "#82becd",
-			"text": "#2d2d2d",
-			"syntax-string": "#022e99",
-			"syntax-comment": "#84989b",
-			"syntax-number": "#2f9b92",
-			"syntax-label": "#840d7a"
-		}
+```json
+{
+	"theme": "custom",
+	"colors": {
+		"sidebar-background": "#f7f7f7",
+		"sidebar-hover": "#c5c5cb",
+		"lines": "#e7e7e9",
+		"dark": "#3f4657",
+		"light": "#82becd",
+		"text": "#2d2d2d",
+		"syntax-string": "#022e99",
+		"syntax-comment": "#84989b",
+		"syntax-number": "#2f9b92",
+		"syntax-label": "#840d7a"
 	}
+}
+```
 
 ###Code Floating:
 By deafult your code blocks will be floated to a column on the right side of your content. To disable this feature, set the `float` property to `false`.
 
-	{
-		"float": false
-	}
+```json
+{
+	"float": false
+}
+```
 
 
 ###GitHub Repo:
 Add a 'Fork me on GitHub' ribbon.
 
-	{
-		"repo": "justinwalsh/daux.io"
-	}
+```json
+{
+	"repo": "justinwalsh/daux.io"
+}
+```
 
 ###Twitter:
 Include twitter follow buttons in the sidebar.
 
-	{
-		"twitter": ["justin_walsh", "todaymade"]
-	}
+```json
+{
+	"twitter": ["justin_walsh", "todaymade"]
+}
+```
 
 ###Links:
 Include custom links in the sidebar.
 
-	{
-		"links": {
-			"GitHub Repo": "https://github.com/justinwalsh/daux.io",
-			"Help/Support/Bugs": "https://github.com/justinwalsh/daux.io/issues",
-			"Made by Todaymade": "http://todaymade.com"
-		}
+```json
+{
+	"links": {
+		"GitHub Repo": "https://github.com/justinwalsh/daux.io",
+		"Help/Support/Bugs": "https://github.com/justinwalsh/daux.io/issues",
+		"Made by Todaymade": "http://todaymade.com"
 	}
+}
+```
 
 ###Google Analytics:
 This will embed the google analytics tracking code.
 
-	{
-		"google_analytics": "UA-XXXXXXXXX-XX"
-	}
+```json
+{
+	"google_analytics": "UA-XXXXXXXXX-XX"
+}
+```
 
 ###Piwik Analytics:
 This will embed the piwik tracking code.
 
-	{
-		"piwik_analytics": "my-url-for-piwik.com"
-	}
+```json
+{
+	"piwik_analytics": "my-url-for-piwik.com"
+}
+```
 
 ###Ignore:
 Set custom files and entire folders to ignore within your `/docs` folder. For files make sure to include the file extension in the name. For both files and folders, names are case-sensitive.
 
+```json
 	{
 		"ignore": {
-			files: ["Work_In_Progress.md"],
-			folders: ["99_Not_Ready"]
+			"files": ["Work_In_Progress.md"],
+			"folders": ["99_Not_Ready"]
 		}
 	}
+```
 
 ## Running Remotely
 
