@@ -126,6 +126,7 @@ if ($homepage && $homepage_url !== '/') {
 
 	<!-- Navigation -->
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.0/jquery.min.js"></script>
+	<script src="<?php echo $base_url ?>/js/bootstrap.min.js"></script>
 	<script src="<?php echo $base_url ?>/js/custom.js"></script>
 	<!--[if lt IE 9]>
 	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
