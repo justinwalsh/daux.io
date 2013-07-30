@@ -184,24 +184,7 @@ if ($homepage && $homepage_url !== '/') {
 		<div class="homepage-content container-fluid">
 			<div class="container">
 				<div class="row">
-					<div class="span10 offset1">
-
-						<?php if($options['date_modified'] && isset($page['modified'])) { ?>
-							<div class="page-header sub-header">';
-								<h1><?php echo $page['title'];?></h1>';
-									<span style="float: left; font-size: 10px; color: gray;">';
-										<?php date("l, F j, Y", $page['modified']);?>
-									</span>
-									<span style="float: right; font-size: 10px; color: gray;">';
-										<?php date ("g:i A", $modified);?>
-								</span>
-							</div>
-						<?php } else { ?>
-							<div class="page-header">';
-								<h1><?php echo $page['title'];?></h1>
-							</div>
-
-						<?php } ?>
+					<div class="span10 offset1">						
 						<?php echo $page['html'];?>
 					</div>
 				</div>
