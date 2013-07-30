@@ -6725,6 +6725,10 @@ code {
 .page-header h1 {
   margin-top: 0px;
 }
+/* To be applied to the  same element as page-header for sites that have sub-heading content such as Last modified time */
+.page-header .sub-heading {
+  padding: 0px, 0px, 20px;
+}
 pre {
   border: none;
   background-color: #7795b4;

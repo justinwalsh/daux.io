@@ -34,6 +34,7 @@ function get_options() {
 		'tagline' => false,
 		'image' => false,
 		'theme' => 'blue',
+		'date_modified' => true,
 		'float' => true,
 		'repo' => false,
 		'twitter' => array(),
@@ -102,16 +103,29 @@ function docs_url($tree, $branch = false) {
 function load_page($tree) {
 	$branch = find_branch($tree);
 
+	$page = array();
+
 	if (isset($branch['type']) && $branch['type'] == 'file') {
 		$html = '';
 		if ($branch['name'] !== 'index') {
-			$html .= '<div class="page-header"><h1>'. $branch['title'] . '</h1></div>';
+
+			$page['title'] = $branch['title'];
+			$page['modified'] = filemtime($branch['path']);
+
 		}
 		$html .= MarkdownExtended(file_get_contents($branch['path']));
-		return $html;
+
+		$page['html'] = $html;
+
 	} else {
-		return "Oh No. That page dosn't exist";
+
+		$page['title'] = "Oh no";
+		$page['html'] = "<h3>Oh No. That page dosn't exist</h3>";
+
 	}
+	
+
+	return $page;
 }
 
 function find_branch($tree) {

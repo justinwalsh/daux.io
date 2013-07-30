@@ -70,6 +70,15 @@ $tree = get_tree("docs", $base_url);
 $homepage_url = homepage_url($tree);
 $docs_url = docs_url($tree);
 
+$page = load_page($tree);
+
+// If a timezone has been set in the config file, override the default PHP timezone for this application.
+if(isset($options['timezone']))
+{
+	date_default_timezone_set($options['timezone']);
+}
+
+
 // Redirect to docs, if there is no homepage
 if ($homepage && $homepage_url !== '/') {
 	header('Location: '.$homepage_url);
@@ -176,7 +185,24 @@ if ($homepage && $homepage_url !== '/') {
 			<div class="container">
 				<div class="row">
 					<div class="span10 offset1">
-						<?php echo load_page($tree); ?>
+
+						<?php if($options['date_modified'] && isset($page['modified'])) { ?>
+							<div class="page-header sub-header">';
+								<h1><?php echo $page['title'];?></h1>';
+									<span style="float: left; font-size: 10px; color: gray;">';
+										<?php date("l, F j, Y", $page['modified']);?>
+									</span>
+									<span style="float: right; font-size: 10px; color: gray;">';
+										<?php date ("g:i A", $modified);?>
+								</span>
+							</div>
+						<?php } else { ?>
+							<div class="page-header">';
+								<h1><?php echo $page['title'];?></h1>
+							</div>
+
+						<?php } ?>
+						<?php echo $page['html'];?>
 					</div>
 				</div>
 			</div>
@@ -258,7 +284,23 @@ if ($homepage && $homepage_url !== '/') {
 				<div class="right-column <?php echo ($options['float']?'float-view':''); ?> content-area span9">
 					<div class="content-page">
 						<article>
-							<?php echo load_page($tree); ?>
+							<?php if($options['date_modified'] && isset($page['modified'])) { ?>
+								<div class="page-header sub-header">
+									<h1><?php echo $page['title'];?></h1>
+										<span style="float: left; font-size: 10px; color: gray;">
+											<?php echo date("l, F j, Y", $page['modified']);?>
+										</span>
+										<span style="float: right; font-size: 10px; color: gray;">
+											<?php echo date ("g:i A", $page['modified']);?>
+										</span>
+								</div>
+							<?php } else { ?>
+								<div class="page-header">
+									<h1><?php echo $page['title'];?></h1>
+								</div>
+	
+							<?php } ?>
+							<?php echo $page['html'];?>
 						</article>
 					</div>
 				</div>
