@@ -191,16 +191,29 @@ Set custom files and entire folders to ignore within your `/docs` folder. For fi
 ###Disabling clean URLs
 By default, Daux.io will create clean url's that do not include index.php. On servers running Apache, uploading the included .htaccess file should be enough for them to work properly. On servers that are not running Apache or that do not allow custom .htaccess files, you may need to disable clean_urls:
 
-	{
+```json
+{
 		"clean_urls": false
-	}
+}
+```
+
+###Date Modified
+By default, daux.io will display the last modified time as reported by the system underneath the title for each document. To disable this, change the option in your config.json to false.
+
+```json
+{
+	"date_modified": false
+} 
+```
 
 ###Timezone
 If your server does not have a default timezone set in php.ini, it may return errors when it tries to generate the last modified date/time for docs. To fix these errors, specify a timezone in your config file. Valid options are available in the [PHP Manual](http://php.net/manual/en/timezones.php).
 
-    {
+```json
+{
         "timezone": "America/Los_Angeles"
-    }
+}
+```
 
 ## Running Remotely
 
@@ -220,6 +233,52 @@ The Grunt.js task uses the built in web server in PHP 5.4 to host the docs on yo
 * PHP 5.4 or greater (This is because of the built-in web server packaged in 5.4)
 
 This project contains a package.json file, so once you have the requirements installed, you can simply run a `npm install` and then `grunt` in the projects folder to start the local web server. By default the server will run at: <a href="http://localhost:8085" target="_blank">http://localhost:8085</a>
+
+## Running on IIS
+
+If you have set up a local or remote IIS web site, you may need a `web.config` with:
+
+* A rewrite configuration, for handling clean urls.
+* A mime type handler for less files, if using a custom theme.
+
+### Clean URLs
+
+The `web.config` needs an entry for `<rewrite>` under `<system.webServer>`:
+
+```xml
+<configuration> 
+	<system.webServer>
+		<rewrite>
+			<rules>
+				<rule name="Main Rule" stopProcessing="true">
+					<match url=".*" />
+					<conditions logicalGrouping="MatchAll">
+						<add input="{REQUEST_FILENAME}" matchType="IsFile" negate="true" />
+						<add input="{REQUEST_FILENAME}" matchType="IsDirectory" negate="true" />
+					</conditions>
+					<action type="Rewrite" url="index.php" appendQueryString="false" />
+				</rule>
+			</rules>
+		</rewrite>
+	</system.webServer>
+</configuration>
+```
+
+To use clean URLs on IIS 6, you will need to use a custom URL rewrite module, such as [URL Rewriter](http://urlrewriter.net/).
+
+### Less Mime Type
+
+The `web.config` needs a new `<mimeMap>` entry, under `<staticContent>` in `<system.webServer>`:
+
+```xml
+<staticContent>
+	<mimeMap fileExtension=".less" mimeType="text/css" />
+</staticContent>
+```
+
+You will only need the mime map entry if you are using a custom theme and receive 404s for `.less` files.
+
+If you have a global mime map entry for `.less` files set for the server, you will receive an internal server (500) error for having duplicate mime map entries.
 
 ## Support
 
