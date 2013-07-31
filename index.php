@@ -238,13 +238,13 @@ if ($homepage && $homepage_url !== '/') {
 				<div class="left-column article-tree span3">
 					<!-- For Mobile -->
 					<div class="responsive-collapse">
-						<button type="button" class="btn btn-sidebar" data-toggle="collapse" data-target="#sub-nav-collapse">
+						<button type="button" class="btn btn-sidebar" id="menu-spinner-button">
 					        <span class="icon-bar"></span>
 					        <span class="icon-bar"></span>
 					        <span class="icon-bar"></span>
 					    </button>
 					</div>
-					<div id="sub-nav-collapse" class="collapse in">
+					<div id="sub-nav-collapse" class="sub-nav-collapse">
 						<!-- Navigation -->
 						<?php echo build_nav($tree); ?>
 
