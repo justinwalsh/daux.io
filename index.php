@@ -268,7 +268,7 @@ if ($homepage && $homepage_url !== '/') {
 					<div class="content-page">
 						<article>
 							<?php if($options['date_modified'] && isset($page['modified'])) { ?>
-								<div class="page-header sub-header">
+								<div class="page-header sub-header clearfix">
 									<h1><?php echo $page['title'];?></h1>
 										<span style="float: left; font-size: 10px; color: gray;">
 											<?php echo date("l, F j, Y", $page['modified']);?>
