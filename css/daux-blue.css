@@ -6508,8 +6508,15 @@ body {
     display: block;
   }
 }
-@media (max-width: 480px) {
-  
+@media (max-width: 768px) {
+  .sub-nav-collapse {
+    display: none;
+  }
+}
+@media (min-width: 768px) {
+  .sub-nav-collapse {
+    display: block;
+  }
 }
 @media only screen and (max-width: 800px) {
   /* Force table to not be like tables anymore */
