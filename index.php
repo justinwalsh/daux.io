@@ -66,7 +66,7 @@ software, even if advised of the possibility of such damage.
 require_once('libs/functions.php');
 
 $options = get_options();
-$tree = get_tree("docs", $base_url);
+$tree = get_tree($options['docs_path'], $base_url);
 $homepage_url = homepage_url($tree);
 $docs_url = docs_url($tree);
 
