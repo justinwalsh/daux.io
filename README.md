@@ -215,6 +215,37 @@ If your server does not have a default timezone set in php.ini, it may return er
 }
 ```
 
+###Multi-language
+Enables multi-language support which needs seperate directories for each language in `docs/` folder.
+
+```json
+{
+        "languages": { "en": "English", "de": "German" }
+}
+```
+
+Directory structure:
+```
+├── docs/
+│   ├── index.md
+│   ├── en
+│   │   ├── 00_Getting_Started.md
+│   │   ├── 01_Examples
+│   │   │   ├── 01_GitHub_Flavored_Markdown.md
+│   │   │   ├── 05_Code_Highlighting.md
+│   │   ├── 05_More_Examples
+│   │   │   ├── Hello_World.md
+│   │   │   ├── 05_Code_Highlighting.md
+│   ├── de
+│   │   ├── 00_Getting_Started.md
+│   │   ├── 01_Examples
+│   │   │   ├── 01_GitHub_Flavored_Markdown.md
+│   │   │   ├── 05_Code_Highlighting.md
+│   │   ├── 05_More_Examples
+│   │   │   ├── Hello_World.md
+│   │   │   ├── 05_Code_Highlighting.md
+```
+
 ## Running Remotely
 
 Copy the files from the repo to a web server that can run PHP 5.3 or greater.
