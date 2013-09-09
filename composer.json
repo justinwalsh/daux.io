@@ -1,0 +1,17 @@
+{
+    "name": "justinwalsh/daux.io",
+    "type": "project",
+    "license": "MIT",
+    "description": "Documentation generator that uses a simple folder structure and Markdown files to create custom documentation on the fly",
+    "keywords": ["documentation", "docs", "markdown", "md"],
+    "homepage": "http://daux.io/",
+    "authors": [
+        {
+            "name": "Justin Walsh",
+            "homepage": "http://todaymade.com/"
+        }
+    ],
+    "require": {
+        "php": ">=5.3"
+    }
+}
