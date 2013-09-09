@@ -182,6 +182,12 @@ function clean_name($text) {
 	return $text;
 }
 
+function RFC3986UrlEncode($string) {
+	$entities = array('%21', '%2A', '%27', '%28', '%29', '%3B', '%3A', '%40', '%26', '%3D', '%2B', '%24', '%2C', '%2F', '%3F', '%25', '%23', '%5B', '%5D');
+	$replacements = array('!', '*', "'", "(", ")", ";", ":", "@", "&", "=", "+", "$", ",", "/", "?", "%", "#", "[", "]");
+	return str_replace($entities, $replacements, urlencode($string));
+}
+
 function build_nav($tree, $url_params = false) {
 	// Remove Index
 	unset($tree['index']);
@@ -197,7 +203,7 @@ function build_nav($tree, $url_params = false) {
 			array_shift($url_params);
 
 			// Final Node
-			if ($url_path == $val['url']) {
+			if ($url_path == RFC3986UrlEncode($val['url'])) {
 				$html .= '<li class="active">';
 			} else {
 				$html .= '<li class="open">';
