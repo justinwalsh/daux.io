@@ -223,7 +223,7 @@ function get_ignored() {
 	// TODO: Add support for wildcards
 	// TODO: Add support for specific paths, i.e. /Publish/Somefile.md vs. /Don't_Publish/Somefile.md
 	$options = get_options();
-	$default_ignored_files = array('config.json', 'cgi-bin', '.', '..', '.DS_Store', 'Thumbs.db', '.Trashes', '.htaccess');
+	$default_ignored_files = array('config.json', 'cgi-bin', 'Thumbs.db');
 	$default_ignored_folders = array(); // To allow for easy addition of default folders if found necessary in the future
 	$user_ignored_files = array();
 	$user_ignored_folders = array();
@@ -268,7 +268,7 @@ function get_tree($path = '.', $clean_path = '', $title = '', $first = true){
 	foreach($paths as $file) {
 
      	// Check that this file or folder is not to be ignored
-        if(!in_array($file, $ignore)) {
+        if(!in_array($file, $ignore) && $file[0] !== '.') {
             $full_path = "$path/$file";
             $clean_sort = clean_sort($file);
 
