@@ -158,7 +158,7 @@ function url_path() {
 }
 
 function url_params() {
-	$url = get_uri();
+	$url = rawurldecode(get_uri());
 	$params = explode('/', trim($url, '/'));
 	return $params;
 }
