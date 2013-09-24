@@ -121,7 +121,7 @@ function load_page($tree) {
 	} else {
 
 		$page['title'] = "Oh no";
-		$page['html'] = "<h3>Oh No. That page dosn't exist</h3>";
+		$page['html'] = "<h3>Oh No. That page doesn't exist</h3>";
 
 	}
 	
