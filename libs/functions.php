@@ -132,6 +132,10 @@ function load_page($tree) {
 function find_branch($tree) {
 	$path = url_params();
 	foreach($path as $peice) {
+
+		// Support for cyrillic URLs
+		$peice = urldecode($peice);
+
 		// Check for homepage
 		if (empty($peice)) {
 			$peice = 'index';
@@ -158,7 +162,7 @@ function url_path() {
 }
 
 function url_params() {
-	$url = get_uri();
+	$url = rawurldecode(get_uri());
 	$params = explode('/', trim($url, '/'));
 	return $params;
 }

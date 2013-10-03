@@ -31,9 +31,11 @@ Download this repository as a zip, and unpack. Copy the files to a web server th
 
 ## Folders
 
-The generator will look for folders in the `/docs` folder. Add your folders inside the `/docs` folder. This project contains some example folders and files to get you started.
+By default, the generator will look for folders in the `/docs` folder. Add your folders inside the `/docs` folder. This project contains some example folders and files to get you started.
 
 You can nest folders any number of levels to get the exact structure you want. The folder structure will be converted to the nested navigation.
+
+If you'd prefer to keep your docs somewhere else (like outside of the daux.io root directory) you can specify your docs path in the `config.json` file.
 
 ## Files
 
@@ -79,6 +81,17 @@ Change the title bar in the docs
 ```json
 {
 	"title": "Daux.io"
+}
+```
+
+###Docs Path:
+If you'd prefer to keep your docs outside of the Daux.io directory, you can provide the filepath.
+
+Note: Your `config.json` file will need to remain in `/daux.io/docs`.
+
+```json
+{
+	"docs_path": "../../my_docs"
 }
 ```
 
