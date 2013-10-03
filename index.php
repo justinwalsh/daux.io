@@ -67,10 +67,31 @@ require_once('libs/functions.php');
 
 $options = get_options();
 $tree = get_tree($options['docs_path'], $base_url);
-$homepage_url = homepage_url($tree);
-$docs_url = docs_url($tree);
 
-$page = load_page($tree);
+// If a language is set in the config, rewrite urls based on the language
+if ($language === null) {
+    $homepage_url = homepage_url($tree);
+    $docs_url = docs_url($tree);
+} else {
+    $homepage_url = "/";
+}
+
+$docs_url = docs_url($tree);
+$url_params = url_params();
+
+if (count($options['languages']) > 0 && count($url_params) > 0 && strlen($url_params[0]) > 0) {
+    $language = array_shift($url_params);
+    $base_path = "docs/" . $language;
+} else {
+    $language = null;
+    $base_path = "docs";
+}
+
+$tree = get_tree($base_path, $base_url, '', true, $language);
+
+
+
+$page = load_page($tree, $url_params);
 
 // If a timezone has been set in the config file, override the default PHP timezone for this application.
 if(isset($options['timezone']))
@@ -174,9 +195,17 @@ if ($homepage && $homepage_url !== '/') {
 								View On GitHub
 							</a>
 						<?php } ?>
+                        <?php if (count($options['languages']) > 0) { ?>
+                            <?php foreach ($options['languages'] as $language_key => $language_name) { ?>
+                            <a href="<?php echo $base_url . "/" . $language_key . "/"; ?>" class="btn btn-primary btn-hero">
+                                <?php echo $language_name; ?>
+                            </a>
+                            <?php } ?>
+                        <?php } else { ?>
 						<a href="<?php echo $docs_url;?>" class="btn btn-primary btn-hero">
 							View Documentation
 						</a>
+                        <?php } ?>
 					</div>
 				</div>
 			</div>
@@ -246,7 +275,7 @@ if ($homepage && $homepage_url !== '/') {
 					</div>
 					<div id="sub-nav-collapse" class="sub-nav-collapse">
 						<!-- Navigation -->
-						<?php echo build_nav($tree); ?>
+						<?php echo build_nav($tree, $url_params); ?>
 
 						<?php if (!empty($options['links']) || !empty($options['twitter'])) { ?>
 							<div class="well well-sidebar">
