@@ -44,7 +44,8 @@ function get_options() {
 		'clean_urls' => true,
 		'google_analytics' => false,
 		'piwik_analytics' => false,
-        'ignore' => array()
+        'ignore' => array(),
+        'languages' => array()
 	);
 
 	// Load User Config
@@ -75,7 +76,7 @@ function homepage_url($tree) {
 	if (isset($tree['index'])) {
 		return '/';
 	} else {
-		return docs_url($tree);
+		return docs_url($tree, false);
 	}
 }
 
@@ -101,8 +102,12 @@ function docs_url($tree, $branch = false) {
 	}
 }
 
-function load_page($tree) {
-	$branch = find_branch($tree);
+function load_page($tree, $url_params) {
+    if (count($url_params) > 0) {
+        $branch = find_branch($tree, $url_params);
+    } else {
+        $branch = current($tree);
+    }
 
 	$page = array();
 
@@ -129,9 +134,9 @@ function load_page($tree) {
 	return $page;
 }
 
-function find_branch($tree) {
-	$path = url_params();
-	foreach($path as $peice) {
+
+function find_branch($tree, $url_params) {
+	foreach($url_params as $peice) {
 
 		// Support for cyrillic URLs
 		$peice = urldecode($peice);
@@ -192,13 +197,10 @@ function RFC3986UrlEncode($string) {
 	return str_replace($entities, $replacements, urlencode($string));
 }
 
-function build_nav($tree, $url_params = false) {
+function build_nav($tree, $url_params) {
 	// Remove Index
 	unset($tree['index']);
 
-	if (!is_array($url_params)) {
-		$url_params = url_params();
-	}
 	$url_path = url_path();
 	$html = '<ul class="nav nav-list">';
 	foreach($tree as $key => $val) {
@@ -254,7 +256,7 @@ function get_ignored() {
 	return $all_ignored;
 }
 
-function get_tree($path = '.', $clean_path = '', $title = '', $first = true){
+function get_tree($path = '.', $clean_path = '', $title = '', $first = true, $language = null){
     $options = get_options();
     $tree = array();
     $ignore = get_ignored();
@@ -272,6 +274,12 @@ function get_tree($path = '.', $clean_path = '', $title = '', $first = true){
 
 	// Sort paths
 	sort($paths);
+    
+    if ($first && $language !== null) {
+        $language_path = $language . "/";
+    } else {
+        $language_path = "";
+    }
 
     // Loop through the paths
     // while(false !== ($file = readdir($dh))){
@@ -287,16 +295,16 @@ function get_tree($path = '.', $clean_path = '', $title = '', $first = true){
             {
                 if($first)
                 {
-                    $url = $clean_path . '/index.php/' . $clean_sort;
+                    $url = $clean_path . '/' . $language_path . 'index.php/' . $clean_sort;
                 }
                 else
                 {
-                    $url = $clean_path . '/' . $clean_sort;
+                    $url = $clean_path . '/' . $language_path . $clean_sort;
                 }
             }
             else
             {
-            	$url = $clean_path . '/' . $clean_sort;
+            	$url = $clean_path . '/' . $language_path . $clean_sort;
             }
 
         	$clean_name = clean_name($clean_sort);
@@ -317,7 +325,7 @@ function get_tree($path = '.', $clean_path = '', $title = '', $first = true){
             		'path' => $full_path,
             		'clean' => $clean_sort,
             		'url' => $url,
-            		'tree'=> get_tree($full_path, $url, $full_title, false)
+            		'tree'=> get_tree($full_path, $url, $full_title, false, $language)
             	);
             } else {
             	// File
