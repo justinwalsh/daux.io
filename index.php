@@ -147,6 +147,11 @@ if ($homepage && $homepage_url !== '/') {
 
 	<!-- Navigation -->
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.0/jquery.min.js"></script>
+	<script>
+	if (typeof jQuery == 'undefined') {
+	    document.write(unescape("%3Cscript src='<?php echo $base_url ?>/js/jquery-1.10.2.min.js' type='text/javascript'%3E%3C/script%3E"));
+	}
+	</script>
 	<script src="<?php echo $base_url ?>/js/bootstrap.min.js"></script>
 	<script src="<?php echo $base_url ?>/js/custom.js"></script>
 	<!--[if lt IE 9]>
