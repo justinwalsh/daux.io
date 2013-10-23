@@ -7,8 +7,7 @@
 	"date_modified": true,
 	"repo": "justinwalsh/daux.io",
 	"twitter": ["justin_walsh", "todaymade"],
-	"piwik_analytics": "test.com",
-    "piwik_analytics_id": "43",
+	"google_analytics": "UA-12653604-10",
 	"links": {
 		"Download": "https://github.com/justinwalsh/daux.io/archive/master.zip",
 		"GitHub Repo": "https://github.com/justinwalsh/daux.io",
