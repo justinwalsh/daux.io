@@ -44,6 +44,7 @@ function get_options() {
 		'clean_urls' => true,
 		'google_analytics' => false,
 		'piwik_analytics' => false,
+        'piwik_analytics_id' => 1,
         'ignore' => array(),
         'languages' => array()
 	);

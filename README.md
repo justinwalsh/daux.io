@@ -189,6 +189,14 @@ This will embed the piwik tracking code.
 }
 ```
 
+You can Also give a specific Piwik ID as well.
+
+```json
+{
+	"piwik_analytics_id": "43"
+}
+```
+
 ###Ignore:
 Set custom files and entire folders to ignore within your `/docs` folder. For files make sure to include the file extension in the name. For both files and folders, names are case-sensitive.
 
