@@ -23,6 +23,7 @@ This is a list of sites using Daux.io:
 * [Daux.io](http://daux.io)
 * [Munee: Standalone PHP 5.3 Asset Optimisation & Manipulation](http://mun.ee)
 * [ICADMIN: An admin panel powered by CodeIgniter.](http://istocode.com/shared/ic-admin/)
+* [Daux.io in Chinese - Demonstrates muti-language installations](http://daux.emx2.co.uk/)
 
 Do you use Daux.io? Send me a pull request or open an [issue](https://github.com/justinwalsh/daux.io/issues) and I will add you to the list.
 
