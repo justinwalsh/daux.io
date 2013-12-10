@@ -1023,7 +1023,7 @@ class Markdown_Parser {
 		$result = $this->processListItems($list, $marker_any_re);
 		
 		$result = $this->hashBlock("<$list_type>\n" . $result . "</$list_type>");
-		return "\n". $result ."\n\n";
+		return $result ."\n\n";
 	}
 
 	var $list_level = 0;
