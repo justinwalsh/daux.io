@@ -124,7 +124,14 @@ function load_page($tree, $url_params) {
 
 		$page['html'] = $html;
 
-	} else {
+	} elseif (isset($branch['index']['type']) && $branch['index']['type'] == 'file') {
+		
+		$page['title'] = substr($branch['index']['title'], 0, -7);
+		$page['modified'] = filemtime($branch['index']['path']);
+		$html .= MarkdownExtended(file_get_contents($branch['index']['path']));
+		$page['html'] = $html;
+
+	} else 
 
 		$page['title'] = "Oh no";
 		$page['html'] = "<h3>Oh No. That page doesn't exist</h3>";
