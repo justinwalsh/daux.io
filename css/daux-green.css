@@ -6576,6 +6576,34 @@ body {
   }
 }
 /* ===========================================================================================
+Markdown editor
+============================================================================================== */
+.editor {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: white;
+  padding: 20px;
+  padding-bottom: 100px;
+  min-height: 100%;
+  height: auto;
+  display: none;
+}
+.editor h3 {
+  width: 100%!important;
+}
+#markdown_editor {
+  width: 85%;
+  margin: 0 auto;
+  padding: 10px;
+  height: auto;
+  font-size: 16px;
+  min-height: 100px;
+  font-family: "Ubuntu Mono", "Consolas", monospace;
+  display: block;
+}
+/* ===========================================================================================
 Componenets
 ============================================================================================== */
 a {
@@ -6732,8 +6760,7 @@ code {
 .page-header h1 {
   margin-top: 0px;
 }
-/* To be applied to the  same element as page-header for sites that have sub-heading content such as Last modified time */
-.page-header .sub-heading {
+.page-header sub-heading {
   padding: 0px, 0px, 20px;
 }
 pre {
