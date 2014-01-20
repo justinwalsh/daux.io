@@ -6546,7 +6546,7 @@ body {
   }
   td {
     /* Behave  like a "row" */
-  
+
     border: none;
     border-bottom: 1px solid #eee;
     position: relative;
@@ -6556,10 +6556,10 @@ body {
   }
   td:before {
     /* Now like a table header */
-  
+
     position: absolute;
     /* Top/left values mimic padding */
-  
+
     top: 6px;
     left: 6px;
     width: 45%;
@@ -6760,7 +6760,7 @@ code {
 .page-header h1 {
   margin-top: 0px;
 }
-.page-header sub-heading {
+.page-header .sub-heading {
   padding: 0px, 0px, 20px;
 }
 pre {
