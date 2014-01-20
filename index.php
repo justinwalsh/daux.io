@@ -335,7 +335,7 @@ if ($homepage && $homepage_url !== '/') {
                             <?php } ?>
                             <?php echo $page['html'];?>
                             <?php if($options["file_editor"]) { ?>
-                                <div class="editor">
+                                <div class="editor <?php if(!$options['date_modified']) { ?>paddingTop<?php } ?>">
                                     <h3>You are editing <?php echo $page['path']; ?>&nbsp;<a href="javascript:;" class="closeEditor btn btn-warning">Close</a></h3>
                                     <div class="navbar navbar-inverse navbar-default navbar-fixed-bottom" role="navigation">
                                         <div class="navbar-inner">

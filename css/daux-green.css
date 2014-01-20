@@ -6593,6 +6593,9 @@ Markdown editor
 .editor h3 {
   width: 100%!important;
 }
+.editor.paddingTop {
+  padding-top: 50px;
+}
 #markdown_editor {
   width: 85%;
   margin: 0 auto;
