@@ -313,9 +313,9 @@ if ($homepage && $homepage_url !== '/') {
                             <?php if($options['date_modified'] && isset($page['modified'])) { ?>
                                 <div class="page-header sub-header clearfix">
                                     <h1><?php echo $page['title'];?>
-                                    <?php if($options["file_editor"]) { ?>
-                                        <a href="javascript:;" id="editThis" class="btn">Edit this page</a>
-                                    <?php } ?>
+                                        <?php if($options["file_editor"]) { ?>
+                                            <a href="javascript:;" id="editThis" class="btn">Edit this page</a>
+                                        <?php } ?>
                                     </h1>
                                         <span style="float: left; font-size: 10px; color: gray;">
                                             <?php echo date("l, F j, Y", $page['modified']);?>
@@ -326,7 +326,11 @@ if ($homepage && $homepage_url !== '/') {
                                 </div>
                             <?php } else { ?>
                                 <div class="page-header">
-                                    <h1><?php echo $page['title'];?></h1>
+                                    <h1><?php echo $page['title'];?>
+                                        <?php if($options["file_editor"]) { ?>
+                                            <a href="javascript:;" id="editThis" class="btn">Edit this page</a>
+                                        <?php } ?>
+                                    </h1>
                                 </div>
                             <?php } ?>
                             <?php echo $page['html'];?>

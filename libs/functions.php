@@ -35,6 +35,7 @@ function get_options() {
 		'tagline' => false,
 		'image' => false,
 		'theme' => 'blue',
+		'docs_path' => 'docs',
 		'date_modified' => true,
 		'float' => true,
 		'repo' => false,
