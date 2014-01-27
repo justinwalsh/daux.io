@@ -81,10 +81,10 @@ $url_params = url_params();
 
 if (count($options['languages']) > 0 && count($url_params) > 0 && strlen($url_params[0]) > 0) {
     $language = array_shift($url_params);
-    $base_path = "docs/" . $language;
+    $base_path = $options['docs_path'] . $language;
 } else {
     $language = null;
-    $base_path = "docs";
+    $base_path = $options['docs_path'];
 }
 
 $tree = get_tree($base_path, $base_url, '', true, $language);
