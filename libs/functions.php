@@ -46,7 +46,8 @@ function get_options() {
 		'piwik_analytics' => false,
         'piwik_analytics_id' => 1,
         'ignore' => array(),
-        'languages' => array()
+        'languages' => array(),
+        'template' => 'default'
 	);
 
 	// Load User Config
