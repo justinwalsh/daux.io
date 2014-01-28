@@ -1,0 +1,29 @@
+html,body{
+	background: #fff;
+}
+body{
+	margin: 10px 30px;
+}
+h1{
+	font-size: 17px;
+}
+h2{
+	font-size: 16px;
+}
+h3{
+	font-size: 15px;
+}
+
+.page-header{
+	border-top: #000 1px solid;
+	border-bottom: #000 1px solid;
+	clear: both;
+}
+
+.page-header h1{
+	font-size: 18px;
+}
+
+blockquote p{
+	font-size: 14px;
+}

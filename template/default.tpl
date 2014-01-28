@@ -206,7 +206,7 @@
                                 </div>
                             <?php } else { ?>
                                 <div class="page-header">
-                                    <h1><?php echo $page['title'];?></h1>
+                                    <h1><?php echo (isset($page['title']))?$page['title']:$options['title'];?></h1>
                                 </div>
 
                             <?php } ?>
@@ -225,7 +225,7 @@
   m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
   })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
-  ga('create', '<?php echo $options['google_analytics'];?>', '<?php echo $_SERVER['HTTP_HOST'];?>');
+  ga('create', '<?php echo $options['google_analytics'];?>', '<?php echo (isset($_SERVER['HTTP_HOST']))?$_SERVER['HTTP_HOST']:''; ?>');
   ga('send', 'pageview');
 
 </script>

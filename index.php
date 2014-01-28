@@ -66,43 +66,99 @@ software, even if advised of the possibility of such damage.
 require_once('libs/functions.php');
 
 $options = get_options();
-$tree = get_tree($options['docs_path'], $base_url);
 
-// If a language is set in the config, rewrite urls based on the language
-if (! isset($language) || $language === null) {
-    $homepage_url = homepage_url($tree);
-    $docs_url = docs_url($tree);
-} else {
-    $homepage_url = "/";
+$command_line=FALSE;
+if(isset($argv)){
+    define("CLI",TRUE);
+    echo 'Daux.io documentation generator'."\n";
+    
+    if(!isset($argv[1]))
+        $argv[1]= 'help';
+
+    switch ($argv[1]) {
+        //Generate static web documentation
+        case 'generate':
+            clean_copy_assets(dirname(__FILE__).'/static');
+
+            //Generate index.html
+            $markdown_structure = array();
+            $base_url = '.';
+            $index = generate_page($options, array(''),TRUE,$markdown_structure,$base_url);
+            file_put_contents('./static/index.html', $index);
+            echo '.';
+
+            foreach ($markdown_structure as $element) {
+                echo '.';
+                $flat_tree_tmp = array();
+                if( preg_match('/\.\/(.*)\/(.*)$/', $element['url'], $final_folder) ){
+                    @mkdir('./static/'.$final_folder[1]);
+
+                    $url_params =  preg_split('/\//',$final_folder[1] );
+                    $folder_count = count($url_params);
+                    array_push( $url_params , $final_folder[2] );
+
+                    $base_url = relative_base($folder_count);
+                    $file = generate_page($options, $url_params,TRUE,$flat_tree_tmp,$base_url);
+                    file_put_contents('./static/'.$final_folder[1].'/'.$final_folder[2].'.html', $file);
+                }else{
+                    $strFile = str_replace('./', '', $element['url']);
+                    $base_url = '.';
+                    $file = generate_page($options, array($strFile),TRUE,$flat_tree_tmp,$base_url);
+                    file_put_contents('./static/'.$strFile.'.html', $file);
+                }               
+            }
+            echo "finished\n";
+            echo "The documentation is generated in static folder\n";
+            break;
+        //Generate one-page documentation
+        case 'full-doc':
+            clean_copy_assets(dirname(__FILE__).'/static');
+
+            $options['template'] ='full-doc';
+            $markdown_structure = array();
+            //Generate index.html
+            $markdown_structure = array();
+            $base_url = '.';
+            $index = generate_page($options, array(''),TRUE,$markdown_structure,$base_url);
+            file_put_contents('./static/full-doc.html', load_tpl_block('full-doc-blocks/head', $options, $base_url).$index);
+            echo '.';
+            array_pop($markdown_structure);
+
+            foreach ($markdown_structure as $element) {
+                echo '.';
+                $flat_tree_tmp = array();
+                if( preg_match('/\.\/(.*)\/(.*)$/', $element['url'], $final_folder) ){
+                    $url_params = preg_split('/\//',$final_folder[1] );
+                    $folder_count = count($url_params);
+                    array_push( $url_params , $final_folder[2] );
+
+                    $file = generate_page($options, $url_params,TRUE,$flat_tree_tmp,$base_url);
+                    file_put_contents('./static/full-doc.html', $file, FILE_APPEND);
+                }else{
+                    $strFile = str_replace('./', '', $element['url']);
+                    $file = generate_page($options, array($strFile),TRUE,$flat_tree_tmp,$base_url);
+                    file_put_contents('./static/full-doc.html', $file, FILE_APPEND);
+                }               
+            }
+            file_put_contents('./static/full-doc.html', file_get_contents('template/full-doc-blocks/foot.tpl'), FILE_APPEND);
+            echo "finished\n";
+            echo "The documentation is generated in static folder\n";
+            break;
+        default:
+            echo "\n"; 
+            echo 'Usage:'."\n";
+            echo ' php index.php generate'."\n";
+            echo ' php index.php full-doc'."\n";
+            echo "\n";
+            echo 'generate. Generate static web'."\n";
+            echo 'fulldoc. Generate one-file documentation static html'."\n";
+            echo "\n";
+            break;
+    }    
+    exit();
 }
+define("CLI", FALSE);
 
-$docs_url = docs_url($tree);
 $url_params = url_params();
+generate_page($options, $url_params);
 
-if (count($options['languages']) > 0 && count($url_params) > 0 && strlen($url_params[0]) > 0) {
-    $language = array_shift($url_params);
-    $base_path = $options['docs_path'] . $language;
-} else {
-    $language = null;
-    $base_path = $options['docs_path'];
-}
-
-$tree = get_tree($base_path, $base_url, '', true, $language);
-
-
-
-$page = load_page($tree, $url_params);
-
-// If a timezone has been set in the config file, override the default PHP timezone for this application.
-if(isset($options['timezone']))
-{
-    date_default_timezone_set($options['timezone']);
-}
-
-
-// Redirect to docs, if there is no homepage
-if ($homepage && $homepage_url !== '/') {
-    header('Location: '.$homepage_url);
-}
-
-include('template/'.$options['template'].'.tpl');
