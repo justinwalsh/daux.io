@@ -48,7 +48,7 @@ function get_options() {
 		'piwik_analytics_id' => 1,
 		'ignore' => array(),
 		'languages' => array(),
-		'file_editor' => true
+		'file_editor' => false
 	);
 
 	// Load User Config
