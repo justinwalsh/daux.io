@@ -35,6 +35,7 @@ function get_options() {
 		'tagline' => false,
 		'image' => false,
 		'theme' => 'blue',
+		'docs_path' => 'docs',
 		'date_modified' => true,
 		'float' => true,
 		'repo' => false,
@@ -44,9 +45,10 @@ function get_options() {
 		'clean_urls' => true,
 		'google_analytics' => false,
 		'piwik_analytics' => false,
-        'piwik_analytics_id' => 1,
-        'ignore' => array(),
-        'languages' => array()
+		'piwik_analytics_id' => 1,
+		'ignore' => array(),
+		'languages' => array(),
+		'file_editor' => false
 	);
 
 	// Load User Config
@@ -122,6 +124,10 @@ function load_page($tree, $url_params) {
 		}
 		$html .= MarkdownExtended(file_get_contents($branch['path']));
 
+		// Markdown editor related
+		$page['markdown'] = file_get_contents($branch['path']);
+		$page['path'] = $branch['path'];
+
 		$page['html'] = $html;
 
 	} else {
@@ -130,7 +136,7 @@ function load_page($tree, $url_params) {
 		$page['html'] = "<h3>Oh No. That page doesn't exist</h3>";
 
 	}
-	
+
 
 	return $page;
 }
@@ -275,7 +281,7 @@ function get_tree($path = '.', $clean_path = '', $title = '', $first = true, $la
 
 	// Sort paths
 	sort($paths);
-    
+
     if ($first && $language !== null) {
         $language_path = $language . "/";
     } else {
@@ -411,4 +417,12 @@ function get_uri($prefix_slash = true)
 
     // Do some final cleaning of the URI and return it
     return ($prefix_slash ? '/' : '').str_replace(array('//', '../'), '/', trim($uri, '/'));
+}
+
+function handle_editor_post($post, $page) {
+    if(file_exists($page["path"])) {
+        file_put_contents($page["path"], $post["markdown"]);
+    } else {
+        throw new Exception("File doesn't exists", 1);
+    }
 }

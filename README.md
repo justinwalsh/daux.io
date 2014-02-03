@@ -87,7 +87,7 @@ Change the title bar in the docs
 ```
 
 ###Docs Path:
-If you'd prefer to keep your docs outside of the Daux.io directory, you can provide the filepath. 
+If you'd prefer to keep your docs outside of the Daux.io directory, you can provide the filepath.
 
 Note: Your `config.json` file will need to remain in `/daux.io/docs`.
 
@@ -173,6 +173,17 @@ Include custom links in the sidebar.
 }
 ```
 
+###File editor:
+![File editor](https://f.cloud.github.com/assets/1788727/1954191/44358884-81d1-11e3-859d-254b9fb81808.png)
+
+Enable front-end Markdown editor. _Disabled by default_.
+
+```json
+{
+	"file_editor" => true
+}
+```
+
 ###Google Analytics:
 This will embed the google analytics tracking code.
 
@@ -226,7 +237,7 @@ By default, daux.io will display the last modified time as reported by the syste
 ```json
 {
 	"date_modified": false
-} 
+}
 ```
 
 ###Timezone
@@ -300,7 +311,7 @@ If you have set up a local or remote IIS web site, you may need a `web.config` w
 The `web.config` needs an entry for `<rewrite>` under `<system.webServer>`:
 
 ```xml
-<configuration> 
+<configuration>
 	<system.webServer>
 		<rewrite>
 			<rules>

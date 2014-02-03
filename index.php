@@ -89,9 +89,13 @@ if (count($options['languages']) > 0 && count($url_params) > 0 && strlen($url_pa
 
 $tree = get_tree($base_path, $base_url, '', true, $language);
 
-
-
 $page = load_page($tree, $url_params);
+
+// Handle AJAX requests
+if(isset($_POST["markdown"]) && $options["file_editor"] === true) {
+    handle_editor_post($_POST, $page);
+    die;
+}
 
 // If a timezone has been set in the config file, override the default PHP timezone for this application.
 if(isset($options['timezone']))
@@ -147,6 +151,11 @@ if ($homepage && $homepage_url !== '/') {
 
     <!-- Navigation -->
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.0/jquery.min.js"></script>
+
+    <?php if($options["file_editor"]) { ?>
+    <!-- Front end file editor -->
+    <script src="<?php echo $base_url ?>/js/editor.js"></script>
+    <?php } ?>
     <script>
     if (typeof jQuery == 'undefined') {
         document.write(unescape("%3Cscript src='<?php echo $base_url ?>/js/jquery-1.10.2.min.js' type='text/javascript'%3E%3C/script%3E"));
@@ -252,7 +261,6 @@ if ($homepage && $homepage_url !== '/') {
                 </div>
             </div>
         </div>
-
     <?php } else { ?>
         <!-- Docs -->
         <?php if ($options['repo']) { ?>
@@ -304,7 +312,11 @@ if ($homepage && $homepage_url !== '/') {
                         <article>
                             <?php if($options['date_modified'] && isset($page['modified'])) { ?>
                                 <div class="page-header sub-header clearfix">
-                                    <h1><?php echo $page['title'];?></h1>
+                                    <h1><?php echo $page['title'];?>
+                                        <?php if($options["file_editor"]) { ?>
+                                            <a href="javascript:;" id="editThis" class="btn">Edit this page</a>
+                                        <?php } ?>
+                                    </h1>
                                         <span style="float: left; font-size: 10px; color: gray;">
                                             <?php echo date("l, F j, Y", $page['modified']);?>
                                         </span>
@@ -314,11 +326,26 @@ if ($homepage && $homepage_url !== '/') {
                                 </div>
                             <?php } else { ?>
                                 <div class="page-header">
-                                    <h1><?php echo $page['title'];?></h1>
+                                    <h1><?php echo $page['title'];?>
+                                        <?php if($options["file_editor"]) { ?>
+                                            <a href="javascript:;" id="editThis" class="btn">Edit this page</a>
+                                        <?php } ?>
+                                    </h1>
                                 </div>
-
                             <?php } ?>
                             <?php echo $page['html'];?>
+                            <?php if($options["file_editor"]) { ?>
+                                <div class="editor <?php if(!$options['date_modified']) { ?>paddingTop<?php } ?>">
+                                    <h3>You are editing <?php echo $page['path']; ?>&nbsp;<a href="javascript:;" class="closeEditor btn btn-warning">Close</a></h3>
+                                    <div class="navbar navbar-inverse navbar-default navbar-fixed-bottom" role="navigation">
+                                        <div class="navbar-inner">
+                                            <a href="javascript:;" class="save_editor btn btn-primary navbar-btn pull-right">Save file</a>
+                                        </div>
+                                    </div>
+                                    <textarea id="markdown_editor"><?php echo $page['markdown'];?></textarea>
+                                    <div class="clearfix"></div>
+                                </div>
+                            <?php } ?>
                         </article>
                     </div>
                 </div>
