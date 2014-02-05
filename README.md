@@ -180,7 +180,7 @@ Enable front-end Markdown editor. _Disabled by default_.
 
 ```json
 {
-	"file_editor" => true
+	"file_editor": true
 }
 ```
 
