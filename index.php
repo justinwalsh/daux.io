@@ -144,28 +144,6 @@ if ($homepage && $homepage_url !== '/') {
     <?php } else { ?>
         <link rel="stylesheet" href="<?php echo $base_url ?>/css/daux-<?php echo $options['theme'];?>.css">
     <?php } ?>
-
-    <!-- hightlight.js -->
-    <script src="<?php echo $base_url ?>/js/highlight.min.js"></script>
-    <script>hljs.initHighlightingOnLoad();</script>
-
-    <!-- Navigation -->
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.0/jquery.min.js"></script>
-
-    <?php if($options["file_editor"]) { ?>
-    <!-- Front end file editor -->
-    <script src="<?php echo $base_url ?>/js/editor.js"></script>
-    <?php } ?>
-    <script>
-    if (typeof jQuery == 'undefined') {
-        document.write(unescape("%3Cscript src='<?php echo $base_url ?>/js/jquery-1.10.2.min.js' type='text/javascript'%3E%3C/script%3E"));
-    }
-    </script>
-    <script src="<?php echo $base_url ?>/js/bootstrap.min.js"></script>
-    <script src="<?php echo $base_url ?>/js/custom.js"></script>
-    <!--[if lt IE 9]>
-    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
 </head>
 <body>
     <?php if ($homepage) { ?>
@@ -380,5 +358,29 @@ if ($homepage && $homepage_url !== '/') {
   })();
 </script>
 <?php } ?>
+
+
+    <!-- hightlight.js -->
+    <script src="<?php echo $base_url ?>/js/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    <!-- Navigation -->
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.0/jquery.min.js"></script>
+
+    <?php if($options["file_editor"]) { ?>
+    <!-- Front end file editor -->
+    <script src="<?php echo $base_url ?>/js/editor.js"></script>
+    <?php } ?>
+    <script>
+    if (typeof jQuery == 'undefined') {
+        document.write(unescape("%3Cscript src='<?php echo $base_url ?>/js/jquery-1.10.2.min.js' type='text/javascript'%3E%3C/script%3E"));
+    }
+    </script>
+    <script src="<?php echo $base_url ?>/js/bootstrap.min.js"></script>
+    <script src="<?php echo $base_url ?>/js/custom.js"></script>
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
 </body>
 </html>
