@@ -144,7 +144,7 @@ function load_page($tree, $url_params) {
 		$page['html'] = "<h3>Oh No. That page doesn't exist</h3>";
 
 	}
-	
+
 
 	return $page;
 }
@@ -289,7 +289,7 @@ function get_tree($path = '.', $clean_path = '', $title = '', $first = true, $la
 
 	// Sort paths
 	sort($paths);
-    
+
     if ($first && $language !== null) {
         $language_path = $language . "/";
     } else {
@@ -513,7 +513,7 @@ function load_tpl_block($file, $options, $base_url){
 	return $buffer;
 }
 
-function copy_recursive($source, $dest){
+function copy_recursive($source, $dest, $ignoreList = array()){
 	$src_folder=str_replace(array('.','/'), '', $source);
 	@mkdir($dest.DIRECTORY_SEPARATOR.$src_folder);
 	foreach (
@@ -524,7 +524,7 @@ function copy_recursive($source, $dest){
 	  if ($item->isDir()) {
 	    @mkdir($dest . DIRECTORY_SEPARATOR . $src_folder . DIRECTORY_SEPARATOR .$iterator->getSubPathName());
 	  } else {
-	    @copy($item, $dest . DIRECTORY_SEPARATOR .$src_folder. DIRECTORY_SEPARATOR .$iterator->getSubPathName());
+        if (!$ignoreList || !in_array($item, $ignoreList)) @copy($item, $dest . DIRECTORY_SEPARATOR .$src_folder. DIRECTORY_SEPARATOR .$iterator->getSubPathName());
 	  }
 	}
 }
@@ -551,10 +551,23 @@ function relative_base($count){
 
 function clean_copy_assets($path){
 	@mkdir($path);
+    $options = $GLOBALS["options"];
 	//Clean
     clean_directory($path);
-    //Copy assets    
-    copy_recursive('./css', $path.'/');
-    copy_recursive('./img', $path.'/');
-    copy_recursive('./js', $path.'/');
+    //Copy assets
+    $unnecessaryImgs = array('./img/favicon.png', './img/favicon-blue.png', './img/favicon-green.png', './img/favicon-navy.png', './img/favicon-red.png');
+    $unnecessaryJs = array();
+    if ($options['colors']) {
+        @mkdir($path.'/less');
+        @mkdir($path.'/less/import');
+        @copy('./less/import/daux-base.less', $path.'/less/import/daux-base.less');
+        $unnecessaryImgs = array_diff($unnecessaryImgs, array('./img/favicon.png'));
+    } else {
+        $unnecessaryJs = array('./js/less.min.js');
+        @mkdir($path.'/css');
+        @copy('./css/daux-'.$options['theme'].'.css', $path.'/css/daux-'.$options['theme'].'.css');
+        $unnecessaryImgs = array_diff($unnecessaryImgs, array('./img/favicon-'.$options['theme'].'.png'));
+    }
+    copy_recursive('./img', $path.'/', $unnecessaryImgs);
+    copy_recursive('./js', $path.'/', $unnecessaryJs);
 }
