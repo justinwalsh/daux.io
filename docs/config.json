@@ -4,6 +4,7 @@
 	"docs_path": "docs",
 	"image": "img/app.png",
 	"theme": "navy",
+	"template":"default",
 	"date_modified": true,
 	"repo": "justinwalsh/daux.io",
 	"twitter": ["justin_walsh", "todaymade"],

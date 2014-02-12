@@ -264,6 +264,23 @@ The Grunt.js task uses the built in web server in PHP 5.4 to host the docs on yo
 
 This project contains a package.json file, so once you have the requirements installed, you can simply run a `npm install` and then `grunt` in the projects folder to start the local web server. By default the server will run at: <a href="http://localhost:8085" target="_blank">http://localhost:8085</a>
 
+## Generating a set of static files
+
+These can be uploaded to a static site hosting service such as pages.github.com
+
+Generating a complete set of pages, with navigation
+
+```bash
+php index.php generate
+```
+
+Generating just one big file with each doc concatenated
+
+```bash
+php index.php full-doc
+```
+
+
 ## Running on IIS
 
 If you have set up a local or remote IIS web site, you may need a `web.config` with:

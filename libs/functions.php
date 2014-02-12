@@ -20,6 +20,7 @@ require_once('libs/markdown_extended.php');
 $homepage = (get_uri(false) === "") ? true : false;
 
 // Stores the base url under which daux is running
+global $base_url;
 $base_url = '/';
 
 // Set the base url of where the script is located
@@ -27,6 +28,12 @@ if (isset($_SERVER['SCRIPT_NAME']))
 {
     $base_url = substr($_SERVER['SCRIPT_NAME'], 0, strrpos($_SERVER['SCRIPT_NAME'] , '/')); // find the full URL to this application from server root
 }
+
+function get_base_url()
+{
+	global $base_url;
+	return $base_url;
+};
 
 // Daux.io Functions
 function get_options() {
@@ -45,10 +52,11 @@ function get_options() {
 		'clean_urls' => true,
 		'google_analytics' => false,
 		'piwik_analytics' => false,
-		'piwik_analytics_id' => 1,
-		'ignore' => array(),
-		'languages' => array(),
-		'file_editor' => false
+        'piwik_analytics_id' => 1,
+        'ignore' => array(),
+        'languages' => array(),
+        'file_editor' => false,
+        'template' => 'default'
 	);
 
 	// Load User Config
@@ -136,7 +144,7 @@ function load_page($tree, $url_params) {
 		$page['html'] = "<h3>Oh No. That page doesn't exist</h3>";
 
 	}
-
+	
 
 	return $page;
 }
@@ -168,7 +176,7 @@ function find_branch($tree, $url_params) {
 }
 
 function url_path() {
-	$url = parse_url($_SERVER['REQUEST_URI']);
+	$url = parse_url((isset($_SERVER['REQUEST_URI']))?$_SERVER['REQUEST_URI']:'');
 	$url = $url['path'];
 	return $url;
 }
@@ -229,7 +237,7 @@ function build_nav($tree, $url_params) {
 			$html .= '<a href="#" class="aj-nav folder">'.$val['name'].'</a>';
 			$html .= build_nav($val['tree'], $url_params);
 		} else {
-			$html .= '<a href="'.$val['url'].'">'.$val['name'].'</a>';
+			$html .= '<a href="'.$val['url'].((CLI)?'.html':'').'">'.$val['name'].'</a>';
 		}
 
 		$html .= '</li>';
@@ -263,7 +271,7 @@ function get_ignored() {
 	return $all_ignored;
 }
 
-function get_tree($path = '.', $clean_path = '', $title = '', $first = true, $language = null){
+function get_tree($path = '.', $clean_path = '', $title = '', $first = true, $language = null, &$flat_tree = null){
     $options = get_options();
     $tree = array();
     $ignore = get_ignored();
@@ -281,7 +289,7 @@ function get_tree($path = '.', $clean_path = '', $title = '', $first = true, $la
 
 	// Sort paths
 	sort($paths);
-
+    
     if ($first && $language !== null) {
         $language_path = $language . "/";
     } else {
@@ -332,7 +340,9 @@ function get_tree($path = '.', $clean_path = '', $title = '', $first = true, $la
             		'path' => $full_path,
             		'clean' => $clean_sort,
             		'url' => $url,
-            		'tree'=> get_tree($full_path, $url, $full_title, false, $language)
+            		'tree'=> (isset($flat_tree) && $flat_tree!==NULL)?
+            			get_tree($full_path, $url, $full_title, false, $language, $flat_tree):
+            			get_tree($full_path, $url, $full_title, false, $language)
             	);
             } else {
             	// File
@@ -344,6 +354,9 @@ function get_tree($path = '.', $clean_path = '', $title = '', $first = true, $la
             		'clean' => $clean_sort,
             		'url' => $url,
             	);
+
+            	if(isset($flat_tree) && $flat_tree!==NULL)
+            		array_push($flat_tree, $tree[$clean_sort]);
             }
         }
      	$index++;
@@ -423,6 +436,125 @@ function handle_editor_post($post, $page) {
     if(file_exists($page["path"])) {
         file_put_contents($page["path"], $post["markdown"]);
     } else {
-        throw new Exception("File doesn't exists", 1);
+        throw new Exception("File doesn't exist", 1);
     }
+}
+
+/**
+ * Generate the page using the correct $url_params
+ */
+
+function generate_page($options, $url_params, $base_url, $return=FALSE, &$flat_tree=NULL){
+	//documentation folder defined in various folder languages
+	if (count($options['languages']) > 0 && count($url_params) > 0 && strlen($url_params[0]) > 0) {
+        $language = array_shift($url_params);
+        $base_path = $options['docs_path']. DIRECTORY_SEPARATOR . $language;
+    } else {
+        $language = null;
+        $base_path = $options['docs_path'];
+    }
+
+	// If a timezone has been set in the config file, override the default PHP timezone for this application.
+	if(isset($options['timezone']))
+	{
+	    date_default_timezone_set($options['timezone']);
+	}
+
+    $tree = (isset($flat_tree))?
+        get_tree($base_path, $base_url, '', true, $language,$flat_tree):
+        get_tree($base_path, $base_url, '', true, $language);
+
+    // If a language is set in the config, rewrite urls based on the language
+	if (! isset($language) || $language === null) {
+	    $homepage_url = homepage_url($tree);
+	} else {
+	    $homepage_url = "/";
+	}
+	// Redirect to docs, if there is no homepage
+	if ($homepage_url !== '/') {
+	    header('Location: '.$homepage_url);
+	}
+
+    $docs_url = docs_url($tree);
+    $page = load_page($tree, $url_params);
+
+
+	// Handle AJAX requests for file editing
+	if(isset($_POST["markdown"]) && $options["file_editor"] === true) {
+	    handle_editor_post($_POST, $page);
+	    die;
+	}
+
+    if($url_params[0]=='')
+    	$homepage = TRUE;
+    else
+    	$homepage = FALSE;
+
+    ob_start();
+
+    include('template/'.$options['template'].'.tpl');
+    if ($return === TRUE)
+	{
+		$buffer = ob_get_contents();
+		@ob_end_clean();
+		return $buffer;
+	}else{
+		ob_end_flush();
+		@ob_end_clean();
+	}
+}
+
+function load_tpl_block($file, $options, $base_url){
+	ob_start();
+
+    include('template/'.$file.'.tpl');
+    $buffer = ob_get_contents();
+	@ob_end_clean();
+	return $buffer;
+}
+
+function copy_recursive($source, $dest){
+	$src_folder=str_replace(array('.','/'), '', $source);
+	@mkdir($dest.DIRECTORY_SEPARATOR.$src_folder);
+	foreach (
+	 $iterator = new RecursiveIteratorIterator(
+	  new RecursiveDirectoryIterator($source, RecursiveDirectoryIterator::SKIP_DOTS),
+	  RecursiveIteratorIterator::SELF_FIRST) as $item
+	) {
+	  if ($item->isDir()) {
+	    @mkdir($dest . DIRECTORY_SEPARATOR . $src_folder . DIRECTORY_SEPARATOR .$iterator->getSubPathName());
+	  } else {
+	    @copy($item, $dest . DIRECTORY_SEPARATOR .$src_folder. DIRECTORY_SEPARATOR .$iterator->getSubPathName());
+	  }
+	}
+}
+
+function clean_directory($directory){
+	foreach (
+	 $iterator = new RecursiveIteratorIterator(
+	  new RecursiveDirectoryIterator($directory, RecursiveDirectoryIterator::SKIP_DOTS),
+	  RecursiveIteratorIterator::SELF_FIRST) as $item
+	) {
+	    @unlink($directory.DIRECTORY_SEPARATOR.$iterator->getSubPathName());
+	}
+}
+
+function relative_base($count){
+	$relative = '';
+	for ($i=0; ($i < $count); $i++ ){
+		if (! ($i == 0))
+			$relative .= '/';
+		$relative .= '..';
+	}
+	return $relative;
+}
+
+function clean_copy_assets($path){
+	@mkdir($path);
+	//Clean
+    clean_directory($path);
+    //Copy assets    
+    copy_recursive('./css', $path.'/');
+    copy_recursive('./img', $path.'/');
+    copy_recursive('./js', $path.'/');
 }
