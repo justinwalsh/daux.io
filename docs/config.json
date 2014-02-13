@@ -5,6 +5,7 @@
 	"image": "img/app.png",
 	"theme": "navy",
 	"template":"default",
+	"toggle_code": true,
 	"date_modified": true,
 	"repo": "justinwalsh/daux.io",
 	"twitter": ["justin_walsh", "todaymade"],

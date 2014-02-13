@@ -46,6 +46,7 @@ function get_options() {
 		'date_modified' => true,
 		'float' => true,
 		'repo' => false,
+        'toggle_code' => false,
 		'twitter' => array(),
 		'links' => array(),
 		'colors' => false,

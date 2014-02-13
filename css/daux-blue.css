@@ -816,6 +816,7 @@ code {
 }
 pre {
   display: block;
+  overflow: hidden;
   padding: 9.5px;
   margin: 0 0 10px;
   font-size: 13px;
@@ -6476,6 +6477,7 @@ body {
 .columns .left-column {
   background-color: #f7f7f7;
   border-right: 1px solid #e7e7e9;
+  overflow-x: hidden;
 }
 .columns .right-column.span9 {
   width: 76.4866339334%;
@@ -6808,6 +6810,9 @@ pre code {
     position: absolute;
     z-index: -1;
   }
+  .hideCode:before {
+      width: 100% !important;
+  }
   .float-view .content-page table {
     float: left;
     clear: left;
@@ -6840,6 +6845,10 @@ pre code {
     margin-left: 1.5%;
     margin-right: 1.5%;
     background-color: white;
+  }
+  .hideCode2 {
+    width: 900px !important;
+    width: calc(100% - 130px) !important;
   }
   .float-view .content-page .page-header:before,
   .float-view .content-page p:before,
@@ -6972,6 +6981,9 @@ pre code {
     border-left: 10px solid white;
     margin: 0px 0px 10px 0px;
     padding: 0px 0px 0px 10px;
+  }
+  .hideCode3 {
+    display: none;
   }
 }
 table {

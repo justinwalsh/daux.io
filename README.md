@@ -133,11 +133,19 @@ To create a custom color scheme, set the `theme` property to `custom` and then d
 ```
 
 ###Code Floating:
-By deafult your code blocks will be floated to a column on the right side of your content. To disable this feature, set the `float` property to `false`.
+By default your code blocks will be floated to a column on the right side of your content. To disable this feature, set the `float` property to `false`.
 
 ```json
 {
 	"float": false
+}
+```
+###Toggling Code Blocks
+Some users might wish to hide the code blocks & view just the documentation. By setting the `toggle_code` property to `true`, you can offer a toggle button on the page.
+
+```json
+{
+	"toggle_code": true
 }
 ```
 
