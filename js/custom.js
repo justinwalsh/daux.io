@@ -21,6 +21,9 @@ $(function() {
 	});
 });
 
+//Fix GitHub Ribbon overlapping Scrollbar
+if ($('article')[0].scrollHeight > $('.right-column').height()) $('#github-ribbon')[0].style.right = '16px'
+
 //Toggle Code Block Visibility
 function toggleCodeBlocks() {
     var t = localStorage.getItem("toggleCodeStats")
