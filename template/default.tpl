@@ -163,6 +163,9 @@
                                 <?php foreach($options['links'] as $name => $url) { ?>
                                     <a href="<?php echo $url;?>" target="_blank"><?php echo $name;?></a><br>
                                 <?php } ?>
+                                <?php if ($options['toggle_code']) { ?>
+                                    <a href="#" id="toggleCodeBlockBtn" onclick="toggleCodeBlocks();">Show Code Blocks Inline</a><br>
+                                <?php } ?>
                                 <!-- Twitter -->
                                 <?php foreach($options['twitter'] as $handle) { ?>
                                     <div class="twitter">
