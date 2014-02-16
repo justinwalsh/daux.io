@@ -30,7 +30,7 @@
         </style>
         <script src="<?php echo $base_url ?>/js/less.min.js"></script>
     <?php } else { ?>
-        <link rel="stylesheet" href="<?php echo $base_url ?>/css/daux-<?php echo $options['theme'];?>.css">
+        <link rel="stylesheet" href="<?php echo $base_url ?>/css/daux-<?php echo $options['theme'];?>.min.css">
     <?php } ?>
 </head>
 <body>
