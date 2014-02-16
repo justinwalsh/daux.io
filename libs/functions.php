@@ -29,6 +29,13 @@ if (isset($_SERVER['SCRIPT_NAME']))
     $base_url = substr($_SERVER['SCRIPT_NAME'], 0, strrpos($_SERVER['SCRIPT_NAME'] , '/')); // find the full URL to this application from server root
 }
 
+// Hide annoying date() Warnings due to no Timezone being set.
+if( ! ini_get('date.timezone') )
+{
+   date_default_timezone_set('GMT');
+}
+
+
 function get_base_url()
 {
 	global $base_url;
