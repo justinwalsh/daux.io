@@ -2,38 +2,18 @@
 Mixins
 ============================================================================================== */
 
-.box-shadow(@shadowsize: 5px, @color:rgba(0,0,0,.25), @left: 0px, @top: 1px) {
-  	-moz-box-shadow: @left @top @shadowsize @color;
-	-webkit-box-shadow: @left @top @shadowsize @color;
-	box-shadow: @left @top @shadowsize @color;
-}
-.border-radius(@radius: 5px) {
-  -moz-border-radius: @radius;
-  -webkit-border-radius: @radius;
-  border-radius: @radius;
-}
 .kill-background-image() {
-  background-image: none;
-  -ms-filter: none;
-  filter: none;
+    background-image: none;
+    filter: none;
 }
+
 .kill-box-shadow() {
-  box-shadow: none;
-  -webkit-box-shadow: none;
-  -moz-box-shadow: none;
+    box-shadow: none;
 }
+
 .sans-serif(@weight: normal, @size: 14px, @lineheight: 20px) {
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-size: @size;
-  font-weight: @weight;
-  line-height: @lineheight;
-}
-.opacity(@opacity: 0.5) {
-  -moz-opacity: @opacity;
-  -khtml-opacity: @opacity;
-  -webkit-opacity: @opacity;
-  opacity: @opacity;
-  @opperc: @opacity * 100;
-  -ms-filter: ~"progid:DXImageTransform.Microsoft.Alpha(opacity=@{opperc})";
-  filter: ~"alpha(opacity=@{opperc})";
+    font-weight: @weight;
+    font-size: @size;
+    font-family: @font-family-sans-serif;
+    line-height: @lineheight;
 }
