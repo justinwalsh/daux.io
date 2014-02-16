@@ -14,7 +14,7 @@
 * Learn more about what you can customize here: http://daux.io
 */
 
-require_once('libs/markdown_extended.php');
+require_once dirname( __FILE__) . '/libs/markdown_extended.php');
 
 // Check for homepage
 $homepage = (get_uri(false) === "") ? true : false;
@@ -501,7 +501,6 @@ function generate_page($options, $url_params, $base_url, $return=FALSE, &$flat_t
 		return $buffer;
 	}else{
 		ob_end_flush();
-		@ob_end_clean();
 	}
 }
 

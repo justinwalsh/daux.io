@@ -63,8 +63,7 @@ software, even if advised of the possibility of such damage.
 
 */
 
-require_once('libs/functions.php');
-
+require_once dirname( __FILE__ ) . '/libs/functions.php';
 $options = get_options();
 
 $command_line=FALSE;
