@@ -4,33 +4,32 @@ Base CSS
 
 //Fonts
 .roboto-slab {
-	&.light {
-		font-family: 'Roboto Slab', serif;
-		font-weight: 100;
-	}
-	&.book {
-		font-family: 'Roboto Slab', serif;
-		font-weight: 300;
-	}
-	&.regular {
-		font-family: 'Roboto Slab', serif;
-		font-weight: 400;
-	}
-	&.bold {
-		font-family: 'Roboto Slab', serif;
-		font-weight: 700;
-	}
+    font-family: 'Roboto Slab', @font-family-sans-serif;
+
+    &.light {
+        font-weight: 100;
+    }
+
+    &.book {
+        font-weight: 300;
+    }
+
+    &.regular {
+        font-weight: 400;
+    }
+
+    &.bold {
+        font-weight: 700;
+    }
 }
 
 //Typography
 h1, h2, h3, h4, h5, h6 {
-	.roboto-slab.book;
+    .roboto-slab.book;
 }
-a {
 
-}
 pre {
-	padding: 0;
+    padding: 0;
 }
 
 /* ===========================================================================================
@@ -38,122 +37,138 @@ Homepage
 ============================================================================================== */
 
 .homepage-hero {
-	padding-top: 50px !important;
-	background-color: @light;
-	.kill-box-shadow;
-	.border-radius(0px);
-	border: none;
-	color: @dark;
-	overflow: hidden;
-	@media (max-width: 767px) {
-		padding-top: 0px !important;
-	}
-	.text-center {
-		.roboto-slab.bold;
-		margin: 10px 0px;
-	}
-	h2 {
-		margin: 20px 0px;
-	}
-	.homepage-image {
-		//.box-shadow(10px, rgba(0,0,0,0.20), 0px, 0px);
-	}
+    padding-top: 50px !important;
+    background-color: @light;
+    .kill-box-shadow;
+    border-radius: 0px;
+    border: none;
+    color: @dark;
+    overflow: hidden;
+
+    @media (max-width: 767px) {
+        padding-top: 0px !important;
+    }
+
+    .text-center {
+        .roboto-slab.bold;
+        margin: 10px 0px;
+    }
+
+    h2 {
+        margin: 20px 0px;
+    }
 }
+
 .hero-buttons.container-fluid {
-	padding: 20px 0px;
-	background-color: @sidebar-hover;
-	.btn-hero.btn {
-		.roboto-slab.bold;
-		padding: 20px 30px;
-		.kill-background-image;
-		.kill-box-shadow;
-		.border-radius(0px);
-		text-shadow:none;
-		border: none;
-		.opacity(0.80);
-		margin: 0px 10px;
-		text-transform: uppercase;
-		border: 5px solid @dark;
-		@media (max-width: 767px) {
-			display: block;
-			margin-bottom: 10px;
-		}
-		&:hover {
-			.opacity(1.0);
-		}
-		&.btn-secondary {
-			background-color: @sidebar-hover;
-			color: @dark;
-		}
-		&.btn-primary {
-			background-color: @dark;
-			color: @sidebar-background;
-		}
-	}
+    padding: 20px 0px;
+    background-color: @sidebar-hover;
+
+    .btn-hero.btn {
+        .roboto-slab.bold;
+        padding: 20px 30px;
+        .kill-background-image;
+        .kill-box-shadow;
+        border-radius: 0px;
+        text-shadow: none;
+        border: none;
+        .opacity(0.80);
+        margin: 0px 10px;
+        text-transform: uppercase;
+        border: 5px solid @dark;
+
+        @media (max-width: 767px) {
+            display: block; margin-bottom: 10px;
+        }
+
+        &:hover {
+            .opacity(1.0);
+        }
+
+        &.btn-secondary {
+            background-color: @sidebar-hover;
+            color: @dark;
+        }
+
+        &.btn-primary {
+            background-color: @dark;
+            color: @sidebar-background;
+        }
+    }
 }
 
 .homepage-content.container-fluid {
-	// color: white;
-	// background-color: @text;
-	background-color: white;
-	padding: 40px 0px;
-	.lead {
-		.roboto-slab.regular;
-	}
-	ul, ol {
-		padding: 20px 0px;
-		margin: 0 0 10px 0px;
-		li {
-			list-style: none;
-			padding-bottom: 5px;
-			&:before {
-				content: '';
-				width: 0px;
-				height: 0px;
-				border: 3px solid transparent;
-				border-left: 3px solid @light;
-				float: left;
-				display: block;
-				margin: 6px;
-			}
-		}
-	}
+    // color: white;
+    // background-color: @text;
+    background-color: white;
+    padding: 40px 0px;
 
-	@media (max-width: 767px) {
-		padding: 40px 20px;
-	}
+    .lead {
+        .roboto-slab.regular;
+    }
+
+    ul, ol {
+        padding: 20px 0px;
+        margin: 0 0 10px 0px;
+
+        li {
+            list-style: none;
+            padding-bottom: 5px;
+
+            &:before {
+                content: '';
+                width: 0px;
+                height: 0px;
+                border: 3px solid transparent;
+                border-left: 3px solid @light;
+                float: left;
+                display: block;
+                margin: 6px;
+            }
+        }
+    }
+
+    @media (max-width: 767px) {
+        padding: 40px 20px;
+    }
 }
 
 .homepage-footer.container-fluid {
-	background-color: @dark;
-	.kill-box-shadow;
-	.border-radius(0px);
-	color: light;
-	border: none;
-	@media (max-width: 767px) {
-		padding: 0 20px;
-	}
-	.footer-nav {
-		margin: 40px 0px;
-		li {
-			list-style: none;
-			a {
-				.roboto-slab.bold;
-				font-size: 16px;
-				line-height: 32px;
-				&:hover {
-					color: @light;
-					text-decoration: underline;
-				}
-			}
-		}
-	}
-	.twitter {
-		margin-top: 20px;
-	}
-	.twitter:first-child {
-		margin-top: 40px;
-	}
+    background-color: @dark;
+    .kill-box-shadow;
+    border-radius: 0px;
+    color: light;
+    border: none;
+
+    @media (max-width: 767px) {
+        padding: 0 20px;
+    }
+
+    .footer-nav {
+        margin: 40px 0px;
+
+        li {
+            list-style: none;
+
+            a {
+                .roboto-slab.bold;
+                font-size: 16px;
+                line-height: 32px;
+
+                &:hover {
+                    color: @light;
+                    text-decoration: underline;
+                }
+            }
+        }
+    }
+
+    .twitter {
+        margin-top: 20px;
+    }
+
+        .twitter:first-child {
+            margin-top: 40px;
+        }
 }
 
 /* ===========================================================================================
@@ -161,7 +176,7 @@ Docs Body & Page Structure
 ============================================================================================== */
 
 html, body {
-	margin: 0;
+    margin: 0;
     padding: 0;
     height: 100%;
     background-color: @light;
@@ -175,121 +190,132 @@ html, body {
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
+
     &.fluid-height {
-    	height: 100%;
+        height: 100%;
     }
 }
+
 .columns {
     height: 100%;
+
     .left-column,
     .right-column {
-    	padding-top: 50px;
-    	@media (max-width: 767px) {
-    		width: 100% !important;
-    		padding-top: 0px;
-    		height: auto;
-		}
+        padding-top: 50px;
+
+        @media (max-width: 767px) {
+            width: 100% !important; padding-top: 0px; height: auto;
+        }
     }
+
     .left-column {
-		background-color: @sidebar-background;
-		border-right: 1px solid @lines;
-		overflow-x: hidden;
-	}
-	.right-column {
-		&.span9 {
-			width: 76.4866339334%;
-			margin-left: 0px;
-			@media (min-width: 1200px) {
-				width: 76.8866339334%;
-			}
-		}
-		.content-page {
-			padding: 20px;
-			min-height: 100%;
-			background-color: white;
-		}
-	}
+        background-color: @sidebar-background;
+        border-right: 1px solid @lines;
+        overflow-x: hidden;
+    }
+
+    .right-column {
+        &.span9 {
+            width: 76.4866339334%;
+            margin-left: 0px;
+
+            @media (min-width: 1200px) {
+                width: 76.8866339334%;
+            }
+        }
+
+        .content-page {
+            padding: 20px;
+            min-height: 100%;
+            background-color: white;
+        }
+    }
 }
+
 .content-area, .article-tree {
-    overflow:auto;
+    overflow: auto;
     height: 100%;
-	padding: 0px;
+    padding: 0px;
 }
 
 //mobile friendly sub-nav
 .responsive-collapse {
-	padding: 10px 15px;
-	display: none;
-	background-color: @lines;
-	border-bottom: 1px solid @lines;
-	@media (max-width: 767px) {
-		display: block;
-	}
+    padding: 10px 15px;
+    display: none;
+    background-color: @lines;
+    border-bottom: 1px solid @lines;
+
+    @media (max-width: 767px) {
+        display: block;
+    }
 }
+
 .sub-nav-collapse {
-	@media (max-width: 768px) {
-		display: none;
-	}
-	@media (min-width: 768px) {
-		display: block;
-	}
+    @media (max-width: 768px) {
+        display: none;
+    }
+
+    @media (min-width: 768px) {
+        display: block;
+    }
 }
 
 //CSS For Fluid Tables
 @media only screen and (max-width: 800px) {
 
-	/* Force table to not be like tables anymore */
-	table,
-	thead,
-	tbody,
-	th,
-	td,
-	tr {
-		display: block;
-		border: none;
-	}
+    /* Force table to not be like tables anymore */
+    table,
+    thead,
+    tbody,
+    th,
+    td,
+    tr {
+        display: block;
+        border: none;
+    }
 
-	/* Hide table headers (but not display: none;, for accessibility) */
-	thead tr {
-		position: absolute;
-		top: -9999px;
-		left: -9999px;
-	}
+        /* Hide table headers (but not display: none;, for accessibility) */
+        thead tr {
+            position: absolute;
+            top: -9999px;
+            left: -9999px;
+        }
 
-	tr {
-		margin-bottom: 10px;
-		border-bottom: 2px solid #ccc;
-		td, th {
-			border: 1px solid #ccc;
-			border-bottom:none;
-		}
-	}
+    tr {
+        margin-bottom: 10px;
+        border-bottom: 2px solid #ccc;
 
-	td {
-		/* Behave  like a "row" */
-		border: none;
-		border-bottom: 1px solid #eee;
-		position: relative;
-		padding-left: 50% !important;
-		white-space: normal;
-		text-align:left;
-	}
+        td, th {
+            border: 1px solid #ccc;
+            border-bottom: none;
+        }
+    }
 
-	td:before {
-		/* Now like a table header */
-		position: absolute;
-		/* Top/left values mimic padding */
-		top: 6px;
-		left: 6px;
-		width: 45%;
-		padding-right: 10px;
-		white-space: nowrap;
-		text-align:left;
-		font-weight: bold;
-	}
+    td {
+        /* Behave  like a "row" */
+        border: none;
+        border-bottom: 1px solid #eee;
+        position: relative;
+        padding-left: 50% !important;
+        white-space: normal;
+        text-align: left;
+    }
 
-	/*
-	Label the data
-	*/
-	td:before { content: attr(data-title); }
+        td:before {
+            /* Now like a table header */
+            position: absolute;
+            /* Top/left values mimic padding */
+            top: 6px;
+            left: 6px;
+            width: 45%;
+            padding-right: 10px;
+            white-space: nowrap;
+            text-align: left;
+            font-weight: bold;
+        }
+
+        /* Label the data */
+        td:before {
+            content: attr(data-title);
+        }
 }
