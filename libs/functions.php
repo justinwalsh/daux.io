@@ -14,7 +14,7 @@
 * Learn more about what you can customize here: http://daux.io
 */
 
-require_once dirname( __FILE__) . '/libs/markdown_extended.php');
+require_once dirname( __FILE__) . '/markdown_extended.php';
 
 // Check for homepage
 $homepage = (get_uri(false) === "") ? true : false;
