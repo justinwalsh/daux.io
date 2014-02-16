@@ -41,15 +41,15 @@ code {
 
 //Navbar
 .navbar {
-    .box-shadow();
+    box-shadow: 0 1px 5px rgba(0,0,0,.25);
+    background-color: @dark;
     margin-bottom: 0px;
     z-index: 200;
 
-    .navbar-inner {
+    .container, .container-fluid {
         .kill-background-image;
-        background-color: @dark;
         border-bottom: none;
-        padding: 6px 20px;
+        padding: 0 20px;
 
         .brand {
             color: @light;
@@ -164,7 +164,6 @@ code {
 
     h1 {
         margin-top: 0px;
-        display: inline-block;
     }
 
     sub-heading {

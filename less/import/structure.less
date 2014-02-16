@@ -4,21 +4,23 @@ Base CSS
 
 //Fonts
 .roboto-slab {
-    font-family: 'Roboto Slab', @font-family-sans-serif;
-
     &.light {
+        font-family: 'Roboto Slab', @font-family-sans-serif;
         font-weight: 100;
     }
 
     &.book {
+        font-family: 'Roboto Slab', @font-family-sans-serif;
         font-weight: 300;
     }
 
     &.regular {
+        font-family: 'Roboto Slab', @font-family-sans-serif;
         font-weight: 400;
     }
 
     &.bold {
+        font-family: 'Roboto Slab', @font-family-sans-serif;
         font-weight: 700;
     }
 }
@@ -37,17 +39,13 @@ Homepage
 ============================================================================================== */
 
 .homepage-hero {
-    padding-top: 50px !important;
+    padding-top: 60px !important;
     background-color: @light;
     .kill-box-shadow;
     border-radius: 0px;
     border: none;
     color: @dark;
     overflow: hidden;
-
-    @media (max-width: 767px) {
-        padding-top: 0px !important;
-    }
 
     .text-center {
         .roboto-slab.bold;
@@ -144,11 +142,10 @@ Homepage
     }
 
     .footer-nav {
+        &:extend(.list-unstyled all);
         margin: 40px 0px;
 
         li {
-            list-style: none;
-
             a {
                 .roboto-slab.bold;
                 font-size: 16px;
@@ -185,11 +182,6 @@ html, body {
 
 //100% Height Columns
 .container-fluid {
-    margin: 0 auto;
-    padding: 0;
-    -moz-box-sizing: border-box;
-    -webkit-box-sizing: border-box;
-    box-sizing: border-box;
 
     &.fluid-height {
         height: 100%;
@@ -198,15 +190,7 @@ html, body {
 
 .columns {
     height: 100%;
-
-    .left-column,
-    .right-column {
-        padding-top: 50px;
-
-        @media (max-width: 767px) {
-            width: 100% !important; padding-top: 0px; height: auto;
-        }
-    }
+    padding-top: @navbar-height;
 
     .left-column {
         background-color: @sidebar-background;
@@ -215,15 +199,6 @@ html, body {
     }
 
     .right-column {
-        &.span9 {
-            width: 76.4866339334%;
-            margin-left: 0px;
-
-            @media (min-width: 1200px) {
-                width: 76.8866339334%;
-            }
-        }
-
         .content-page {
             padding: 20px;
             min-height: 100%;
