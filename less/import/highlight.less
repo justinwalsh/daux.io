@@ -1,0 +1,135 @@
+/* ===========================================================================================
+Code Highlighting
+============================================================================================== */
+
+@hljs-css-prefix: hljs;
+
+.@{hljs-css-prefix} {
+    display: block;
+    padding: 0.5em;
+}
+
+.@{hljs-css-prefix},
+.@{hljs-css-prefix}-subst,
+.@{hljs-css-prefix}-tag .@{hljs-css-prefix}-title,
+.@{hljs-css-prefix}-lisp .@{hljs-css-prefix}-title,
+.@{hljs-css-prefix}-clojure .@{hljs-css-prefix}-built_in,
+.@{hljs-css-prefix}-nginx .@{hljs-css-prefix}-title {
+    color: @dark;
+}
+
+.@{hljs-css-prefix}-string,
+.@{hljs-css-prefix}-title,
+.@{hljs-css-prefix}-constant,
+.@{hljs-css-prefix}-parent,
+.@{hljs-css-prefix}-tag .@{hljs-css-prefix}-value,
+.@{hljs-css-prefix}-rules .@{hljs-css-prefix}-value,
+.@{hljs-css-prefix}-rules .@{hljs-css-prefix}-value .@{hljs-css-prefix}-number,
+.@{hljs-css-prefix}-preprocessor,
+.@{hljs-css-prefix}-ruby .@{hljs-css-prefix}-symbol,
+.@{hljs-css-prefix}-ruby .@{hljs-css-prefix}-symbol .@{hljs-css-prefix}-string,
+.@{hljs-css-prefix}-aggregate,
+.@{hljs-css-prefix}-template_tag,
+.@{hljs-css-prefix}-django .@{hljs-css-prefix}-variable,
+.@{hljs-css-prefix}-smalltalk .@{hljs-css-prefix}-class,
+.@{hljs-css-prefix}-addition,
+.@{hljs-css-prefix}-flow,
+.@{hljs-css-prefix}-stream,
+.@{hljs-css-prefix}-bash .@{hljs-css-prefix}-variable,
+.@{hljs-css-prefix}-apache .@{hljs-css-prefix}-tag,
+.@{hljs-css-prefix}-apache .@{hljs-css-prefix}-cbracket,
+.@{hljs-css-prefix}-tex .@{hljs-css-prefix}-command,
+.@{hljs-css-prefix}-tex .@{hljs-css-prefix}-special,
+.@{hljs-css-prefix}-erlang_repl .@{hljs-css-prefix}-function_or_atom,
+.@{hljs-css-prefix}-markdown .@{hljs-css-prefix}-header {
+    color: @syntax-string;
+}
+
+.@{hljs-css-prefix}-comment,
+.@{hljs-css-prefix}-annotation,
+.@{hljs-css-prefix}-template_comment,
+.@{hljs-css-prefix}-diff .@{hljs-css-prefix}-header,
+.@{hljs-css-prefix}-chunk,
+.@{hljs-css-prefix}-markdown .@{hljs-css-prefix}-blockquote {
+    color: @syntax-comment;
+}
+
+.@{hljs-css-prefix}-number,
+.@{hljs-css-prefix}-date,
+.@{hljs-css-prefix}-regexp,
+.@{hljs-css-prefix}-literal,
+.@{hljs-css-prefix}-smalltalk .@{hljs-css-prefix}-symbol,
+.@{hljs-css-prefix}-smalltalk .@{hljs-css-prefix}-char,
+.@{hljs-css-prefix}-go .@{hljs-css-prefix}-constant,
+.@{hljs-css-prefix}-change,
+.@{hljs-css-prefix}-markdown .@{hljs-css-prefix}-bullet,
+.@{hljs-css-prefix}-markdown .@{hljs-css-prefix}-link_url {
+    color: @syntax-number;
+}
+
+.@{hljs-css-prefix}-label,
+.@{hljs-css-prefix}-javadoc,
+.@{hljs-css-prefix}-ruby .@{hljs-css-prefix}-string,
+.@{hljs-css-prefix}-decorator,
+.@{hljs-css-prefix}-filter .@{hljs-css-prefix}-argument,
+.@{hljs-css-prefix}-localvars,
+.@{hljs-css-prefix}-array,
+.@{hljs-css-prefix}-attr_selector,
+.@{hljs-css-prefix}-important,
+.@{hljs-css-prefix}-pseudo,
+.@{hljs-css-prefix}-pi,
+.@{hljs-css-prefix}-doctype,
+.@{hljs-css-prefix}-deletion,
+.@{hljs-css-prefix}-envvar,
+.@{hljs-css-prefix}-shebang,
+.@{hljs-css-prefix}-apache .@{hljs-css-prefix}-sqbracket,
+.@{hljs-css-prefix}-nginx .@{hljs-css-prefix}-built_in,
+.@{hljs-css-prefix}-tex .@{hljs-css-prefix}-formula,
+.@{hljs-css-prefix}-erlang_repl .@{hljs-css-prefix}-reserved,
+.@{hljs-css-prefix}-prompt,
+.@{hljs-css-prefix}-markdown .@{hljs-css-prefix}-link_label,
+.@{hljs-css-prefix}-vhdl .@{hljs-css-prefix}-attribute,
+.@{hljs-css-prefix}-clojure .@{hljs-css-prefix}-attribute,
+.@{hljs-css-prefix}-coffeescript .@{hljs-css-prefix}-property {
+    color: @syntax-label;
+}
+
+.@{hljs-css-prefix}-keyword,
+.@{hljs-css-prefix}-id,
+.@{hljs-css-prefix}-phpdoc,
+.@{hljs-css-prefix}-title,
+.@{hljs-css-prefix}-built_in,
+.@{hljs-css-prefix}-aggregate,
+.@{hljs-css-prefix}-css .@{hljs-css-prefix}-tag,
+.@{hljs-css-prefix}-javadoctag,
+.@{hljs-css-prefix}-phpdoc,
+.@{hljs-css-prefix}-yardoctag,
+.@{hljs-css-prefix}-smalltalk .@{hljs-css-prefix}-class,
+.@{hljs-css-prefix}-winutils,
+.@{hljs-css-prefix}-bash .@{hljs-css-prefix}-variable,
+.@{hljs-css-prefix}-apache .@{hljs-css-prefix}-tag,
+.@{hljs-css-prefix}-go .@{hljs-css-prefix}-typename,
+.@{hljs-css-prefix}-tex .@{hljs-css-prefix}-command,
+.@{hljs-css-prefix}-markdown .@{hljs-css-prefix}-strong,
+.@{hljs-css-prefix}-request,
+.@{hljs-css-prefix}-status {
+    font-weight: bold;
+}
+
+.@{hljs-css-prefix}-markdown .@{hljs-css-prefix}-emphasis {
+    font-style: italic;
+}
+
+.@{hljs-css-prefix}-nginx .@{hljs-css-prefix}-built_in {
+    font-weight: normal;
+}
+
+.@{hljs-css-prefix}-coffeescript .@{hljs-css-prefix}-javascript,
+.@{hljs-css-prefix}-javascript .@{hljs-css-prefix}-xml,
+.@{hljs-css-prefix}-tex .@{hljs-css-prefix}-formula,
+.@{hljs-css-prefix}-xml .@{hljs-css-prefix}-javascript,
+.@{hljs-css-prefix}-xml .@{hljs-css-prefix}-vbscript,
+.@{hljs-css-prefix}-xml .@{hljs-css-prefix}-css,
+.@{hljs-css-prefix}-xml .@{hljs-css-prefix}-cdata {
+    opacity: 0.5;
+}

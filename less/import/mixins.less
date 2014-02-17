@@ -1,0 +1,19 @@
+/* ===========================================================================================
+Mixins
+============================================================================================== */
+
+.kill-background-image() {
+    background-image: none;
+    filter: none;
+}
+
+.kill-box-shadow() {
+    box-shadow: none;
+}
+
+.sans-serif(@weight: normal, @size: 14px, @lineheight: 20px) {
+    font-weight: @weight;
+    font-size: @size;
+    font-family: @font-family-sans-serif;
+    line-height: @lineheight;
+}
