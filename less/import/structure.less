@@ -211,8 +211,11 @@ html, body {
 
 .content-area, .article-tree {
     overflow: auto;
-    height: 100%;
     padding: 0px;
+
+    @media (min-width: 767px) {
+        height: 100%;
+    }
 }
 
 //mobile friendly sub-nav
