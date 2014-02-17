@@ -1,4 +1,6 @@
-module.exports = function(grunt) {
+module.exports = function (grunt) {
+    'use strict';
+
     grunt.loadNpmTasks('grunt-php');
     grunt.loadNpmTasks('grunt-contrib-less');
     grunt.loadNpmTasks('grunt-contrib-watch');
@@ -7,33 +9,37 @@ module.exports = function(grunt) {
         php: {
             dist: {
                 options: {
-                	keepalive: true,
-                	open: true,
+                    keepalive: true,
+                    open: true,
                     port: 8085
                 }
             }
         },
         less: {
-          development: {
-            files: {
-              "css/daux-blue.css": "less/daux-blue.less",
-              "css/daux-green.css": "less/daux-green.less",
-              "css/daux-navy.css": "less/daux-navy.less",
-              "css/daux-red.css": "less/daux-red.less"
+            development: {
+                options: {
+                    cleancss: true,
+                    report: 'min'
+                },
+                files: {
+                    "css/daux-blue.min.css": "less/daux-blue.less",
+                    "css/daux-green.min.css": "less/daux-green.less",
+                    "css/daux-navy.min.css": "less/daux-navy.less",
+                    "css/daux-red.min.css": "less/daux-red.less"
+                }
             }
-          }
         },
         watch: {
-          scripts: {
-            files: ['less/**/*.less'],
-            tasks: ['less'],
-            options: {
-              nospawn: true
+            scripts: {
+                files: ['less/**/*.less'],
+                tasks: ['less'],
+                options: {
+                    nospawn: true
+                },
             },
-          },
         },
     });
 
     //grunt.registerTask('default', ['less', 'watch']);
     grunt.registerTask('default', ['php']);
-}
+};
