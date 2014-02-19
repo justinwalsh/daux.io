@@ -26,8 +26,15 @@ $base_url = '/';
 // Set the base url of where the script is located
 if (isset($_SERVER['SCRIPT_NAME']))
 {
-    $base_url = substr($_SERVER['SCRIPT_NAME'], 0, strrpos($_SERVER['SCRIPT_NAME'] , '/')); // find the full URL to this application from server root
+	$base_url = substr($_SERVER['SCRIPT_NAME'], 0, strrpos($_SERVER['SCRIPT_NAME'] , '/')); // find the full URL to this application from server root
 }
+
+// Hide annoying date() Warnings due to no Timezone being set.
+if( ! ini_get('date.timezone') )
+{
+   date_default_timezone_set('GMT');
+}
+
 
 function get_base_url()
 {
@@ -46,18 +53,18 @@ function get_options() {
 		'date_modified' => true,
 		'float' => true,
 		'repo' => false,
-        'toggle_code' => false,
+		'toggle_code' => false,
 		'twitter' => array(),
 		'links' => array(),
 		'colors' => false,
 		'clean_urls' => true,
 		'google_analytics' => false,
 		'piwik_analytics' => false,
-        'piwik_analytics_id' => 1,
-        'ignore' => array(),
-        'languages' => array(),
-        'file_editor' => false,
-        'template' => 'default'
+		'piwik_analytics_id' => 1,
+		'ignore' => array(),
+		'languages' => array(),
+		'file_editor' => false,
+		'template' => 'default'
 	);
 
 	// Load User Config
@@ -115,11 +122,11 @@ function docs_url($tree, $branch = false) {
 }
 
 function load_page($tree, $url_params) {
-    if (count($url_params) > 0) {
-        $branch = find_branch($tree, $url_params);
-    } else {
-        $branch = current($tree);
-    }
+	if (count($url_params) > 0) {
+		$branch = find_branch($tree, $url_params);
+	} else {
+		$branch = current($tree);
+	}
 
 	$page = array();
 
@@ -273,15 +280,15 @@ function get_ignored() {
 }
 
 function get_tree($path = '.', $clean_path = '', $title = '', $first = true, $language = null, &$flat_tree = null){
-    $options = get_options();
-    $tree = array();
-    $ignore = get_ignored();
-    $dh = @opendir($path);
-    $index = 0;
+	$options = get_options();
+	$tree = array();
+	$ignore = get_ignored();
+	$dh = @opendir($path);
+	$index = 0;
 
-    // Build array of paths
-    $paths = array();
-    while(false !== ($file = readdir($dh))){
+	// Build array of paths
+	$paths = array();
+	while(false !== ($file = readdir($dh))){
 		$paths[$file] = $file;
 	}
 
@@ -291,79 +298,79 @@ function get_tree($path = '.', $clean_path = '', $title = '', $first = true, $la
 	// Sort paths
 	sort($paths);
 
-    if ($first && $language !== null) {
-        $language_path = $language . "/";
-    } else {
-        $language_path = "";
-    }
+	if ($first && $language !== null) {
+		$language_path = $language . "/";
+	} else {
+		$language_path = "";
+	}
 
-    // Loop through the paths
-    // while(false !== ($file = readdir($dh))){
+	// Loop through the paths
+	// while(false !== ($file = readdir($dh))){
 	foreach($paths as $file) {
 
-     	// Check that this file or folder is not to be ignored
-        if(!in_array($file, $ignore) && $file[0] !== '.') {
-            $full_path = "$path/$file";
-            $clean_sort = clean_sort($file);
+		// Check that this file or folder is not to be ignored
+		if(!in_array($file, $ignore) && $file[0] !== '.') {
+			$full_path = "$path/$file";
+			$clean_sort = clean_sort($file);
 
-            // If clean_urls is set to false and this is the first branch of the tree, append index.php to the clean_path.
-            if($options['clean_urls'] == false)
-            {
-                if($first)
-                {
-                    $url = $clean_path . '/' . $language_path . 'index.php/' . $clean_sort;
-                }
-                else
-                {
-                    $url = $clean_path . '/' . $language_path . $clean_sort;
-                }
-            }
-            else
-            {
-            	$url = $clean_path . '/' . $language_path . $clean_sort;
-            }
+			// If clean_urls is set to false and this is the first branch of the tree, append index.php to the clean_path.
+			if($options['clean_urls'] == false)
+			{
+				if($first)
+				{
+					$url = $clean_path . '/' . $language_path . 'index.php/' . $clean_sort;
+				}
+				else
+				{
+					$url = $clean_path . '/' . $language_path . $clean_sort;
+				}
+			}
+			else
+			{
+				$url = $clean_path . '/' . $language_path . $clean_sort;
+			}
 
-        	$clean_name = clean_name($clean_sort);
+			$clean_name = clean_name($clean_sort);
 
-        	// Title
-        	if (empty($title)) {
-        		$full_title = $clean_name;
-        	} else {
-        		$full_title = $title . ': ' . $clean_name;
-        	}
+			// Title
+			if (empty($title)) {
+				$full_title = $clean_name;
+			} else {
+				$full_title = $title . ': ' . $clean_name;
+			}
 
-            if(is_dir("$path/$file")) {
-            	// Directory
-            	$tree[$clean_sort] = array(
-            		'type' => 'folder',
-            		'name' => $clean_name,
-            		'title' => $full_title,
-            		'path' => $full_path,
-            		'clean' => $clean_sort,
-            		'url' => $url,
-            		'tree'=> (isset($flat_tree) && $flat_tree!==NULL)?
-            			get_tree($full_path, $url, $full_title, false, $language, $flat_tree):
-            			get_tree($full_path, $url, $full_title, false, $language)
-            	);
-            } else {
-            	// File
-            	$tree[$clean_sort] = array(
-            		'type' => 'file',
-            		'name' => $clean_name,
-            		'title' => $full_title,
-            		'path' => $full_path,
-            		'clean' => $clean_sort,
-            		'url' => $url,
-            	);
+			if(is_dir("$path/$file")) {
+				// Directory
+				$tree[$clean_sort] = array(
+					'type' => 'folder',
+					'name' => $clean_name,
+					'title' => $full_title,
+					'path' => $full_path,
+					'clean' => $clean_sort,
+					'url' => $url,
+					'tree'=> (isset($flat_tree) && $flat_tree!==NULL)?
+						get_tree($full_path, $url, $full_title, false, $language, $flat_tree):
+						get_tree($full_path, $url, $full_title, false, $language)
+				);
+			} else {
+				// File
+				$tree[$clean_sort] = array(
+					'type' => 'file',
+					'name' => $clean_name,
+					'title' => $full_title,
+					'path' => $full_path,
+					'clean' => $clean_sort,
+					'url' => $url,
+				);
 
-            	if(isset($flat_tree) && $flat_tree!==NULL)
-            		array_push($flat_tree, $tree[$clean_sort]);
-            }
-        }
-     	$index++;
-    }
+				if(isset($flat_tree) && $flat_tree!==NULL)
+					array_push($flat_tree, $tree[$clean_sort]);
+			}
+		}
+		$index++;
+	}
 
-    return $tree;
+	return $tree;
 }
 
 /**
@@ -387,58 +394,58 @@ function get_tree($path = '.', $clean_path = '', $title = '', $first = true, $la
  */
 function get_uri($prefix_slash = true)
 {
-    if (isset($_SERVER['PATH_INFO']))
-    {
-        $uri = $_SERVER['PATH_INFO'];
-    }
-    elseif (isset($_SERVER['REQUEST_URI']))
-    {
-        $uri = $_SERVER['REQUEST_URI'];
-        if (strpos($uri, $_SERVER['SCRIPT_NAME']) === 0)
-        {
-            $uri = substr($uri, strlen($_SERVER['SCRIPT_NAME']));
-        }
-        elseif (strpos($uri, dirname($_SERVER['SCRIPT_NAME'])) === 0)
-        {
-            $uri = substr($uri, strlen(dirname($_SERVER['SCRIPT_NAME'])));
-        }
+	if (isset($_SERVER['PATH_INFO']))
+	{
+		$uri = $_SERVER['PATH_INFO'];
+	}
+	elseif (isset($_SERVER['REQUEST_URI']))
+	{
+		$uri = $_SERVER['REQUEST_URI'];
+		if (strpos($uri, $_SERVER['SCRIPT_NAME']) === 0)
+		{
+			$uri = substr($uri, strlen($_SERVER['SCRIPT_NAME']));
+		}
+		elseif (strpos($uri, dirname($_SERVER['SCRIPT_NAME'])) === 0)
+		{
+			$uri = substr($uri, strlen(dirname($_SERVER['SCRIPT_NAME'])));
+		}
 
-        // This section ensures that even on servers that require the URI to be in the query string (Nginx) a correct
-        // URI is found, and also fixes the QUERY_STRING server var and $_GET array.
-        if (strncmp($uri, '?/', 2) === 0)
-        {
-            $uri = substr($uri, 2);
-        }
-        $parts = preg_split('#\?#i', $uri, 2);
-        $uri = $parts[0];
-        if (isset($parts[1]))
-        {
-            $_SERVER['QUERY_STRING'] = $parts[1];
-            parse_str($_SERVER['QUERY_STRING'], $_GET);
-        }
-        else
-        {
-            $_SERVER['QUERY_STRING'] = '';
-            $_GET = array();
-        }
-        $uri = parse_url($uri, PHP_URL_PATH);
-    }
-    else
-    {
-        // Couldn't determine the URI, so just return false
-        return false;
-    }
+		// This section ensures that even on servers that require the URI to be in the query string (Nginx) a correct
+		// URI is found, and also fixes the QUERY_STRING server var and $_GET array.
+		if (strncmp($uri, '?/', 2) === 0)
+		{
+			$uri = substr($uri, 2);
+		}
+		$parts = preg_split('#\?#i', $uri, 2);
+		$uri = $parts[0];
+		if (isset($parts[1]))
+		{
+			$_SERVER['QUERY_STRING'] = $parts[1];
+			parse_str($_SERVER['QUERY_STRING'], $_GET);
+		}
+		else
+		{
+			$_SERVER['QUERY_STRING'] = '';
+			$_GET = array();
+		}
+		$uri = parse_url($uri, PHP_URL_PATH);
+	}
+	else
+	{
+		// Couldn't determine the URI, so just return false
+		return false;
+	}
 
-    // Do some final cleaning of the URI and return it
-    return ($prefix_slash ? '/' : '').str_replace(array('//', '../'), '/', trim($uri, '/'));
+	// Do some final cleaning of the URI and return it
+	return ($prefix_slash ? '/' : '').str_replace(array('//', '../'), '/', trim($uri, '/'));
 }
 
 function handle_editor_post($post, $page) {
-    if(file_exists($page["path"])) {
-        file_put_contents($page["path"], $post["markdown"]);
-    } else {
-        throw new Exception("File doesn't exist", 1);
-    }
+	if(file_exists($page["path"])) {
+		file_put_contents($page["path"], $post["markdown"]);
+	} else {
+		throw new Exception("File doesn't exist", 1);
+	}
 }
 
 /**
@@ -448,53 +455,53 @@ function handle_editor_post($post, $page) {
 function generate_page($options, $url_params, $base_url, $return=FALSE, &$flat_tree=NULL){
 	//documentation folder defined in various folder languages
 	if (count($options['languages']) > 0 && count($url_params) > 0 && strlen($url_params[0]) > 0) {
-        $language = array_shift($url_params);
-        $base_path = $options['docs_path']. DIRECTORY_SEPARATOR . $language;
-    } else {
-        $language = null;
-        $base_path = $options['docs_path'];
-    }
+		$language = array_shift($url_params);
+		$base_path = $options['docs_path']. DIRECTORY_SEPARATOR . $language;
+	} else {
+		$language = null;
+		$base_path = $options['docs_path'];
+	}
 
 	// If a timezone has been set in the config file, override the default PHP timezone for this application.
 	if(isset($options['timezone']))
 	{
-	    date_default_timezone_set($options['timezone']);
+		date_default_timezone_set($options['timezone']);
 	}
 
-    $tree = (isset($flat_tree))?
-        get_tree($base_path, $base_url, '', true, $language,$flat_tree):
-        get_tree($base_path, $base_url, '', true, $language);
+	$tree = (isset($flat_tree))?
+		get_tree($base_path, $base_url, '', true, $language,$flat_tree):
+		get_tree($base_path, $base_url, '', true, $language);
 
-    // If a language is set in the config, rewrite urls based on the language
+	// If a language is set in the config, rewrite urls based on the language
 	if (! isset($language) || $language === null) {
-	    $homepage_url = homepage_url($tree);
+		$homepage_url = homepage_url($tree);
 	} else {
-	    $homepage_url = "/";
+		$homepage_url = "/";
 	}
 	// Redirect to docs, if there is no homepage
 	if ($homepage_url !== '/') {
-	    header('Location: '.$homepage_url);
+		header('Location: '.$homepage_url);
 	}
 
-    $docs_url = docs_url($tree);
-    $page = load_page($tree, $url_params);
+	$docs_url = docs_url($tree);
+	$page = load_page($tree, $url_params);
 
 
 	// Handle AJAX requests for file editing
 	if(isset($_POST["markdown"]) && $options["file_editor"] === true) {
-	    handle_editor_post($_POST, $page);
-	    die;
+		handle_editor_post($_POST, $page);
+		die;
 	}
 
-    if($url_params[0]=='')
-    	$homepage = TRUE;
-    else
-    	$homepage = FALSE;
+	if($url_params[0]=='')
+		$homepage = TRUE;
+	else
+		$homepage = FALSE;
 
-    ob_start();
+	ob_start();
 
-    include('template/'.$options['template'].'.tpl');
-    if ($return === TRUE)
+	include('template/'.$options['template'].'.tpl');
+	if ($return === TRUE)
 	{
 		$buffer = ob_get_contents();
 		@ob_end_clean();
@@ -507,8 +514,8 @@ function generate_page($options, $url_params, $base_url, $return=FALSE, &$flat_t
 function load_tpl_block($file, $options, $base_url){
 	ob_start();
 
-    include('template/'.$file.'.tpl');
-    $buffer = ob_get_contents();
+	include('template/'.$file.'.tpl');
+	$buffer = ob_get_contents();
 	@ob_end_clean();
 	return $buffer;
 }
@@ -522,9 +529,9 @@ function copy_recursive($source, $dest, $ignoreList = array()){
 	  RecursiveIteratorIterator::SELF_FIRST) as $item
 	) {
 	  if ($item->isDir()) {
-	    @mkdir($dest . DIRECTORY_SEPARATOR . $src_folder . DIRECTORY_SEPARATOR .$iterator->getSubPathName());
+		@mkdir($dest . DIRECTORY_SEPARATOR . $src_folder . DIRECTORY_SEPARATOR .$iterator->getSubPathName());
 	  } else {
-        if (!$ignoreList || !in_array($item, $ignoreList)) @copy($item, $dest . DIRECTORY_SEPARATOR .$src_folder. DIRECTORY_SEPARATOR .$iterator->getSubPathName());
+		if (!$ignoreList || !in_array($item, $ignoreList)) @copy($item, $dest . DIRECTORY_SEPARATOR .$src_folder. DIRECTORY_SEPARATOR .$iterator->getSubPathName());
 	  }
 	}
 }
@@ -535,7 +542,7 @@ function clean_directory($directory){
 	  new RecursiveDirectoryIterator($directory, RecursiveDirectoryIterator::SKIP_DOTS),
 	  RecursiveIteratorIterator::SELF_FIRST) as $item
 	) {
-	    @unlink($directory.DIRECTORY_SEPARATOR.$iterator->getSubPathName());
+		@unlink($directory.DIRECTORY_SEPARATOR.$iterator->getSubPathName());
 	}
 }
 
@@ -551,23 +558,23 @@ function relative_base($count){
 
 function clean_copy_assets($path){
 	@mkdir($path);
-    $options = $GLOBALS["options"];
+	$options = $GLOBALS["options"];
 	//Clean
-    clean_directory($path);
-    //Copy assets
-    $unnecessaryImgs = array('./img/favicon.png', './img/favicon-blue.png', './img/favicon-green.png', './img/favicon-navy.png', './img/favicon-red.png');
-    $unnecessaryJs = array();
-    if ($options['colors']) {
-        @mkdir($path.'/less');
-        @mkdir($path.'/less/import');
-        @copy('./less/import/daux-base.less', $path.'/less/import/daux-base.less');
-        $unnecessaryImgs = array_diff($unnecessaryImgs, array('./img/favicon.png'));
-    } else {
-        $unnecessaryJs = array('./js/less.min.js');
-        @mkdir($path.'/css');
-        @copy('./css/daux-'.$options['theme'].'.css', $path.'/css/daux-'.$options['theme'].'.css');
-        $unnecessaryImgs = array_diff($unnecessaryImgs, array('./img/favicon-'.$options['theme'].'.png'));
-    }
-    copy_recursive('./img', $path.'/', $unnecessaryImgs);
-    copy_recursive('./js', $path.'/', $unnecessaryJs);
+	clean_directory($path);
+	//Copy assets
+	$unnecessaryImgs = array('./img/favicon.png', './img/favicon-blue.png', './img/favicon-green.png', './img/favicon-navy.png', './img/favicon-red.png');
+	$unnecessaryJs = array();
+	if ($options['colors']) {
+		@mkdir($path.'/less');
+		@mkdir($path.'/less/import');
+		@copy('./less/import/daux-base.less', $path.'/less/import/daux-base.less');
+		$unnecessaryImgs = array_diff($unnecessaryImgs, array('./img/favicon.png'));
+	} else {
+		$unnecessaryJs = array('./js/less.min.js');
+		@mkdir($path.'/css');
+		@copy('./css/daux-'.$options['theme'].'.min.css', $path.'/css/daux-'.$options['theme'].'.min.css');
+		$unnecessaryImgs = array_diff($unnecessaryImgs, array('./img/favicon-'.$options['theme'].'.png'));
+	}
+	copy_recursive('./img', $path.'/', $unnecessaryImgs);
+	copy_recursive('./js', $path.'/', $unnecessaryJs);
 }
