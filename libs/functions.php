@@ -478,9 +478,15 @@ function generate_page($options, $url_params, $base_url, $return=FALSE, &$flat_t
 	} else {
 		$homepage_url = "/";
 	}
+
+	if($url_params[0]=='')
+		$homepage = TRUE;
+	else
+		$homepage = FALSE;
+
 	// Redirect to docs, if there is no homepage
-	if ($homepage_url !== '/') {
-		header('Location: '.$homepage_url);
+	if ($homepage && $homepage_url !== '/') {
+		header('Location: '.docs_url($tree));
 	}
 
 	$docs_url = docs_url($tree);
@@ -493,10 +499,7 @@ function generate_page($options, $url_params, $base_url, $return=FALSE, &$flat_t
 		die;
 	}
 
-	if($url_params[0]=='')
-		$homepage = TRUE;
-	else
-		$homepage = FALSE;
+
 
 	ob_start();
 
