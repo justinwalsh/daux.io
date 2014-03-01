@@ -64,7 +64,11 @@ software, even if advised of the possibility of such damage.
 */
 
 require_once dirname( __FILE__ ) . '/libs/functions.php';
-$options = get_options();
+$options = get_options(
+    empty($argv[2])?:$argv[2]
+);
+
+$outputPath = empty($argv[3])? './static' : $argv[3];
 
 $command_line=FALSE;
 if(isset($argv)){
@@ -77,20 +81,20 @@ if(isset($argv)){
     switch ($argv[1]) {
         //Generate static web documentation
         case 'generate':
-            clean_copy_assets(dirname(__FILE__).'/static');
+            clean_copy_assets(dirname(__FILE__). '/' . $outputPath);
 
             //Generate index.html
             $markdown_structure = array();
             $base_url = '.';
             $index = generate_page($options, array(''), $base_url, TRUE, $markdown_structure);
-            file_put_contents('./static/index.html', $index);
+            file_put_contents($outputPath . '/index.html', $index);
             echo '.';
 
             foreach ($markdown_structure as $element) {
                 echo '.';
                 $flat_tree_tmp = array();
                 if( preg_match('/\.\/(.*)\/(.*)$/', $element['url'], $final_folder) ){
-                    @mkdir('./static/'.$final_folder[1]);
+                    @mkdir($outputPath . '/'.$final_folder[1]);
 
                     $url_params =  preg_split('/\//',$final_folder[1] );
                     $folder_count = count($url_params);
@@ -98,12 +102,12 @@ if(isset($argv)){
 
                     $base_url = relative_base($folder_count);
                     $file = generate_page($options, $url_params, $base_url, TRUE, $flat_tree_tmp);
-                    file_put_contents('./static/'.$final_folder[1].'/'.$final_folder[2].'.html', $file);
+                    file_put_contents($outputPath . '/'.$final_folder[1].'/'.$final_folder[2].'.html', $file);
                 }else{
                     $strFile = str_replace('./', '', $element['url']);
                     $base_url = '.';
                     $file = generate_page($options, array($strFile), $base_url, TRUE, $flat_tree_tmp);
-                    file_put_contents('./static/'.$strFile.'.html', $file);
+                    file_put_contents($outputPath . '/'.$strFile.'.html', $file);
                 }               
             }
             echo "finished\n";
@@ -111,7 +115,7 @@ if(isset($argv)){
             break;
         //Generate one-page documentation
         case 'full-doc':
-            clean_copy_assets(dirname(__FILE__).'/static');
+            clean_copy_assets(dirname(__FILE__). '/' . $outputPath);
 
             $options['template'] ='full-doc';
             $markdown_structure = array();
@@ -119,7 +123,7 @@ if(isset($argv)){
             $markdown_structure = array();
             $base_url = '.';
             $index = generate_page($options, array(''), $base_url, TRUE, $markdown_structure);
-            file_put_contents('./static/full-doc.html', load_tpl_block('full-doc-blocks/head', $options, $base_url).$index);
+            file_put_contents($outputPath . '/full-doc.html', load_tpl_block('full-doc-blocks/head', $options, $base_url).$index);
             echo '.';
             array_pop($markdown_structure);
 
@@ -132,14 +136,14 @@ if(isset($argv)){
                     array_push( $url_params , $final_folder[2] );
 
                     $file = generate_page($options, $url_params, $base_url, TRUE, $flat_tree_tmp);
-                    file_put_contents('./static/full-doc.html', $file, FILE_APPEND);
+                    file_put_contents($outputPath . '/full-doc.html', $file, FILE_APPEND);
                 }else{
                     $strFile = str_replace('./', '', $element['url']);
                     $file = generate_page($options, array($strFile), $base_url, TRUE, $flat_tree_tmp);
-                    file_put_contents('./static/full-doc.html', $file, FILE_APPEND);
+                    file_put_contents($outputPath . '/full-doc.html', $file, FILE_APPEND);
                 }               
             }
-            file_put_contents('./static/full-doc.html', file_get_contents('template/full-doc-blocks/foot.tpl'), FILE_APPEND);
+            file_put_contents($outputPath . '/full-doc.html', file_get_contents('template/full-doc-blocks/foot.tpl'), FILE_APPEND);
             echo "finished\n";
             echo "The documentation is generated in static folder\n";
             break;

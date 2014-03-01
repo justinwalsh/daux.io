@@ -43,7 +43,7 @@ function get_base_url()
 };
 
 // Daux.io Functions
-function get_options() {
+function get_options($config_file = './docs/config.json') {
 	$options = array(
 		'title' => "Documentation",
 		'tagline' => false,
@@ -68,7 +68,6 @@ function get_options() {
 	);
 
 	// Load User Config
-	$config_file = './docs/config.json';
 	if (file_exists($config_file)) {
 		$config = json_decode(file_get_contents($config_file), true);
 		$options = array_merge($options, $config);
