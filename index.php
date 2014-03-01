@@ -64,7 +64,9 @@ software, even if advised of the possibility of such damage.
 */
 
 require_once dirname( __FILE__ ) . '/libs/functions.php';
-$options = get_options();
+$options = get_options(
+    empty($argv[2])?:$argv[2]
+);
 
 $command_line=FALSE;
 if(isset($argv)){
