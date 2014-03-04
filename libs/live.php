@@ -7,7 +7,9 @@
             $b = explode('/', clean_url($page, "Live"));
             $output_language = $b[0];
         }
-        return generate_page(clean_url_to_file($page));
+        $file = clean_url_to_file($page);
+        if (!is_file($file)) $file = FALSE;
+        return generate_page($file);
     }
 
     //  Clean Live Url
@@ -30,14 +32,19 @@
             if (is_file($docs_path . "/index.md")) return $docs_path . "/index.md";
             else {
                 if (empty($options['languages'])) return $base_doc;
-                else return $base_doc[array_keys($base_doc)[0]];
+                else {
+                	$t = array_keys($base_doc);
+                	return $base_doc[$t[0]];
+                }
             }
         } else {
             $url = explode("/", $url);
             $file = $docs_path;
             foreach ($url as $part) {
-                $dirs = array_keys($tree);
-                $key = array_search($part, array_map("clean_live", $dirs));
+                if (isset($tree)) {
+                    $dirs = array_keys($tree);
+                    $key = array_search($part, array_map("clean_live", $dirs));
+                } else $key = FALSE;
                 if ($key === FALSE) {
                     return FALSE;
                 }
