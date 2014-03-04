@@ -30,7 +30,10 @@
             if (is_file($docs_path . "/index.md")) return $docs_path . "/index.md";
             else {
                 if (empty($options['languages'])) return $base_doc;
-                else return $base_doc[array_keys($base_doc)[0]];
+                else {
+                	$t = array_keys($base_doc);
+                	return $base_doc[$t[0]];
+                }
             }
         } else {
             $url = explode("/", $url);
