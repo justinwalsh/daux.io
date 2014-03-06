@@ -150,6 +150,7 @@
         } else {
             $page['path'] = str_replace($docs_path . '/', "", $file);
             $page['markdown'] = file_get_contents($file);
+            $page['modified'] = filemtime($file);
             $page['content'] = MarkDownExtended($page['markdown']);
             $page['title'] = clean_url($file, 'Title');
         }
