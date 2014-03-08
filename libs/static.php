@@ -1,10 +1,14 @@
 <?php
 
     //  Generate Static Documentation
-    function generate_static() {
+    function generate_static($out_dir) {
         global $tree, $base, $docs_path, $output_path, $options, $mode, $multilanguage, $output_language;
         $mode = 'Static';
-        $output_path = $base . '/static';
+        if ($out_dir === '') $output_path = $base . '/static';
+        else {
+            if (substr($out_dir, 0, 1) !== '/') $output_path = $base . '/' . $out_dir;
+            else $output_path = $out_dir;
+        }
         clean_copy_assets($output_path);
         build_tree();
         if (!$multilanguage) generate_static_branch($tree, '');

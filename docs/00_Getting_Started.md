@@ -15,6 +15,7 @@
 * Git/SVN Friendly
 * Supports Google Analytics and Piwik Analytics
 * Optional code float layout
+* Static Output Generation
 
 ## Demos
 
@@ -22,6 +23,8 @@ This is a list of sites using Daux.io:
 
 * [Daux.io](http://daux.io)
 * [Munee: Standalone PHP 5.3 Asset Optimisation & Manipulation](http://mun.ee)
+* [ICADMIN: An admin panel powered by CodeIgniter.](http://istocode.com/shared/ic-admin/)
+* [Daux.io in Chinese - Demonstrates muti-language installations](http://daux.emx2.co.uk/)
 
 Do you use Daux.io? Send me a pull request or open an [issue](https://github.com/justinwalsh/daux.io/issues) and I will add you to the list.
 
@@ -131,11 +134,19 @@ To create a custom color scheme, set the `theme` property to `custom` and then d
 ```
 
 ###Code Floating:
-By deafult your code blocks will be floated to a column on the right side of your content. To disable this feature, set the `float` property to `false`.
+By default your code blocks will be floated to a column on the right side of your content. To disable this feature, set the `float` property to `false`.
 
 ```json
 {
 	"float": false
+}
+```
+###Toggling Code Blocks
+Some users might wish to hide the code blocks & view just the documentation. By setting the `toggle_code` property to `true`, you can offer a toggle button on the page.
+
+```json
+{
+	"toggle_code": true
 }
 ```
 
@@ -172,6 +183,8 @@ Include custom links in the sidebar.
 ```
 
 ###File editor:
+![File editor](https://f.cloud.github.com/assets/1788727/1954191/44358884-81d1-11e3-859d-254b9fb81808.png)
+
 Enable front-end Markdown editor. _Disabled by default_.
 
 ```json
@@ -245,6 +258,37 @@ If your server does not have a default timezone set in php.ini, it may return er
 }
 ```
 
+###Multi-language
+Enables multi-language support which needs seperate directories for each language in `docs/` folder.
+
+```json
+{
+        "languages": { "en": "English", "de": "German" }
+}
+```
+
+Directory structure:
+```
+├── docs/
+│   ├── index.md
+│   ├── en
+│   │   ├── 00_Getting_Started.md
+│   │   ├── 01_Examples
+│   │   │   ├── 01_GitHub_Flavored_Markdown.md
+│   │   │   ├── 05_Code_Highlighting.md
+│   │   ├── 05_More_Examples
+│   │   │   ├── Hello_World.md
+│   │   │   ├── 05_Code_Highlighting.md
+│   ├── de
+│   │   ├── 00_Getting_Started.md
+│   │   ├── 01_Examples
+│   │   │   ├── 01_GitHub_Flavored_Markdown.md
+│   │   │   ├── 05_Code_Highlighting.md
+│   │   ├── 05_More_Examples
+│   │   │   ├── Hello_World.md
+│   │   │   ├── 05_Code_Highlighting.md
+```
+
 ## Running Remotely
 
 Copy the files from the repo to a web server that can run PHP 5.3 or greater.
@@ -274,12 +318,12 @@ Generating a complete set of pages, with navigation
 php index.php generate
 ```
 
-Generating just one big file with each doc concatenated
+You can optionally pass the location of config.json and (also optionally) the output directory for the static file
 
 ```bash
-php index.php full-doc
+php index.php generate '\path\to\config.json' 'out\dir'
 ```
-
+If the directory has a '\' at the beginning, it is treated as an absolute path, otherwise as relative to the Daux Directory.
 
 ## Running on IIS
 
