@@ -3,12 +3,12 @@
     require_once(dirname( __FILE__)."/markdown_extended.php");
     $tree = array();
     $base = dirname(dirname(__FILE__));
-    $options = get_options();
+    $options = get_options(isset($argv[2]) ? $argv[2] : '');
     $docs_path = $base . '/' . $options['docs_path'];
     $multilanguage = !empty($options['languages']) ? TRUE : FALSE;
 
     //  Options
-    function get_options() {
+    function get_options($config_file) {
         global $base;
         $options = array(
             'title' => "Documentation",
@@ -33,7 +33,8 @@
             'template' => 'default'
         );
         // Load User Config
-        $config_file = $base . '/docs/config.json';
+        $config_file = (($config_file === '') ? 'docs/config.json' : $config_file);
+        if (substr($config_file, 0, 1) !== '/') $config_file = $base . '/' . $config_file;
         if (file_exists($config_file)) {
             $config = json_decode(file_get_contents($config_file), true);
             $options = array_merge($options, $config);
@@ -53,6 +54,7 @@
                 exit;
             }
         }
+		if (!ini_get('date.timezone')) date_default_timezone_set('GMT');
         return $options;
     }
 
@@ -143,7 +145,6 @@
         if (!$file) {
             $page['path'] = '';
             $page['markdown'] = '';
-            $page['content'] = '';
             $page['title'] = 'Oh No';
             $page['content'] = "<h3>Oh No. That page doesn't exist</h3>";
             $options['file_editor'] = false;

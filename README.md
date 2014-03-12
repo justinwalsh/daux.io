@@ -15,6 +15,7 @@
 * Git/SVN Friendly
 * Supports Google Analytics and Piwik Analytics
 * Optional code float layout
+* Static Output Generation
 
 ## Demos
 
@@ -317,11 +318,12 @@ Generating a complete set of pages, with navigation
 php index.php generate
 ```
 
-Generating just one big file with each doc concatenated
+You can optionally pass the location of config.json and (also optionally) the output directory for the static file
 
 ```bash
-php index.php full-doc
+php index.php generate '\path\to\config.json' 'out\dir'
 ```
+If the directory has a '\' at the beginning, it is treated as an absolute path, otherwise as relative to the Daux Directory.
 
 ## Running on IIS
 

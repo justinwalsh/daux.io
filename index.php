@@ -75,7 +75,7 @@ if(isset($argv)){
     switch ($argv[1]) {
         //Generate static web documentation
         case 'generate':
-            generate_static();
+            generate_static((isset($argv[3])) ? $argv[3] : '');
             echo "Finished\n";
             echo "The documentation is generated in static folder\n";
             break;
