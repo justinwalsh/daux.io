@@ -154,7 +154,7 @@
                     <div id="sub-nav-collapse" class="sub-nav-collapse">
                         <!-- Navigation -->
                         <?php echo get_navigation($file); ?>
-                        <?php if (!empty($options['links']) || !empty($options['twitter'])) { ?>
+                        <?php if (!empty($options['links']) || !empty($options['twitter'] || $options['toggle_code'])) { ?>
                             <div class="well well-sidebar">
                                 <!-- Links -->
                                 <?php foreach($options['links'] as $name => $url) { ?>
