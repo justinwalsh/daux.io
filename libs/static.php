@@ -2,7 +2,7 @@
 
     //  Generate Static Documentation
     function generate_static($out_dir) {
-        global $tree, $base, $base_doc, $docs_path, $output_path, $options, $mode, $multilanguage, $output_language;
+        global $tree, $base, $docs_path, $output_path, $options, $mode, $multilanguage, $output_language;
         $mode = 'Static';
         if ($out_dir === '') $output_path = $base . '/static';
         else {
@@ -18,15 +18,10 @@
                 generate_static_branch($tree[$languageKey], $languageKey);
             }
         $index = $docs_path . '/index.md';
-        if (!is_file($index)) {
-			if (empty($options['languages'])) $index = $base_doc;
-            else {
-            	$t = array_keys($base_doc);
-            	$index = $base_doc[$t[0]];
-           }
+        if (is_file($index)) {
+            $index = generate_page($index);
+            file_put_contents($output_path . '/index.html', $index);
         }
-        $index = generate_page($index);
-        file_put_contents($output_path . '/index.html', $index);
     }
 
     //  Generate Static Content For Given Directory
