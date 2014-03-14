@@ -36,7 +36,7 @@
 <body>
     <?php if ($homepage) { ?>
         <!-- Homepage -->
-        <div class="navbar navbar-fixed-top">
+        <div class="navbar navbar-fixed-top hidden-print">
                 <div class="container">
                     <a class="brand navbar-brand pull-left" href="<?php echo get_url('index'); ?>"><?php echo $options['title']; ?></a>
                     <p class="navbar-text pull-right">
@@ -129,10 +129,10 @@
     <?php } else { ?>
         <!-- Docs -->
         <?php if ($options['repo']) { ?>
-            <a href="https://github.com/<?php echo $options['repo']; ?>" target="_blank" id="github-ribbon"><img src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"></a>
+            <a href="https://github.com/<?php echo $options['repo']; ?>" target="_blank" id="github-ribbon" class="hidden-print"><img src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"></a>
         <?php } ?>
         <div class="container-fluid fluid-height wrapper">
-            <div class="navbar navbar-fixed-top">
+            <div class="navbar navbar-fixed-top hidden-print">
                 <div class="container-fluid">
                     <a class="brand navbar-brand pull-left" href="<?php echo get_url('index'); ?>"><?php echo $options['title']; ?></a>
                     <p class="navbar-text pull-right">
@@ -142,7 +142,7 @@
             </div>
 
             <div class="row columns content">
-                <div class="left-column article-tree col-sm-3">
+                <div class="left-column article-tree col-sm-3 hidden-print">
                     <!-- For Mobile -->
                     <div class="responsive-collapse">
                         <button type="button" class="btn btn-sidebar" id="menu-spinner-button">
