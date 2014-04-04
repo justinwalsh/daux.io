@@ -1589,7 +1589,7 @@ Highlight.js highlights syntax in code examples on blogs, forums and in fact on 
 	HNDL_1_ADD_VAL_MSG = INTDADDVMSG(HNDL_1,"Missing (Status Code 9) values found");
 	EMPTY_HNDL = INTDCREATEHANDLE('05/03/2006 00:00:00', '05/03/2006 23:59:59', 3600, "Y", "0", " ");
 
-**1С
+**1С**
 
 	#Если Клиент Тогда
 	Перем СимвольныйКодКаталога = "ля-ля-ля"; //комментарий
