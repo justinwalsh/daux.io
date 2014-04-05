@@ -166,6 +166,7 @@
     //  File to URL
     function clean_url($url, $mode = 'Static') {
         global $docs_path, $output_path, $options;
+        $url = rawurldecode($url);
         switch ($mode) {
             case 'Live':
                 $url = str_replace(array(".md", ".html", ".php"), "", $url);
