@@ -115,12 +115,12 @@
                 $return .= "<li";
                 if (!(strpos($url, $key) === FALSE)) $return .= " class=\"open\"";
                 $return .= ">";
-				$link = "#";
-				$nav_class = "aj-nav ";
-				if(in_array("index.md", $node)) {
-					$link = $t . clean_url($key, $mode);
-					$nav_class = "";
-				}
+                $link = "#";
+                $nav_class = "aj-nav ";
+                if(in_array("index.md", $node)) {
+                    $link = $t . clean_url($key, $mode);
+                    $nav_class = "";
+                }
                 $return .= "<a href=\"" . $link . "\" class=\"" . $nav_class . "folder\">";
                 $return .= clean_url($key, "Title");
                 $return .= "</a>";
@@ -145,7 +145,7 @@
     function generate_page($file) {
         global $base, $base_doc, $base_path, $docs_path, $options, $mode, $relative_base;
         $template = $options['template'];
-		$file_relative_path = str_replace($docs_path . '/', "", $file);
+        $file_relative_path = str_replace($docs_path . '/', "", $file);
         if ($file_relative_path === 'index.md') $homepage = TRUE;
         else $homepage = FALSE;
         if (!$file) {
@@ -190,11 +190,11 @@
                 return $url;
             case 'Title':
             case 'Filename':
-				$parts = array_reverse(explode('/', $url));
-				if (isset($parts[0])) {
-					if ($parts[0] === "index.md" && isset($parts[1])) $url = $parts[1];
-					else $url = $parts[0];
-				}
+                $parts = array_reverse(explode('/', $url));
+                if (isset($parts[0])) {
+                    if ($parts[0] === "index.md" && isset($parts[1])) $url = $parts[1];
+                    else $url = $parts[0];
+                }
                 $url = explode('_', $url);
                 if (isset($url[0]) && is_numeric($url[0])) unset($url[0]);
                 if ($mode === 'Filename') $url = implode('_', $url);

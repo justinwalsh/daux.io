@@ -51,7 +51,7 @@
                 $file .= '/' . $dirs[$key];
                 $tree = $tree[$dirs[$key]];
             }
-			if (is_file($file . "/index.md")) $file = $file . "/index.md";
+            if (is_file($file . "/index.md")) $file = $file . "/index.md";
             return $file;
         }
     }
