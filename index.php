@@ -96,6 +96,7 @@ build_tree();
 $remove = array($base_path . '/');
 if (!$options['clean_urls']) $remove[] = 'index.php?';
 $request = str_replace($remove, "", $_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
+$request = rawurldecode($request);
 if (isset($_POST['markdown']) && $options['file_editor'])
     file_put_contents(clean_url_to_file($request), $_POST['markdown']);
 echo generate_live($request);
