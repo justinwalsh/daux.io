@@ -37,6 +37,10 @@
         if (substr($config_file, 0, 1) !== '/') $config_file = $base . '/' . $config_file;
         if (file_exists($config_file)) {
             $config = json_decode(file_get_contents($config_file), true);
+            if(!isset($config)) {
+                echo '<strong>Daux.io Config Error:</strong><br> The config file ' . $config_file . ' that was passed contained invalid JSON. <a href="http://daux.io">Learn More</a>.';
+                exit;
+            }
             $options = array_merge($options, $config);
         }
         if (!isset($options['ignore']['files'])) $options['ignore']['files'] = array();
@@ -54,7 +58,7 @@
                 exit;
             }
         }
-		if (!ini_get('date.timezone')) date_default_timezone_set('GMT');
+        if (!ini_get('date.timezone')) date_default_timezone_set('GMT');
         return $options;
     }
 
