@@ -3,20 +3,20 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "316e27cc72bce34db33fdde3d1b1c414",
+    "hash": "21bea6f01fcb0695632cbacb5a3988a1",
     "packages": [
         {
             "name": "erusev/parsedown",
-            "version": "dev-master",
+            "version": "1.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/erusev/parsedown.git",
-                "reference": "60819541858f9da6fcb77e8bd09693635553d3ef"
+                "reference": "2da10d277b086372f17b96df6cdc903829e1dde0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/erusev/parsedown/zipball/60819541858f9da6fcb77e8bd09693635553d3ef",
-                "reference": "60819541858f9da6fcb77e8bd09693635553d3ef",
+                "url": "https://api.github.com/repos/erusev/parsedown/zipball/2da10d277b086372f17b96df6cdc903829e1dde0",
+                "reference": "2da10d277b086372f17b96df6cdc903829e1dde0",
                 "shasum": ""
             },
             "type": "library",
@@ -42,7 +42,7 @@
                 "markdown",
                 "parser"
             ],
-            "time": "2014-04-17 21:19:22"
+            "time": "2014-05-14 10:14:49"
         }
     ],
     "packages-dev": [
@@ -52,9 +52,9 @@
 
     ],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "erusev/parsedown": 20
-    },
+    "stability-flags": [
+
+    ],
     "platform": {
         "php": ">=5.3"
     },
