@@ -1,6 +1,6 @@
 <?php
 
-    require_once(dirname( __FILE__)."/markdown_extended.php");
+    require_once(dirname( __FILE__)."/../vendor/erusev/parsedown/Parsedown.php");//markdown_extended.php");
     $tree = array();
     $base = dirname(dirname(__FILE__));
     $options = get_options(isset($argv[2]) ? $argv[2] : '');
@@ -158,7 +158,10 @@
             $page['path'] = $file_relative_path;
             $page['markdown'] = file_get_contents($file);
             $page['modified'] = filemtime($file);
-            $page['content'] = MarkDownExtended($page['markdown']);
+
+            $Parsedown = new Parsedown();
+
+            $page['content'] =  $Parsedown->text($page['markdown']);
             $page['title'] = clean_url($file, 'Title');
         }
         $relative_base = ($mode === 'Static') ? relative_path("", $file) : "http://" . $base_path . '/';
