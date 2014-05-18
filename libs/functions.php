@@ -1,6 +1,6 @@
 <?php
+    require_once(dirname(__FILE__) . "/../vendor/autoload.php");
 
-    require_once(dirname( __FILE__)."/../vendor/erusev/parsedown/Parsedown.php");//markdown_extended.php");
     $tree = array();
     $base = dirname(dirname(__FILE__));
     $options = get_options(isset($argv[2]) ? $argv[2] : '');
@@ -32,6 +32,7 @@
             'file_editor' => false,
             'template' => 'default'
         );
+
         // Load User Config
         $config_file = (($config_file === '') ? 'docs/config.json' : $config_file);
         if (substr($config_file, 0, 1) !== '/') $config_file = $base . '/' . $config_file;
