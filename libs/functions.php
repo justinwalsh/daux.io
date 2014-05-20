@@ -1,6 +1,6 @@
 <?php
+    require_once(dirname(__FILE__) . "/../vendor/autoload.php");
 
-    require_once(dirname( __FILE__)."/markdown_extended.php");
     $tree = array();
     $base = dirname(dirname(__FILE__));
     $options = get_options(isset($argv[2]) ? $argv[2] : '');
@@ -32,11 +32,16 @@
             'file_editor' => false,
             'template' => 'default'
         );
+
         // Load User Config
         $config_file = (($config_file === '') ? 'docs/config.json' : $config_file);
         if (substr($config_file, 0, 1) !== '/') $config_file = $base . '/' . $config_file;
         if (file_exists($config_file)) {
             $config = json_decode(file_get_contents($config_file), true);
+            if(!isset($config)) {
+                echo '<strong>Daux.io Config Error:</strong><br> The config file ' . $config_file . ' that was passed contained invalid JSON. <a href="http://daux.io">Learn More</a>.';
+                exit;
+            }
             $options = array_merge($options, $config);
         }
         if (!isset($options['ignore']['files'])) $options['ignore']['files'] = array();
@@ -54,7 +59,7 @@
                 exit;
             }
         }
-		if (!ini_get('date.timezone')) date_default_timezone_set('GMT');
+        if (!ini_get('date.timezone')) date_default_timezone_set('GMT');
         return $options;
     }
 
@@ -73,7 +78,7 @@
     function directory_tree($dir, $ignore) {
         global $base_doc, $multilanguage, $output_language;
         $tree = array();
-        $Item = array_diff(scandir($dir), array(".", "..", "index.md"));
+        $Item = array_diff(scandir($dir), array(".", ".."));
         foreach ($Item as $key => $value) {
             if (is_dir($dir . '/' . $value)) {
                 if (!in_array($value, $ignore['folders']))
@@ -115,7 +120,13 @@
                 $return .= "<li";
                 if (!(strpos($url, $key) === FALSE)) $return .= " class=\"open\"";
                 $return .= ">";
-                $return .= "<a href=\"#\" class=\"aj-nav folder\">";
+                $link = "#";
+                $nav_class = "aj-nav ";
+                if(in_array("index.md", $node)) {
+                    $link = $t . clean_url($key, $mode);
+                    $nav_class = "";
+                }
+                $return .= "<a href=\"" . $link . "\" class=\"" . $nav_class . "folder\">";
                 $return .= clean_url($key, "Title");
                 $return .= "</a>";
                 $return .= "<ul class=\"nav nav-list\">";
@@ -124,7 +135,7 @@
                 $return .= "</ul>";
                 $return .= "</li>";
             }
-            else {
+            else if($node !== "index.md") {
                 $return .= "<li";
                 if ($url === $current_dir . '/' . $node) $return .= " class=\"active\"";
                 $return .= ">";
@@ -139,8 +150,8 @@
     function generate_page($file) {
         global $base, $base_doc, $base_path, $docs_path, $options, $mode, $relative_base;
         $template = $options['template'];
-        $filename = substr(strrchr($file, "/"), 1);
-        if ($filename === 'index.md') $homepage = TRUE;
+        $file_relative_path = str_replace($docs_path . '/', "", $file);
+        if ($file_relative_path === 'index.md') $homepage = TRUE;
         else $homepage = FALSE;
         if (!$file) {
             $page['path'] = '';
@@ -149,10 +160,13 @@
             $page['content'] = "<h3>Oh No. That page doesn't exist</h3>";
             $options['file_editor'] = false;
         } else {
-            $page['path'] = str_replace($docs_path . '/', "", $file);
+            $page['path'] = $file_relative_path;
             $page['markdown'] = file_get_contents($file);
             $page['modified'] = filemtime($file);
-            $page['content'] = MarkDownExtended($page['markdown']);
+
+            $Parsedown = new Parsedown();
+
+            $page['content'] =  $Parsedown->text($page['markdown']);
             $page['title'] = clean_url($file, 'Title');
         }
         $relative_base = ($mode === 'Static') ? relative_path("", $file) : "http://" . $base_path . '/';
@@ -184,8 +198,11 @@
                 return $url;
             case 'Title':
             case 'Filename':
-                $t = substr_count($url, '/');
-                if ($t > 0) $url = substr(strrchr($url, "/"), 1);
+                $parts = array_reverse(explode('/', $url));
+                if (isset($parts[0])) {
+                    if ($parts[0] === "index.md" && isset($parts[1])) $url = $parts[1];
+                    else $url = $parts[0];
+                }
                 $url = explode('_', $url);
                 if (isset($url[0]) && is_numeric($url[0])) unset($url[0]);
                 if ($mode === 'Filename') $url = implode('_', $url);

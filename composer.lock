@@ -1,0 +1,64 @@
+{
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
+    ],
+    "hash": "21bea6f01fcb0695632cbacb5a3988a1",
+    "packages": [
+        {
+            "name": "erusev/parsedown",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/erusev/parsedown.git",
+                "reference": "2da10d277b086372f17b96df6cdc903829e1dde0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/erusev/parsedown/zipball/2da10d277b086372f17b96df6cdc903829e1dde0",
+                "reference": "2da10d277b086372f17b96df6cdc903829e1dde0",
+                "shasum": ""
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Parsedown": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Emanuil Rusev",
+                    "email": "hello@erusev.com",
+                    "homepage": "http://erusev.com"
+                }
+            ],
+            "description": "Parser for Markdown.",
+            "homepage": "http://parsedown.org",
+            "keywords": [
+                "markdown",
+                "parser"
+            ],
+            "time": "2014-05-14 10:14:49"
+        }
+    ],
+    "packages-dev": [
+
+    ],
+    "aliases": [
+
+    ],
+    "minimum-stability": "stable",
+    "stability-flags": [
+
+    ],
+    "platform": {
+        "php": ">=5.3"
+    },
+    "platform-dev": [
+
+    ]
+}
