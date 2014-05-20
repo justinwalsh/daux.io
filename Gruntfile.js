@@ -18,7 +18,7 @@ module.exports = function (grunt) {
         less: {
             development: {
                 options: {
-                    cleancss: true,
+                    cleancss: false,
                     report: 'min'
                 },
                 files: {
@@ -42,4 +42,5 @@ module.exports = function (grunt) {
 
     //grunt.registerTask('default', ['less', 'watch']);
     grunt.registerTask('default', ['php']);
+    grunt.registerTask('rebuild', ['less', 'watch']);
 };

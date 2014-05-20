@@ -1,19 +1,18 @@
 {
-	"title": "DAUX.IO",
-	"tagline": "The Easiest Way To Document Your Project",
-	"docs_path": "docs",
-	"image": "img/app.png",
-	"theme": "navy",
+	"title": "StreamRoot",
+	"tagline": "StreamRoot Documentation and User Guide",
+	"docs_path": "../client/sr-client-last/doc",
+	"image": "",
+	"theme": "blue",
 	"template":"default",
-	"toggle_code": true,
+	"toggle_code": false,
+	"float": false,
 	"date_modified": true,
-	"repo": "justinwalsh/daux.io",
-	"twitter": ["justin_walsh", "todaymade"],
-	"google_analytics": "UA-12653604-10",
+	"twitter": ["StreamRoot"],
+	"google_analytics": "",
 	"links": {
-		"Download": "https://github.com/justinwalsh/daux.io/archive/master.zip",
-		"GitHub Repo": "https://github.com/justinwalsh/daux.io",
-		"Help/Support/Bugs": "https://github.com/justinwalsh/daux.io/issues",
-		"Made by Todaymade": "http://todaymade.com"
+		"StreamRoot Website": "http://www.streamroot.io",
+		"Support Contact": "mailto:support@streamroot.io",
+		"Commercial Contact": "mailto:contact@streamroot.io"
 	}
 }
