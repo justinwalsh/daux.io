@@ -30,7 +30,8 @@
             'ignore' => array(),
             'languages' => array(),
             'file_editor' => false,
-            'template' => 'default'
+            'template' => 'default',
+            'breadcrumbs' => false
         );
 
         // Load User Config
@@ -165,9 +166,13 @@
             $page['modified'] = filemtime($file);
 
             $Parsedown = new Parsedown();
-
             $page['content'] =  $Parsedown->text($page['markdown']);
-            $page['title'] = clean_url($file, 'Title');
+
+            if ($options['breadcrumbs']) {
+                $page['title'] = url_to_title(get_url($file), 'Colons');
+            } else {
+                $page['title'] = clean_url($file, 'Title');                
+            }
         }
         $relative_base = ($mode === 'Static') ? relative_path("", $file) : "http://" . $base_path . '/';
         ob_start();
@@ -175,6 +180,26 @@
         $return = ob_get_contents();
         @ob_end_clean();
         return $return;
+    }
+
+    // Converts a URL to a readable breadcrumb string for the page title
+    function url_to_title($url, $separator = "Chevrons") {
+        $url = str_replace("index.php?", "", $url);
+        $url = str_replace("_", " ", $url);
+        switch ($separator) {
+            case 'Chevrons':
+                $url = str_replace("/", " <i class=\"glyphicon glyphicon-chevron-right\"></i> ", $url);
+                return $url;
+            case 'Colons':
+                $url = str_replace("/", ": ", $url); 
+                return $url;
+            case 'Spaces':
+                $url = str_replace("/", " ", $url); 
+                return $url;
+
+        }
+
+        return $url;
     }
 
     //  File to URL
