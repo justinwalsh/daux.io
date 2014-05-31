@@ -243,6 +243,15 @@ By default, Daux.io will create clean url's that do not include index.php. On se
 }
 ```
 
+###Breadcrumb titles
+Daux.io provides the option to present page titles as breadcrumb navigation.
+
+```json
+{
+		"breadcrumbs": true
+}
+```
+
 ###Date Modified
 By default, daux.io will display the last modified time as reported by the system underneath the title for each document. To disable this, change the option in your config.json to false.
 
