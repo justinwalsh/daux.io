@@ -33,8 +33,8 @@
             else {
                 if (empty($options['languages'])) return $base_doc;
                 else {
-                	$t = array_keys($base_doc);
-                	return $base_doc[$t[0]];
+                    $t = array_keys($base_doc);
+                    return $base_doc[$t[0]];
                 }
             }
         } else {

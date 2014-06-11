@@ -77,6 +77,9 @@ If you want to create a beautiful landing page for your project, simply create a
 
 Note: The image can be a local or remote image.
 
+## Section landing page
+
+If you are interested in having a landing page for a subsection of your docs, all you need to do is add an `index.md` file to the folder. For example, `/docs/01_Examples` has a landing page for that section since there exists a `/docs/01_Examples/index.md` file.
 ## Configuration
 
 To customize the look and feel of your documentation, you can create a `config.json` file in the of the `/docs` folder. The `config.json` file is a simple JSON object that you can use to change some of the basic settings of the documentation.
