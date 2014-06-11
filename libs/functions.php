@@ -31,8 +31,7 @@
             'languages' => array(),
             'file_editor' => false,
             'template' => 'default',
-            'breadcrumbs' => false,
-            'log' => ''
+            'breadcrumbs' => false
         );
 
         // Load User Config
@@ -167,7 +166,7 @@
                 $page['path'] = $file_relative_path;
                 $page['markdown'] = file_get_contents($with_index);
                 $page['modified'] = filemtime($with_index);
-                
+
                 $Parsedown = new Parsedown();
                 $page['content'] =  $Parsedown->text($page['markdown']);
 
