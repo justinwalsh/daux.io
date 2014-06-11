@@ -8,11 +8,8 @@
             $output_language = $b[0];
         }
         $file = clean_url_to_file($page);
-        if (!is_file($file)) {
-            $index = clean_url_to_file($page . "index.md");
-            $file = FALSE;
-        }
-        return generate_page($file, $index);
+        if (!is_file($file)) $file = FALSE;
+        return generate_page($file);
     }
 
     //  Clean Live Url
@@ -36,8 +33,8 @@
             else {
                 if (empty($options['languages'])) return $base_doc;
                 else {
-                	$t = array_keys($base_doc);
-                	return $base_doc[$t[0]];
+                    $t = array_keys($base_doc);
+                    return $base_doc[$t[0]];
                 }
             }
         } else {

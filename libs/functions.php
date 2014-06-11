@@ -148,34 +148,18 @@
     }
 
     //  Generate Documentation from Markdown file
-    function generate_page($file, $with_index="") {
+    function generate_page($file) {
         global $base, $base_doc, $base_path, $docs_path, $options, $mode, $relative_base;
         $template = $options['template'];
         $file_relative_path = str_replace($docs_path . '/', "", $file);
         if ($file_relative_path === 'index.md') $homepage = TRUE;
         else $homepage = FALSE;
         if (!$file) {
-            if (file_get_contents($with_index) === FALSE) {
-                $page['path'] = '';
-                $page['markdown'] = '';
-                $page['title'] = 'Oh No';
-                $page['content'] = "<h3>Oh No. That page doesn't exist</h3>";
-                $options['file_editor'] = false;
-            } else {
-                $file_relative_path = str_replace($docs_path . '/', "", $with_index);
-                $page['path'] = $file_relative_path;
-                $page['markdown'] = file_get_contents($with_index);
-                $page['modified'] = filemtime($with_index);
-
-                $Parsedown = new Parsedown();
-                $page['content'] =  $Parsedown->text($page['markdown']);
-
-                if ($options['breadcrumbs']) {
-                    $page['title'] = url_to_title(get_url($with_index), 'Colons');
-                } else {
-                    $page['title'] = clean_url($with_index, 'Title');                
-                }
-            }
+            $page['path'] = '';
+            $page['markdown'] = '';
+            $page['title'] = 'Oh No';
+            $page['content'] = "<h3>Oh No. That page doesn't exist</h3>";
+            $options['file_editor'] = false;
         } else {
             $page['path'] = $file_relative_path;
             $page['markdown'] = file_get_contents($file);
