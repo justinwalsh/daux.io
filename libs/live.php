@@ -8,8 +8,11 @@
             $output_language = $b[0];
         }
         $file = clean_url_to_file($page);
-        if (!is_file($file)) $file = FALSE;
-        return generate_page($file);
+        if (!is_file($file)) {
+            $index = clean_url_to_file($page . "index.md");
+            $file = FALSE;
+        }
+        return generate_page($file, $index);
     }
 
     //  Clean Live Url
