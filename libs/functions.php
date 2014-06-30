@@ -203,7 +203,7 @@
     }
 
     //  File to URL
-    function clean_url($url, $mode = 'Static') {
+    function clean_url($url, $mode = 'Static', $from_link=false) {
         global $docs_path, $output_path, $options;
         switch ($mode) {
             case 'Live':
@@ -216,7 +216,7 @@
                 $url = explode('/', $url);
                 foreach ($url as &$a) {
                     $a = explode('_', $a);
-                    if (isset($a[0]) && is_numeric($a[0])) unset($a[0]);
+                    if (isset($a[0]) && is_numeric($a[0]) && !$from_link) unset($a[0]);
                     $a = implode('_', $a);
                 }
                 $url = implode('/', $url);
