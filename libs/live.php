@@ -28,6 +28,10 @@
     function getfile($tree, $url, $current_dir, $flag = FALSE) {
         global $docs_path, $base_doc, $options;
         $url = clean_url($url, "Live", true);
+        if ($options['clean_urls'] == true) {
+           $url = explode("?", $url);
+           $url = $url[0];
+        }
         if ($url === '' || $url === 'index') {
             if (is_file($docs_path . "/index.md")) return $docs_path . "/index.md";
             else {
