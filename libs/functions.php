@@ -81,6 +81,7 @@
         $tree = array();
         $Item = array_diff(scandir($dir), array(".", ".."));
         foreach ($Item as $key => $value) {
+            $value = utf8_encode($value);
             if (is_dir($dir . '/' . $value)) {
                 if (!in_array($value, $ignore['folders']))
                     $tree[$value] = directory_tree($dir . '/' . $value, $ignore);
@@ -169,9 +170,9 @@
             $page['content'] =  $Parsedown->text($page['markdown']);
 
             if ($options['breadcrumbs']) {
-                $page['title'] = url_to_title(get_url($file), 'Colons');
+                $page['title'] = utf8_encode(url_to_title(get_url($file), 'Colons'));
             } else {
-                $page['title'] = clean_url($file, 'Title');                
+                $page['title'] = utf8_encode(clean_url($file, 'Title'));                
             }
         }
         $relative_base = ($mode === 'Static') ? relative_path("", $file) : "http://" . $base_path . '/';
