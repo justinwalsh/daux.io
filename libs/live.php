@@ -7,7 +7,7 @@
             $b = explode('/', clean_url($page, "Live"));
             $output_language = $b[0];
         }
-        $file = clean_url_to_file($page);
+        $file = utf8_decode(clean_url_to_file($page));
         if (!is_file($file)) $file = FALSE;
         return generate_page($file);
     }
