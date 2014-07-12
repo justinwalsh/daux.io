@@ -1,13 +1,18 @@
 {
 	"title": "DAUX.IO",
 	"tagline": "The Easiest Way To Document Your Project",
-	"docs_path": "docs",
-	"image": "img/app.png",
-	"theme": "navy",
-	"template":"default",
+	"image": "<base_url>img/app.png",
+	"theme": "daux-blue",
 	"toggle_code": true,
+	"breadcrumbs": true,
+	"breadcrumb_separator": "Chevrons",
 	"date_modified": true,
+    "file_editor": true,	
 	"repo": "justinwalsh/daux.io",
+	"ignore": {
+	        "files": ["Work_In_Progress.md"],
+	        "folders": ["99_Not_Ready"]
+    },
 	"twitter": ["justin_walsh", "todaymade"],
 	"google_analytics": "UA-12653604-10",
 	"links": {

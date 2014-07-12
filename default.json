@@ -1,0 +1,30 @@
+{
+    "title": "DAUX.IO",
+    "tagline": "The Easiest Way To Document Your Project",
+    "author": "Justin Walsh",
+    "image": "",
+    "theme": "daux-blue",
+    "breadcrumbs": true,
+    "template": "default",
+    "toggle_code": true,
+    "date_modified": true,
+    "float": false,
+    "file_editor": false,
+    "repo": "justinwalsh/daux.io",
+    "twitter": ["justin_walsh", "todaymade"],
+    "google_analytics": "UA-12653604-10",
+    "timezone": "America/Los_Angeles",
+    "piwik_analytics": false,
+    "piwik_analytics_id": "0",
+    "languages": {},
+    "ignore": {
+        "files": [],
+        "folders": []
+    },    
+    "links": {
+        "Download": "https://github.com/justinwalsh/daux.io/archive/master.zip",
+        "GitHub Repo": "https://github.com/justinwalsh/daux.io",
+        "Help/Support/Bugs": "https://github.com/justinwalsh/daux.io/issues",
+        "Made by Todaymade": "http://todaymade.com"
+    }
+}

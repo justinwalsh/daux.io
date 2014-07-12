@@ -37,23 +37,24 @@ Download this repository as a zip, and unpack. Copy the files to a web server th
 
 ## Folders
 
-By default, the generator will look for folders in the `/docs` folder. Add your folders inside the `/docs` folder. This project contains some example folders and files to get you started.
+By default, the generator will look for folders in the `docs` folder. Add your folders inside the `docs` folder. This project contains some example folders and files to get you started.
 
 You can nest folders any number of levels to get the exact structure you want. The folder structure will be converted to the nested navigation.
 
-If you'd prefer to keep your docs somewhere else (like outside of the daux.io root directory) you can specify your docs path in the `config.json` file.
+If you'd prefer to keep your docs somewhere else (like outside of the daux.io root directory) you can specify your docs path in the `global.json` file.
 
 ## Files
 
-The generator will look for Markdown `*.md` files inside the `/docs` folder and any of the subfolders within /docs.
+The generator will look for Markdown files (`*.md` and `*.markdown`) inside the `docs` folder and any of the subfolders within `docs`. Additional extensions can be added by editing `global.json`
 
-You must use the `.md` file extension for your files. Also, you must use underscores instead of spaces. Here are some example file names and what they will be converted to:
+You must use underscores instead of spaces. Here are some example file names and what they will be converted to:
 
 **Good:**
 
 * 01_Getting_Started.md = Getting Started
 * API_Calls.md = API Calls
 * 200_Something_Else-Cool.md = Something Else-Cool
+* _5_Ways_to_Be_Happy.md = 5 Ways To Be Happy
 
 **Bad:**
 
@@ -61,7 +62,7 @@ You must use the `.md` file extension for your files. Also, you must use undersc
 
 ## Sorting
 
-To sort your files and folders in a specific way, you can prefix them with a number and underscore, e.g. `/docs/01_Hello_World.md` and `/docs/05_Features.md` This will list *Hello World* before *Features*, overriding the default alpha-numeric sorting. The numbers will be stripped out of the navigation and urls.
+To sort your files and folders in a specific way, you can prefix them with a number and underscore, e.g. `/docs/01_Hello_World.md` and `/docs/05_Features.md` This will list *Hello World* before *Features*, overriding the default alpha-numeric sorting. The numbers will be stripped out of the navigation and urls. For the file `6 Ways to Get Rich`, you can use `/docs/_6_Ways_to_Get_Rich.md`
 
 ## Landing page
 
@@ -71,15 +72,15 @@ If you want to create a beautiful landing page for your project, simply create a
 {
 	"title": "Daux.io",
 	"tagline": "The Easiest Way To Document Your Project",
-	"image": "img/app.png"
+	"image": "<base_url>img/app.png"
 }
 ```
 
-Note: The image can be a local or remote image.
+Note: The image can be a local or remote image. Use the convention `<base_url>` to refer to the root directory of the Daux instance. 
 
 ## Section landing page
 
-If you are interested in having a landing page for a subsection of your docs, all you need to do is add an `index.md` file to the folder. For example, `/docs/01_Examples` has a landing page for that section since there exists a `/docs/01_Examples/index.md` file.
+If you are interested in having a landing page for a subsection of your docs, all you need to do is add an `index.md` file to the folder. For example, `/docs/01_Examples` has a landing page for that section since there exists a `/docs/01_Examples/index.md` file. If you wish to have an index page for a section without a landing page format, use the name `_index.md`
 
 ## Configuration
 
@@ -91,17 +92,6 @@ Change the title bar in the docs
 ```json
 {
 	"title": "Daux.io"
-}
-```
-
-###Docs Path:
-If you'd prefer to keep your docs outside of the Daux.io directory, you can provide the filepath.
-
-Note: Your `config.json` file will need to remain in `/daux.io/docs`.
-
-```json
-{
-	"docs_path": "../../my_docs"
 }
 ```
 
@@ -120,23 +110,11 @@ We have 4 built-in Bootstrap themes. To use one of the themes, just set the `the
 ```
 
 ###Custom Theme:
-To create a custom color scheme, set the `theme` property to `custom` and then define the required colors. Copy the following configuration to get started:
+To use a custom theme, just copy over the theme folder as well as the `.thm` file for that theme into the `themes` directory and set its value in the `theme` param in config.json
 
 ```json
 {
-	"theme": "custom",
-	"colors": {
-		"sidebar-background": "#f7f7f7",
-		"sidebar-hover": "#c5c5cb",
-		"lines": "#e7e7e9",
-		"dark": "#3f4657",
-		"light": "#82becd",
-		"text": "#2d2d2d",
-		"syntax-string": "#022e99",
-		"syntax-comment": "#84989b",
-		"syntax-number": "#2f9b92",
-		"syntax-label": "#840d7a"
-	}
+	"theme": "new-theme",
 }
 ```
 
@@ -148,6 +126,7 @@ By default your code blocks will be floated to a column on the right side of you
 	"float": false
 }
 ```
+
 ###Toggling Code Blocks
 Some users might wish to hide the code blocks & view just the documentation. By setting the `toggle_code` property to `true`, you can offer a toggle button on the page.
 
@@ -238,21 +217,13 @@ Set custom files and entire folders to ignore within your `/docs` folder. For fi
 	}
 ```
 
-###Disabling clean URLs
-By default, Daux.io will create clean url's that do not include index.php. On servers running Apache, uploading the included .htaccess file should be enough for them to work properly. On servers that are not running Apache or that do not allow custom .htaccess files, you may need to disable clean_urls:
-
-```json
-{
-		"clean_urls": false
-}
-```
-
 ###Breadcrumb titles
-Daux.io provides the option to present page titles as breadcrumb navigation.
+Daux.io provides the option to present page titles as breadcrumb navigation. You can *optionally* specify the separator used for breadcrumbs.
 
 ```json
 {
-		"breadcrumbs": true
+		"breadcrumbs": true,
+		"breadcrumb_separator" : " > "
 }
 ```
 
@@ -331,15 +302,8 @@ These can be uploaded to a static site hosting service such as pages.github.com
 Generating a complete set of pages, with navigation
 
 ```bash
-php index.php generate
+php generate.php
 ```
-
-You can optionally pass the location of config.json and (also optionally) the output directory for the static file
-
-```bash
-php index.php generate '\path\to\config.json' 'out\dir'
-```
-If the directory has a '\' at the beginning, it is treated as an absolute path, otherwise as relative to the Daux Directory.
 
 ## Running on IIS
 
