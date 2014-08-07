@@ -90,7 +90,9 @@ if(isset($argv)){
     exit();
 }
 require_once(dirname( __FILE__)."/libs/live.php");
-$base_path = str_replace("/index.php", "", $_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF']);
+$server_base = $_SERVER['HTTP_HOST'];
+if (!$options['clean_urls']) $server_base .= $_SERVER['PHP_SELF'];
+$base_path = str_replace("/index.php", "", $server_base);
 define("CLI", FALSE);
 build_tree();
 $remove = array($base_path . '/');
