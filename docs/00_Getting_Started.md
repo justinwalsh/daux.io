@@ -304,7 +304,7 @@ These can be uploaded to a static site hosting service such as pages.github.com
 Generating a complete set of pages, with navigation
 
 ```bash
-php generate.php
+php generate.php [global.json Relative Location] [Output Directory Relative Direction]
 ```
 
 ## Running on IIS

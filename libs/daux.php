@@ -23,7 +23,7 @@
         private $params;
         private $mode;
 
-        function __construct($global_config_file = 'global.json') {
+        function __construct($global_config_file = NULL) {
             $this->initial_setup($global_config_file);
         }
 
@@ -34,8 +34,8 @@
             if (!$this->error) $this->params = $this->get_page_params();
         }
 
-        public function generate_static() {
-            $output_dir = $this->local_base . DIRECTORY_SEPARATOR . 'static';
+        public function generate_static($output_dir = NULL) {
+            if (is_null($output_dir)) $output_dir = $this->local_base . DIRECTORY_SEPARATOR . 'static';
             DauxHelper::clean_copy_assets($output_dir, $this->local_base);
             $this->recursive_generate_static($this->tree, $output_dir, $this->params);
         }
@@ -81,7 +81,7 @@
         }
 
         private function load_global_config($global_config_file) {
-            $global_config_file = $this->local_base . DIRECTORY_SEPARATOR . $global_config_file;
+            if (is_null($global_config_file)) $global_config_file = $this->local_base . DIRECTORY_SEPARATOR . 'global.json';
             if (!file_exists($global_config_file)) {
                 $this->generate_error_page('Global Config File Missing',
                 'The Global Config file is missing. Requested File : ' . $global_config_file, ErrorPage::FATAL_ERROR_TYPE);
