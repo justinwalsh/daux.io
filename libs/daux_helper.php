@@ -24,7 +24,8 @@
         }
 
         public static function get_title_from_file($file) {
-            return static::get_title_from_filename(pathinfo($file, PATHINFO_FILENAME));
+            $file = static::pathinfo($file);
+            return static::get_title_from_filename($file['filename']);
         }
 
         public static function get_title_from_filename($filename) {
@@ -36,7 +37,8 @@
         }
 
         public static function get_url_from_file($file) {
-            return static::get_url_from_filename(pathinfo($file, PATHINFO_FILENAME));
+            $file = static::pathinfo($file);
+            return static::get_url_from_filename($file['filename']);
         }
 
         public static function get_url_from_filename($filename) {
@@ -172,8 +174,9 @@ EOT;
                     if (is_dir($path) && in_array($entry, $ignore['folders'])) continue;
                     if (!is_dir($path) && in_array($entry, $ignore['files'])) continue;
 
+                    $file_details = static::pathinfo($path);
                     if (is_dir($path)) $entry = static::directory_tree_builder($path, $ignore, $mode, $new_parents);
-                    else if (in_array(pathinfo($path, PATHINFO_EXTENSION), Daux::$VALID_MARKDOWN_EXTENSIONS))
+                    else if (in_array($file_details['extension'], Daux::$VALID_MARKDOWN_EXTENSIONS))
                     {
                         $entry = new Directory_Entry($path, $new_parents);
                         if ($mode === Daux::STATIC_MODE) $entry->uri .= '.html';
@@ -189,6 +192,15 @@ EOT;
                 } else $node->index_page = false;
                 return $node;
             }
+        }
+
+        public static function pathinfo($path) {
+            preg_match('%^(.*?)[\\\\/]*(([^/\\\\]*?)(\.([^\.\\\\/]+?)|))[\\\\/\.]*$%im', $path, $m);
+            if (isset($m[1])) $ret['dir']=$m[1];
+            if (isset($m[2])) $ret['basename']=$m[2];
+            if (isset($m[5])) $ret['extension']=$m[5];
+            if (isset($m[3])) $ret['filename']=$m[3];
+            return $ret;
         }
 
         public static function clean_copy_assets($path, $local_base){

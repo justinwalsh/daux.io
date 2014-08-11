@@ -20,7 +20,8 @@
             $this->local_path = $path;
             $this->parents = $parents;
             $this->last_modified = filemtime($path);
-            $this->name = pathinfo($path, PATHINFO_FILENAME);
+            $this->name = DauxHelper::pathinfo($path);
+            $this->name = $this->name['filename'];
             $this->title = DauxHelper::get_title_from_file($this->name);
             $this->uri = DauxHelper::get_url_from_filename($this->name);
             $this->index_page = false;
