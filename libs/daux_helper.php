@@ -178,7 +178,7 @@ EOT;
                         $entry = new Directory_Entry($path, $new_parents);
                         if ($mode === Daux::STATIC_MODE) $entry->uri .= '.html';
                     }
-                    if ($entry instanceof Directory_Entry) $node->value[$entry->uri] = $entry;
+                    if ($entry instanceof Directory_Entry) $node->value[$entry->uri] = $entry; 
                 }
                 $node->sort();
                 $node->first_page = $node->get_first_page();

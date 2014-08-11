@@ -11,22 +11,23 @@
 
         private function build_navigation($tree, $path, $current_url, $base_page, $mode) {
             $nav = '';
-            foreach ($tree->value as $url => $node) {
+            foreach ($tree->value as $node) {
+            	$url = $node->uri;
                 if ($node->type === \TodayMade\Daux\Directory_Entry::FILE_TYPE) {
                     if ($node->value === 'index') continue;
                     $nav .= '<li';
                     $link = ($path === '') ? $url : $path . '/' . $url;
                     if ($current_url === $link) $nav .= ' class="active"';
-                    $nav .= '><a href="' . utf8_encode($base_page . $link) . '">' . utf8_encode($node->title) . '</a></li>';
+                    $nav .= '><a href="' . $base_page . $link . '">' . $node->title . '</a></li>';
                 } else {
                     $nav .= '<li';
                     $link = ($path === '') ? $url : $path . '/' . $url;
                     if (strpos($current_url, $link) === 0) $nav .= ' class="open"';
                     $nav .= ">";
                     if ($mode === \TodayMade\Daux\Daux::STATIC_MODE) $link .= "/index.html";
-                    if ($node->index_page) $nav .= '<a href="' . utf8_encode($base_page . $link) . '" class="folder">' .
-                        utf8_encode($node->title) . '</a>';
-                    else $nav .= '<a href="#" class="aj-nav folder">' . utf8_encode($node->title) . '</a>';
+                    if ($node->index_page) $nav .= '<a href="' . $base_page . $link . '" class="folder">' .
+                        $node->title . '</a>';
+                    else $nav .= '<a href="#" class="aj-nav folder">' . $node->title . '</a>';
                     $nav .= '<ul class="nav nav-list">';
                     $new_path = ($path === '') ? $url : $path . '/' . $url;
                     $nav .= $this->build_navigation($node, $new_path, $current_url, $base_page, $mode);
@@ -46,7 +47,7 @@
             if ($page['filename'] === 'index' || $page['filename'] === '_index') {
                 if ($page['title'] != '') $title = substr($title, 0, -1 * strlen($separator));
             } else $title .= '<a href="' . $base_page . $page['request'] . '">' . $page['title'] . '</a>';
-            return utf8_encode($title);
+            return $title;
         }
 
         private function get_separator($separator) {
