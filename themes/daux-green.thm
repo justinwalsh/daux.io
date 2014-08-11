@@ -1,0 +1,8 @@
+{
+    "favicon": "<base_url>themes/daux-green/img/favicon-green.png",
+    "css": ["<base_url>themes/daux-green/css/daux-green.css"],
+    "fonts": ["http://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700&subset=latin,cyrillic-ext,cyrillic"],
+    "js": [],
+    "require-jquery": true,
+    "bootstrap-js": false
+}

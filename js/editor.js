@@ -16,7 +16,7 @@ $(document).ready(function() {
         var original_text = save_editor.text();
         save_editor.text("Saving...").addClass("disabled");
 
-        $.post(window.location.href, {markdown: markdown_editor.val() }, function() {
+        $.post(window.location.href, {markdown: markdown_editor.val(), method: 'DauxEdit' }, function() {
             save_editor.text("Done! Reloading page in 5 seconds. You can cancel it with ESC key");
 
             var timeout = setTimeout(function() {
