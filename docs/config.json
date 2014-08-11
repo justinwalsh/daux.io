@@ -7,7 +7,7 @@
 	"breadcrumbs": true,
 	"breadcrumb_separator": "Chevrons",
 	"date_modified": true,
-    "file_editor": true,	
+    "file_editor": false,	
 	"repo": "justinwalsh/daux.io",
 	"ignore": {
 	        "files": ["Work_In_Progress.md"],
