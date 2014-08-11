@@ -190,6 +190,7 @@
             $params['local_base'] = $this->local_base;
 
             if ($mode === '') $mode = $this->mode;
+            $params['mode'] = $mode;
             switch ($mode) {
                 case ErrorPage::FATAL_ERROR_TYPE:
                     $params['error_type'] = ErrorPage::FATAL_ERROR_TYPE;

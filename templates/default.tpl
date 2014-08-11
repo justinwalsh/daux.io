@@ -2,14 +2,14 @@
     namespace Todaymade\Daux;
     class Template {
 
-        private function get_navigation($tree, $path, $current_url, $base_page) {
+        private function get_navigation($tree, $path, $current_url, $base_page, $mode) {
             $nav = '<ul class="nav nav-list">';
-            $nav .= $this->build_navigation($tree, $path, $current_url, $base_page);
+            $nav .= $this->build_navigation($tree, $path, $current_url, $base_page, $mode);
             $nav .= '</ul>';
             return $nav;
         }
 
-        private function build_navigation($tree, $path, $current_url, $base_page) {
+        private function build_navigation($tree, $path, $current_url, $base_page, $mode) {
             $nav = '';
             foreach ($tree->value as $url => $node) {
                 if ($node->type === \TodayMade\Daux\Directory_Entry::FILE_TYPE) {
@@ -23,12 +23,13 @@
                     $link = ($path === '') ? $url : $path . '/' . $url;
                     if (strpos($current_url, $link) === 0) $nav .= ' class="open"';
                     $nav .= ">";
+                    if ($mode === \TodayMade\Daux\Daux::STATIC_MODE) $link .= "/index.html";
                     if ($node->index_page) $nav .= '<a href="' . utf8_encode($base_page . $link) . '" class="folder">' .
                         utf8_encode($node->title) . '</a>';
                     else $nav .= '<a href="#" class="aj-nav folder">' . utf8_encode($node->title) . '</a>';
                     $nav .= '<ul class="nav nav-list">';
                     $new_path = ($path === '') ? $url : $path . '/' . $url;
-                    $nav .= $this->build_navigation($node, $new_path, $current_url, $base_page);
+                    $nav .= $this->build_navigation($node, $new_path, $current_url, $base_page, $mode);
                     $nav .= '</ul></li>';
                 }
             }
@@ -192,8 +193,8 @@
                     <div id="sub-nav-collapse" class="sub-nav-collapse">
                         <!-- Navigation -->
                         <?php
-                            if ($page['language'] !== '') echo $this->get_navigation($tree->value[$page['language']], $page['language'], $params['request'], $base_page);
-                            else echo $this->get_navigation($tree, '', $params['request'], $base_page);
+                            if ($page['language'] !== '') echo $this->get_navigation($tree->value[$page['language']], $page['language'], $params['request'], $base_page, $params['mode']);
+                            else echo $this->get_navigation($tree, '', $params['request'], $base_page, $params['mode']);
                         ?>
                         <?php if (!empty($params['links']) || !empty($params['twitter'])) { ?>
                             <div class="well well-sidebar">
