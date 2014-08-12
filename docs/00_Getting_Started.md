@@ -68,7 +68,7 @@ To sort your files and folders in a specific way, you can prefix them with a num
 
 ## Landing page
 
-If you want to create a beautiful landing page for your project, simply create a `index.md` file in the root of the `/docs` folder. This file will then be used to create a landing page. You can also add a tagline and image to this page using the config file like this:
+If you want to create a beautiful landing page for your project, simply create a `_index.md` file in the root of the `/docs` folder. This file will then be used to create a landing page. You can also add a tagline and image to this page using the config file like this:
 
 ```json
 {
@@ -82,7 +82,7 @@ Note: The image can be a local or remote image. Use the convention `<base_url>` 
 
 ## Section landing page
 
-If you are interested in having a landing page for a subsection of your docs, all you need to do is add an `index.md` file to the folder. For example, `/docs/01_Examples` has a landing page for that section since there exists a `/docs/01_Examples/index.md` file. If you wish to have an index page for a section without a landing page format, use the name `_index.md`
+If you are interested in having a landing page for a subsection of your docs, all you need to do is add an `index.md` file to the folder. For example, `/docs/01_Examples` has a landing page for that section since there exists a `/docs/01_Examples/index.md` file. If you wish to have an landing page for a section sans the document format, use the name `_index.md`
 
 ## Configuration
 
@@ -259,7 +259,7 @@ Enables multi-language support which needs seperate directories for each languag
 Directory structure:
 ```
 ├── docs/
-│   ├── index.md
+│   ├── _index.md
 │   ├── en
 │   │   ├── 00_Getting_Started.md
 │   │   ├── 01_Examples

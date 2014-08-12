@@ -115,7 +115,7 @@
             $this->params = $params;
 
             if ($this->title === 'index') {
-                $this->homepage = ($this->filename === 'index');
+                $this->homepage = ($this->filename === '_index');
                 $minimum_parent_dir_size = ($params['multilanguage']) ? 2 : 1;
                 if (count($file->parents) >= $minimum_parent_dir_size) {
                     $parent = end($file->parents);
