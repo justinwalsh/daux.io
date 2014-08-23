@@ -23,7 +23,7 @@ This is a list of sites using Daux.io:
 
 * [Daux.io](http://daux.io)
 * [Gltn - An open-source word processor webapp](http://felkerdigitalmedia.com/gltn/)
-* [Invade & Annex 3 - An Arma 3 Co-operative Mission](http://ia3.ahoyworld.co.uk/)	
+* [Invade & Annex 3 - An Arma 3 Co-operative Mission](http://ia3.ahoyworld.co.uk/)
 * [Munee: Standalone PHP 5.3 Asset Optimisation & Manipulation](http://mun.ee)
 * [ICADMIN: An admin panel powered by CodeIgniter.](http://istocode.com/shared/ic-admin/)
 * [Daux.io in Chinese - Demonstrates muti-language installations](http://daux.emx2.co.uk/)
@@ -78,7 +78,7 @@ If you want to create a beautiful landing page for your project, simply create a
 }
 ```
 
-Note: The image can be a local or remote image. Use the convention `<base_url>` to refer to the root directory of the Daux instance. 
+Note: The image can be a local or remote image. Use the convention `<base_url>` to refer to the root directory of the Daux instance.
 
 ## Section landing page
 
