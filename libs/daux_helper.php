@@ -31,8 +31,11 @@
         public static function get_title_from_filename($filename) {
             $filename = explode('_', $filename);
             if ($filename[0] == '' || is_numeric($filename[0])) unset($filename[0]);
+            else {
+                $t = $filename[0];
+                if ($t[0] == '-') $filename[0] = substr($t, 1);                
+            }
             $filename = implode(' ', $filename);
-
             return $filename;
         }
 
@@ -44,6 +47,10 @@
         public static function get_url_from_filename($filename) {
             $filename = explode('_', $filename);
             if ($filename[0] == '' || is_numeric($filename[0])) unset($filename[0]);
+            else {
+                $t = $filename[0];
+                if ($t[0] == '-') $filename[0] = substr($t, 1);                
+            }
             $filename = implode('_', $filename);
             return $filename;
         }
