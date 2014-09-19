@@ -42,8 +42,6 @@
 
         public function handle_request($url, $query = array()) {
             if ($this->error) return $this->error_page;
-            $t = substr($url, strlen($this->base_url) + 1);
-            $this->params['clean_urls'] = !(strpos($t, 'index.php') === 0);
             if (!$this->params['clean_urls']) $this->params['base_page'] .= 'index.php?request=';
             $request = DauxHelper::get_request_from_url($url, $this->base_url);
             $request = urldecode($request);
@@ -207,6 +205,7 @@
                     $params['host'] = $this->host;
                     $params['tree'] = $this->tree;
                     $params['index'] = ($this->tree->index_page !== false) ? $this->tree->index_page : $this->tree->first_page;
+                    $params['clean_urls'] = $this->options['clean_urls'];
 
                     $params['tagline'] = $this->options['tagline'];
                     $params['title'] = $this->options['title'];
@@ -236,6 +235,7 @@
                     $params['host'] = $this->host;
                     $params['tree'] = $this->tree;
                     $params['index'] = ($this->tree->index_page !== false) ? $this->tree->index_page : $this->tree->first_page;
+                    $params['clean_urls'] = $this->options['clean_urls'];
 
                     $params['tagline'] = $this->options['tagline'];
                     $params['title'] = $this->options['title'];

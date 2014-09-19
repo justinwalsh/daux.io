@@ -84,6 +84,16 @@ Note: The image can be a local or remote image. Use the convention `<base_url>` 
 
 If you are interested in having a landing page for a subsection of your docs, all you need to do is add an `index.md` file to the folder. For example, `/docs/01_Examples` has a landing page for that section since there exists a `/docs/01_Examples/index.md` file. If you wish to have an landing page for a section sans the document format, use the name `_index.md`
 
+## Clean URLs
+
+Daux provides native support for Clean URLs provided the webserver has its URL Rewrite module enabled. To enable the same, simply set the toggle in the `config.json` file in the `/docs` folder.
+
+```json
+{
+	"clean_urls": true
+}
+```
+
 ## Configuration
 
 To customize the look and feel of your documentation, you can create a `config.json` file in the of the `/docs` folder. The `config.json` file is a simple JSON object that you can use to change some of the basic settings of the documentation.

@@ -5,6 +5,7 @@
     "image": "<base_url>img/app.png",
     "theme": "daux-blue",
     "template": "default",
+    "clean_urls": true,
     "toggle_code": true,
     "breadcrumbs": true,
     "breadcrumb_separator": "Chevrons",
