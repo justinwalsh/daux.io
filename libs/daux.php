@@ -198,8 +198,7 @@
                     $params['error_type'] = ErrorPage::NORMAL_ERROR_TYPE;
                     $params['index_key'] = 'index';
                     $params['docs_path'] = $this->docs_path;
-                    $protocol = ((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') || $_SERVER['SERVER_PORT'] == 443) ?
-                        'https://' : 'http://';
+                    $protocol = '//';
                     $params['base_url'] = $protocol . $this->base_url . '/';
                     $params['base_page'] = $params['base_url'];
                     $params['host'] = $this->host;
@@ -228,8 +227,7 @@
                 case Daux::LIVE_MODE:
                     $params['docs_path'] = $this->docs_path;
                     $params['index_key'] = 'index';
-                    $protocol = ((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') || $_SERVER['SERVER_PORT'] == 443) ?
-                        'https://' : 'http://';
+                    $protocol = '//';
                     $params['base_url'] = $protocol . $this->base_url . '/';
                     $params['base_page'] = $params['base_url'];
                     $params['host'] = $this->host;
