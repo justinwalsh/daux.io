@@ -43,6 +43,7 @@
     class ErrorPage extends SimplePage
     {
         const NORMAL_ERROR_TYPE = 'NORMAL_ERROR';
+        const MISSING_PAGE_ERROR_TYPE = 'MISSING_PAGE_ERROR';
         const FATAL_ERROR_TYPE = 'FATAL_ERROR';
 
         private $params;
@@ -56,12 +57,12 @@
         }
 
         public function display() {
-            header('HTTP', true, 500);
+            http_response_code($this->type === static::MISSING_PAGE_ERROR_TYPE ? 404 : 500);
             parent::display();
         }
 
         public function get_page_content() {
-            if ($this->type === static::NORMAL_ERROR_TYPE && is_null(static::$template)) {
+            if ($this->type !== static::FATAL_ERROR_TYPE && is_null(static::$template)) {
                 include_once($this->params['theme']['error-template']);
                 static::$template = new Template();
             }

@@ -160,7 +160,7 @@
         private function save_file($request, $content) {
             $file = $this->get_file_from_request($request);
             if ($file === false) return $this->generate_error_page('Page Not Found',
-                'The Page you requested is yet to be made. Try again later.', ErrorPage::NORMAL_ERROR_TYPE);
+                'The Page you requested is yet to be made. Try again later.', ErrorPage::MISSING_PAGE_ERROR_TYPE);
             if ($file->write($content)) return new SimplePage('Success', 'Successfully Edited');
             else return $this->generate_error_page('File Not Writable', 'The file you wish to write to is not writable.',
                 ErrorPage::FATAL_ERROR_TYPE);
@@ -176,7 +176,7 @@
             $params = $this->params;
             $file = $this->get_file_from_request($request);
             if ($file === false) return $this->generate_error_page('Page Not Found',
-                'The Page you requested is yet to be made. Try again later.', ErrorPage::NORMAL_ERROR_TYPE);
+                'The Page you requested is yet to be made. Try again later.', ErrorPage::MISSING_PAGE_ERROR_TYPE);
             $params['request'] = $request;
             $params['file_uri'] = $file->value;
             if ($request !== 'index') $params['entry_page'] = $file->first_page;
@@ -195,7 +195,8 @@
                     break;
 
                 case ErrorPage::NORMAL_ERROR_TYPE:
-                    $params['error_type'] = ErrorPage::NORMAL_ERROR_TYPE;
+                case ErrorPage::MISSING_PAGE_ERROR_TYPE:
+                    $params['error_type'] = $mode;
                     $params['index_key'] = 'index';
                     $params['docs_path'] = $this->docs_path;
                     $protocol = '//';
