@@ -72,35 +72,41 @@
             return $request;
         }
 
-        public static function configure_theme($theme, $base_url, $local_base, $mode = Daux::LIVE_MODE) {
+        public static function configure_theme($theme, $base_url, $local_base, $theme_url, $mode = Daux::LIVE_MODE) {
+            $name = static::pathinfo($theme); 
             if (is_file($theme)) {
                 $theme = file_get_contents($theme);
                 $theme = json_decode($theme, true);
                 if (!$theme) $theme = array();
             } else $theme = array();
+            $theme['name'] = $name['filename'];
 
             if ($mode === Daux::LIVE_MODE) {
                 if (!isset($theme['favicon'])) $theme['favicon'] = utf8_encode($base_url . 'img/favicon.png');
                 else {
                     $theme['favicon'] = utf8_encode(str_replace('<base_url>', $base_url, $theme['favicon']));
+                    $theme['favicon'] = str_replace('<theme_url>', $theme_url, $theme['favicon']);
                 }
 
                 if (!isset($theme['css'])) $theme['css'] = array();
                 else {
                     foreach ($theme['css'] as $key => $css) {
                         $theme['css'][$key] = utf8_encode(str_replace('<base_url>', $base_url, $css));
+                        $theme['css'][$key] = utf8_encode(str_replace('<theme_url>', $theme_url, $css));
                     }
                 }
                 if (!isset($theme['fonts'])) $theme['fonts'] = array();
                 else {
                     foreach ($theme['fonts'] as $key => $font) {
                         $theme['fonts'][$key] = utf8_encode(str_replace('<base_url>', $base_url, $font));
+                        $theme['fonts'][$key] = utf8_encode(str_replace('<theme_url>', $theme_url, $font));
                     }
                 }
                 if (!isset($theme['js'])) $theme['js'] = array();
                 else {
                     foreach ($theme['js'] as $key => $js) {
                         $theme['js'][$key] = utf8_encode(str_replace('<base_url>', $base_url, $js));
+                        $theme['js'][$key] = utf8_encode(str_replace('<theme_url>', $theme_url, $js));
                     }
                 }
             } else {
@@ -111,26 +117,33 @@
             }
 
             if (!isset($theme['template'])) $theme['template'] = $local_base . DIRECTORY_SEPARATOR . 'templates' .
-                DIRECTORY_SEPARATOR . 'default.tpl';
+                DIRECTORY_SEPARATOR . 'default/default.tpl';
             else $theme['template'] = str_replace('<local_base>', $local_base, $theme['template']);
             if (!isset($theme['error-template'])) $theme['error-template'] = $local_base . DIRECTORY_SEPARATOR . 'templates' .
-                DIRECTORY_SEPARATOR . 'error.tpl';
+                DIRECTORY_SEPARATOR . 'default/error.tpl';
             else $theme['error-template'] = str_replace('<local_base>', $local_base, $theme['error-template']);
             if (!isset($theme['require-jquery'])) $theme['require-jquery'] = false;
             if (!isset($theme['bootstrap-js'])) $theme['bootstrap-js'] = false;
+
             return $theme;
         }
 
-        public static function rebase_theme($theme, $base_url) {
+        public static function rebase_theme($theme, $base_url, $theme_url) {
             $theme['favicon'] = utf8_encode(str_replace('<base_url>', $base_url, $theme['favicon']));
+            $theme['favicon'] = str_replace('<theme_url>', $theme_url, $theme['favicon']);
+
             foreach ($theme['css'] as $key => $css) {
                 $theme['css'][$key] = utf8_encode(str_replace('<base_url>', $base_url, $css));
+                $theme['css'][$key] = utf8_encode(str_replace('<theme_url>', $theme_url, $css));
             }
             foreach ($theme['fonts'] as $key => $font) {
                 $theme['fonts'][$key] = utf8_encode(str_replace('<base_url>', $base_url, $font));
+                $theme['fonts'][$key] = utf8_encode(str_replace('<theme_url>', $theme_url, $font));
+
             }
             foreach ($theme['js'] as $key => $js) {
                 $theme['js'][$key] = utf8_encode(str_replace('<base_url>', $base_url, $js));
+                $theme['js'][$key] = utf8_encode(str_replace('<theme_url>', $theme_url, $js));
             }
             return $theme;
         }

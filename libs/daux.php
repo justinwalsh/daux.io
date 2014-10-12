@@ -139,7 +139,7 @@
         private function recursive_generate_static($tree, $output_dir, $params, $base_url = '') {
             $params['base_url'] = $params['base_page'] = $base_url;
             $new_params = $params;
-            $params['theme'] = DauxHelper::rebase_theme($params['theme'], $base_url);
+            $params['theme'] = DauxHelper::rebase_theme($params['theme'], $base_url, $params['base_url'] . "themes/" . $params['theme']['name'] . '/');
             $params['image'] = str_replace('<base_url>', $base_url, $params['image']);
             if ($base_url !== '') $params['entry_page'] = $tree->first_page;
             foreach ($tree->value as $key => $node) {
@@ -220,9 +220,10 @@
                     $params['piwik_analytics'] = ($p = $this->options['piwik_analytics']) ?
                         DauxHelper::piwik_analytics($p, $this->options['piwik_analytics_id']) : '';
 
-                    $params['theme'] = DauxHelper::configure_theme($this->local_base . DIRECTORY_SEPARATOR . 'themes' .
-                        DIRECTORY_SEPARATOR . $this->options['theme'] . '.thm', $params['base_url'],
-                        $params['local_base']);
+                    $params['template'] = $this->options['template'];
+                    $params['theme'] = DauxHelper::configure_theme($this->local_base . DIRECTORY_SEPARATOR . 'templates' . DIRECTORY_SEPARATOR .
+                        $this->options['template'] . DIRECTORY_SEPARATOR . 'themes' . DIRECTORY_SEPARATOR . $this->options['theme'] . '.thm', $params['base_url'],
+                        $this->local_base, $params['base_url'] . "templates/" . $params['template'] . "/themes/" . $this->options['theme'] . '/');
                     break;
 
                 case Daux::LIVE_MODE:
@@ -249,9 +250,11 @@
                     $params['piwik_analytics'] = ($p = $this->options['piwik_analytics']) ?
                         DauxHelper::piwik_analytics($p, $this->options['piwik_analytics_id']) : '';
 
-                    $params['theme'] = DauxHelper::configure_theme($this->local_base . DIRECTORY_SEPARATOR . 'themes' .
-                        DIRECTORY_SEPARATOR . $this->options['theme'] . '.thm', $params['base_url'],
-                        $params['local_base'], $mode);
+                    $params['template'] = $this->options['template'];
+                    $params['theme'] = DauxHelper::configure_theme($this->local_base . DIRECTORY_SEPARATOR . 'templates' . DIRECTORY_SEPARATOR .
+                        $this->options['template'] . DIRECTORY_SEPARATOR . 'themes' . DIRECTORY_SEPARATOR . $this->options['theme'] . '.thm', $params['base_url'],
+                        $this->local_base, $params['base_url'] . "templates/" . $params['template'] . "/themes/" . $this->options['theme'] . '/', $mode);
+
 
                     if ($params['breadcrumbs'] = $this->options['breadcrumbs'])
                         $params['breadcrumb_separator'] = $this->options['breadcrumb_separator'];
@@ -291,9 +294,10 @@
                     $params['piwik_analytics'] = ($p = $this->options['piwik_analytics']) ?
                         DauxHelper::piwik_analytics($p, $this->options['piwik_analytics_id']) : '';
 
-                    $params['theme'] = DauxHelper::configure_theme($this->local_base . DIRECTORY_SEPARATOR . 'themes' .
-                        DIRECTORY_SEPARATOR . $this->options['theme'] . '.thm', $params['base_url'],
-                        $params['local_base'], $mode);
+                    $params['template'] = $this->options['template'];
+                    $params['theme'] = DauxHelper::configure_theme($this->local_base . DIRECTORY_SEPARATOR . 'templates' . DIRECTORY_SEPARATOR .
+                        $this->options['template'] . DIRECTORY_SEPARATOR . 'themes' . DIRECTORY_SEPARATOR . $this->options['theme'] . '.thm', $params['base_url'],
+                        $this->local_base, $params['base_url'] . "templates/" . $params['template'] . "/themes/" . $this->options['theme'] . '/', $mode);        
 
                     if ($params['breadcrumbs'] = $this->options['breadcrumbs'])
                         $params['breadcrumb_separator'] = $this->options['breadcrumb_separator'];
