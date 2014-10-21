@@ -231,8 +231,14 @@ EOT;
             static::copy_recursive($local_base . DIRECTORY_SEPARATOR . 'img', $path . DIRECTORY_SEPARATOR . 'img');
             @mkdir($path . DIRECTORY_SEPARATOR . 'js');
             static::copy_recursive($local_base . DIRECTORY_SEPARATOR . 'js', $path . DIRECTORY_SEPARATOR . 'js');
-            @mkdir($path . DIRECTORY_SEPARATOR . 'themes');
-            static::copy_recursive($local_base . DIRECTORY_SEPARATOR . 'themes', $path . DIRECTORY_SEPARATOR . 'themes');
+            //added and changed these in order to fetch the theme files and put them in the right place
+            @mkdir($path . DIRECTORY_SEPARATOR . 'templates');
+            @mkdir($path . DIRECTORY_SEPARATOR . 'templates' . DIRECTORY_SEPARATOR . 'default');
+            @mkdir($path . DIRECTORY_SEPARATOR . 'templates' . DIRECTORY_SEPARATOR . 'default' . DIRECTORY_SEPARATOR . 'themes');
+            static::copy_recursive($local_base . DIRECTORY_SEPARATOR . 'templates' . DIRECTORY_SEPARATOR .
+                'default' . DIRECTORY_SEPARATOR . 'themes', $path . DIRECTORY_SEPARATOR . 'templates' .
+                DIRECTORY_SEPARATOR . 'default' . DIRECTORY_SEPARATOR . 'themes');
+            //
         }
 
         //  Rmdir

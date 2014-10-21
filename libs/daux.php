@@ -76,6 +76,8 @@
             $this->host = $_SERVER['HTTP_HOST'];
             $this->base_url = $_SERVER['HTTP_HOST'] . $_SERVER['PHP_SELF'];
             $this->base_url = substr($this->base_url, 0, strrpos($this->base_url, '/'));
+            //adding this replace, which replaces the /index.php with nothing seems to resolve the issue with serving static content
+            $this->base_url = str_replace("/index.php", "", $this->base_url);
         }
 
         private function load_global_config($global_config_file) {
@@ -139,7 +141,9 @@
         private function recursive_generate_static($tree, $output_dir, $params, $base_url = '') {
             $params['base_url'] = $params['base_page'] = $base_url;
             $new_params = $params;
-            $params['theme'] = DauxHelper::rebase_theme($params['theme'], $base_url, $params['base_url'] . "themes/" . $params['theme']['name'] . '/');
+            //changed this as well in order for the templates to be put in the right place
+            $params['theme'] = DauxHelper::rebase_theme($params['theme'], $base_url, $params['base_url'] . "templates/default/themes/" . $params['theme']['name'] . '/');
+            //
             $params['image'] = str_replace('<base_url>', $base_url, $params['image']);
             if ($base_url !== '') $params['entry_page'] = $tree->first_page;
             foreach ($tree->value as $key => $node) {
