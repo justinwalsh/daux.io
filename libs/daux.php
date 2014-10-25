@@ -74,8 +74,10 @@
             }
             $this->mode = Daux::LIVE_MODE;
             $this->host = $_SERVER['HTTP_HOST'];
-            $this->base_url = $_SERVER['HTTP_HOST'] . $_SERVER['PHP_SELF'];
-            $this->base_url = substr($this->base_url, 0, strrpos($this->base_url, '/'));
+            //Fixes for pages within pages
+            //$this->base_url = $_SERVER['HTTP_HOST'] . $_SERVER['PHP_SELF'];
+            $this->base_url = $_SERVER['HTTP_HOST'];
+            //$this->base_url = substr($this->base_url, 0, strrpos($this->base_url, '/'));
             //adding this replace, which replaces the /index.php with nothing seems to resolve the issue with serving static content
             $this->base_url = str_replace("/index.php", "", $this->base_url);
         }
@@ -301,7 +303,7 @@
                     $params['template'] = $this->options['template'];
                     $params['theme'] = DauxHelper::configure_theme($this->local_base . DIRECTORY_SEPARATOR . 'templates' . DIRECTORY_SEPARATOR .
                         $this->options['template'] . DIRECTORY_SEPARATOR . 'themes' . DIRECTORY_SEPARATOR . $this->options['theme'] . '.thm', $params['base_url'],
-                        $this->local_base, $params['base_url'] . "templates/" . $params['template'] . "/themes/" . $this->options['theme'] . '/', $mode);        
+                        $this->local_base, $params['base_url'] . "templates/" . $params['template'] . "/themes/" . $this->options['theme'] . '/', $mode);
 
                     if ($params['breadcrumbs'] = $this->options['breadcrumbs'])
                         $params['breadcrumb_separator'] = $this->options['breadcrumb_separator'];
