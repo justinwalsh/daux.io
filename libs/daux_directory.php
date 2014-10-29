@@ -10,7 +10,6 @@
         public $index_page;
         public $first_page;
         public $value;
-        public $extension;
         public $uri;
         public $local_path;
         public $last_modified;
@@ -32,8 +31,6 @@
             } else {
                 $this->type = Directory_Entry::FILE_TYPE;
                 $this->value = $this->uri;
-                $pathinfo = DauxHelper::pathinfo($path);
-                $this->extension = $pathinfo['extension'];
             }
         }
 

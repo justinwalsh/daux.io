@@ -13,7 +13,6 @@
     "float": true,
     "file_editor": false,   
     "repo": "justinwalsh/daux.io",
-    "repo_to_fix": "https://github.com/justinwalsh/daux.io/blob/master/",
     "ignore": {
             "files": ["Work_In_Progress.md"],
             "folders": ["99_Not_Ready"]
