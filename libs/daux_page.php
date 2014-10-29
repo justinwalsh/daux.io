@@ -112,8 +112,15 @@
             $this->title = $file->title;
             $this->filename = $file->name;
             $this->path = $file->local_path;
+            $this->repo_path = $params['repo_to_fix'];
+            $this->extension = $file->extension;
             $this->mtime = $file->last_modified;
             $this->params = $params;
+
+            $this->folderPaths = '';
+            foreach ($file->parents as $parent) {
+                $this->folderPaths .= DIRECTORY_SEPARATOR . $parent->name;
+            }
 
             if ($this->title === 'index') {
                 $this->homepage = ($this->filename === '_index');
@@ -184,6 +191,7 @@
             }
             $page['language'] = $this->language;
             $page['path'] = $this->path;
+            $page['url_for_fix'] = $this->repo_path . $this->folderPaths . DIRECTORY_SEPARATOR . $this->filename . '.' . $this->extension;
             $page['request'] = utf8_encode($params['request']);
             $page['theme'] = $params['theme'];
             $page['modified_time'] = filemtime($this->path);
