@@ -42,8 +42,8 @@
 
         public function handle_request($url, $query = array()) {
             if ($this->error) return $this->error_page;
-            if (!$this->params['clean_urls']) $this->params['base_page'] .= 'index.php?request=';
-            $request = DauxHelper::get_request_from_url($url, $this->base_url);
+            if (!$this->params['clean_urls']) $this->params['base_page'] .= 'index.php/';
+            $request = DauxHelper::get_request();
             $request = urldecode($request);
             $request_type = isset($query['method']) ? $query['method'] : '';
             switch ($request_type) {
@@ -74,12 +74,10 @@
             }
             $this->mode = Daux::LIVE_MODE;
             $this->host = $_SERVER['HTTP_HOST'];
-            //Fixes for pages within pages
-            //$this->base_url = $_SERVER['HTTP_HOST'] . $_SERVER['PHP_SELF'];
-            $this->base_url = $_SERVER['HTTP_HOST'];
-            //$this->base_url = substr($this->base_url, 0, strrpos($this->base_url, '/'));
-            //adding this replace, which replaces the /index.php with nothing seems to resolve the issue with serving static content
-            $this->base_url = str_replace("/index.php", "", $this->base_url);
+            $this->base_url = $_SERVER['HTTP_HOST'] . dirname($_SERVER['PHP_SELF']);
+            $t = strrpos($this->base_url, '/index.php');
+            if ($t != FALSE) $this->base_url = substr($this->base_url, 0, $t);
+            if (substr($this->base_url, -1) !== '/') $this->base_url .= '/';
         }
 
         private function load_global_config($global_config_file) {
@@ -206,7 +204,7 @@
                     $params['index_key'] = 'index';
                     $params['docs_path'] = $this->docs_path;
                     $protocol = '//';
-                    $params['base_url'] = $protocol . $this->base_url . '/';
+                    $params['base_url'] = $protocol . $this->base_url;
                     $params['base_page'] = $params['base_url'];
                     $params['host'] = $this->host;
                     $params['tree'] = $this->tree;
@@ -236,7 +234,7 @@
                     $params['docs_path'] = $this->docs_path;
                     $params['index_key'] = 'index';
                     $protocol = '//';
-                    $params['base_url'] = $protocol . $this->base_url . '/';
+                    $params['base_url'] = $protocol . $this->base_url;
                     $params['base_page'] = $params['base_url'];
                     $params['host'] = $this->host;
                     $params['tree'] = $this->tree;

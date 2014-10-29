@@ -59,8 +59,10 @@
             return static::directory_tree_builder($dir, $ignore, $mode);
         }
 
+
+        //Depreciated
         public static function get_request_from_url($url, $base_url) {
-            $url = substr($url, strlen($base_url) + 1);
+            $url = substr($url, strlen($base_url));
             if (strpos($url, 'index.php') === 0) {
                 $request = (($i = strpos($url, 'request=')) !== false) ? $request = substr($url, $i + 8) : '';
                 if ($end = strpos($request, '&')) $request = substr($request, 0, $end);
@@ -70,6 +72,33 @@
                 $request = ($end = strpos($request, '?')) ? substr($request, 0, $end) : $request;
             }
             return $request;
+        }
+
+
+
+        public static function get_request($prefix_slash = false)
+        {
+            if (isset($_SERVER['PATH_INFO'])) $uri = $_SERVER['PATH_INFO'];
+            else if (isset($_SERVER['REQUEST_URI'])) {
+                $uri = $_SERVER['REQUEST_URI'];
+                if (strpos($uri, $_SERVER['SCRIPT_NAME']) === 0) $uri = substr($uri, strlen($_SERVER['SCRIPT_NAME']));
+                else if (strpos($uri, dirname($_SERVER['SCRIPT_NAME'])) === 0) $uri = substr($uri, strlen(dirname($_SERVER['SCRIPT_NAME'])));
+                if (strncmp($uri, '?/', 2) === 0) $uri = substr($uri, 2);
+                $parts = preg_split('#\?#i', $uri, 2);
+                $uri = $parts[0];
+                if (isset($parts[1])) {
+                    $_SERVER['QUERY_STRING'] = $parts[1];
+                    parse_str($_SERVER['QUERY_STRING'], $_GET);
+                } else {
+                    $_SERVER['QUERY_STRING'] = '';
+                    $_GET = array();
+                }
+                $uri = parse_url($uri, PHP_URL_PATH);
+            }
+            else return false;
+            $uri = str_replace(array('//', '../'), '/', trim($uri, '/'));
+            if ($uri == "") $uri = "index";
+            return $uri;
         }
 
         public static function configure_theme($theme, $base_url, $local_base, $theme_url, $mode = Daux::LIVE_MODE) {
