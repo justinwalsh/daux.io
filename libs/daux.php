@@ -194,6 +194,7 @@
             $params = array();
             $params['local_base'] = $this->local_base;
             $params['relative_path'] = $this->relative_path;
+            $params['enable_repo_to_fix'] = $this->options['enable_repo_to_fix'];
             $params['repo_to_fix'] = $this->options['repo_to_fix'];
 
             if ($mode === '') $mode = $this->mode;

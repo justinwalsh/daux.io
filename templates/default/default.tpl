@@ -225,7 +225,7 @@
                                             else echo $page['title'];
                                         ?>
                                         <?php if ($page['file_editor']) echo '<a href="javascript:;" id="editThis" class="btn">Edit this page</a>'; ?>
-                                        <?php echo '<a href="'.$page['url_for_fix'].'" class="btn">Fix this page</a>'; ?>
+                                        <?php if ($page['enable_repo_to_fix']) echo '<a href="'.$page['url_for_fix'].'" class="btn">Fix this page</a>'; ?>
                                     </h1>
                                     <span style="float: left; font-size: 10px; color: gray;">
                                         <?php echo date("l, F j, Y", $page['modified_time']);?>
@@ -241,7 +241,7 @@
                                             else echo $page['title'];
                                         ?>
                                         <?php if ($page['file_editor']) echo '<a href="javascript:;" id="editThis" class="btn">Edit this page</a>'; ?>
-                                        <?php echo '<a href="'.$page['url_for_fix'].'" class="btn">Fix this page</a>'; ?>
+                                        <?php if ($page['enable_repo_to_fix']) echo '<a href="'.$page['url_for_fix'].'" class="btn">Fix this page</a>'; ?>
                                     </h1>
                                 </div>
                             <?php } ?>

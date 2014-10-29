@@ -112,6 +112,7 @@
             $this->title = $file->title;
             $this->filename = $file->name;
             $this->path = $file->local_path;
+            $this->enable_repo_to_fix = $params['enable_repo_to_fix'];
             $this->repo_path = $params['repo_to_fix'];
             $this->extension = $file->extension;
             $this->mtime = $file->last_modified;
@@ -191,6 +192,7 @@
             }
             $page['language'] = $this->language;
             $page['path'] = $this->path;
+            $page['enable_repo_to_fix'] = $this->enable_repo_to_fix;
             $page['url_for_fix'] = $this->repo_path . $this->folderPaths . DIRECTORY_SEPARATOR . $this->filename . '.' . $this->extension;
             $page['request'] = utf8_encode($params['request']);
             $page['theme'] = $params['theme'];

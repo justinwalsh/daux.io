@@ -13,7 +13,8 @@
     "float": true,
     "file_editor": false,   
     "repo": "justinwalsh/daux.io",
-    "repo_to_fix": "https://github.com/justinwalsh/daux.io/blob/master/",
+    "enable_repo_to_fix": false,
+    "repo_to_fix": "https://github.com/justinwalsh/daux.io/blob/master/docs", # You have to set the URL to your doc files with /blob/master for github
     "ignore": {
             "files": ["Work_In_Progress.md"],
             "folders": ["99_Not_Ready"]
