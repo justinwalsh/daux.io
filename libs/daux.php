@@ -101,7 +101,6 @@
                 return;
             }
             $this->docs_path = $this->local_base . DIRECTORY_SEPARATOR . $global_config['docs_directory'];
-            $this->relative_path = $global_config['docs_directory'];
             if (!is_dir($this->docs_path)) {
                 $this->generate_error_page('Docs Directory not found',
                     'The Docs directory does not exist. Check the path again : ' . $this->docs_path, ErrorPage::FATAL_ERROR_TYPE);
@@ -193,8 +192,6 @@
         private function get_page_params($mode = '') {
             $params = array();
             $params['local_base'] = $this->local_base;
-            $params['relative_path'] = $this->relative_path;
-            $params['repo_to_fix'] = $this->options['repo_to_fix'];
 
             if ($mode === '') $mode = $this->mode;
             $params['mode'] = $mode;

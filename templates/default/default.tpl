@@ -225,7 +225,6 @@
                                             else echo $page['title'];
                                         ?>
                                         <?php if ($page['file_editor']) echo '<a href="javascript:;" id="editThis" class="btn">Edit this page</a>'; ?>
-                                        <?php echo '<a href="'.$page['url_for_fix'].'" class="btn">Fix this page</a>'; ?>
                                     </h1>
                                     <span style="float: left; font-size: 10px; color: gray;">
                                         <?php echo date("l, F j, Y", $page['modified_time']);?>
@@ -240,9 +239,7 @@
                                             if ($page['breadcrumbs']) echo $this->get_breadcrumb_title($page, $base_page);
                                             else echo $page['title'];
                                         ?>
-                                        <?php if ($page['file_editor']) echo '<a href="javascript:;" id="editThis" class="btn">Edit this page</a>'; ?>
-                                        <?php echo '<a href="'.$page['url_for_fix'].'" class="btn">Fix this page</a>'; ?>
-                                    </h1>
+                                        <?php if ($page['file_editor']) echo '<a href="javascript:;" id="editThis" class="btn">Edit this page</a>'; ?>                                    </h1>
                                 </div>
                             <?php } ?>
 
@@ -259,7 +256,6 @@
                                     <div class="clearfix"></div>
                                 </div>
                             <?php } ?>
-
                         </article>
                     </div>
                 </div>
