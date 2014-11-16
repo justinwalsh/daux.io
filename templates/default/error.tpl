@@ -46,6 +46,7 @@
 <head>
     <title><?php echo $page['title']; ?></title>
     <link rel="icon" href="<?php echo $page['theme']['favicon']; ?>" type="image/x-icon">
+    <meta charset="UTF-8">
     <!-- Mobile -->
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
