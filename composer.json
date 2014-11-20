@@ -16,6 +16,6 @@
         "erusev/parsedown": "~1.0"
     },
     "autoload": {
-        "files": [ "lib/daux.php" ]
+        "files": [ "libs/daux.php" ]
     }
 }
