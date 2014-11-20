@@ -65,7 +65,7 @@ software, even if advised of the possibility of such damage.
 
 */
     if (isset($argv[1])) $Daux = new \Todaymade\Daux\Daux($argv[1]);
-    else $Daux = new \Todaymade\Daux\Daux($argv[1]);
+    else $Daux = new \Todaymade\Daux\Daux();
     $Daux->initialize();
     if (isset($argv[2])) $Daux->generate_static($argv[2]);
     else $Daux->generate_static();  

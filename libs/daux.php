@@ -87,23 +87,27 @@
                 'The Global Config file is missing. Requested File : ' . $global_config_file, ErrorPage::FATAL_ERROR_TYPE);
                 return;
             }
+
             $global_config = json_decode(file_get_contents($global_config_file), true);
             if (!isset($global_config)) {
                 $this->generate_error_page('Corrupt Global Config File',
                     'The Global Config file is corrupt. Check that the JSON encoding is correct', ErrorPage::FATAL_ERROR_TYPE);
                 return;
             }
+
             if (!isset($global_config['docs_directory'])) {
                 $this->generate_error_page('Docs Directory not set', 'The Global Config file does not have the docs directory set.',
                     ErrorPage::FATAL_ERROR_TYPE);
                 return;
             }
-            $this->docs_path = $this->local_base . DIRECTORY_SEPARATOR . $global_config['docs_directory'];
-            if (!is_dir($this->docs_path)) {
+
+            $this->docs_path = $global_config['docs_directory'];
+            if (!is_dir($this->docs_path) && !is_dir($this->docs_path = $this->local_base . DIRECTORY_SEPARATOR . $this->docs_path)) {
                 $this->generate_error_page('Docs Directory not found',
                     'The Docs directory does not exist. Check the path again : ' . $this->docs_path, ErrorPage::FATAL_ERROR_TYPE);
-                return;
+                return;                    
             }
+
             if (!isset($global_config['valid_markdown_extensions'])) static::$VALID_MARKDOWN_EXTENSIONS = array('md', 'markdown');
             else static::$VALID_MARKDOWN_EXTENSIONS = $global_config['valid_markdown_extensions'];
         }
