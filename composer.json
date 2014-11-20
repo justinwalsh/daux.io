@@ -14,5 +14,8 @@
     "require": {
         "php": ">=5.3",
         "erusev/parsedown": "~1.0"
+    },
+    "autoload": {
+        "files": [ "lib/daux.php" ]
     }
 }
