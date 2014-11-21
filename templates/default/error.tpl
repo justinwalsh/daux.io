@@ -12,7 +12,7 @@
         private function build_navigation($tree, $path, $base_page) {
             $nav = '';
             foreach ($tree->value as $url => $node) {
-                if ($node->type === \TodayMade\Daux\Directory_Entry::FILE_TYPE) {
+                if ($node->type === \TodayMade\Daux\DirectoryEntry::FILE_TYPE) {
                     if ($node->value === 'index') continue;
                     $link = ($path === '') ? $url : $path . '/' . $url;
                     $nav .= '<li><a href="' . utf8_encode($base_page . $link) . '">' . $node->title . '</a></li>';

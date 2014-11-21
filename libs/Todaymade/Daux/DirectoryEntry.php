@@ -3,7 +3,7 @@
 namespace Todaymade\Daux;
 
 
-class Directory_Entry {
+class DirectoryEntry {
 
     const FILE_TYPE = 'FILE_TYPE';
     const DIRECTORY_TYPE = 'DIRECTORY_TYPE';
@@ -29,10 +29,10 @@ class Directory_Entry {
         $this->uri = DauxHelper::get_url_from_filename($this->name);
         $this->index_page = false;
         if (is_dir($path)) {
-            $this->type = Directory_Entry::DIRECTORY_TYPE;
+            $this->type = DirectoryEntry::DIRECTORY_TYPE;
             $this->value = array();
         } else {
-            $this->type = Directory_Entry::FILE_TYPE;
+            $this->type = DirectoryEntry::FILE_TYPE;
             $this->value = $this->uri;
         }
     }

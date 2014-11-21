@@ -63,7 +63,7 @@ class Daux {
 
     private function setup_environment_variables() {
         global $argc;
-        $this->local_base = dirname(dirname(__FILE__));
+        $this->local_base = getcwd() . DIRECTORY_SEPARATOR . 'vendor/justinwalsh/daux.io';//dirname(dirname(__FILE__));
         $this->base_url = '';
         if (isset($argc)) {
             $this->mode = Daux::STATIC_MODE;
@@ -148,7 +148,7 @@ class Daux {
         $params['image'] = str_replace('<base_url>', $base_url, $params['image']);
         if ($base_url !== '') $params['entry_page'] = $tree->first_page;
         foreach ($tree->value as $key => $node) {
-            if ($node->type === Directory_Entry::DIRECTORY_TYPE) {
+            if ($node->type === DirectoryEntry::DIRECTORY_TYPE) {
                 $new_output_dir = $output_dir . DIRECTORY_SEPARATOR . $key;
                 @mkdir($new_output_dir);
                 $this->recursive_generate_static($node, $new_output_dir, $new_params, '../' . $base_url);

@@ -3,7 +3,7 @@
 namespace Todaymade\Daux;
 
 
-class MarkdownPage {
+class MarkdownPage extends SimplePage{
 
     private $filename;
     private  $params;

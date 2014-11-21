@@ -3,7 +3,7 @@
 namespace Todaymade\Daux;
 
 
-class SimplePage {
+class SimplePage implements Page{
 
     protected $title;
     protected $content;

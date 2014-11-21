@@ -3,7 +3,7 @@
 namespace Todaymade\Daux;
 
 
-class ErrorPage {
+class ErrorPage extends SimplePage{
 
     const NORMAL_ERROR_TYPE = 'NORMAL_ERROR';
     const MISSING_PAGE_ERROR_TYPE = 'MISSING_PAGE_ERROR';

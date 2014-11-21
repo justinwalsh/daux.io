@@ -2,6 +2,7 @@
 
 namespace Todaymade\Daux;
 
+use Todaymade\Daux\DirectoryEntry;
 
 class DauxHelper {
 
@@ -215,7 +216,7 @@ EOT;
 
     private static function directory_tree_builder($dir, $ignore, $mode = Daux::LIVE_MODE, $parents = null) {
         if ($dh = opendir($dir)) {
-            $node = new Directory_Entry($dir, $parents);
+            $node = new DirectoryEntry($dir, $parents);
             $new_parents = $parents;
             if (is_null($new_parents)) $new_parents = array();
             else $new_parents[] = $node;
@@ -229,10 +230,10 @@ EOT;
                 if (is_dir($path)) $entry = static::directory_tree_builder($path, $ignore, $mode, $new_parents);
                 else if (in_array($file_details['extension'], Daux::$VALID_MARKDOWN_EXTENSIONS))
                 {
-                    $entry = new Directory_Entry($path, $new_parents);
+                    $entry = new DirectoryEntry($path, $new_parents);
                     if ($mode === Daux::STATIC_MODE) $entry->uri .= '.html';
                 }
-                if ($entry instanceof Directory_Entry) $node->value[$entry->uri] = $entry;
+                if ($entry instanceof DirectoryEntry) $node->value[$entry->uri] = $entry;
             }
             $node->sort();
             $node->first_page = $node->get_first_page();

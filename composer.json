@@ -20,5 +20,5 @@
             "Todaymade\\": "libs/"
         }
     },
-    "bin": ["bin/generate.php"]
+    "bin": ["generate.php"]
 }
