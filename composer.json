@@ -16,6 +16,9 @@
         "erusev/parsedown": "~1.0"
     },
     "autoload": {
-        "files": [ "libs/daux.php" ]
-    }
+        "psr-0": {
+            "Todaymade\\": "libs/"
+        }
+    },
+    "bin": ["bin/generate.php"]
 }
