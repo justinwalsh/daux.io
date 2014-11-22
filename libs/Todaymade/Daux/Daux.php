@@ -348,4 +348,12 @@ class Daux {
         $this->docs_path = $docs_path;
         return $this;
     }
+
+    public function hasError(){
+        return $this->error;
+    }
+
+    public function getErrorPage(){
+        return $this->error_page;
+    }
 }
