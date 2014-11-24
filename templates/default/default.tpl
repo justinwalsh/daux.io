@@ -13,7 +13,7 @@
             $nav = '';
             foreach ($tree->value as $node) {
             	$url = $node->uri;
-                if ($node->type === \TodayMade\Daux\Directory_Entry::FILE_TYPE) {
+                if ($node->type === \TodayMade\Daux\DirectoryEntry::FILE_TYPE) {
                     if ($node->value === 'index') continue;
                     $nav .= '<li';
                     $link = ($path === '') ? $url : $path . '/' . $url;

@@ -14,5 +14,11 @@
     "require": {
         "php": ">=5.3",
         "erusev/parsedown": "~1.0"
-    }
+    },
+    "autoload": {
+        "psr-0": {
+            "Todaymade\\": "libs/"
+        }
+    },
+    "bin": ["generate.php"]
 }
