@@ -33,7 +33,7 @@
             if ($filename[0] == '' || is_numeric($filename[0])) unset($filename[0]);
             else {
                 $t = $filename[0];
-                if ($t[0] == '-') $filename[0] = substr($t, 1);                
+                if ($t[0] == '-') $filename[0] = substr($t, 1);
             }
             $filename = implode(' ', $filename);
             return $filename;
@@ -49,7 +49,7 @@
             if ($filename[0] == '' || is_numeric($filename[0])) unset($filename[0]);
             else {
                 $t = $filename[0];
-                if ($t[0] == '-') $filename[0] = substr($t, 1);                
+                if ($t[0] == '-') $filename[0] = substr($t, 1);
             }
             $filename = implode('_', $filename);
             return $filename;
@@ -97,12 +97,12 @@
             }
             else return false;
             $uri = str_replace(array('//', '../'), '/', trim($uri, '/'));
-            if ($uri == "") $uri = "index";
+            if ($uri == "") $uri = "first_page";
             return $uri;
         }
 
         public static function configure_theme($theme, $base_url, $local_base, $theme_url, $mode = Daux::LIVE_MODE) {
-            $name = static::pathinfo($theme); 
+            $name = static::pathinfo($theme);
             if (is_file($theme)) {
                 $theme = file_get_contents($theme);
                 $theme = json_decode($theme, true);
@@ -230,7 +230,7 @@ EOT;
                         $entry = new Directory_Entry($path, $new_parents);
                         if ($mode === Daux::STATIC_MODE) $entry->uri .= '.html';
                     }
-                    if ($entry instanceof Directory_Entry) $node->value[$entry->uri] = $entry; 
+                    if ($entry instanceof Directory_Entry) $node->value[$entry->uri] = $entry;
                 }
                 $node->sort();
                 $node->first_page = $node->get_first_page();
