@@ -46,6 +46,9 @@
             $request = DauxHelper::get_request();
             $request = urldecode($request);
             $request_type = isset($query['method']) ? $query['method'] : '';
+            if($request == 'first_page') {
+                $request = $this->tree->first_page->uri;
+            }
             switch ($request_type) {
                 case 'DauxEdit':
                     if ($this->options['file_editor']) {
@@ -105,7 +108,7 @@
             if (!is_dir($this->docs_path) && !is_dir($this->docs_path = $this->local_base . DIRECTORY_SEPARATOR . $this->docs_path)) {
                 $this->generate_error_page('Docs Directory not found',
                     'The Docs directory does not exist. Check the path again : ' . $this->docs_path, ErrorPage::FATAL_ERROR_TYPE);
-                return;                    
+                return;
             }
 
             if (!isset($global_config['valid_markdown_extensions'])) static::$VALID_MARKDOWN_EXTENSIONS = array('md', 'markdown');
