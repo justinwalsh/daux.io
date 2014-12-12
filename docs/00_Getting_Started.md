@@ -111,14 +111,14 @@ Change the title bar in the docs
 ###Themes:
 We have 4 built-in Bootstrap themes. To use one of the themes, just set the `theme` option to one of the following:
 
-* blue
-* green
-* navy
-* red
+* daux-blue
+* daux-green
+* daux-navy
+* daux-red
 
 ```json
 {
-	"theme": "blue"
+	"theme": "daux-blue"
 }
 ```
 
