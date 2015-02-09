@@ -12,6 +12,7 @@
         const LIVE_MODE = 'DAUX_LIVE';
 
         public static $VALID_MARKDOWN_EXTENSIONS;
+        private $parsedown_extra_support = false;
         private $local_base;
         private $base_url;
         private $host;
@@ -113,6 +114,10 @@
 
             if (!isset($global_config['valid_markdown_extensions'])) static::$VALID_MARKDOWN_EXTENSIONS = array('md', 'markdown');
             else static::$VALID_MARKDOWN_EXTENSIONS = $global_config['valid_markdown_extensions'];
+
+            if(isset($global_config['parsedown_extra_support']) && $global_config['parsedown_extra_support'] === true) {
+                $this->parsedown_extra_support = true;
+            }
         }
 
         private function load_docs_config($config_file) {
@@ -235,6 +240,7 @@
                     $params['theme'] = DauxHelper::configure_theme($this->local_base . DIRECTORY_SEPARATOR . 'templates' . DIRECTORY_SEPARATOR .
                         $this->options['template'] . DIRECTORY_SEPARATOR . 'themes' . DIRECTORY_SEPARATOR . $this->options['theme'] . '.thm', $params['base_url'],
                         $this->local_base, $params['base_url'] . "templates/" . $params['template'] . "/themes/" . $this->options['theme'] . '/');
+                    $params['parsedown_extra_support'] = $this->parsedown_extra_support;
                     break;
 
                 case Daux::LIVE_MODE:
@@ -283,6 +289,7 @@
                     $params['float'] = $this->options['float'];
                     $params['date_modified'] = $this->options['date_modified'];
                     $params['file_editor'] = $this->options['file_editor'];
+                    $params['parsedown_extra_support'] = $this->parsedown_extra_support;
                     break;
 
                 case Daux::STATIC_MODE:
@@ -326,6 +333,7 @@
                     $params['float'] = $this->options['float'];
                     $params['date_modified'] = $this->options['date_modified'];
                     $params['file_editor'] = false;
+                    $params['parsedown_extra_support'] = $this->parsedown_extra_support;
                     break;
             }
             return $params;

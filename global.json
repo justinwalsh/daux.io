@@ -1,4 +1,5 @@
 {
     "docs_directory": "docs",
-    "valid_markdown_extensions": ["md", "markdown"]
+    "valid_markdown_extensions": ["md", "markdown"],
+    "parsedown_extra_support": true
 }
