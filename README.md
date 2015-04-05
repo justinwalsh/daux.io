@@ -29,6 +29,7 @@ This is a list of sites using Daux.io:
 * [TrackJs](http://docs.trackjs.com) (uses a customized theme)
 * [Sugoi](http://doc.sugoi.ventrux.com/)
 * [wallabag](http://doc.wallabag.org/index)
+* [iGeo-Topo](http://igeo-topo.fr/doc)
 
 Do you use Daux.io? Send me a pull request or open an [issue](https://github.com/justinwalsh/daux.io/issues) and I will add you to the list.
 
