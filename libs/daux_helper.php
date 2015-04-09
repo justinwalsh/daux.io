@@ -217,12 +217,16 @@ EOT;
                 $new_parents = $parents;
                 if (is_null($new_parents)) $new_parents = array();
                 else $new_parents[] = $node;
+                $sort_list = array();
                 while (($entry = readdir($dh)) !== false) {
                     if ($entry == '.' || $entry == '..') continue;
                     $path = $dir . DIRECTORY_SEPARATOR . $entry;
                     if (is_dir($path) && in_array($entry, $ignore['folders'])) continue;
                     if (!is_dir($path) && in_array($entry, $ignore['files'])) continue;
-
+                    $sort_list[ $entry ] = $path;
+                }
+                uksort($sort_list, array($node, 'compare_directory_entries'));
+                foreach( $sort_list AS $entry => $path ){
                     $file_details = static::pathinfo($path);
                     if (is_dir($path)) $entry = static::directory_tree_builder($path, $ignore, $mode, $new_parents);
                     else if (in_array($file_details['extension'], Daux::$VALID_MARKDOWN_EXTENSIONS))
