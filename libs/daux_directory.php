@@ -92,9 +92,9 @@
             return true;
         }
 
-        private function compare_directory_entries($a, $b) {
-            $name_a = explode('_', $a->name);
-            $name_b = explode('_', $b->name);
+        public function compare_directory_entries($a, $b) {
+            $name_a = explode('_', is_object($a) ? $a->name : (string)$a);
+            $name_b = explode('_', is_object($b) ? $b->name : (string)$b);
             if (is_numeric($name_a[0])) {
                 $a = intval($name_a[0]);
                 if (is_numeric($name_b[0])) {
