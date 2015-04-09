@@ -47,7 +47,7 @@
             $request = urldecode($request);
             $request_type = isset($query['method']) ? $query['method'] : '';
             if($request == 'first_page') {
-                $request = $this->tree->first_page->uri;
+                $request = $this->tree->first_page->get_url();
             }
             switch ($request_type) {
                 case 'DauxEdit':
