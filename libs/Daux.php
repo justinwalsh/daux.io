@@ -1,4 +1,4 @@
-<?php git mvnamespace Todaymade\Daux;
+<?php namespace Todaymade\Daux;
 
     class Daux
     {
