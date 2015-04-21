@@ -227,7 +227,7 @@
 
                     $params['template'] = $this->options['template'];
                     $params['theme'] = DauxHelper::configure_theme($this->local_base . DIRECTORY_SEPARATOR . 'templates' . DIRECTORY_SEPARATOR .
-                        $this->options['template'] . DIRECTORY_SEPARATOR . 'themes' . DIRECTORY_SEPARATOR . $this->options['theme'] . '.thm', $params['base_url'],
+                        $this->options['template'] . DIRECTORY_SEPARATOR . 'themes' . DIRECTORY_SEPARATOR . $this->options['theme'] . '/config.json', $params['base_url'],
                         $this->local_base, $params['base_url'] . "templates/" . $params['template'] . "/themes/" . $this->options['theme'] . '/');
                     break;
 
@@ -257,7 +257,7 @@
 
                     $params['template'] = $this->options['template'];
                     $params['theme'] = DauxHelper::configure_theme($this->local_base . DIRECTORY_SEPARATOR . 'templates' . DIRECTORY_SEPARATOR .
-                        $this->options['template'] . DIRECTORY_SEPARATOR . 'themes' . DIRECTORY_SEPARATOR . $this->options['theme'] . '.thm', $params['base_url'],
+                        $this->options['template'] . DIRECTORY_SEPARATOR . 'themes' . DIRECTORY_SEPARATOR . $this->options['theme'] . '/config.json', $params['base_url'],
                         $this->local_base, $params['base_url'] . "templates/" . $params['template'] . "/themes/" . $this->options['theme'] . '/', $mode);
 
 
@@ -301,7 +301,7 @@
 
                     $params['template'] = $this->options['template'];
                     $params['theme'] = DauxHelper::configure_theme($this->local_base . DIRECTORY_SEPARATOR . 'templates' . DIRECTORY_SEPARATOR .
-                        $this->options['template'] . DIRECTORY_SEPARATOR . 'themes' . DIRECTORY_SEPARATOR . $this->options['theme'] . '.thm', $params['base_url'],
+                        $this->options['template'] . DIRECTORY_SEPARATOR . 'themes' . DIRECTORY_SEPARATOR . $this->options['theme'] . '/config.json', $params['base_url'],
                         $this->local_base, $params['base_url'] . "templates/" . $params['template'] . "/themes/" . $this->options['theme'] . '/', $mode);
 
                     if ($params['breadcrumbs'] = $this->options['breadcrumbs'])

@@ -22,16 +22,16 @@ module.exports = function (grunt) {
                     report: 'min'
                 },
                 files: {
-                    "css/daux-blue.min.css": "less/daux-blue.less",
-                    "css/daux-green.min.css": "less/daux-green.less",
-                    "css/daux-navy.min.css": "less/daux-navy.less",
-                    "css/daux-red.min.css": "less/daux-red.less"
+                    "templates/default/themes/daux-blue/css/theme.min.css": "templates/default/themes/daux-blue/less/theme.less",
+                    "templates/default/themes/daux-green/css/theme.min.css": "templates/default/themes/daux-green/less/theme.less",
+                    "templates/default/themes/daux-navy/css/theme.min.css": "templates/default/themes/daux-navy/less/theme.less",
+                    "templates/default/themes/daux-red/css/theme.min.css": "templates/default/themes/daux-red/less/theme.less"
                 }
             }
         },
         watch: {
             scripts: {
-                files: ['less/**/*.less'],
+                files: ['templates/default/theme/**/*.less'],
                 tasks: ['less'],
                 options: {
                     nospawn: true
