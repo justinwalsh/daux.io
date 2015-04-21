@@ -12,7 +12,10 @@
         }
     ],
     "require": {
-        "php": ">=5.3",
+        "php": ">=5.4",
         "erusev/parsedown": "~1.0"
+    },
+    "autoload": {
+        "psr-4": {"Todaymade\\Daux\\": "libs/"}
     }
 }

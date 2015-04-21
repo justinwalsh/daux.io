@@ -1,10 +1,4 @@
-<?php
-    namespace Todaymade\Daux;
-    require_once(dirname(__FILE__) . '/../vendor/autoload.php');
-    require_once('daux_directory.php');
-    require_once('daux_helper.php');
-    require_once('daux_page.php');
-
+<?php git mvnamespace Todaymade\Daux;
 
     class Daux
     {
@@ -154,7 +148,7 @@
             $params['image'] = str_replace('<base_url>', $base_url, $params['image']);
             if ($base_url !== '') $params['entry_page'] = $tree->first_page;
             foreach ($tree->value as $key => $node) {
-                if ($node->type === Directory_Entry::DIRECTORY_TYPE) {
+                if ($node->type === Entry::DIRECTORY_TYPE) {
                     $new_output_dir = $output_dir . DIRECTORY_SEPARATOR . $key;
                     @mkdir($new_output_dir);
                     $this->recursive_generate_static($node, $new_output_dir, $new_params, '../' . $base_url);
