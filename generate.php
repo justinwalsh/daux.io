@@ -1,5 +1,5 @@
 <?php
-    require_once("libs/daux.php");
+    require_once("vendor/autoload.php");
 
 /*
 
@@ -68,5 +68,5 @@ software, even if advised of the possibility of such damage.
     else $Daux = new \Todaymade\Daux\Daux();
     $Daux->initialize();
     if (isset($argv[2])) $Daux->generate_static($argv[2]);
-    else $Daux->generate_static();  
+    else $Daux->generate_static();
 ?>

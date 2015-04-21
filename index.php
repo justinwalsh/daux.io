@@ -1,5 +1,5 @@
 <?php
-require_once("libs/daux.php");
+require_once("vendor/autoload.php");
 
 /*
 
