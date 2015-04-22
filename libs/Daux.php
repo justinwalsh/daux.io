@@ -138,7 +138,7 @@
             $params['date_modified'] = $this->options['date_modified'];
             $params['file_editor'] = false;
 
-            $params['theme'] = GeneratorHelper::configure_theme(
+            $params['theme'] = DauxHelper::get_theme(
                 $this->local_base . DIRECTORY_SEPARATOR . 'templates' . DIRECTORY_SEPARATOR . $this->options['template'] . DIRECTORY_SEPARATOR . 'themes' . DIRECTORY_SEPARATOR . $this->options['theme'],
                 $params['base_url'],
                 $this->local_base,
@@ -180,7 +180,7 @@
             $params['date_modified'] = $this->options['date_modified'];
             $params['file_editor'] = $this->options['file_editor'];
 
-            $params['theme'] = ServerHelper::configure_theme(
+            $params['theme'] = DauxHelper::get_theme(
                 $this->local_base . DIRECTORY_SEPARATOR . 'templates' . DIRECTORY_SEPARATOR . $this->options['template'] . DIRECTORY_SEPARATOR . 'themes' . DIRECTORY_SEPARATOR . $this->options['theme'],
                 $params['base_url'],
                 $this->local_base,
