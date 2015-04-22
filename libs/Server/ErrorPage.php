@@ -12,28 +12,32 @@ class ErrorPage extends SimplePage
     private $params;
     private static $template;
 
-    public function __construct($title, $content, $params) {
+    public function __construct($title, $content, $params)
+    {
         parent::__construct($title, $content);
         $this->params = $params;
     }
 
-    public function display() {
+    public function display()
+    {
         http_response_code(404);
         parent::display();
     }
 
-    public function get_page_content() {
+    public function getContent()
+    {
         include_once($this->params['theme']['error-template']);
         static::$template = new Template();
 
         if (is_null($this->html)) {
-            $this->html = $this->generate_page();
+            $this->html = $this->generatePage();
         }
 
         return $this->html;
     }
 
-    public function generate_page() {
+    private function generatePage()
+    {
         $params = $this->params;
         $page['title'] = $this->title;
         $page['theme'] = $params['theme'];

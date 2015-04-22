@@ -2,6 +2,6 @@
 
 interface Page
 {
-    function get_page_content();
-    function display();
+    public function getContent();
+    public function display();
 }

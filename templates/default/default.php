@@ -12,13 +12,14 @@
         private function build_navigation($tree, $path, $current_url, $base_page, $mode) {
             $nav = '';
             foreach ($tree->value as $node) {
-            	$url = $node->uri;
+            	$url = $node->getUri();
                 if ($node instanceof \Todaymade\Daux\Tree\Content) {
+
                     if ($node->value === 'index') continue;
                     $nav .= '<li';
                     $link = ($path === '') ? $url : $path . '/' . $url;
                     if ($current_url === $link) $nav .= ' class="active"';
-                    $nav .= '><a href="' . $base_page . $link . '">' . $node->title . '</a></li>';
+                    $nav .= '><a href="' . $base_page . $link . '">' . $node->getTitle() . '</a></li>';
                 }
                 if ($node instanceof \Todaymade\Daux\Tree\Directory) {
                     $nav .= '<li';
@@ -26,9 +27,9 @@
                     if (strpos($current_url, $link) === 0) $nav .= ' class="open"';
                     $nav .= ">";
                     if ($mode === \TodayMade\Daux\Daux::STATIC_MODE) $link .= "/index.html";
-                    if ($node->index_page) $nav .= '<a href="' . $base_page . $link . '" class="folder">' .
-                        $node->title . '</a>';
-                    else $nav .= '<a href="#" class="aj-nav folder">' . $node->title . '</a>';
+                    if ($node->getIndexPage()) $nav .= '<a href="' . $base_page . $link . '" class="folder">' .
+                        $node->getTitle() . '</a>';
+                    else $nav .= '<a href="#" class="aj-nav folder">' . $node->getTitle() . '</a>';
                     $nav .= '<ul class="nav nav-list">';
                     $new_path = ($path === '') ? $url : $path . '/' . $url;
                     $nav .= $this->build_navigation($node, $new_path, $current_url, $base_page, $mode);

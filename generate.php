@@ -65,6 +65,8 @@ software, even if advised of the possibility of such damage.
 
 require_once("vendor/autoload.php");
 
+\Todaymade\Daux\Daux::initConstants();
+
 $global_config = (isset($argv[1]))? $argv[1] : null;
 $destination = (isset($argv[2]))? $argv[2] : null;
 

@@ -6,29 +6,34 @@ class SimplePage implements Page
     protected $content;
     protected $html = null;
 
-    public function __construct($title, $content) {
-        $this->initialize_page($title, $content);
+    public function __construct($title, $content)
+    {
+        $this->initializePage($title, $content);
     }
 
-    public function initialize_page($title, $content) {
-        $this->title = $title;
-        $this->content = $content;
-    }
-
-    public function  display() {
+    public function display()
+    {
         header('Content-type: text/html; charset=utf-8');
-        echo $this->get_page_content();
+        echo $this->getContent();
     }
 
-    public function get_page_content() {
+    public function getContent()
+    {
         if (is_null($this->html)) {
-            $this->html = $this->generate_page();
+            $this->html = $this->generatePage();
         }
 
         return $this->html;
     }
 
-    private function generate_page() {
+    private function initializePage($title, $content)
+    {
+        $this->title = $title;
+        $this->content = $content;
+    }
+
+    private function generatePage()
+    {
         return $this->content;
     }
 }
