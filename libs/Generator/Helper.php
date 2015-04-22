@@ -8,8 +8,8 @@ class Helper {
         @mkdir($path);
         static::clean_directory($path);
 
-        @mkdir($path . DIRECTORY_SEPARATOR . 'img');
-        static::copy_recursive($local_base . DIRECTORY_SEPARATOR . 'img', $path . DIRECTORY_SEPARATOR . 'img');
+        @mkdir($path . DIRECTORY_SEPARATOR . 'resources');
+        static::copy_recursive($local_base . DIRECTORY_SEPARATOR . 'resources', $path . DIRECTORY_SEPARATOR . 'resources');
         @mkdir($path . DIRECTORY_SEPARATOR . 'js');
         static::copy_recursive($local_base . DIRECTORY_SEPARATOR . 'js', $path . DIRECTORY_SEPARATOR . 'js');
         //added and changed these in order to fetch the theme files and put them in the right place

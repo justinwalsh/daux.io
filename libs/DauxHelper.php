@@ -22,38 +22,6 @@
             return $request;
         }
 
-        public static function get_title_from_file($file) {
-            $file = static::pathinfo($file);
-            return static::get_title_from_filename($file['filename']);
-        }
-
-        public static function get_title_from_filename($filename) {
-            $filename = explode('_', $filename);
-            if ($filename[0] == '' || is_numeric($filename[0])) unset($filename[0]);
-            else {
-                $t = $filename[0];
-                if ($t[0] == '-') $filename[0] = substr($t, 1);
-            }
-            $filename = implode(' ', $filename);
-            return $filename;
-        }
-
-        public static function get_url_from_file($file) {
-            $file = static::pathinfo($file);
-            return static::get_url_from_filename($file['filename']);
-        }
-
-        public static function get_url_from_filename($filename) {
-            $filename = explode('_', $filename);
-            if ($filename[0] == '' || is_numeric($filename[0])) unset($filename[0]);
-            else {
-                $t = $filename[0];
-                if ($t[0] == '-') $filename[0] = substr($t, 1);
-            }
-            $filename = implode('_', $filename);
-            return $filename;
-        }
-
         public static function get_theme($theme_folder, $base_url, $local_base, $theme_url) {
             $name = static::pathinfo($theme_folder);
 
@@ -71,7 +39,7 @@
                 'fonts' => [],
                 'require-jquery' => false,
                 'bootstrap-js' => false,
-                'favicon' => '<base_url>img/favicon.png',
+                'favicon' => '<base_url>resources/img/favicon.png',
                 'template' => $local_base . DIRECTORY_SEPARATOR . 'templates' . DIRECTORY_SEPARATOR . 'default/default.tpl',
                 'error-template' => $local_base . DIRECTORY_SEPARATOR . 'templates' . DIRECTORY_SEPARATOR . 'default/error.tpl',
             ];
@@ -130,38 +98,6 @@ EOT;
                 </script>
 EOT;
             return $pa;
-        }
-
-        public static function build_directory_tree($dir, $ignore, $mode = Daux::LIVE_MODE, $parents = null) {
-            if ($dh = opendir($dir)) {
-                $node = new Entry($dir, $parents);
-                $new_parents = $parents;
-                if (is_null($new_parents)) $new_parents = array();
-                else $new_parents[] = $node;
-                while (($entry = readdir($dh)) !== false) {
-                    if ($entry == '.' || $entry == '..') continue;
-                    $path = $dir . DIRECTORY_SEPARATOR . $entry;
-                    if (is_dir($path) && in_array($entry, $ignore['folders'])) continue;
-                    if (!is_dir($path) && in_array($entry, $ignore['files'])) continue;
-
-                    $file_details = static::pathinfo($path);
-                    if (is_dir($path)) $entry = static::build_directory_tree($path, $ignore, $mode, $new_parents);
-                    else if (in_array($file_details['extension'], Daux::$VALID_MARKDOWN_EXTENSIONS))
-                    {
-                        $entry = new Entry($path, $new_parents);
-                        if ($mode === Daux::STATIC_MODE) $entry->uri .= '.html';
-                    }
-                    if ($entry instanceof Entry) $node->value[$entry->uri] = $entry;
-                }
-                $node->sort();
-                $node->first_page = $node->get_first_page();
-                $index_key = ($mode === Daux::LIVE_MODE) ? 'index' : 'index.html';
-                if (isset($node->value[$index_key])) {
-                    $node->value[$index_key]->first_page = $node->first_page;
-                    $node->index_page =  $node->value[$index_key];
-                } else $node->index_page = false;
-                return $node;
-            }
         }
 
         public static function pathinfo($path) {

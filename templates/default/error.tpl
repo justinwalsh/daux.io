@@ -12,11 +12,12 @@
         private function build_navigation($tree, $path, $base_page) {
             $nav = '';
             foreach ($tree->value as $url => $node) {
-                if ($node->type === \TodayMade\Daux\Entry::FILE_TYPE) {
+                if ($node instanceof \Todaymade\Daux\Tree\Content) {
                     if ($node->value === 'index') continue;
                     $link = ($path === '') ? $url : $path . '/' . $url;
                     $nav .= '<li><a href="' . utf8_encode($base_page . $link) . '">' . $node->title . '</a></li>';
-                } else {
+                }
+                if ($node instanceof \Todaymade\Daux\Tree\Directory) {
                     $nav .= '<li>';
                     $link = ($path === '') ? $url : $path . '/' . $url;
                     if ($node->index_page) $nav .= '<a href="' . $base_page . $link . '" class="folder">' . $node->title . '</a>';

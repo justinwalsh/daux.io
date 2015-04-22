@@ -75,15 +75,18 @@ class MarkdownPage extends SimplePage
     private function generate_page() {
         $params = $this->params;
         $Parsedown = new \Parsedown();
-        if ($params['request'] === $params['index_key']) {
-            if ($params['multilanguage']) {
-                foreach ($params['languages'] as $key => $name) {
-                    $entry_page[utf8_encode($name)] = utf8_encode($params['base_page'] . $params['entry_page'][$key]->get_url());
-                }
-            } else $entry_page['View Documentation'] = utf8_encode($params['base_page'] . $params['entry_page']->uri);
-        } else if ($params['file_uri'] === 'index')
-            $entry_page[utf8_encode($params['entry_page']->title)] = utf8_encode($params['base_page'].
-                $params['entry_page']->get_url());
+        $entry_page = [];
+        //TODO :: debug entry pages
+        //if ($params['request'] === $params['index_key']) {
+        //    if ($params['multilanguage']) {
+        //        foreach ($params['languages'] as $key => $name) {
+        //            $entry_page[utf8_encode($name)] = utf8_encode($params['base_page'] . $params['entry_page'][$key]->get_url());
+        //        }
+        //    } else $entry_page['View Documentation'] = utf8_encode($params['base_page'] . $params['entry_page']->uri);
+        //} else if ($params['file_uri'] === 'index') {
+        //    $entry_page[utf8_encode($params['entry_page']->title)] = utf8_encode($params['base_page'] . $params['entry_page']->get_url());
+        //}
+
         $page['entry_page'] = (isset($entry_page)) ? $entry_page : null;
 
         $page['homepage'] = $this->homepage;
