@@ -22,7 +22,7 @@ class Server {
         }
         catch( NotFoundException $e )
         {
-            $page = new ErrorPage("An error occured", $e->getMessage(), Helper::get_error_params($daux));
+            $page = new ErrorPage("An error occured", $e->getMessage(), $daux->get_live_page_params());
         }
 
         $page->display();
@@ -33,10 +33,8 @@ class Server {
     }
 
     public function handle($url, $query = []) {
-
         $this->params = $this->daux->get_live_page_params();
 
-        if (!$this->params['clean_urls']) $this->params['base_page'] .= 'index.php/';
         $request = Helper::get_request();
         $request = urldecode($request);
         $request_type = isset($query['method']) ? $query['method'] : '';
@@ -68,8 +66,43 @@ class Server {
     }
 
     private function get_file_from_request($request) {
-        $file = $this->daux->tree->retrieve_file($request);
-        return $file;
+        $tree = $this->daux->tree;
+        $request = explode('/', $request);
+        foreach ($request as $node) {
+            // If the element we're in currently is not a
+            // directory, we failed to find the requested file
+            if (!$tree instanceof Directory) {
+                return false;
+            }
+
+            // if the node exists in the current request tree,
+            // change the $tree variable to reference the new
+            // node and proceed to the next url part
+            if (isset($tree->value[$node])) {
+                $tree = $tree->value[$node];
+                continue;
+            }
+
+            // At this stage, we're in a directory, but no
+            // sub-item matches, so the current node must
+            // be an index page or we failed
+            if ($node !== 'index' && $node !== 'index.html') {
+                return false;
+            }
+
+            return $tree->index_page;
+        }
+
+        // If the entry we found is not a directory, we're done
+        if (!$tree instanceof Directory) {
+            return $tree;
+        }
+
+        if ($tree->index_page){
+            return $tree->index_page;
+        }
+
+        return ($get_first_file) ? $tree->first_page : false;
     }
 
     private function get_page($request) {

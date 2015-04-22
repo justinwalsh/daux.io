@@ -1,6 +1,7 @@
 <?php namespace Todaymade\Daux\Server;
 
 use Todaymade\Daux\SimplePage;
+use Todaymade\Daux\Template;
 
 class ErrorPage extends SimplePage
 {
@@ -9,25 +10,21 @@ class ErrorPage extends SimplePage
     const FATAL_ERROR_TYPE = 'FATAL_ERROR';
 
     private $params;
-    private $type;
     private static $template;
 
     public function __construct($title, $content, $params) {
         parent::__construct($title, $content);
         $this->params = $params;
-        $this->type = $params['error_type'];
     }
 
     public function display() {
-        http_response_code($this->type === static::MISSING_PAGE_ERROR_TYPE ? 404 : 500);
+        http_response_code(404);
         parent::display();
     }
 
     public function get_page_content() {
-        if ($this->type !== static::FATAL_ERROR_TYPE && is_null(static::$template)) {
-            include_once($this->params['theme']['error-template']);
-            static::$template = new Template();
-        }
+        include_once($this->params['theme']['error-template']);
+        static::$template = new Template();
 
         if (is_null($this->html)) {
             $this->html = $this->generate_page();
@@ -37,7 +34,6 @@ class ErrorPage extends SimplePage
     }
 
     public function generate_page() {
-        if ($this->type === static::FATAL_ERROR_TYPE) return $this->content;
         $params = $this->params;
         $page['title'] = $this->title;
         $page['theme'] = $params['theme'];

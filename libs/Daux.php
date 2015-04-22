@@ -2,6 +2,7 @@
 
     use Todaymade\Daux\Server\Helper as ServerHelper;
     use Todaymade\Daux\Generator\Helper as GeneratorHelper;
+    use Todaymade\Daux\Tree\Builder;
 
     class Daux
     {
@@ -80,7 +81,7 @@
         }
 
         private function generate_directory_tree() {
-            $this->tree = DauxHelper::build_directory_tree($this->docs_path, $this->options['ignore'], $this->mode);
+            $this->tree = Builder::build($this->docs_path, $this->options['ignore'], $this->mode);
             if (!empty($this->options['languages'])) {
                 foreach ($this->options['languages'] as $key => $node) {
                     $this->tree->value[$key]->title = $node;
@@ -89,9 +90,8 @@
         }
 
         public function get_base_params() {
-            return array(
-                'local_base' => $this->local_base,
-
+            $params = array(
+                //Informations
                 'tagline' => $this->options['tagline'],
                 'title' => $this->options['title'],
                 'author' => $this->options['author'],
@@ -99,44 +99,46 @@
                 'repo' => $this->options['repo'],
                 'links' => $this->options['links'],
                 'twitter' => $this->options['twitter'],
+
+                //Features
                 'google_analytics' => ($g = $this->options['google_analytics']) ?  DauxHelper::google_analytics($g, $this->host) : '',
                 'piwik_analytics' => ($p = $this->options['piwik_analytics']) ? DauxHelper::piwik_analytics($p, $this->options['piwik_analytics_id']) : '',
+                'toggle_code' => $this->options['toggle_code'],
+                'float' => $this->options['float'],
+                'date_modified' => $this->options['date_modified'],
+                'file_editor' => false,
+                'breadcrumbs' => $this->options['breadcrumbs'],
+                'breadcrumb_separator' => $this->options['breadcrumb_separator'],
+                'multilanguage' => !empty($this->options['languages']),
+                'languages' => $this->options['languages'],
 
+
+                //Paths and tree
+                'mode' => $this->mode,
+                'local_base' => $this->local_base,
                 'docs_path' => $this->docs_path,
                 'tree' => $this->tree,
                 'index' => ($this->tree->index_page !== false) ? $this->tree->index_page : $this->tree->first_page,
                 'template' => $this->options['template'],
             );
-        }
 
-        //TODO :: move to generator
-        public function get_page_params($mode = '') {
-
-            if ($mode === '') $mode = $this->mode;
-
-            $params = $this->get_base_params();
-            $params['mode'] = $mode;
-
-            $params['index_key'] = 'index.html';
-            $params['base_url'] = '';
-            $params['base_page'] = $params['base_url'];
-
-            if ($params['breadcrumbs'] = $this->options['breadcrumbs'])
-                $params['breadcrumb_separator'] = $this->options['breadcrumb_separator'];
-            $params['multilanguage'] = !empty($this->options['languages']);
-            $params['languages'] = $this->options['languages'];
-            if (empty($this->options['languages'])) {
-                $params['entry_page'] = $this->tree->first_page;
-            } else {
+            if (!$params['multilanguage']) {
                 foreach ($this->options['languages'] as $key => $name) {
                     $params['entry_page'][$key] = $this->tree->value[$key]->first_page;
                 }
+            } else {
+                $params['entry_page'] = $this->tree->first_page;
             }
 
-            $params['toggle_code'] = $this->options['toggle_code'];
-            $params['float'] = $this->options['float'];
-            $params['date_modified'] = $this->options['date_modified'];
-            $params['file_editor'] = false;
+            return $params;
+        }
+
+        //TODO :: move to generator
+        public function get_page_params() {
+            $params = $this->get_base_params();
+
+            $params['index_key'] = 'index.html';
+            $params['base_page'] = $params['base_url'] = '';
 
             $params['theme'] = DauxHelper::get_theme(
                 $this->local_base . DIRECTORY_SEPARATOR . 'templates' . DIRECTORY_SEPARATOR . $this->options['template'] . DIRECTORY_SEPARATOR . 'themes' . DIRECTORY_SEPARATOR . $this->options['theme'],
@@ -152,33 +154,12 @@
         public function get_live_page_params() {
             $params = $this->get_base_params();
 
-            $params['mode'] = Daux::LIVE_MODE;
-
             $params['index_key'] = 'index';
-            $protocol = '//';
-            $params['base_url'] = $protocol . $this->base_url;
-            $params['base_page'] = $params['base_url'];
             $params['host'] = $this->host;
-            $params['clean_urls'] = $this->options['clean_urls'];
+            $params['base_page'] = $params['base_url'] = '//' . $this->base_url;
+            if (!$this->options['clean_urls']) $params['base_page'] .= 'index.php/';
 
             if ($params['image'] !== '') $params['image'] = str_replace('<base_url>', $params['base_url'], $params['image']);
-
-            if ($params['breadcrumbs'] = $this->options['breadcrumbs'])
-                $params['breadcrumb_separator'] = $this->options['breadcrumb_separator'];
-            $params['multilanguage'] = !empty($this->options['languages']);
-            $params['languages'] = $this->options['languages'];
-            if (empty($this->options['languages'])) {
-                $params['entry_page'] = $this->tree->first_page;
-            } else {
-                foreach ($this->options['languages'] as $key => $name) {
-                    $params['entry_page'][$key] = $this->tree->value[$key]->first_page;
-                }
-            }
-
-            $params['toggle_code'] = $this->options['toggle_code'];
-            $params['float'] = $this->options['float'];
-            $params['date_modified'] = $this->options['date_modified'];
-            $params['file_editor'] = $this->options['file_editor'];
 
             $params['theme'] = DauxHelper::get_theme(
                 $this->local_base . DIRECTORY_SEPARATOR . 'templates' . DIRECTORY_SEPARATOR . $this->options['template'] . DIRECTORY_SEPARATOR . 'themes' . DIRECTORY_SEPARATOR . $this->options['theme'],

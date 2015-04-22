@@ -13,13 +13,14 @@
             $nav = '';
             foreach ($tree->value as $node) {
             	$url = $node->uri;
-                if ($node->type === \TodayMade\Daux\Entry::FILE_TYPE) {
+                if ($node instanceof \Todaymade\Daux\Tree\Content) {
                     if ($node->value === 'index') continue;
                     $nav .= '<li';
                     $link = ($path === '') ? $url : $path . '/' . $url;
                     if ($current_url === $link) $nav .= ' class="active"';
                     $nav .= '><a href="' . $base_page . $link . '">' . $node->title . '</a></li>';
-                } else {
+                }
+                if ($node instanceof \Todaymade\Daux\Tree\Directory) {
                     $nav .= '<li';
                     $link = ($path === '') ? $url : $path . '/' . $url;
                     if (strpos($current_url, $link) === 0) $nav .= ' class="open"';

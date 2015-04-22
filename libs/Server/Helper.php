@@ -4,30 +4,6 @@ use Todaymade\Daux\Daux;
 use Todaymade\Daux\DauxHelper;
 
 class Helper {
-    public static function get_error_params(Daux $daux)
-    {
-        $params = $daux->get_base_params();
-        $params['theme'] = DauxHelper::get_theme(
-            $daux->local_base . DIRECTORY_SEPARATOR . 'templates' . DIRECTORY_SEPARATOR . $daux->options['template'] . DIRECTORY_SEPARATOR . 'themes' . DIRECTORY_SEPARATOR . $daux->options['theme'],
-            $params['base_url'],
-            $daux->local_base,
-            $params['base_url'] . "templates/" . $params['template'] . "/themes/" . $daux->options['theme'] . '/'
-        );
-
-        $params['index_key'] = 'index';
-
-        $protocol = '//';
-        $params['base_url'] = $protocol . $daux->base_url;
-        $params['base_page'] = $params['base_url'];
-        $params['host'] = $daux->host;
-
-        $params['clean_urls'] = $daux->options['clean_urls'];
-
-        if ($params['image'] !== '') $params['image'] = str_replace('<base_url>', $params['base_url'], $params['image']);
-
-        return $params;
-    }
-
     public static function get_request()
     {
         if (isset($_SERVER['PATH_INFO'])) $uri = $_SERVER['PATH_INFO'];

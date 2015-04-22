@@ -3,6 +3,8 @@
 use Todaymade\Daux\Daux;
 use Todaymade\Daux\Entry;
 use Todaymade\Daux\MarkdownPage;
+use Todaymade\Daux\Tree\Directory;
+use Todaymade\Daux\Tree\Content;
 
 class Generator {
     public function generate($global_config, $destination) {
@@ -26,16 +28,18 @@ class Generator {
         $params['image'] = str_replace('<base_url>', $base_url, $params['image']);
         if ($base_url !== '') $params['entry_page'] = $tree->first_page;
         foreach ($tree->value as $key => $node) {
-            if ($node->type === Entry::DIRECTORY_TYPE) {
+            if ($node instanceof Directory) {
                 $new_output_dir = $output_dir . DIRECTORY_SEPARATOR . $key;
                 @mkdir($new_output_dir);
                 $this->recursive_generate_static($node, $new_output_dir, $new_params, '../' . $base_url);
-            } else {
+            } else if ($node instanceof Content) {
                 $params['request'] = $node->get_url();
                 $params['file_uri'] = $node->name;
 
                 $page = MarkdownPage::fromFile($node, $params);
                 file_put_contents($output_dir . DIRECTORY_SEPARATOR . $key, $page->get_page_content());
+            } else {
+                copy($node->local_path, $output_dir . DIRECTORY_SEPARATOR . $key);
             }
         }
     }
