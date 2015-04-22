@@ -22,8 +22,6 @@ class Generator {
     private function recursive_generate_static($tree, $output_dir, $params, $base_url = '') {
         $params['base_url'] = $params['base_page'] = $base_url;
         $new_params = $params;
-        //changed this as well in order for the templates to be put in the right place
-        $params['theme'] = Helper::rebase_theme($params['theme'], $base_url, $params['base_url'] . "templates/default/themes/" . $params['theme']['name'] . '/');
         //
         $params['image'] = str_replace('<base_url>', $base_url, $params['image']);
         if ($base_url !== '') $params['entry_page'] = $tree->first_page;
@@ -41,6 +39,4 @@ class Generator {
             }
         }
     }
-
-
 }

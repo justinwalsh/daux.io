@@ -54,7 +54,7 @@
             return $filename;
         }
 
-        public static function get_theme($theme_folder, $local_base) {
+        public static function get_theme($theme_folder, $base_url, $local_base, $theme_url) {
             $name = static::pathinfo($theme_folder);
 
             $theme = array();
@@ -64,24 +64,39 @@
             }
             $theme['name'] = $name['filename'];
 
-            $theme += ['css' => [], 'js' => [], 'fonts' => [], 'require-jquery' => false, 'bootstrap-js' => false];
+            //Default parameters for theme
+            $theme += [
+                'css' => [],
+                'js' => [],
+                'fonts' => [],
+                'require-jquery' => false,
+                'bootstrap-js' => false,
+                'favicon' => '<base_url>img/favicon.png',
+                'template' => $local_base . DIRECTORY_SEPARATOR . 'templates' . DIRECTORY_SEPARATOR . 'default/default.tpl',
+                'error-template' => $local_base . DIRECTORY_SEPARATOR . 'templates' . DIRECTORY_SEPARATOR . 'default/error.tpl',
+            ];
 
+            $substitutions = ['<local_base>' => $local_base, '<base_url>' => $base_url, '<theme_url>' => $theme_url];
 
-            if (!isset($theme['template'])){
-                $theme['template'] = $local_base . DIRECTORY_SEPARATOR . 'templates' . DIRECTORY_SEPARATOR . 'default/default.tpl';
-            } else{
-                $theme['template'] = str_replace('<local_base>', $local_base, $theme['template']);
+            // Substitute some placeholders
+            $theme['template'] = strtr($theme['template'], $substitutions);
+            $theme['error-template'] = strtr($theme['error-template'], $substitutions);
+            $theme['favicon'] = utf8_encode(strtr($theme['favicon'], $substitutions));
+
+            foreach ($theme['css'] as $key => $css) {
+                $theme['css'][$key] = utf8_encode(strtr($css, $substitutions));
             }
-            if (!isset($theme['error-template'])) {
-                $theme['error-template'] = $local_base . DIRECTORY_SEPARATOR . 'templates' . DIRECTORY_SEPARATOR . 'default/error.tpl';
-            } else {
-                $theme['error-template'] = str_replace('<local_base>', $local_base, $theme['error-template']);
+
+            foreach ($theme['fonts'] as $key => $font) {
+                $theme['fonts'][$key] = utf8_encode(strtr($font, $substitutions));
+            }
+
+            foreach ($theme['js'] as $key => $js) {
+                $theme['js'][$key] = utf8_encode(strtr($js, $substitutions));
             }
 
             return $theme;
         }
-
-
 
         public static function google_analytics($analytics, $host) {
             $ga = <<<EOT

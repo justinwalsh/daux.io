@@ -48,32 +48,4 @@ class Helper {
         }
         closedir($dir);
     }
-
-    public static function rebase_theme($theme, $base_url, $theme_url) {
-        $theme['favicon'] = utf8_encode(str_replace('<base_url>', $base_url, $theme['favicon']));
-        $theme['favicon'] = str_replace('<theme_url>', $theme_url, $theme['favicon']);
-
-        foreach ($theme['css'] as $key => $css) {
-            $theme['css'][$key] = utf8_encode(str_replace('<base_url>', $base_url, $css));
-            $theme['css'][$key] = utf8_encode(str_replace('<theme_url>', $theme_url, $css));
-        }
-        foreach ($theme['fonts'] as $key => $font) {
-            $theme['fonts'][$key] = utf8_encode(str_replace('<base_url>', $base_url, $font));
-            $theme['fonts'][$key] = utf8_encode(str_replace('<theme_url>', $theme_url, $font));
-
-        }
-        foreach ($theme['js'] as $key => $js) {
-            $theme['js'][$key] = utf8_encode(str_replace('<base_url>', $base_url, $js));
-            $theme['js'][$key] = utf8_encode(str_replace('<theme_url>', $theme_url, $js));
-        }
-        return $theme;
-    }
-
-    public static function configure_theme($theme, $base_url, $local_base, $theme_url) {
-        $theme = DauxHelper::get_theme($theme, $local_base);
-
-        if (!isset($theme['favicon'])) $theme['favicon'] = '<base_url>img/favicon.png';
-
-        return $theme;
-    }
 }
