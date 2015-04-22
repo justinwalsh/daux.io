@@ -3,6 +3,7 @@
     {
         const FILE_TYPE = 'FILE_TYPE';
         const DIRECTORY_TYPE = 'DIRECTORY_TYPE';
+
         public $name;
         public $title;
         public $type;

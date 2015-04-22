@@ -1,6 +1,4 @@
 <?php
-require_once("vendor/autoload.php");
-
 /*
 
 Daux.io
@@ -64,8 +62,7 @@ negligence or otherwise) arising in any way out of the use of this
 software, even if advised of the possibility of such damage.
 
 */
-    $Daux = new \Todaymade\Daux\Daux();
-    $Daux->initialize();
-    $page = $Daux->handle_request($_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'], $_REQUEST);
-    $page->display();
-?>
+
+require_once("vendor/autoload.php");
+
+\Todaymade\Daux\Server\Server::serve($_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'], $_REQUEST);
