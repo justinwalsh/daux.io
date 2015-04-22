@@ -77,7 +77,7 @@
             }
             $this->mode = Daux::LIVE_MODE;
             $this->host = $_SERVER['HTTP_HOST'];
-            $this->base_url = $_SERVER['HTTP_HOST'] . dirname($_SERVER['PHP_SELF']);
+            $this->base_url = $_SERVER['HTTP_HOST'] . str_replace(dirname($_SERVER['PHP_SELF']),"\\","/");
             $t = strrpos($this->base_url, '/index.php');
             if ($t != FALSE) $this->base_url = substr($this->base_url, 0, $t);
             if (substr($this->base_url, -1) !== '/') $this->base_url .= '/';
