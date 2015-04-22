@@ -65,4 +65,6 @@ software, even if advised of the possibility of such damage.
 
 require_once("vendor/autoload.php");
 
+\Todaymade\Daux\Daux::initConstants();
+
 \Todaymade\Daux\Server\Server::serve($_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'], $_REQUEST);

@@ -4,41 +4,43 @@ use Todaymade\Daux\Daux;
 use Todaymade\Daux\Exception;
 use Todaymade\Daux\MarkdownPage;
 use Todaymade\Daux\SimplePage;
+use Todaymade\Daux\Tree\Directory;
 
-class Server {
+class Server
+{
 
     private $daux;
     private $params;
 
-    public static function serve() {
+    public static function serve()
+    {
         $daux = new Daux(Daux::LIVE_MODE);
 
-        try
-        {
+        try {
             $daux->initialize();
             $server = new static($daux);
 
-            $page = $server->handle($_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'], $_REQUEST);
-        }
-        catch( NotFoundException $e )
-        {
-            $page = new ErrorPage("An error occured", $e->getMessage(), $daux->get_live_page_params());
+            $page = $server->handle($_REQUEST);
+        } catch (NotFoundException $e) {
+            $page = new ErrorPage("An error occured", $e->getMessage(), $daux->getParams());
         }
 
         $page->display();
     }
 
-    public function __construct(Daux $daux) {
+    public function __construct(Daux $daux)
+    {
         $this->daux = $daux;
     }
 
-    public function handle($url, $query = []) {
-        $this->params = $this->daux->get_live_page_params();
+    public function handle($query = [])
+    {
+        $this->params = $this->daux->getParams();
 
-        $request = Helper::get_request();
+        $request = Helper::getRequest();
         $request = urldecode($request);
         $request_type = isset($query['method']) ? $query['method'] : '';
-        if($request == 'first_page') {
+        if ($request == 'first_page') {
             $request = $this->daux->tree->first_page->uri;
         }
         switch ($request_type) {
@@ -48,24 +50,30 @@ class Server {
                 }
 
                 $content = isset($query['markdown']) ? $query['markdown'] : '';
-                return $this->save_file($request, $content);
+                return $this->saveFile($request, $content);
 
             default:
-                return $this->get_page($request);
+                return $this->getPage($request);
         }
     }
 
-    private function save_file($request, $content) {
-        $file = $this->get_file_from_request($request);
+    private function saveFile($request, $content)
+    {
+        $file = $this->getFile($request);
 
-        if ($file === false) throw new NotFoundException('The Page you requested is yet to be made. Try again later.');
+        if ($file === false) {
+            throw new NotFoundException('The Page you requested is yet to be made. Try again later.');
+        }
 
-        if (!$file->write($content)) throw new Exception('The file you wish to write to is not writable.');
+        if (!$file->write($content)) {
+            throw new Exception('The file you wish to write to is not writable.');
+        }
 
         return new SimplePage('Success', 'Successfully Edited');
     }
 
-    private function get_file_from_request($request) {
+    private function getFile($request)
+    {
         $tree = $this->daux->tree;
         $request = explode('/', $request);
         foreach ($request as $node) {
@@ -90,7 +98,7 @@ class Server {
                 return false;
             }
 
-            return $tree->index_page;
+            return $tree->getIndexPage();
         }
 
         // If the entry we found is not a directory, we're done
@@ -98,21 +106,26 @@ class Server {
             return $tree;
         }
 
-        if ($tree->index_page){
-            return $tree->index_page;
+        if ($tree->getIndexPage()) {
+            return $tree->getIndexPage();
         }
 
-        return ($get_first_file) ? $tree->first_page : false;
+        return false;
     }
 
-    private function get_page($request) {
+    private function getPage($request)
+    {
         $params = $this->params;
 
-        $file = $this->get_file_from_request($request);
-        if ($file === false) throw new NotFoundException('The Page you requested is yet to be made. Try again later.');
+        $file = $this->getFile($request);
+        if ($file === false) {
+            throw new NotFoundException('The Page you requested is yet to be made. Try again later.');
+        }
         $params['request'] = $request;
         $params['file_uri'] = $file->value;
-        if ($request !== 'index') $params['entry_page'] = $file->first_page;
+        if ($request !== 'index') {
+            $params['entry_page'] = $file->first_page;
+        }
         return MarkdownPage::fromFile($file, $params);
     }
 }

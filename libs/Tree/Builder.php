@@ -3,8 +3,10 @@
 use Todaymade\Daux\Daux;
 use Todaymade\Daux\DauxHelper;
 
-class Builder {
-    public static function build($dir, $ignore, $mode = Daux::LIVE_MODE, $parents = null) {
+class Builder
+{
+    public static function build($dir, $ignore, $params, $parents = null)
+    {
         if (!$dh = opendir($dir)) {
             return;
         }
@@ -14,7 +16,7 @@ class Builder {
         $new_parents = $parents;
         if (is_null($new_parents)) {
             $new_parents = array();
-        } else{
+        } else {
             $new_parents[] = $node;
         }
 
@@ -23,9 +25,12 @@ class Builder {
                 continue;
             }
 
-            $path = $dir . DIRECTORY_SEPARATOR . $file;
+            $path = $dir . DS . $file;
 
-            if ((is_dir($path) && in_array($file, $ignore['folders'])) || (!is_dir($path) && in_array($file, $ignore['files']))) {
+            if (is_dir($path) && in_array($file, $ignore['folders'])) {
+                continue;
+            }
+            if (!is_dir($path) && in_array($file, $ignore['files'])) {
                 continue;
             }
 
@@ -33,30 +38,29 @@ class Builder {
 
             $entry = null;
             if (is_dir($path)) {
-                $entry = static::build($path, $ignore, $mode, $new_parents);
-            } else if(in_array($file_details['extension'], Daux::$VALID_MARKDOWN_EXTENSIONS)) {
+                $entry = static::build($path, $ignore, $params, $new_parents);
+            } elseif (in_array($file_details['extension'], Daux::$VALID_MARKDOWN_EXTENSIONS)) {
                 $entry = new Content($path, $new_parents);
 
-                if ($mode === Daux::STATIC_MODE) {
-                    $entry->uri .= '.html';
+                if ($params['mode'] === Daux::STATIC_MODE) {
+                    $entry->setUri($entry->getUri() . '.html');
                 }
             } else {
                 $entry = new Raw($path, $new_parents);
             }
 
             if ($entry instanceof Entry) {
-                $node->value[$entry->uri] = $entry;
+                $node->value[$entry->getUri()] = $entry;
             }
         }
 
         $node->sort();
-        $node->first_page = $node->get_first_page();
-        $index_key = ($mode === Daux::LIVE_MODE) ? 'index' : 'index.html';
-        if (isset($node->value[$index_key])) {
-            $node->value[$index_key]->first_page = $node->first_page;
-            $node->index_page =  $node->value[$index_key];
-        } else $node->index_page = false;
+        if (isset($node->value[$params['index_key']])) {
+            $node->value[$params['index_key']]->setFirstPage($node->getFirstPage());
+            $node->setIndexPage($node->value[$params['index_key']]);
+        } else {
+            $node->setIndexPage(false);
+        }
         return $node;
-
     }
 }
