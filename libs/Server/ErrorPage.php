@@ -1,4 +1,6 @@
-<?php namespace Todaymade\Daux;
+<?php namespace Todaymade\Daux\Server;
+
+use Todaymade\Daux\SimplePage;
 
 class ErrorPage extends SimplePage
 {
