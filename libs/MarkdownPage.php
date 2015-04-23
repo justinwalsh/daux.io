@@ -105,6 +105,7 @@ class MarkdownPage extends SimplePage
         $page['path'] = $this->file->getPath();
         $page['modified_time'] = filemtime($this->file->getPath());
         $page['markdown'] = $this->content;
+        $page['request'] = $params['request'];
 
         $Parsedown = new \Parsedown();
         $page['content'] = $Parsedown->text($this->content);
