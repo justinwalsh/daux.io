@@ -10,7 +10,6 @@ class ErrorPage extends SimplePage
     const FATAL_ERROR_TYPE = 'FATAL_ERROR';
 
     private $params;
-    private static $template;
 
     public function __construct($title, $content, $params)
     {
@@ -26,9 +25,6 @@ class ErrorPage extends SimplePage
 
     public function getContent()
     {
-        include_once($this->params['theme']['error-template']);
-        static::$template = new Template();
-
         if (is_null($this->html)) {
             $this->html = $this->generatePage();
         }
@@ -40,11 +36,9 @@ class ErrorPage extends SimplePage
     {
         $params = $this->params;
         $page['title'] = $this->title;
-        $page['theme'] = $params['theme'];
         $page['content'] = $this->content;
-        $page['google_analytics'] = $params['google_analytics'];
-        $page['piwik_analytics'] = $params['piwik_analytics'];
 
-        return static::$template->get_content($page, $params);
+        $template = new Template($params['templates'], $params['theme']['templates']);
+        return $template->render('error', ['page' => $page, 'params' => $params]);
     }
 }

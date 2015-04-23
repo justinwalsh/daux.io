@@ -3,25 +3,27 @@
     "tagline": "My Stylish Documentation",
     "author": "I, Me & Myself",
     "image": "",
+    "repo": "",
+    "twitter": [],
+    "links": {
+    },
+
+    "languages": {},
     "theme": "daux-blue",
+    "ignore": {
+        "files": [],
+        "folders": []
+    },
+
     "breadcrumbs": false,
-    "template": "default",
     "clean_urls": false,
     "toggle_code": false,
     "date_modified": false,
     "float": false,
     "file_editor": false,
-    "repo": "",
-    "twitter": [],
-    "google_analytics": "",
     "timezone": "America/Los_Angeles",
+
+    "google_analytics": false,
     "piwik_analytics": false,
-    "piwik_analytics_id": "0",
-    "languages": {},
-    "ignore": {
-        "files": [],
-        "folders": []
-    },    
-    "links": {
-    }
+    "piwik_analytics_id": "0"
 }
