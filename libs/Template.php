@@ -21,17 +21,13 @@ class Template
 
     public function render($name, array $data = array())
     {
-
         $this->engine->addData([
             'index' => utf8_encode($data['params']['base_page'] . $data['params']['index']->value),
             'base_url' => $data['params']['base_url'],
             'base_page' => $data['params']['base_page'],
             'page' => $data['page'],
             'params' => $data['params'],
-            //'homepage' => $data['params']['homepage'],
-            //'project_title' => utf8_encode($data['params']['title']),
             'tree' => $data['params']['tree'],
-            //'entry_page' => $data['page']['entry_page'],
         ]);
 
         return $this->engine->render($name, $data);
@@ -40,10 +36,8 @@ class Template
     protected function registerFunctions()
     {
         $this->engine->registerFunction('get_navigation', function($tree, $path, $current_url, $base_page, $mode) {
-            $nav = '<ul class="nav nav-list">';
-            $nav .= $this->buildNavigation($tree, $path, $current_url, $base_page, $mode);
-            $nav .= '</ul>';
-            return $nav;
+            $nav = $this->buildNavigation($tree, $path, $current_url, $base_page, $mode);
+            return $this->renderNavigation($nav);
         });
 
         $this->engine->registerFunction('get_breadcrumb_title', function($page, $base_page) {
@@ -64,42 +58,68 @@ class Template
         });
     }
 
+    private function renderNavigation($entries)
+    {
+        $nav = "";
+        foreach ($entries as $entry) {
+
+            if (array_key_exists('children', $entry)) {
+                if (array_key_exists('href', $entry)) {
+                    $link = '<a href="' . $entry['href'] . '" class="folder">' . $entry['title'] . '</a>';
+                } else {
+                    $link = '<a href="#" class="aj-nav folder">' . $entry['title'] . '</a>';
+                }
+
+                $link .= $this->renderNavigation($entry['children']);
+            } else {
+                $link = '<a href="' . $entry['href'] . '">' . $entry['title'] . '</a>';
+            }
+
+            $nav .= "<li class='$entry[class]'>$link</li>";
+        }
+
+        return "<ul class='nav nav-list'>$nav</ul>";
+    }
+
     private function buildNavigation($tree, $path, $current_url, $base_page, $mode)
     {
-        $nav = '';
+        $nav = [];
         foreach ($tree->value as $node) {
             $url = $node->getUri();
             if ($node instanceof \Todaymade\Daux\Tree\Content) {
                 if ($node->value === 'index') {
                     continue;
                 }
-                $nav .= '<li';
+
                 $link = ($path === '') ? $url : $path . '/' . $url;
-                if ($current_url === $link) {
-                    $nav .= ' class="active"';
-                }
-                $nav .= '><a href="' . $base_page . $link . '">' . $node->getTitle() . '</a></li>';
+
+                $nav[] = [
+                    'title' => $node->getTitle(),
+                    'href' => $base_page . $link,
+                    'class' => ($current_url === $link)? 'active' : ''
+                ];
             }
             if ($node instanceof \Todaymade\Daux\Tree\Directory) {
-                $nav .= '<li';
                 $link = ($path === '') ? $url : $path . '/' . $url;
-                if (strpos($current_url, $link) === 0) {
-                    $nav .= ' class="open"';
-                }
-                $nav .= ">";
+
+                $folder = [
+                    'title' => $node->getTitle(),
+                    'class' => (strpos($current_url, $link) === 0)? 'open' : '',
+                ];
+
                 if ($mode === \TodayMade\Daux\Daux::STATIC_MODE) {
                     $link .= "/index.html";
                 }
+
                 if ($node->getIndexPage()) {
-                    $nav .= '<a href="' . $base_page . $link . '" class="folder">' .
-                    $node->getTitle() . '</a>';
-                } else {
-                    $nav .= '<a href="#" class="aj-nav folder">' . $node->getTitle() . '</a>';
+                    $folder['href'] = $base_page . $link;
                 }
-                $nav .= '<ul class="nav nav-list">';
+
+                //Child pages
                 $new_path = ($path === '') ? $url : $path . '/' . $url;
-                $nav .= $this->buildNavigation($node, $new_path, $current_url, $base_page, $mode);
-                $nav .= '</ul></li>';
+                $folder['children'] = $this->buildNavigation($node, $new_path, $current_url, $base_page, $mode);
+
+                $nav[] = $folder;
             }
         }
         return $nav;
