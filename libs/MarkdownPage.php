@@ -28,19 +28,19 @@ class MarkdownPage extends SimplePage
         $this->params = $params;
         $this->title = $file->title;
 
+		$this->homepage = false;
         if ($this->title === 'index') {
-            $this->homepage = ($this->file->getName() === '_index');
             $minimum_parent_dir_size = ($params['multilanguage']) ? 2 : 1;
             if (count($file->getParents()) >= $minimum_parent_dir_size) {
                 $parents = $file->getParents();
                 $parent = end($parents);
                 $this->title = $parent->getTitle();
             } else {
+				$this->homepage = ($this->file->getName() === '_index');
                 $this->title = $params['title'];
             }
-        } else {
-            $this->homepage = false;
         }
+		
         if ($params['breadcrumbs']) {
             $this->breadcrumb_trail = $this->buildBreadcrumbTrail($file->getParents(), $params['multilanguage']);
         }
