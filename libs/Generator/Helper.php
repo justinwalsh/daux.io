@@ -10,18 +10,6 @@ class Helper
 
         @mkdir($path . DS . 'resources');
         static::copyRecursive($local_base . DS . 'resources', $path . DS . 'resources');
-        @mkdir($path . DS . 'js');
-        static::copyRecursive($local_base . DS . 'js', $path . DS . 'js');
-
-        //added and changed these in order to fetch the theme files and put them in the right place
-        @mkdir($path . DS . 'templates');
-        @mkdir($path . DS . 'templates' . DS . 'default');
-        @mkdir($path . DS . 'templates' . DS . 'default' . DS . 'themes');
-
-        static::copyRecursive(
-            $local_base . DS . 'templates' . DS . 'default' . DS . 'themes',
-            $path . DS . 'templates' . DS . 'default' . DS . 'themes'
-        );
     }
 
     private static function rmdir($dir)

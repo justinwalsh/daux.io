@@ -47,15 +47,13 @@ class DauxHelper
             'require-jquery' => false,
             'bootstrap-js' => false,
             'favicon' => '<base_url>resources/img/favicon.png',
-            'template' => $local_base . DS . 'templates' . DS . 'default/default.php',
-            'error-template' => $local_base . DS . 'templates' . DS . 'default/error.php',
+            'templates' => $theme_folder . DS . 'templates',
         ];
 
         $substitutions = ['<local_base>' => $local_base, '<base_url>' => $base_url, '<theme_url>' => $theme_url];
 
         // Substitute some placeholders
-        $theme['template'] = strtr($theme['template'], $substitutions);
-        $theme['error-template'] = strtr($theme['error-template'], $substitutions);
+        $theme['templates'] = strtr($theme['templates'], $substitutions);
         $theme['favicon'] = utf8_encode(strtr($theme['favicon'], $substitutions));
 
         foreach ($theme['css'] as $key => $css) {
@@ -71,43 +69,6 @@ class DauxHelper
         }
 
         return $theme;
-    }
-
-    public static function googleAnalytics($analytics, $host)
-    {
-        $ga = <<<EOT
-            <script>
-                (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-                    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-                    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-                    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-EOT;
-        $ga .= "ga('create', '" . $analytics . "', '" . $host . "');";
-        $ga .= "ga('send', 'pageview');";
-        $ga .= '</script>';
-        return $ga;
-    }
-
-    public static function piwikAnalytics($analytics_url, $analytics_id)
-    {
-        $pa = <<<EOT
-                <script type="text/javascript">
-                var _paq = _paq || [];
-                _paq.push(["trackPageView"]);
-                _paq.push(["enableLinkTracking"]);
-                (function() {
-EOT;
-        $pa .= 'var u=(("https:" == document.location.protocol) ? "https" : "http") + "://' . $analytics_url . '/";';
-        $pa .= '_paq.push(["setTrackerUrl", u+"piwik.php"]);';
-        $pa .= '_paq.push(["setSiteId", ' . $analytics_id . ']);';
-        $pa .= <<<EOT
-                var d=document, g=d.createElement("script"), s=d.getElementsByTagName("script")[0];
-                g.type="text/javascript";
-                g.defer=true; g.async=true; g.src=u+"piwik.js"; s.parentNode.insertBefore(g,s);
-                })();
-                </script>
-EOT;
-        return $pa;
     }
 
     public static function pathinfo($path)

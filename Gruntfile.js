@@ -22,10 +22,10 @@ module.exports = function (grunt) {
                     report: 'min'
                 },
                 files: {
-                    "templates/default/themes/daux-blue/css/theme.min.css": "templates/default/themes/daux-blue/less/theme.less",
-                    "templates/default/themes/daux-green/css/theme.min.css": "templates/default/themes/daux-green/less/theme.less",
-                    "templates/default/themes/daux-navy/css/theme.min.css": "templates/default/themes/daux-navy/less/theme.less",
-                    "templates/default/themes/daux-red/css/theme.min.css": "templates/default/themes/daux-red/less/theme.less"
+                    "resources/themes/daux-blue/css/theme.min.css": "resources/themes/daux-blue/less/theme.less",
+                    "resources/themes/daux-green/css/theme.min.css": "resources/themes/daux-green/less/theme.less",
+                    "resources/themes/daux-navy/css/theme.min.css": "resources/themes/daux-navy/less/theme.less",
+                    "resources/themes/daux-red/css/theme.min.css": "resources/themes/daux-red/less/theme.less"
                 }
             }
         },

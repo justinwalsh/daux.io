@@ -9,7 +9,6 @@ class MarkdownPage extends SimplePage
     private $language;
     private $homepage;
     private $breadcrumb_trail;
-    private static $template;
 
     public function __construct()
     {
@@ -51,10 +50,6 @@ class MarkdownPage extends SimplePage
             $language_dir = current($file->getParents());
             $this->language = $language_dir->name;
         }
-        if (is_null(static::$template)) {
-            include_once($params['theme']['template']);
-            static::$template = new Template();
-        }
     }
 
     private function buildBreadcrumbTrail($parents, $multilanguage)
@@ -89,20 +84,18 @@ class MarkdownPage extends SimplePage
         if ($params['request'] === $params['index_key']) {
             if ($params['multilanguage']) {
                 foreach ($params['languages'] as $key => $name) {
-                    $entry_page[utf8_encode($name)] = utf8_encode($params['base_page'] . $params['entry_page'][$key]->getUrl());
+                    $entry_page[$name] = $params['base_page'] . $params['entry_page'][$key]->getUrl();
                 }
             } else {
-                $entry_page['View Documentation'] = utf8_encode($params['base_page'] . $params['entry_page']->getUri());
+                $entry_page['View Documentation'] = $params['base_page'] . $params['entry_page']->getUri();
             }
         } elseif ($params['file_uri'] === 'index') {
-            $entry_page[utf8_encode($params['entry_page']->title)] = utf8_encode($params['base_page'] . $params['entry_page']->getUrl());
+            $entry_page[$params['entry_page']->title] = $params['base_page'] . $params['entry_page']->getUrl();
         }
 
         $page['entry_page'] = $entry_page;
         $page['homepage'] = $this->homepage;
         $page['title'] = $this->file->getTitle();
-        $page['tagline'] = $params['tagline'];
-        $page['author'] = $params['author'];
         $page['filename'] = $this->file->getName();
         if ($page['breadcrumbs'] = $params['breadcrumbs']) {
             $page['breadcrumb_trail'] = $this->breadcrumb_trail;
@@ -110,17 +103,13 @@ class MarkdownPage extends SimplePage
         }
         $page['language'] = $this->language;
         $page['path'] = $this->file->getPath();
-        $page['request'] = utf8_encode($params['request']);
-        $page['theme'] = $params['theme'];
         $page['modified_time'] = filemtime($this->file->getPath());
         $page['markdown'] = $this->content;
-        $page['file_editor'] = $params['file_editor'];
-        $page['google_analytics'] = $params['google_analytics'];
-        $page['piwik_analytics'] = $params['piwik_analytics'];
 
         $Parsedown = new \Parsedown();
         $page['content'] = $Parsedown->text($this->content);
 
-        return static::$template->get_content($page, $params);
+        $template = new Template($params['templates'], $params['theme']['templates']);
+        return $template->render($this->homepage? 'home' : 'content', ['page' => $page, 'params' => $params]);
     }
 }

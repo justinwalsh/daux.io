@@ -111,36 +111,15 @@ class Daux
 
     public function getParams()
     {
-        $params = array(
-            //Informations
-            'tagline' => $this->options['tagline'],
-            'title' => $this->options['title'],
-            'author' => $this->options['author'],
-            'image' => $this->options['image'],
-            'repo' => $this->options['repo'],
-            'links' => $this->options['links'],
-            'twitter' => $this->options['twitter'],
-
+        $params = $this->options += array(
             //Features
-            'google_analytics' => ($g = $this->options['google_analytics']) ?
-                DauxHelper::googleAnalytics($g, $this->host) : '',
-            'piwik_analytics' => ($p = $this->options['piwik_analytics']) ?
-                DauxHelper::piwikAnalytics($p, $this->options['piwik_analytics_id']) : '',
-            'toggle_code' => $this->options['toggle_code'],
-            'float' => $this->options['float'],
-            'date_modified' => $this->options['date_modified'],
-            'file_editor' => false,
-            'breadcrumbs' => $this->options['breadcrumbs'],
-            'breadcrumb_separator' => $this->options['breadcrumb_separator'],
             'multilanguage' => !empty($this->options['languages']),
-            'languages' => $this->options['languages'],
-
 
             //Paths and tree
             'mode' => $this->mode,
             'local_base' => $this->local_base,
             'docs_path' => $this->docs_path,
-            'template' => $this->options['template'],
+            'templates' => $this->local_base . DS . 'templates',
         );
 
         if ($this->tree) {
@@ -172,10 +151,10 @@ class Daux
         }
 
         $params['theme'] = DauxHelper::getTheme(
-            $this->local_base . DS . 'templates' . DS . $this->options['template'] . DS . 'themes' . DS . $this->options['theme'],
+            $this->local_base . DS . 'resources' . DS . 'themes' . DS . $this->options['theme'],
             $params['base_url'],
             $this->local_base,
-            $params['base_url'] . "templates/" . $params['template'] . "/themes/" . $this->options['theme'] . '/'
+            $params['base_url'] . "resources/themes/" . $this->options['theme'] . '/'
         );
 
         return $params;
