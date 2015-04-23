@@ -152,10 +152,10 @@ class Daux
         }
 
         $params['theme'] = DauxHelper::getTheme(
-            $this->local_base . DS . 'resources' . DS . 'themes' . DS . $this->options['theme-name'],
+            $this->options['theme-name'],
             $params['base_url'],
             $this->local_base,
-            $params['base_url'] . "resources/themes/" . $this->options['theme-name'] . '/'
+            $params['base_url']
         );
 
         return $params;

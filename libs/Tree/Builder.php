@@ -34,12 +34,10 @@ class Builder
                 continue;
             }
 
-            $file_details = DauxHelper::pathinfo($path);
-
             $entry = null;
             if (is_dir($path)) {
                 $entry = static::build($path, $ignore, $params, $new_parents);
-            } elseif (in_array($file_details['extension'], Daux::$VALID_MARKDOWN_EXTENSIONS)) {
+            } elseif (in_array(pathinfo($path, PATHINFO_EXTENSION), Daux::$VALID_MARKDOWN_EXTENSIONS)) {
                 $entry = new Content($path, $new_parents);
 
                 if ($params['mode'] === Daux::STATIC_MODE) {

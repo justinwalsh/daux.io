@@ -15,7 +15,6 @@ class Content extends Entry
 
     protected function getFilename($file)
     {
-        $file = DauxHelper::pathinfo($file);
-        return $file['filename'];
+        return DauxHelper::pathinfo($file)['filename'];
     }
 }

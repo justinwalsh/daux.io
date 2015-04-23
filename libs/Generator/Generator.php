@@ -32,10 +32,10 @@ class Generator
 
         // Rebase Theme
         $params['theme'] = DauxHelper::getTheme(
-            $params['local_base'] . DS . 'resources' . DS . 'themes' . DS . $params['theme-name'],
-            $base_url,
+            $params['theme-name'],
+            $params['base_url'],
             $params['local_base'],
-            $params['base_url'] . "resources/themes/" . $params['theme-name'] . '/'
+            $base_url
         );
 
         $params['image'] = str_replace('<base_url>', $base_url, $params['image']);

@@ -26,9 +26,10 @@ class DauxHelper
         return $request;
     }
 
-    public static function getTheme($theme_folder, $base_url, $local_base, $theme_url)
+    public static function getTheme($theme_name, $base_url, $local_base, $current_url)
     {
-        $name = static::pathinfo($theme_folder);
+        $theme_folder = $local_base . DS . 'resources' . DS . 'themes' . DS . $theme_name;
+        $theme_url = $base_url . "resources/themes/" . $theme_name . '/';
 
         $theme = array();
         if (is_file($theme_folder . DS . "config.json")) {
@@ -37,10 +38,10 @@ class DauxHelper
                 $theme = array();
             }
         }
-        $theme['name'] = $name['filename'];
 
         //Default parameters for theme
         $theme += [
+            'name' => $theme_name,
             'css' => [],
             'js' => [],
             'fonts' => [],
@@ -50,7 +51,7 @@ class DauxHelper
             'templates' => $theme_folder . DS . 'templates',
         ];
 
-        $substitutions = ['<local_base>' => $local_base, '<base_url>' => $base_url, '<theme_url>' => $theme_url];
+        $substitutions = ['<local_base>' => $local_base, '<base_url>' => $current_url, '<theme_url>' => $theme_url];
 
         // Substitute some placeholders
         $theme['templates'] = strtr($theme['templates'], $substitutions);
