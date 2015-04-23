@@ -116,6 +116,7 @@ class Daux
             'multilanguage' => !empty($this->options['languages']),
 
             //Paths and tree
+            'theme-name' => $this->options['theme'],
             'mode' => $this->mode,
             'local_base' => $this->local_base,
             'docs_path' => $this->docs_path,
@@ -151,10 +152,10 @@ class Daux
         }
 
         $params['theme'] = DauxHelper::getTheme(
-            $this->local_base . DS . 'resources' . DS . 'themes' . DS . $this->options['theme'],
+            $this->local_base . DS . 'resources' . DS . 'themes' . DS . $this->options['theme-name'],
             $params['base_url'],
             $this->local_base,
-            $params['base_url'] . "resources/themes/" . $this->options['theme'] . '/'
+            $params['base_url'] . "resources/themes/" . $this->options['theme-name'] . '/'
         );
 
         return $params;

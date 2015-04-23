@@ -26,7 +26,8 @@
                 if ($page['language'] !== '') echo $this->get_navigation($tree->value[$page['language']], $page['language'], $params['request'], $base_page, $params['mode']);
                 else echo $this->get_navigation($tree, '', $params['request'], $base_page, $params['mode']);
                 ?>
-                <?php if (!empty($params['links']) || !empty($params['twitter'])) { ?>
+
+                <?php if (!empty($params['links']) || !empty($params['twitter']) || $params['toggle_code']) { ?>
                     <div class="well well-sidebar">
 
                         <!-- Links -->
