@@ -40,7 +40,7 @@ class MarkdownPage extends SimplePage
                 $this->title = $params['title'];
             }
         }
-		
+
         if ($params['breadcrumbs']) {
             $this->breadcrumb_trail = $this->buildBreadcrumbTrail($file->getParents(), $params['multilanguage']);
         }
@@ -87,7 +87,7 @@ class MarkdownPage extends SimplePage
                     $entry_page[$name] = $params['base_page'] . $params['entry_page'][$key]->getUrl();
                 }
             } else {
-                $entry_page['View Documentation'] = $params['base_page'] . $params['entry_page']->getUri();
+                $entry_page['View Documentation'] = $params['base_page'] . $params['entry_page']->getUrl();
             }
         } elseif ($params['file_uri'] === 'index') {
             $entry_page[$params['entry_page']->title] = $params['base_page'] . $params['entry_page']->getUrl();
