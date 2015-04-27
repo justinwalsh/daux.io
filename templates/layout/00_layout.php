@@ -24,8 +24,6 @@
     <![endif]-->
 </head>
 <body>
-
-
     <?= $this->section('content'); ?>
 
     <?php if ($params['google_analytics']) {

@@ -4,7 +4,6 @@
     "author": "Justin Walsh",
     "image": "app.png",
     "theme": "daux-blue",
-    "template": "default",
     "clean_urls": true,
     "toggle_code": true,
     "breadcrumbs": true,

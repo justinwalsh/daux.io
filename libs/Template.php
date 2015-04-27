@@ -4,7 +4,6 @@ use League\Plates\Engine;
 
 class Template
 {
-
     protected $engine;
 
     public function __construct($base, $theme)
@@ -61,7 +60,6 @@ class Template
     {
         $nav = "";
         foreach ($entries as $entry) {
-
             if (array_key_exists('children', $entry)) {
                 if (array_key_exists('href', $entry)) {
                     $link = '<a href="' . $entry['href'] . '" class="folder">' . $entry['title'] . '</a>';
@@ -106,7 +104,7 @@ class Template
                     'class' => (strpos($current_url, $link) === 0)? 'open' : '',
                 ];
 
-                if ($mode === \TodayMade\Daux\Daux::STATIC_MODE) {
+                if ($mode === Daux::STATIC_MODE) {
                     $link .= "/index.html";
                 }
 

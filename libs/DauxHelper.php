@@ -2,30 +2,6 @@
 
 class DauxHelper
 {
-
-    public static function getBreadcrumbFromRequest($request, $separator = 'Chevrons', $multilanguage = false)
-    {
-        if ($multilanguage) {
-            $request = substr($request, strpos($request, '/') + 1);
-        }
-        $request = str_replace('_', ' ', $request);
-        switch ($separator) {
-            case 'Chevrons':
-                $request = str_replace('/', ' <i class="glyphicon glyphicon-chevron-right"></i> ', $request);
-                return $request;
-            case 'Colons':
-                $request = str_replace('/', ': ', $request);
-                return $request;
-            case 'Spaces':
-                $request = str_replace('/', ' ', $request);
-                return $request;
-            default:
-                $request = str_replace('/', $separator, $request);
-                return $request;
-        }
-        return $request;
-    }
-
     public static function getTheme($theme_name, $base_url, $local_base, $current_url)
     {
         $theme_folder = $local_base . DS . 'resources' . DS . 'themes' . DS . $theme_name;
