@@ -6,7 +6,7 @@
 <div class="container-fluid fluid-height wrapper">
     <div class="navbar navbar-fixed-top hidden-print">
         <div class="container-fluid">
-            <?php $this->insert('partials/navbar_content', ['params' => $params]); ?>
+            <?php $this->insert('theme::partials/navbar_content', ['params' => $params]); ?>
         </div>
     </div>
     <div class="row columns content">

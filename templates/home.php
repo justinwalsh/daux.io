@@ -1,7 +1,7 @@
 <?php $this->layout('theme::layout/00_layout') ?>
 <div class="navbar navbar-fixed-top hidden-print">
     <div class="container">
-        <?php $this->insert('partials/navbar_content', ['params' => $params]); ?>
+        <?php $this->insert('theme::partials/navbar_content', ['params' => $params]); ?>
     </div>
 </div>
 <?php if ($params['repo']) { ?>

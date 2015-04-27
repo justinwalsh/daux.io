@@ -27,10 +27,10 @@
     <?= $this->section('content'); ?>
 
     <?php if ($params['google_analytics']) {
-        $this->insert('partials/google_analytics', ['analytics' => $params['google_analytics'], 'host' => array_key_exists('host', $params)? $params['host'] : '']);
+        $this->insert('theme::partials/google_analytics', ['analytics' => $params['google_analytics'], 'host' => array_key_exists('host', $params)? $params['host'] : '']);
     } ?>
     <?php if ($params['piwik_analytics']) {
-        $this->insert('partials/piwik_analytics', ['url' => $params['piwik_analytics'], 'id' => $params['piwik_analytics_id']]);
+        $this->insert('theme::partials/piwik_analytics', ['url' => $params['piwik_analytics'], 'id' => $params['piwik_analytics_id']]);
     } ?>
 
 
