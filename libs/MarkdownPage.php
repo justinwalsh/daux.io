@@ -8,7 +8,6 @@ class MarkdownPage extends SimplePage
     private $params;
     private $language;
     private $homepage;
-    private $breadcrumb_trail;
 
     public function __construct()
     {
@@ -28,22 +27,18 @@ class MarkdownPage extends SimplePage
         $this->params = $params;
         $this->title = $file->title;
 
-		$this->homepage = false;
+        $this->homepage = false;
         if ($this->title === 'index') {
             $minimum_parent_dir_size = ($params['multilanguage']) ? 2 : 1;
             if (count($file->getParents()) >= $minimum_parent_dir_size) {
                 $parents = $file->getParents();
-                $parent = end($parents);
-                $this->title = $parent->getTitle();
+                $this->title = end($parents)->getTitle();
             } else {
-				$this->homepage = ($this->file->getName() === '_index');
+                $this->homepage = ($this->file->getName() === '_index');
                 $this->title = $params['title'];
             }
         }
 
-        if ($params['breadcrumbs']) {
-            $this->breadcrumb_trail = $this->buildBreadcrumbTrail($file->getParents(), $params['multilanguage']);
-        }
         $this->language = '';
         if ($params['multilanguage'] && count($file->getParents())) {
             reset($file->getParents());
@@ -52,7 +47,7 @@ class MarkdownPage extends SimplePage
         }
     }
 
-    private function buildBreadcrumbTrail($parents, $multilanguage)
+    private function getBreadcrumbTrail($parents, $multilanguage)
     {
         if ($multilanguage && !empty($parents)) {
             $parents = array_splice($parents, 1);
@@ -93,22 +88,24 @@ class MarkdownPage extends SimplePage
             $entry_page[$params['entry_page']->title] = $params['base_page'] . $params['entry_page']->getUrl();
         }
 
-        $page['entry_page'] = $entry_page;
-        $page['homepage'] = $this->homepage;
-        $page['title'] = $this->file->getTitle();
-        $page['filename'] = $this->file->getName();
-        if ($page['breadcrumbs'] = $params['breadcrumbs']) {
-            $page['breadcrumb_trail'] = $this->breadcrumb_trail;
+        $page = [
+            'entry_page' => $entry_page,
+            'homepage' => $this->homepage,
+            'title' => $this->file->getTitle(),
+            'filename' => $this->file->getName(),
+            'language' => $this->language,
+            'path' => $this->file->getPath(),
+            'modified_time' => filemtime($this->file->getPath()),
+            'markdown' => $this->content,
+            'request' => $params['request'],
+            'content' => (new \Parsedown())->text($this->content),
+            'breadcrumbs' => $params['breadcrumbs']
+        ];
+
+        if ($page['breadcrumbs']) {
+            $page['breadcrumb_trail'] = $this->getBreadcrumbTrail($this->file->getParents(), $params['multilanguage']);
             $page['breadcrumb_separator'] = $params['breadcrumb_separator'];
         }
-        $page['language'] = $this->language;
-        $page['path'] = $this->file->getPath();
-        $page['modified_time'] = filemtime($this->file->getPath());
-        $page['markdown'] = $this->content;
-        $page['request'] = $params['request'];
-
-        $Parsedown = new \Parsedown();
-        $page['content'] = $Parsedown->text($this->content);
 
         $template = new Template($params['templates'], $params['theme']['templates']);
         return $template->render($this->homepage? 'home' : 'content', ['page' => $page, 'params' => $params]);
