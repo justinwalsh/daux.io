@@ -12,6 +12,10 @@ class Daux
     public $base_url = '';
     public $host;
     private $docs_path;
+
+    /**
+     * @var Tree\Entry
+     */
     public $tree;
     public $options;
     private $mode;

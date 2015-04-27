@@ -61,22 +61,27 @@ abstract class Entry
         $this->index_page = $index_page;
     }
 
+    /**
+     * @return Entry
+     */
     public function getFirstPage()
     {
         if ($this->first_page) {
             return $this->first_page;
         }
 
-        foreach ($this->value as $node) {
-            if ($node instanceof Content && $node->title != 'index') {
-                $this->first_page = $node;
-                return $node;
+        if ($this instanceof Directory) {
+            foreach ($this->value as $node) {
+                if ($node instanceof Content && $node->title != 'index') {
+                    $this->first_page = $node;
+                    return $node;
+                }
             }
-        }
-        foreach ($this->value as $node) {
-            if ($node instanceof Directory && $page = $node->getFirstPage()) {
-                $this->first_page = $page;
-                return $page;
+            foreach ($this->value as $node) {
+                if ($node instanceof Directory && $page = $node->getFirstPage()) {
+                    $this->first_page = $page;
+                    return $page;
+                }
             }
         }
         return false;

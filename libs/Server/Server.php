@@ -3,8 +3,10 @@
 use Todaymade\Daux\Daux;
 use Todaymade\Daux\Exception;
 use Todaymade\Daux\MarkdownPage;
+use Todaymade\Daux\RawPage;
 use Todaymade\Daux\SimplePage;
 use Todaymade\Daux\Tree\Directory;
+use Todaymade\Daux\Tree\Raw;
 
 class Server
 {
@@ -41,8 +43,9 @@ class Server
         $request = urldecode($request);
         $request_type = isset($query['method']) ? $query['method'] : '';
         if ($request == 'first_page') {
-            $request = $this->daux->tree->first_page->uri;
+            $request = $this->daux->tree->getFirstPage()->getUri();
         }
+
         switch ($request_type) {
             case 'DauxEdit':
                 if (!$this->daux->options['file_editor']) {
@@ -115,16 +118,21 @@ class Server
 
     private function getPage($request)
     {
-        $params = $this->params;
-
         $file = $this->getFile($request);
         if ($file === false) {
             throw new NotFoundException('The Page you requested is yet to be made. Try again later.');
         }
+
+        if ($file instanceof Raw) {
+            return new RawPage($file->getPath());
+        }
+
+        $params = $this->params;
+
         $params['request'] = $request;
         $params['file_uri'] = $file->value;
         if ($request !== 'index') {
-            $params['entry_page'] = $file->first_page;
+            $params['entry_page'] = $file->getFirstPage();
         }
         return MarkdownPage::fromFile($file, $params);
     }
