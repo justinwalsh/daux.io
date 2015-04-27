@@ -22,7 +22,6 @@ class Template
     public function render($name, array $data = array())
     {
         $this->engine->addData([
-            'index' => utf8_encode($data['params']['base_page'] . $data['params']['index']->value),
             'base_url' => $data['params']['base_url'],
             'base_page' => $data['params']['base_page'],
             'page' => $data['page'],
