@@ -168,7 +168,7 @@
                         $entry_page[utf8_encode($name)] = utf8_encode($params['base_page'] . $params['entry_page'][$key]->get_url());
                     }
                 } else $entry_page['View Documentation'] = utf8_encode($params['base_page'] . $params['entry_page']->uri);
-            } else if ($params['file_uri'] === 'index')
+            } else if ($params['file_uri'] === 'index' && $params['entry_page'])
                 $entry_page[utf8_encode($params['entry_page']->title)] = utf8_encode($params['base_page'].
                     $params['entry_page']->get_url());
             $page['entry_page'] = (isset($entry_page)) ? $entry_page : null;
