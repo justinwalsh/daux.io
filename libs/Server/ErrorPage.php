@@ -1,7 +1,7 @@
 <?php namespace Todaymade\Daux\Server;
 
-use Todaymade\Daux\SimplePage;
-use Todaymade\Daux\Template;
+use Todaymade\Daux\Format\HTML\SimplePage;
+use Todaymade\Daux\Format\HTML\Template;
 
 class ErrorPage extends SimplePage
 {
@@ -17,22 +17,7 @@ class ErrorPage extends SimplePage
         $this->params = $params;
     }
 
-    public function display()
-    {
-        http_response_code(404);
-        parent::display();
-    }
-
-    public function getContent()
-    {
-        if (is_null($this->html)) {
-            $this->html = $this->generatePage();
-        }
-
-        return $this->html;
-    }
-
-    private function generatePage()
+    protected function generatePage()
     {
         $params = $this->params;
         $page['title'] = $this->title;

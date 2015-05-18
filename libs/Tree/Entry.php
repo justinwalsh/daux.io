@@ -73,11 +73,11 @@ abstract class Entry
         if ($this instanceof Directory) {
             foreach ($this->value as $node) {
                 if ($node instanceof Content) {
-					if (!count($node->getParents()) && $node->title == 'index') {
-						//the homepage should not count as first page
-						continue;
-					}
-					
+                    if (!count($node->getParents()) && $node->title == 'index') {
+                        //the homepage should not count as first page
+                        continue;
+                    }
+                    
                     $this->first_page = $node;
                     return $node;
                 }

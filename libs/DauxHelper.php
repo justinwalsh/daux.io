@@ -1,5 +1,7 @@
 <?php namespace Todaymade\Daux;
 
+use Todaymade\Daux\Tree\Directory;
+
 class DauxHelper
 {
     public static function getTheme($theme_name, $base_url, $local_base, $current_url)
@@ -64,5 +66,45 @@ class DauxHelper
             $ret['filename']=$m[3];
         }
         return $ret;
+    }
+
+    public static function getFile($tree, $request)
+    {
+        $request = explode('/', $request);
+        foreach ($request as $node) {
+            // If the element we're in currently is not a
+            // directory, we failed to find the requested file
+            if (!$tree instanceof Directory) {
+                return false;
+            }
+
+            // if the node exists in the current request tree,
+            // change the $tree variable to reference the new
+            // node and proceed to the next url part
+            if (isset($tree->value[$node])) {
+                $tree = $tree->value[$node];
+                continue;
+            }
+
+            // At this stage, we're in a directory, but no
+            // sub-item matches, so the current node must
+            // be an index page or we failed
+            if ($node !== 'index' && $node !== 'index.html') {
+                return false;
+            }
+
+            return $tree->getIndexPage();
+        }
+
+        // If the entry we found is not a directory, we're done
+        if (!$tree instanceof Directory) {
+            return $tree;
+        }
+
+        if ($tree->getIndexPage()) {
+            return $tree->getIndexPage();
+        }
+
+        return false;
     }
 }

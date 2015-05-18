@@ -2,7 +2,7 @@
 
 use Todaymade\Daux\Daux;
 use Todaymade\Daux\DauxHelper;
-use Todaymade\Daux\MarkdownPage;
+use Todaymade\Daux\Format\HTML\MarkdownPage;
 use Todaymade\Daux\Tree\Directory;
 use Todaymade\Daux\Tree\Content;
 

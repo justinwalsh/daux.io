@@ -2,7 +2,6 @@
 
 class Helper
 {
-
     public static function copyAssets($path, $local_base)
     {
         @mkdir($path);

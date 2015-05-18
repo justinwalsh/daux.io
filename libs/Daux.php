@@ -1,6 +1,6 @@
 <?php namespace Todaymade\Daux;
 
-    use Todaymade\Daux\Tree\Builder;
+use Todaymade\Daux\Tree\Builder;
 
 class Daux
 {
@@ -9,8 +9,6 @@ class Daux
 
     public static $VALID_MARKDOWN_EXTENSIONS;
     public $local_base;
-    public $base_url = '';
-    public $host;
     private $docs_path;
 
     /**
@@ -25,19 +23,6 @@ class Daux
         $this->mode = $mode;
 
         $this->local_base = dirname(__DIR__);
-        $this->base_url = '';
-
-        if ($this->mode == Daux::LIVE_MODE) {
-            $this->host = $_SERVER['HTTP_HOST'];
-            $this->base_url = $_SERVER['HTTP_HOST'] . dirname($_SERVER['PHP_SELF']);
-            $t = strrpos($this->base_url, '/index.php');
-            if ($t != false) {
-                $this->base_url = substr($this->base_url, 0, $t);
-            }
-            if (substr($this->base_url, -1) !== '/') {
-                $this->base_url .= '/';
-            }
-        }
     }
 
     public static function initConstants()
@@ -45,10 +30,10 @@ class Daux
         define("DS", DIRECTORY_SEPARATOR);
     }
 
-    public function initialize($global_config_file = null, $config_file = 'config.json')
+    public function initialize($global_config_file = null, $override_file = 'config.json')
     {
         $this->loadConfig($global_config_file);
-        $this->loadConfigOverrides($config_file);
+        $this->loadConfigOverrides($override_file);
         $this->generateTree();
     }
 
@@ -84,11 +69,13 @@ class Daux
 
     private function loadConfigOverrides($config_file)
     {
-        $config_file = $this->docs_path . DS . $config_file;
+        $this->options = json_decode(file_get_contents($this->local_base . DS . 'default.json'), true);
+
+        $config_file = $this->local_base . DS . $config_file;
         if (!file_exists($config_file)) {
             throw new Exception('The local config file is missing. Check path : ' . $config_file);
         }
-        $this->options = json_decode(file_get_contents($this->local_base . DS . 'default.json'), true);
+
         if (is_file($config_file)) {
             $config = json_decode(file_get_contents($config_file), true);
             if (!isset($config)) {
@@ -96,6 +83,7 @@ class Daux
             }
             $this->options = array_merge($this->options, $config);
         }
+
         if (isset($this->options['timezone'])) {
             date_default_timezone_set($this->options['timezone']);
         } elseif (!ini_get('date.timezone')) {
@@ -139,21 +127,8 @@ class Daux
             }
         }
 
-        if ($this->mode == self::LIVE_MODE) {
-            $params['index_key'] = 'index';
-            $params['host'] = $this->host;
-            $params['base_page'] = $params['base_url'] = '//' . $this->base_url;
-            if (!$this->options['clean_urls']) {
-                $params['base_page'] .= 'index.php/';
-            }
-
-            if ($params['image'] !== '') {
-                $params['image'] = str_replace('<base_url>', $params['base_url'], $params['image']);
-            }
-        } else {
-            $params['index_key'] = 'index.html';
-            $params['base_page'] = $params['base_url'] = '';
-        }
+        $params['index_key'] = 'index.html';
+        $params['base_page'] = $params['base_url'] = '';
 
         $params['theme'] = DauxHelper::getTheme(
             $this->options['theme-name'],

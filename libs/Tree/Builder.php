@@ -1,7 +1,6 @@
 <?php namespace Todaymade\Daux\Tree;
 
 use Todaymade\Daux\Daux;
-use Todaymade\Daux\DauxHelper;
 
 class Builder
 {

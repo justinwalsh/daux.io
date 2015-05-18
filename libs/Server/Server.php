@@ -1,18 +1,20 @@
 <?php namespace Todaymade\Daux\Server;
 
 use Todaymade\Daux\Daux;
+use Todaymade\Daux\DauxHelper;
 use Todaymade\Daux\Exception;
-use Todaymade\Daux\MarkdownPage;
-use Todaymade\Daux\RawPage;
-use Todaymade\Daux\SimplePage;
+use Todaymade\Daux\Format\HTML\MarkdownPage;
+use Todaymade\Daux\Format\HTML\RawPage;
+use Todaymade\Daux\Format\HTML\SimplePage;
 use Todaymade\Daux\Tree\Directory;
 use Todaymade\Daux\Tree\Raw;
 
 class Server
 {
-
     private $daux;
     private $params;
+    private $host;
+    private $base_url;
 
     public static function serve()
     {
@@ -24,20 +26,64 @@ class Server
 
             $page = $server->handle($_REQUEST);
         } catch (NotFoundException $e) {
+            http_response_code(404);
             $page = new ErrorPage("An error occured", $e->getMessage(), $daux->getParams());
         }
 
-        $page->display();
+        if ($page instanceof RawPage) {
+            header('Content-type: ' . MimeType::get($page->getFile()));
+
+            // Transfer file in 1024 byte chunks to save memory usage.
+            if ($fd = fopen($page->getFile(), 'rb')) {
+                while (!feof($fd)) {
+                    print fread($fd, 1024);
+                }
+                fclose($fd);
+            }
+
+            return;
+        }
+
+        header('Content-type: text/html; charset=utf-8');
+        echo $page->getContent();
     }
 
     public function __construct(Daux $daux)
     {
         $this->daux = $daux;
+
+        $this->host = $_SERVER['HTTP_HOST'];
+        $this->base_url = $_SERVER['HTTP_HOST'] . dirname($_SERVER['PHP_SELF']);
+        $t = strrpos($this->base_url, '/index.php');
+        if ($t != false) {
+            $this->base_url = substr($this->base_url, 0, $t);
+        }
+        if (substr($this->base_url, -1) !== '/') {
+            $this->base_url .= '/';
+        }
+    }
+
+    public function getParams()
+    {
+        $params = $this->daux->getParams();
+
+        $params['index_key'] = 'index';
+        $params['host'] = $this->host;
+        $params['base_page'] = $params['base_url'] = '//' . $this->base_url;
+        if (!$this->daux->options['clean_urls']) {
+            $params['base_page'] .= 'index.php/';
+        }
+
+        if ($params['image'] !== '') {
+            $params['image'] = str_replace('<base_url>', $params['base_url'], $params['image']);
+        }
+
+        return $params;
     }
 
     public function handle($query = [])
     {
-        $this->params = $this->daux->getParams();
+        $this->params = $this->getParams();
 
         $request = $this->getRequest();
         $request = urldecode($request);
@@ -75,50 +121,9 @@ class Server
         return new SimplePage('Success', 'Successfully Edited');
     }
 
-    private function getFile($request)
-    {
-        $tree = $this->daux->tree;
-        $request = explode('/', $request);
-        foreach ($request as $node) {
-            // If the element we're in currently is not a
-            // directory, we failed to find the requested file
-            if (!$tree instanceof Directory) {
-                return false;
-            }
-
-            // if the node exists in the current request tree,
-            // change the $tree variable to reference the new
-            // node and proceed to the next url part
-            if (isset($tree->value[$node])) {
-                $tree = $tree->value[$node];
-                continue;
-            }
-
-            // At this stage, we're in a directory, but no
-            // sub-item matches, so the current node must
-            // be an index page or we failed
-            if ($node !== 'index' && $node !== 'index.html') {
-                return false;
-            }
-
-            return $tree->getIndexPage();
-        }
-
-        // If the entry we found is not a directory, we're done
-        if (!$tree instanceof Directory) {
-            return $tree;
-        }
-
-        if ($tree->getIndexPage()) {
-            return $tree->getIndexPage();
-        }
-
-        return false;
-    }
-
     private function getPage($request)
     {
-        $file = $this->getFile($request);
+        $file = DauxHelper::getFile($this->daux->tree, $request);
         if ($file === false) {
             throw new NotFoundException('The Page you requested is yet to be made. Try again later.');
         }

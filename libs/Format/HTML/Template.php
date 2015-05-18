@@ -1,6 +1,7 @@
-<?php namespace Todaymade\Daux;
+<?php namespace Todaymade\Daux\Format\HTML;
 
 use League\Plates\Engine;
+use Todaymade\Daux\Daux;
 
 class Template
 {

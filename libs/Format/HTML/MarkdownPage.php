@@ -1,48 +1,28 @@
-<?php namespace Todaymade\Daux;
+<?php namespace Todaymade\Daux\Format\HTML;
 
-use Todaymade\Daux\Tree\Content;
-
-class MarkdownPage extends SimplePage
+class MarkdownPage extends \Todaymade\Daux\Format\Base\MarkdownPage
 {
-    private $file;
-    private $params;
     private $language;
     private $homepage;
 
-    public function __construct()
+    private function initialize()
     {
-    }
-
-    // For Future Expansion
-    public static function fromFile($file, $params)
-    {
-        $instance = new self();
-        $instance->initialize($file, $params);
-        return $instance;
-    }
-
-    private function initialize(Content $file, $params)
-    {
-        $this->file = $file;
-        $this->params = $params;
-        $this->title = $file->title;
-
         $this->homepage = false;
         if ($this->title === 'index') {
-            $minimum_parent_dir_size = ($params['multilanguage']) ? 2 : 1;
-            if (count($file->getParents()) >= $minimum_parent_dir_size) {
-                $parents = $file->getParents();
+            $minimum_parent_dir_size = ($this->params['multilanguage']) ? 2 : 1;
+            if (count($this->file->getParents()) >= $minimum_parent_dir_size) {
+                $parents = $this->file->getParents();
                 $this->title = end($parents)->getTitle();
             } else {
                 $this->homepage = ($this->file->getName() === '_index');
-                $this->title = $params['title'];
+                $this->title = $this->params['title'];
             }
         }
 
         $this->language = '';
-        if ($params['multilanguage'] && count($file->getParents())) {
-            reset($file->getParents());
-            $language_dir = current($file->getParents());
+        if ($this->params['multilanguage'] && count($this->file->getParents())) {
+            reset($this->file->getParents());
+            $language_dir = current($this->file->getParents());
             $this->language = $language_dir->name;
         }
     }
@@ -61,18 +41,9 @@ class MarkdownPage extends SimplePage
         return $breadcrumb_trail;
     }
 
-    public function getContent()
+    protected function generatePage()
     {
-        if (is_null($this->html)) {
-            $this->content = file_get_contents($this->file->getPath());
-            $this->html = $this->generatePage();
-        }
-
-        return $this->html;
-    }
-
-    private function generatePage()
-    {
+        $this->initialize();
         $params = $this->params;
 
         $entry_page = [];
