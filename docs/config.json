@@ -1,7 +1,7 @@
 {
     "title": "DAUX.IO",
     "tagline": "The Easiest Way To Document Your Project",
-    "author": "Justin Walsh",   
+    "author": "Justin Walsh",
     "image": "<base_url>img/app.png",
     "theme": "daux-blue",
     "template": "default",
@@ -11,7 +11,7 @@
     "breadcrumb_separator": "Chevrons",
     "date_modified": true,
     "float": true,
-    "file_editor": false,   
+    "file_editor": false,
     "repo": "justinwalsh/daux.io",
     "ignore": {
             "files": ["Work_In_Progress.md"],
