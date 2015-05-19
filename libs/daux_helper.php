@@ -104,9 +104,19 @@
         public static function configure_theme($theme, $base_url, $local_base, $theme_url, $mode = Daux::LIVE_MODE) {
             $name = static::pathinfo($theme);
             if (is_file($theme)) {
+                $theme_pathinfo = pathinfo($theme);
                 $theme = file_get_contents($theme);
                 $theme = json_decode($theme, true);
-                if (!$theme) $theme = array();
+                if (!$theme)
+                  $theme = array();
+                $template_path = explode(DIRECTORY_SEPARATOR, $theme_pathinfo['dirname']); array_pop($template_path);
+                $template_path = implode(DIRECTORY_SEPARATOR, $template_path) . DIRECTORY_SEPARATOR;
+                if( file_exists($template_path . 'default.tpl') ){
+                  $theme['template'] = $template_path . 'default.tpl';
+                }
+                if( file_exists($template_path . 'error.tpl') ){
+                  $theme['error-template'] = $template_path . 'error.tpl';
+                }
             } else $theme = array();
             $theme['name'] = $name['filename'];
 

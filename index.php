@@ -64,6 +64,8 @@ negligence or otherwise) arising in any way out of the use of this
 software, even if advised of the possibility of such damage.
 
 */
+    define('LOCAL_BASE', preg_replace('/\/index.php$/', '', $_SERVER['SCRIPT_FILENAME']));
+
     $Daux = new \Todaymade\Daux\Daux();
     $Daux->initialize();
     $page = $Daux->handle_request($_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'], $_REQUEST);
