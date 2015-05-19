@@ -24,7 +24,8 @@ class Daux
     {
         $this->mode = $mode;
 
-        $this->local_base = dirname(__DIR__);
+        // LOCAL_BASE may be defined from caller to prevent symlink issues
+        $this->local_base = defined('LOCAL_BASE') ? LOCAL_BASE : dirname(__DIR__);
         $this->base_url = '';
 
         if ($this->mode == Daux::LIVE_MODE) {
