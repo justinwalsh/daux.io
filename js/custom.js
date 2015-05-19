@@ -38,7 +38,7 @@ function setCodeBlockStyle(x) {
         case 2:
             toggleCodeBlockBtn.innerHTML = "Show Code Blocks";
             codeBlockView.removeClass('float-view');
-            codeBlocks.addClass('hidden');          
+            codeBlocks.addClass('hidden');
             break;
     }
 }
@@ -52,14 +52,17 @@ function toggleCodeBlocks() {
 //Initialize CodeBlock Visibility Settings
 $(function () {
     toggleCodeBlockBtn = $('#toggleCodeBlockBtn')[0];
-    codeBlockView = $('.right-column');
+    codeBlockView = $('.right-column.float-view');
     codeBlocks = $('.content-page article > pre');
     codeBlockState = localStorage.getItem("codeBlockState");
     if (!codeBlockState) {
         codeBlockState = 0;
         localStorage.setItem("codeBlockState", codeBlockState);
     } else codeBlockState = parseInt(codeBlockState);
-    if (!codeBlockView.size()) return;
+    if (!codeBlockView.size()){
+        toggleCodeBlockBtn.classList.add('hidden');
+        return;
+    }
     if (!codeBlocks.size()) {
         codeBlockState = 2;
         toggleCodeBlockBtn.classList.add('hidden');
