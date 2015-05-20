@@ -63,6 +63,8 @@ software, even if advised of the possibility of such damage.
 
 */
 
+define('LOCAL_BASE', preg_replace('/\/generate.php$/', '', $_SERVER['SCRIPT_FILENAME']));
+
 require_once("vendor/autoload.php");
 
 \Todaymade\Daux\Daux::initConstants();
