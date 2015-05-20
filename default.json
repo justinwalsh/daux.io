@@ -21,6 +21,7 @@
     "date_modified": false,
     "float": false,
     "file_editor": false,
+    "inherit_index": false,
     "timezone": "America/Los_Angeles",
 
     "google_analytics": false,
