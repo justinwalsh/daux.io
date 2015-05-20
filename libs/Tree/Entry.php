@@ -144,7 +144,7 @@ abstract class Entry
              * Assign and Return if found
              */
             foreach ($this->value as $node) {
-                if ($node instanceof Directory && $page = $node->getFirstPage()) {
+                if ($node instanceof Directory && $page = $node->getFirstPage( $inherit_index )) {
                     $this->first_page = $page;
                     return $page;
                 }
