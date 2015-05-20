@@ -62,32 +62,94 @@ abstract class Entry
     }
 
     /**
-     * @return Entry
+     * Set the directory index by the first matching content
+     * @return bool Success result
      */
-    public function getFirstPage()
+    public function setInheritedIndex(){
+        if( $this instanceof Directory ){
+            if( $first_page = $this->getFirstPage( true ) ){
+                $this->setIndexPage( $first_page );
+                return true;
+            }
+        }
+        $this->setIndexPage(false);
+        return false;
+    }
+
+    /**
+     * Traverse descendents for first available content item.
+     * @param  string $key_chain Preceding key chain
+     * @return string Resulting key chain
+     */
+    public function getFirstPageKey( $key_chain = null )
+    {
+        if( !empty($this->value) ){
+            if( $this instanceof Directory ){
+                foreach( $this->value AS $node_key => $node ){
+                    $node_chain = (empty($key_chain) ? '' : $key_chain . '/') . $node_key;
+                    if( $node instanceof Content ){
+                        return $node_chain;
+                    }
+                    if( $node instanceof Directory ){
+                        if( $first_key = $node->getFirstPageKey( $node_chain ) ){
+                            return $first_key;
+                        }
+                    }
+                }
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Traverse the node tree descendents for the first page
+     * Exclude index content by default
+     * @param  bool $inherit_index Flag to enable inheritence of the index pages
+     * @return mixed Todaymade\Daux\Tree\Content
+     */
+    public function getFirstPage( $inherit_index = false )
     {
         if ($this->first_page) {
             return $this->first_page;
         }
 
         if ($this instanceof Directory) {
+
+            /**
+             * If node index Content exists assign and return
+             */
+            if( $inherit_index && isset($this->value['index']) && $this->value['index'] instanceof Content ){
+                $this->value['index']->first_page = $this->value['index'];
+                return $this->value['index'];
+            }
+
+            /**
+             * Look for node Content node that is not index
+             * Assign and Return if found
+             */
             foreach ($this->value as $node) {
                 if ($node instanceof Content) {
 					if (!count($node->getParents()) && $node->title == 'index') {
 						//the homepage should not count as first page
 						continue;
 					}
-					
+
                     $this->first_page = $node;
                     return $node;
                 }
             }
+
+            /**
+             * Look for node Directories and traverse
+             * Assign and Return if found
+             */
             foreach ($this->value as $node) {
                 if ($node instanceof Directory && $page = $node->getFirstPage()) {
                     $this->first_page = $page;
                     return $page;
                 }
             }
+
         }
         return false;
     }

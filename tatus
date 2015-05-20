@@ -1,0 +1,124 @@
+diff --git a/docs/config.json b/docs/config.json
+index a2dfbef..0ae1640 100644
+--- a/docs/config.json
++++ b/docs/config.json
+@@ -11,6 +11,7 @@
+     "date_modified": true,
+     "float": true,
+     "file_editor": false,
++    "inherit_index": false,
+     "repo": "justinwalsh/daux.io",
+     "ignore": {
+             "files": ["Work_In_Progress.md"],
+diff --git a/libs/Daux.php b/libs/Daux.php
+index ab58451..39da6c5 100644
+--- a/libs/Daux.php
++++ b/libs/Daux.php
+@@ -112,6 +112,7 @@ class Daux
+                 $this->tree->value[$key]->title = $node;
+             }
+         }
++        // print_r($this->tree->value['wbTimeLog']);die();
+     }
+ 
+     public function getParams()
+diff --git a/libs/Tree/Builder.php b/libs/Tree/Builder.php
+index b538846..c9097b1 100644
+--- a/libs/Tree/Builder.php
++++ b/libs/Tree/Builder.php
+@@ -53,12 +53,30 @@ class Builder
+         }
+ 
+         $node->sort();
+-        if (isset($node->value[$params['index_key']])) {
++
++        /**
++         * Assign the first child content available as node index
++         */
++        echo $node->getFirstPageKey().'<br>';
++        if( $params['inherit_index'] ){
++            $node->setInheritedIndex();
++        }
++
++        /**
++         * Assign a descendent matching the 'index_key' exists as node index
++         */
++        else if (isset($node->value[$params['index_key']])) {
+             $node->value[$params['index_key']]->setFirstPage($node->getFirstPage());
+             $node->setIndexPage($node->value[$params['index_key']]);
+-        } else {
++        }
++
++        /**
++         * Indicate a missing node index
++         */
++        else {
+             $node->setIndexPage(false);
+         }
++
+         return $node;
+     }
+ }
+diff --git a/libs/Tree/Entry.php b/libs/Tree/Entry.php
+index 32575ee..fbf8f12 100644
+--- a/libs/Tree/Entry.php
++++ b/libs/Tree/Entry.php
+@@ -62,15 +62,57 @@ abstract class Entry
+     }
+ 
+     /**
++     * Set the directory index by the first matching content
++     */
++    public function setInheritedIndex(){
++        if( $this instanceof Directory ){
++            if( $first_page = $this->getFirstPage( true ) ){
++                $this->setIndexPage( $first_page );
++                return true;
++            }
++        }
++        $this->setIndexPage(false);
++        return false;
++    }
++
++    /**
++     * Return first descendent key chain
++     * @return [type] [description]
++     */
++    public function getFirstPageKey( $key_chain = null )
++    {
++        if( !empty($this->value) ){
++            if( $this instanceof Directory ){
++                foreach( $this->value AS $node_key => $node ){
++                    $node_chain = (empty($key_chain) ? '' : $key_chain . '/') . $node_key;
++                    if( $node instanceof Content ){
++                        return $node_chain;
++                    }
++                    if( $node instanceof Directory ){
++                        if( $first_key = $node->getFirstPageKey( $node_chain ) ){
++                            return $first_key;
++                        }
++                    }
++                }
++            }
++        }
++        return null;
++    }
++
++    /**
+      * @return Entry
+      */
+-    public function getFirstPage()
++    public function getFirstPage( $inherit_index=true )
+     {
+         if ($this->first_page) {
+             return $this->first_page;
+         }
+ 
+         if ($this instanceof Directory) {
++            if( $inherit_index && isset($this->value['index']) ){
++                $this->value['index']->first_page = $this->value['index'];
++                return $this->value['index'];
++            }
+             foreach ($this->value as $node) {
+                 if ($node instanceof Content) {
+ 					if (!count($node->getParents()) && $node->title == 'index') {

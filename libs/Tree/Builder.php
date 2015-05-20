@@ -53,12 +53,29 @@ class Builder
         }
 
         $node->sort();
-        if (isset($node->value[$params['index_key']])) {
+
+        /**
+         * Assign the first child content available as node index
+         */
+        if( $params['inherit_index'] ){
+            $node->setInheritedIndex();
+        }
+
+        /**
+         * Assign a descendent matching the 'index_key' exists as node index
+         */
+        else if (isset($node->value[$params['index_key']])) {
             $node->value[$params['index_key']]->setFirstPage($node->getFirstPage());
             $node->setIndexPage($node->value[$params['index_key']]);
-        } else {
+        }
+
+        /**
+         * Indicate a missing node index
+         */
+        else {
             $node->setIndexPage(false);
         }
+
         return $node;
     }
 }
