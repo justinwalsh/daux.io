@@ -112,7 +112,6 @@ class Daux
                 $this->tree->value[$key]->title = $node;
             }
         }
-        // print_r($this->tree->value['wbTimeLog']);die();
     }
 
     public function getParams()
