@@ -36,8 +36,35 @@ class Builder
 
             $entry = null;
             if (is_dir($path)) {
-                $entry = static::build($path, $ignore, $params, $new_parents);
-            } elseif (in_array(pathinfo($path, PATHINFO_EXTENSION), Daux::$VALID_MARKDOWN_EXTENSIONS)) {
+
+                /**
+                 * Check folder for configuration overrides
+                 */
+                $params_custom = $params;
+                if( is_file($path . DIRECTORY_SEPARATOR . 'config.json') ){
+                    $config = json_decode(file_get_contents($path . DIRECTORY_SEPARATOR . 'config.json'), true);
+                    if( !empty($config) ){
+                        $params_custom = array_merge($params_custom, $config);
+                    }
+                }
+
+                /**
+                 * Abort descendent lookup if failed ipfilter
+                 */
+                if( !empty($params_custom['ipfilter']) ){
+                    if( !in_array($_SERVER['REMOTE_ADDR'], $params_custom['ipfilter']) ){
+                        continue;
+                    }
+                }
+
+                /**
+                 * Traverse path for descendents
+                 * @var [type]
+                 */
+                $entry = static::build($path, $ignore, $params_custom, $new_parents);
+
+            }
+            else if (in_array(pathinfo($path, PATHINFO_EXTENSION), Daux::$VALID_MARKDOWN_EXTENSIONS)) {
                 $entry = new Content($path, $new_parents);
 
                 if ($params['mode'] === Daux::STATIC_MODE) {
