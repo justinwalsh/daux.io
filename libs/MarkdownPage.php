@@ -33,7 +33,8 @@ class MarkdownPage extends SimplePage
             if (count($file->getParents()) >= $minimum_parent_dir_size) {
                 $parents = $file->getParents();
                 $this->title = end($parents)->getTitle();
-            } else {
+            }
+            else {
                 $this->homepage = ($this->file->getName() === '_index');
                 $this->title = $params['title'];
             }

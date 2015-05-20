@@ -192,16 +192,21 @@ abstract class Entry
 
     protected function getTitleInternal($filename)
     {
-        $filename = explode('_', $filename);
-        if ($filename[0] == '' || is_numeric($filename[0])) {
-            unset($filename[0]);
-        } else {
-            $t = $filename[0];
-            if ($t[0] == '-') {
-                $filename[0] = substr($t, 1);
-            }
+        if( $filename == 'index' && !empty($this->parents) ){
+            return end($this->parents)->getTitle();
         }
-        $filename = implode(' ', $filename);
+        else {
+            $filename = explode('_', $filename);
+            if ($filename[0] == '' || is_numeric($filename[0])) {
+                unset($filename[0]);
+            } else {
+                $t = $filename[0];
+                if ($t[0] == '-') {
+                    $filename[0] = substr($t, 1);
+                }
+            }
+            $filename = implode(' ', $filename);
+        }
         return $filename;
     }
 
