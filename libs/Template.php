@@ -108,8 +108,8 @@ class Template
                     $link .= "/index.html";
                 }
 
-                if ($node->getIndexPage()) {
-                    $folder['href'] = $base_page . $link;
+                if ($index_page = $node->getIndexPage()) {
+                    $folder['href'] = $base_page . $index_page->getUrl();
                 }
 
                 //Child pages
