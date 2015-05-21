@@ -1,0 +1,60 @@
+{
+    "name": "league/commonmark",
+    "type": "library",
+    "description": "Markdown parser for PHP based on the CommonMark spec",
+    "keywords": ["markdown","parser","commonmark"],
+    "homepage": "https://github.com/thephpleague/commonmark",
+    "license": "BSD-3-Clause",
+    "authors": [
+        {
+            "name": "Colin O'Dell",
+            "email": "colinodell@gmail.com",
+            "homepage": "http://www.colinodell.com",
+            "role": "Lead Developer"
+        }
+    ],
+    "replace": {
+        "colinodell/commonmark-php": "*"
+    },
+    "require": {
+        "php": ">=5.4.8",
+        "ext-mbstring": "*"
+    },
+    "require-dev": {
+        "erusev/parsedown": "~1.0",
+        "jgm/CommonMark": "0.19",
+        "michelf/php-markdown": "~1.4",
+        "phpunit/phpunit": "~4.3",
+        "phpunit/phpunit-mock-objects": "2.3.0",
+        "symfony/finder": "~2.3"
+    },
+    "repositories": [
+        {
+            "type": "package",
+            "package": {
+                "name": "jgm/CommonMark",
+                "version": "0.19",
+                "dist": {
+                    "url": "http://spec.commonmark.org/0.19/spec.txt",
+                    "type": "file"
+                }
+            }
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "League\\CommonMark\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "League\\CommonMark\\Tests\\Unit\\": "tests/unit",
+            "League\\CommonMark\\Tests\\Functional\\": "tests/functional"
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "0.9-dev"
+        }
+    }
+}

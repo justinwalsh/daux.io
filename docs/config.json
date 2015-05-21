@@ -6,6 +6,7 @@
     "theme": "daux-blue",
     "clean_urls": true,
     "toggle_code": true,
+    "parser": "commonmark",
     "breadcrumbs": true,
     "breadcrumb_separator": "Chevrons",
     "date_modified": true,

@@ -1,5 +1,6 @@
 <?php namespace Todaymade\Daux;
 
+use Todaymade\Daux\Parser\MarkdownParser;
 use Todaymade\Daux\Tree\Content;
 
 class MarkdownPage extends SimplePage
@@ -99,7 +100,13 @@ class MarkdownPage extends SimplePage
             'modified_time' => filemtime($this->file->getPath()),
             'markdown' => $this->content,
             'request' => $params['request'],
-            'content' => (new \Parsedown())->text($this->content),
+            'content' => (
+              new MarkdownParser(
+                array(
+                  'handler' => (empty($params['parser']) ? 'parsedown' : $params['parser'])
+                )
+              )
+              )->convertToHtml( $this->content ),
             'breadcrumbs' => $params['breadcrumbs']
         ];
 
