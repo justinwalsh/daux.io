@@ -67,9 +67,22 @@ require_once("vendor/autoload.php");
 
 \Todaymade\Daux\Daux::initConstants();
 
-$global_config = (isset($argv[1]))? $argv[1] : null;
-$destination = (isset($argv[2]))? $argv[2] : null;
+$rules = [
+    'config|c-s' => 'Configuration file',
+    'format|f-s' => 'Output format, html or confluence (default:html)',
+
+    //HTML
+    'destination|d-s' => 'Destination folder, relative to the working directory (default:static)',
+];
+
+$options = new \Todaymade\Daux\Generator\Getopt($rules, $argv);
+
+$default = [
+    'config' => null,
+    'format' => 'html',
+    'destination' => null,
+];
 
 $generator = new \Todaymade\Daux\Generator\Generator();
 
-$generator->generate($global_config, $destination);
+$generator->generate($options->getOptions() + $default);
