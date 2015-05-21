@@ -43,7 +43,12 @@ class Server
         $request = urldecode($request);
         $request_type = isset($query['method']) ? $query['method'] : '';
         if ($request == 'first_page') {
-            $request = $this->daux->tree->getFirstPage()->getUri();
+            if( $this->daux->tree->getIndexPage() ){
+                $request = $this->daux->tree->getIndexPage()->getUri();
+            }
+            else {
+                $request = $this->daux->tree->getFirstPage()->getUri();
+            }
         }
 
         switch ($request_type) {
