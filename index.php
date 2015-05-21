@@ -1,4 +1,12 @@
 <?php
+
+if( $_SERVER['REQUEST_URI'] == '/app.png' ){
+    header('Content-type: image/png');
+    header('Content-length: '.filesize('docs/app.png'));
+    echo file_get_contents('docs/app.png');
+    exit;
+}
+
 /*
 
 Daux.io

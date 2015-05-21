@@ -20,6 +20,7 @@ class RawPage implements Page
     public function display()
     {
         header('Content-type: ' . MimeType::get($this->file));
+        header('Content-length: ' . filesize($this->file));
 
         // Transfer file in 1024 byte chunks to save memory usage.
         if ($fd = fopen($this->file, 'rb')) {
