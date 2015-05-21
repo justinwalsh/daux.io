@@ -67,19 +67,27 @@ class Daux
         }
     }
 
-    private function loadConfigOverrides($config_file)
+    private function loadConfigOverrides($override_file)
     {
+        // Read main configuration
         $this->options = json_decode(file_get_contents($this->local_base . DS . 'default.json'), true);
 
-        $config_file = $this->local_base . DS . $config_file;
-        if (!file_exists($config_file)) {
-            throw new Exception('The local config file is missing. Check path : ' . $config_file);
-        }
-
-        if (is_file($config_file)) {
+        // Read documentation overrides
+        $config_file = $this->docs_path . DS . 'config.json';
+        if (file_exists($config_file)) {
             $config = json_decode(file_get_contents($config_file), true);
             if (!isset($config)) {
-                throw new Exception('There was an error parsing the Config file. Please review');
+                throw new Exception('The local config file is missing. Check path : ' . $config_file);
+            }
+            $this->options = array_merge($this->options, $config);
+        }
+
+        // Read command line overrides
+        $config_file = $this->local_base . DS . $override_file;
+        if (file_exists($config_file)) {
+            $config = json_decode(file_get_contents($config_file), true);
+            if (!isset($config)) {
+                throw new Exception('The local config file is missing. Check path : ' . $config_file);
             }
             $this->options = array_merge($this->options, $config);
         }

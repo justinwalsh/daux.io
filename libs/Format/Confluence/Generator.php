@@ -62,9 +62,11 @@ class Generator
         if (!array_key_exists('id', $published)) {
             if (array_key_exists('page', $entry)) {
                 echo "Creating: " . $entry['file']->getUrl() . "\n";
+                $published['version'] = 1;
                 $published['id'] = $this->client->createPage($parent_id, $entry['title'], "The content will come very soon !");
             } else {
                 echo "Creating Placeholder page: " . $entry['title'] . "\n";
+                $published['version'] = 1;
                 $published['id'] = $this->client->createPage($parent_id, $entry['title'], "");
             }
         }
