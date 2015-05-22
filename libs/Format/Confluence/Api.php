@@ -80,24 +80,72 @@ class Api
      * @param $rootPage
      * @return mixed
      */
+    public function getList($rootPage)
+    {
+        $url = "content/$rootPage/child/page?expand=version";
+
+        $pages = [];
+
+        do {
+            try {
+                $list = $this->getClient()->get($url)->json();
+            } catch (BadResponseException $e) {
+                throw $this->handleError($e);
+            }
+
+            foreach ($list['results'] as $result) {
+                $pages[$result['title']] = [
+                    "id" => $result['id'],
+                    "title" => $result['title'],
+                    "version" => $result['version']['number'],
+                ];
+            }
+
+            if (array_key_exists('next', $list['_links'])) {
+                $url = $list['_links']['next'];
+            }
+
+        } while (array_key_exists('next', $list['_links']));
+
+        return $pages;
+    }
+
+    /**
+     * /rest/api/content/{id}/child/{type}
+     *
+     * @param $rootPage
+     * @return mixed
+     */
     public function getHierarchy($rootPage)
     {
-        try {
-            $hierarchy = $this->getClient()->get("content/$rootPage/child/page?expand=version,body.storage")->json();
-        } catch (BadResponseException $e) {
-            throw $this->handleError($e);
-        }
+        //We do a limit of 15 as it appears that confluence has
+        //a bug when retrieving more than 20 entries with "body.storage"
+        $url = "content/$rootPage/child/page?expand=version,body.storage&limit=15";
 
         $children = [];
-        foreach ($hierarchy['results'] as $result) {
-            $children[$result['title']] = [
-                "id" => $result['id'],
-                "title" => $result['title'],
-                "version" => $result['version']['number'],
-                "content" => $result['body']['storage']['value'],
-                "children" => $this->getHierarchy($result['id'])
-            ];
-        }
+
+        do {
+            try {
+                $hierarchy = $this->getClient()->get($url)->json();
+            } catch (BadResponseException $e) {
+                throw $this->handleError($e);
+            }
+
+            foreach ($hierarchy['results'] as $result) {
+                $children[$result['title']] = [
+                    "id" => $result['id'],
+                    "title" => $result['title'],
+                    "version" => $result['version']['number'],
+                    "content" => $result['body']['storage']['value'],
+                    "children" => $this->getHierarchy($result['id'])
+                ];
+            }
+
+            if (array_key_exists('next', $hierarchy['_links'])) {
+                $url = $hierarchy['_links']['next'];
+            }
+
+        } while (array_key_exists('next', $hierarchy['_links']));
 
         return $children;
     }

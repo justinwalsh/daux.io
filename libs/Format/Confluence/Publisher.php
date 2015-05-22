@@ -31,16 +31,19 @@ class Publisher
 
     public function publish(array $tree)
     {
-        echo "Getting already published pages...\n";
-        $all_published = $this->client->getHierarchy($this->confluence['ancestor_id']);
-
         echo "Finding Root Page...\n";
-        $published = [];
-        foreach ($all_published as $page) {
+        $pages = $this->client->getList($this->confluence['ancestor_id']);
+        $published = null;
+        foreach ($pages as $page) {
             if ($page['title'] == $tree['title']) {
                 $published = $page;
                 break;
             }
+        }
+
+        echo "Getting already published pages...\n";
+        if ($published != null) {
+            $published['children'] = $this->client->getHierarchy($published['id']);
         }
 
         echo "Create placeholder pages...\n";
