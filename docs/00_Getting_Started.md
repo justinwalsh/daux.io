@@ -99,7 +99,7 @@ Daux provides native support for Clean URLs provided the webserver has its URL R
 
 To customize the look and feel of your documentation, you can create a `config.json` file in the of the `/docs` folder. The `config.json` file is a simple JSON object that you can use to change some of the basic settings of the documentation.
 
-###Title:
+### Title:
 Change the title bar in the docs
 
 ```json
@@ -108,7 +108,7 @@ Change the title bar in the docs
 }
 ```
 
-###Themes:
+### Themes:
 We have 4 built-in Bootstrap themes. To use one of the themes, just set the `theme` option to one of the following:
 
 * daux-blue
@@ -122,7 +122,7 @@ We have 4 built-in Bootstrap themes. To use one of the themes, just set the `the
 }
 ```
 
-###Custom Theme:
+### Custom Theme:
 To use a custom theme, just copy over the theme folder into the `themes` directory and set its value in the `theme` param in config.json
 
 ```json
@@ -131,7 +131,7 @@ To use a custom theme, just copy over the theme folder into the `themes` directo
 }
 ```
 
-###Code Floating:
+### Code Floating:
 By default your code blocks will be floated to a column on the right side of your content. To disable this feature, set the `float` property to `false`.
 
 ```json
@@ -140,7 +140,7 @@ By default your code blocks will be floated to a column on the right side of you
 }
 ```
 
-###Toggling Code Blocks
+### Toggling Code Blocks
 Some users might wish to hide the code blocks & view just the documentation. By setting the `toggle_code` property to `true`, you can offer a toggle button on the page.
 
 ```json
@@ -150,7 +150,7 @@ Some users might wish to hide the code blocks & view just the documentation. By 
 ```
 
 
-###GitHub Repo:
+### GitHub Repo:
 Add a 'Fork me on GitHub' ribbon.
 
 ```json
@@ -159,7 +159,7 @@ Add a 'Fork me on GitHub' ribbon.
 }
 ```
 
-###Twitter:
+### Twitter:
 Include twitter follow buttons in the sidebar.
 
 ```json
@@ -168,7 +168,7 @@ Include twitter follow buttons in the sidebar.
 }
 ```
 
-###Links:
+### Links:
 Include custom links in the sidebar.
 
 ```json
@@ -181,7 +181,7 @@ Include custom links in the sidebar.
 }
 ```
 
-###File editor:
+### File editor:
 ![File editor](https://f.cloud.github.com/assets/1788727/1954191/44358884-81d1-11e3-859d-254b9fb81808.png)
 
 Enable front-end Markdown editor. _Disabled by default_.
@@ -192,7 +192,7 @@ Enable front-end Markdown editor. _Disabled by default_.
 }
 ```
 
-###Google Analytics:
+### Google Analytics:
 This will embed the google analytics tracking code.
 
 ```json
@@ -201,7 +201,7 @@ This will embed the google analytics tracking code.
 }
 ```
 
-###Piwik Analytics:
+### Piwik Analytics:
 This will embed the piwik tracking code.
 
 ```json
@@ -218,7 +218,7 @@ You can Also give a specific Piwik ID as well.
 }
 ```
 
-###Ignore:
+### Ignore:
 Set custom files and entire folders to ignore within your `/docs` folder. For files make sure to include the file extension in the name. For both files and folders, names are case-sensitive.
 
 ```json
@@ -230,7 +230,7 @@ Set custom files and entire folders to ignore within your `/docs` folder. For fi
 	}
 ```
 
-###Breadcrumb titles
+### Breadcrumb titles
 Daux.io provides the option to present page titles as breadcrumb navigation. You can *optionally* specify the separator used for breadcrumbs.
 
 ```json
@@ -240,7 +240,7 @@ Daux.io provides the option to present page titles as breadcrumb navigation. You
 }
 ```
 
-###Date Modified
+### Date Modified
 By default, daux.io will display the last modified time as reported by the system underneath the title for each document. To disable this, change the option in your config.json to false.
 
 ```json
@@ -249,7 +249,7 @@ By default, daux.io will display the last modified time as reported by the syste
 }
 ```
 
-###Timezone
+### Timezone
 If your server does not have a default timezone set in php.ini, it may return errors when it tries to generate the last modified date/time for docs. To fix these errors, specify a timezone in your config file. Valid options are available in the [PHP Manual](http://php.net/manual/en/timezones.php).
 
 ```json
@@ -258,7 +258,7 @@ If your server does not have a default timezone set in php.ini, it may return er
 }
 ```
 
-###Multi-language
+### Multi-language
 Enables multi-language support which needs seperate directories for each language in `docs/` folder.
 
 ```json

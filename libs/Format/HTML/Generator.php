@@ -28,12 +28,7 @@ class Generator
         $params['base_url'] = $params['base_page'] = $base_url;
 
         // Rebase Theme
-        $params['theme'] = DauxHelper::getTheme(
-            $params['theme-name'],
-            $params['base_url'],
-            $params['local_base'],
-            $base_url
-        );
+        $params['theme'] = DauxHelper::getTheme($params, $base_url);
 
         $params['image'] = str_replace('<base_url>', $base_url, $params['image']);
         if ($base_url !== '') {

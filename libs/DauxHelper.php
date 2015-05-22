@@ -4,10 +4,10 @@ use Todaymade\Daux\Tree\Directory;
 
 class DauxHelper
 {
-    public static function getTheme($theme_name, $base_url, $local_base, $current_url)
+    public static function getTheme($params, $current_url)
     {
-        $theme_folder = $local_base . DS . 'resources' . DS . 'themes' . DS . $theme_name;
-        $theme_url = $base_url . "resources/themes/" . $theme_name . '/';
+        $theme_folder = $params['local_base'] . DS . 'resources' . DS . 'themes' . DS . $params['theme-name'];
+        $theme_url = $params['base_url'] . "resources/themes/" . $params['theme-name'] . '/';
 
         $theme = array();
         if (is_file($theme_folder . DS . "config.json")) {
@@ -19,7 +19,7 @@ class DauxHelper
 
         //Default parameters for theme
         $theme += [
-            'name' => $theme_name,
+            'name' => $params['theme-name'],
             'css' => [],
             'js' => [],
             'fonts' => [],
@@ -29,7 +29,11 @@ class DauxHelper
             'templates' => $theme_folder . DS . 'templates',
         ];
 
-        $substitutions = ['<local_base>' => $local_base, '<base_url>' => $current_url, '<theme_url>' => $theme_url];
+        $substitutions = [
+            '<local_base>' => $params['local_base'],
+            '<base_url>' => $current_url,
+            '<theme_url>' => $theme_url
+        ];
 
         // Substitute some placeholders
         $theme['templates'] = strtr($theme['templates'], $substitutions);

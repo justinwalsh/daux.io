@@ -78,6 +78,8 @@ class Server
             $params['image'] = str_replace('<base_url>', $params['base_url'], $params['image']);
         }
 
+        $params['theme'] = DauxHelper::getTheme($params, $this->base_url);
+
         return $params;
     }
 

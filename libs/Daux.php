@@ -109,6 +109,10 @@ class Daux
         }
     }
 
+    /**
+     * @todo make it an object
+     * @return array
+     */
     public function getParams()
     {
         $params = $this->options += array(
@@ -137,13 +141,6 @@ class Daux
 
         $params['index_key'] = 'index.html';
         $params['base_page'] = $params['base_url'] = '';
-
-        $params['theme'] = DauxHelper::getTheme(
-            $this->options['theme-name'],
-            $params['base_url'],
-            $this->local_base,
-            $params['base_url']
-        );
 
         return $params;
     }
