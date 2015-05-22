@@ -84,7 +84,7 @@ class Daux
 
         // Read command line overrides
         $config_file = $this->local_base . DS . $override_file;
-        if (file_exists($config_file)) {
+        if (!is_null($override_file) && file_exists($config_file)) {
             $config = json_decode(file_get_contents($config_file), true);
             if (!isset($config)) {
                 throw new Exception('The local config file is missing. Check path : ' . $config_file);

@@ -69,7 +69,7 @@ class MarkdownPage extends \Todaymade\Daux\Format\Base\MarkdownPage
             'modified_time' => filemtime($this->file->getPath()),
             'markdown' => $this->content,
             'request' => $params['request'],
-            'content' => (new \Parsedown())->text($this->content),
+            'content' => $this->convertPage($this->content),
             'breadcrumbs' => $params['breadcrumbs']
         ];
 

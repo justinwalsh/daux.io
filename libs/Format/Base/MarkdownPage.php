@@ -1,5 +1,6 @@
 <?php namespace Todaymade\Daux\Format\Base;
 
+use League\CommonMark\CommonMarkConverter;
 use Todaymade\Daux\Tree\Content;
 
 abstract class MarkdownPage extends SimplePage
@@ -29,9 +30,19 @@ abstract class MarkdownPage extends SimplePage
         $this->params = $params;
     }
 
+    protected function getMarkdownConverter()
+    {
+        return new CommonMarkConverter();
+    }
+
+    protected function convertPage($content)
+    {
+        return $this->getMarkdownConverter()->convertToHtml($content);
+    }
+
     protected function generatePage()
     {
-        return (new \Parsedown())->text($this->content);
+        return $this->convertPage($this->content);
     }
 
     public static function fromFile(Content $file, $params)

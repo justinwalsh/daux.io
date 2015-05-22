@@ -254,8 +254,7 @@ class Getopt
         $long = [];
         $short = '';
         foreach ($this->rules as $rule) {
-            foreach($rule['alias'] as $alias) {
-
+            foreach ($rule['alias'] as $alias) {
                 $prepared = $alias;
                 if ($rule['param'] == 'optional') {
                     $prepared .= '::';

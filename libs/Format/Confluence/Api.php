@@ -1,8 +1,12 @@
 <?php namespace Todaymade\Daux\Format\Confluence;
 
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\BadResponseException;
+use GuzzleHttp\Exception\ParseException;
+use GuzzleHttp\Exception\TransferException;
 
-class Api {
+class Api
+{
 
     protected $base_url;
     protected $user;
@@ -10,15 +14,64 @@ class Api {
 
     protected $space;
 
-    public function __construct($base_url, $user, $pass, $space_id) {
+    public function __construct($base_url, $user, $pass)
+    {
         $this->base_url = $base_url;
         $this->user = $user;
         $this->pass = $pass;
-        $this->setSpace($space_id);
     }
 
-    public function setSpace($space_id) {
+    public function setSpace($space_id)
+    {
         $this->space = $space_id;
+    }
+
+    protected function getClient()
+    {
+        $options = [
+            'base_url' => $this->base_url . 'rest/api/',
+            'defaults' => [
+                'auth' => [$this->user, $this->pass]
+            ]
+        ];
+
+        return new Client($options);
+    }
+
+    /**
+     * The standard error message from guzzle is quite poor in informations,
+     * this will give little bit more sense to it and return it
+     *
+     * @param BadResponseException $e
+     * @return BadResponseException
+     */
+    protected function handleError(BadResponseException $e)
+    {
+        $request = $e->getRequest();
+        $response = $e->getResponse();
+
+        $level = floor($response->getStatusCode() / 100);
+
+        if ($level == '4') {
+            $label = 'Client error response';
+        } elseif ($level == '5') {
+            $label = 'Server error response';
+        } else {
+            $label = 'Unsuccessful response';
+        }
+
+        $message = $label .
+            ' [url] ' . $request->getUrl() .
+            ' [status code] ' . $response->getStatusCode() .
+            ' [message] ';
+
+        try {
+            $message .= $response->json()['message'];
+        } catch (ParseException $e) {
+            $message .= (string) $response->getBody();
+        }
+
+        return new BadResponseException($message, $request, $response, $e->getPrevious());
     }
 
     /**
@@ -27,11 +80,16 @@ class Api {
      * @param $rootPage
      * @return mixed
      */
-    public function getHierarchy($rootPage) {
-        $hiera = $this->getClient()->get("content/$rootPage/child/page?expand=version,body.storage")->json();
+    public function getHierarchy($rootPage)
+    {
+        try {
+            $hierarchy = $this->getClient()->get("content/$rootPage/child/page?expand=version,body.storage")->json();
+        } catch (BadResponseException $e) {
+            throw $this->handleError($e);
+        }
 
         $children = [];
-        foreach($hiera['results'] as $result) {
+        foreach ($hierarchy['results'] as $result) {
             $children[$result['title']] = [
                 "id" => $result['id'],
                 "title" => $result['title'],
@@ -44,8 +102,8 @@ class Api {
         return $children;
     }
 
-    public function createPage($parent_id, $title, $content) {
-
+    public function createPage($parent_id, $title, $content)
+    {
         $body = [
             'type' => 'page',
             'space' => ['key' => $this->space],
@@ -54,12 +112,17 @@ class Api {
             'body' => ['storage' => ['value' => $content, 'representation' => 'storage']]
         ];
 
-        $response = $this->getClient()->post('content', [ 'json' => $body ])->json();
+        try {
+            $response = $this->getClient()->post('content', [ 'json' => $body ])->json();
+        } catch (BadResponseException $e) {
+            throw $this->handleError($e);
+        }
 
         return $response['id'];
     }
 
-    public function updatePage($parent_id, $page_id, $newVersion, $title, $content) {
+    public function updatePage($parent_id, $page_id, $newVersion, $title, $content)
+    {
         $body = [
             'type' => 'page',
             'space' => ['key' => $this->space],
@@ -69,22 +132,45 @@ class Api {
             'body' => ['storage' => ['value' => $content, 'representation' => 'storage']]
         ];
 
-        $this->getClient()->put("content/$page_id", [ 'json' => $body ])->json();
+        try {
+            $this->getClient()->put("content/$page_id", ['json' => $body])->json();
+        } catch (BadResponseException $e) {
+            throw $this->handleError($e);
+        }
     }
 
-    public function deletePage($page_id) {
-        return $this->getClient()->delete('content/' . $page_id)->json();
+    public function deletePage($page_id)
+    {
+        try {
+            return $this->getClient()->delete('content/' . $page_id)->json();
+        } catch (BadResponseException $e) {
+            throw $this->handleError($e);
+        }
     }
 
-    protected function getClient() {
+    public function uploadAttachment($id, $attachment)
+    {
+        //get if attachment is uploaded
+        try {
+            $result = $this->getClient()->get("content/$id/child/attachment?filename=$attachment[filename]")->json();
+        } catch (BadResponseException $e) {
+            throw $this->handleError($e);
+        }
 
-        $options = [
-            'base_url' => $this->base_url . 'rest/api/',
-            'defaults' => [
-                'auth' => [$this->user, $this->pass]
-            ]
-        ];
+        $url = "content/$id/child/attachment" . (count($result['results'])? "/{$result['results'][0]['id']}/data" : "");
 
-        return new Client($options);
+        try {
+            $this->getClient()->post(
+                $url,
+                [
+                    'body' => ['file' => fopen($attachment['file']->getPath(), 'r')] ,
+                    'headers' => ['X-Atlassian-Token' => 'nocheck'],
+                ]
+            );
+        } catch (BadResponseException $e) {
+            throw $this->handleError($e);
+        }
+
+        //FIXME :: When doing an update, Confluence does a null pointer exception
     }
 }

@@ -1,18 +1,32 @@
 <?php namespace Todaymade\Daux\Format\Confluence;
 
+use DOMDocument;
 use Todaymade\Daux\DauxHelper;
 
 class MarkdownPage extends \Todaymade\Daux\Format\Base\MarkdownPage
 {
+    public $attachments = [];
+
+    protected function getMarkdownConverter()
+    {
+        return new CommonMarkConverter();
+    }
+
     protected function generatePage()
     {
         $page = parent::generatePage();
 
         //Embed images
+        // We do it after generation so we can catch the images that were in html already
         $page = preg_replace_callback(
             "/<img\\s+[^>]*src=['\"]([^\"]*)['\"][^>]*>/",
             function ($matches) {
-                return str_replace($matches[1], $this->findImage($matches[1]), $matches[0]);
+
+                if ($result = $this->findImage($matches[1], $matches[0])) {
+                    return $result;
+                }
+
+                return $matches[0];
             },
             $page
         );
@@ -20,7 +34,7 @@ class MarkdownPage extends \Todaymade\Daux\Format\Base\MarkdownPage
         return $page;
     }
 
-    private function findImage($src)
+    private function findImage($src, $tag)
     {
         //for protocol relative or http requests : keep the original one
         if (substr($src, 0, strlen("http")) === "http" || substr($src, 0, strlen("//")) === "//") {
@@ -35,16 +49,46 @@ class MarkdownPage extends \Todaymade\Daux\Format\Base\MarkdownPage
 
 
         if ($file === false) {
-            return $src;
+            return false;
         }
 
-        $encoded = base64_encode(file_get_contents($file->getPath()));
-        $extension =  pathinfo($file->getPath(), PATHINFO_EXTENSION);
+        $filename = basename($file->getPath());
 
-        if (!in_array($extension, ['jpg', 'jpeg', 'png', 'gif'])) {
-            return $src;
+        //Add the attachment for later upload
+        $this->attachments[] = ['filename' => $filename, 'file' => $file];
+
+        return $this->createImageTag($filename, $this->getAttributes($tag));
+    }
+
+    private function getAttributes($tag)
+    {
+        $dom = new DOMDocument();
+        $dom->loadHTML($tag);
+
+        $img = $dom->getElementsByTagName('img')[0];
+
+        $attributes = ['align', 'class', 'title', 'style', 'alt', 'height', 'width'];
+        $used = [];
+        foreach ($attributes as $attr) {
+            if ($img->attributes->getNamedItem($attr)) {
+                $used[$attr] = $img->attributes->getNamedItem($attr)->value;
+            }
         }
 
-        return "data:image/$extension;base64,$encoded";
+        return $used;
+    }
+
+    private function createImageTag($filename, $attributes)
+    {
+
+        $img = "<ac:image";
+
+        foreach ($attributes as $name => $value) {
+            $img .=  ' ac:' . $name.'="'.htmlentities($value, ENT_QUOTES, 'UTF-8', false).'"';
+        }
+
+        $img .= "><ri:attachment ri:filename=\"$filename\" /></ac:image>";
+
+        return $img;
     }
 }

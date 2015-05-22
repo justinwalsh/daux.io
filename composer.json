@@ -13,9 +13,9 @@
     ],
     "require": {
         "php": ">=5.4",
-        "erusev/parsedown": "~1.0",
         "league/plates": "~3.1",
-        "guzzlehttp/guzzle": "~5.3"
+        "guzzlehttp/guzzle": "~5.3",
+        "league/commonmark": "0.8.*"
     },
     "autoload": {
         "psr-4": {"Todaymade\\Daux\\": "libs/"}
