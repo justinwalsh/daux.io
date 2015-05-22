@@ -82,7 +82,9 @@ class Api
      */
     public function getList($rootPage)
     {
-        $url = "content/$rootPage/child/page?expand=version";
+        //We do a limit of 15 as it appears that confluence has
+        //a bug when retrieving more than 20 entries with "body.storage"
+        $url = "content/$rootPage/child/page?expand=version,body.storage&limit=15";
 
         $pages = [];
 
@@ -98,6 +100,7 @@ class Api
                     "id" => $result['id'],
                     "title" => $result['title'],
                     "version" => $result['version']['number'],
+                    "content" => $result['body']['storage']['value'],
                 ];
             }
 
