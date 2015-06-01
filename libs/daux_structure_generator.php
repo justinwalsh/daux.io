@@ -178,7 +178,7 @@ class StructureGenerator {
             }
 
             if ($this->getOpt('createConfig', false)) {
-                $this->writeIfNotExist($rootDirectory . DIRECTORY_SEPARATOR . 'config.json', json_encode($this->defaultConfig, JSON_PRETTY_PRINT));
+                $this->writeIfNotExist($rootDirectory . DIRECTORY_SEPARATOR . 'config.json', json_encode($this->config, JSON_PRETTY_PRINT));
             }
         }
 
