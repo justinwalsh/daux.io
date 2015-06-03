@@ -199,12 +199,19 @@ class StructureGenerator {
             }
 
             if (!$node->isRoot() && $this->getOpt('sectionLandingPage', false)) {
-                $this->writeIfNotExist($path . DIRECTORY_SEPARATOR . 'index.md', "##{$node->getLabel()}##\n");
+                $idxContent = "##{$node->getLabel()}##\nContent:\n";
+                foreach ($node->getChildren() as $child){
+                    $idxContent .= "- [{$child->getLabel()}]({$child->getUrl()})\n";
+                }
+                
+                $this->writeIfNotExist($path . DIRECTORY_SEPARATOR . 'index.md', $idxContent);
             }
 
             foreach ($node->getChildren() as $childNode) {
                 $this->createFsStructure($childNode, $rootDirectory);
             }
+            
+            
         }
     }
 
@@ -304,12 +311,25 @@ class Node {
             return '';
         }
 
+        $baseName = sprintf("%03d_%s", $this->order * self::$weightStep, $this->_name());
+        return ($baseOnly || !$this->parent) ? $baseName : ($this->parent->getFsName($baseOnly) . DIRECTORY_SEPARATOR . $baseName);
+    }
+
+    private function _name() {
         $name = preg_replace('/[\s\\/\\\\:\~]/', '_', $this->label);
         if (preg_match('/^\d/', $name)) {
             $name = '_' . $name;
         }
-        $baseName = sprintf("%03d_%s", $this->order * self::$weightStep, $name);
-        return ($baseOnly || !$this->parent) ? $baseName : ($this->parent->getFsName($baseOnly) . DIRECTORY_SEPARATOR . $baseName);
+        
+        return $name;
+    }
+
+    public function getUrl() {
+        if ($this->isRoot()) {
+            return '';
+        }
+        
+        return ltrim($this->parent->getUrl() . '/' . $this->_name(), '/');
     }
 
     public static function setWeightStep($step = 1) {

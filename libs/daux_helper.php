@@ -220,8 +220,8 @@ EOT;
                 while (($entry = readdir($dh)) !== false) {
                     if ($entry == '.' || $entry == '..') continue;
                     $path = $dir . DIRECTORY_SEPARATOR . $entry;
-                    if (is_dir($path) && in_array($entry, $ignore['folders'])) continue;
-                    if (!is_dir($path) && in_array($entry, $ignore['files'])) continue;
+                    if (is_dir($path) && in_array($entry, (array) $ignore['folders'])) continue;
+                    if (!is_dir($path) && in_array($entry, (array)  $ignore['files'])) continue;
 
                     $file_details = static::pathinfo($path);
                     if (is_dir($path)) $entry = static::directory_tree_builder($path, $ignore, $mode, $new_parents);
