@@ -39,6 +39,7 @@
 
         private function get_breadcrumb_title($page, $base_page) {
             $title = '';
+            $page['request'] = iconv('utf-8', 'iso-8859-1', $page['request']);
             $breadcrumb_trail = $page['breadcrumb_trail'];
             $separator = $this->get_separator($page['breadcrumb_separator']);
             foreach ($breadcrumb_trail as $key => $value) {
