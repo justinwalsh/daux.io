@@ -1,5 +1,6 @@
 <?php namespace Todaymade\Daux\Format\Confluence;
 
+use Todaymade\Daux\Config;
 use Todaymade\Daux\Daux;
 use Todaymade\Daux\Tree\Content;
 use Todaymade\Daux\Tree\Directory;
@@ -31,7 +32,7 @@ class Generator
         echo "Done !\n";
     }
 
-    private function generateRecursive(Entry $tree, array $params, $base_url = '')
+    private function generateRecursive(Entry $tree, Config $params, $base_url = '')
     {
         $final = ['title' => $this->prefix . $tree->getTitle()];
         $params['base_url'] = $params['base_page'] = $base_url;

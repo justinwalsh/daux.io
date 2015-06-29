@@ -9,7 +9,7 @@ class Generator
     public function generate($options)
     {
         $daux = new Daux(Daux::STATIC_MODE);
-        $daux->initialize(null, $options['config']);
+        $daux->initialize($options['config']);
 
         switch(strtolower($options['format'])) {
             case 'confluence':
@@ -19,6 +19,5 @@ class Generator
             default:
                 (new HTMLGenerator())->generate($daux, $options['destination']);
         }
-
     }
 }

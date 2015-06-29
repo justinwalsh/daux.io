@@ -15,6 +15,9 @@ class Daux
      * @var Tree\Entry
      */
     public $tree;
+    /**
+     * @var Config
+     */
     public $options;
     private $mode;
 
@@ -30,48 +33,48 @@ class Daux
         define("DS", DIRECTORY_SEPARATOR);
     }
 
-    public function initialize($global_config_file = null, $override_file = 'config.json')
+    public function initialize($override_file = 'config.json')
     {
-        $this->loadConfig($global_config_file);
+        //global.json (docs dir, markdown files)
+        $this->loadConfig();
+
+        //config.json
         $this->loadConfigOverrides($override_file);
+
         $this->generateTree();
     }
 
-    private function loadConfig($global_config_file)
+    private function loadConfig()
     {
-        if (is_null($global_config_file)) {
-            $global_config_file = $this->local_base . DS . 'global.json';
-        }
+        $default_config = [
+            'docs_directory' => 'docs',
+            'valid_markdown_extensions' => ['md', 'markdown']
+        ];
+
+        $global_config_file = $this->local_base . DS . 'global.json';
+
         if (!file_exists($global_config_file)) {
             throw new Exception('The Global Config file is missing. Requested File : ' . $global_config_file);
         }
 
-        $global_config = json_decode(file_get_contents($global_config_file), true);
-        if (!isset($global_config)) {
+        $default_config = array_merge($default_config, json_decode(file_get_contents($global_config_file), true));
+        if (!isset($default_config)) {
             throw new Exception('The Global Config file is corrupt. Check that the JSON encoding is correct');
         }
 
-        if (!isset($global_config['docs_directory'])) {
-            throw new Exception('The Global Config file does not have the docs directory set.');
-        }
-
-        $this->docs_path = $global_config['docs_directory'];
+        $this->docs_path = $default_config['docs_directory'];
         if (!is_dir($this->docs_path) && !is_dir($this->docs_path = $this->local_base . DS . $this->docs_path)) {
             throw new Exception('The Docs directory does not exist. Check the path again : ' . $this->docs_path);
         }
 
-        if (!isset($global_config['valid_markdown_extensions'])) {
-            static::$VALID_MARKDOWN_EXTENSIONS = array('md', 'markdown');
-        } else {
-            static::$VALID_MARKDOWN_EXTENSIONS = $global_config['valid_markdown_extensions'];
-        }
+        static::$VALID_MARKDOWN_EXTENSIONS = $default_config['valid_markdown_extensions'];
+
+        $this->options = new Config();
+        $this->options->merge($default_config);
     }
 
     private function loadConfigOverrides($override_file)
     {
-        // Read main configuration
-        $this->options = json_decode(file_get_contents($this->local_base . DS . 'default.json'), true);
-
         // Read documentation overrides
         $config_file = $this->docs_path . DS . 'config.json';
         if (file_exists($config_file)) {
@@ -79,7 +82,7 @@ class Daux
             if (!isset($config)) {
                 throw new Exception('The local config file is missing. Check path : ' . $config_file);
             }
-            $this->options = array_merge($this->options, $config);
+            $this->options->merge($config);
         }
 
         // Read command line overrides
@@ -89,7 +92,7 @@ class Daux
             if (!isset($config)) {
                 throw new Exception('The local config file is missing. Check path : ' . $config_file);
             }
-            $this->options = array_merge($this->options, $config);
+            $this->options->merge($config);
         }
 
         if (isset($this->options['timezone'])) {
@@ -115,7 +118,7 @@ class Daux
      */
     public function getParams()
     {
-        $params = $this->options += array(
+        $default = [
             //Features
             'multilanguage' => !empty($this->options['languages']),
 
@@ -125,23 +128,24 @@ class Daux
             'local_base' => $this->local_base,
             'docs_path' => $this->docs_path,
             'templates' => $this->local_base . DS . 'templates',
-        );
+        ];
+        $this->options->conservativeMerge($default);
 
         if ($this->tree) {
-            $params['tree'] = $this->tree;
-            $params['index'] = ($index = $this->tree->getIndexPage()) ? $index : $this->tree->getFirstPage();
-            if ($params['multilanguage']) {
+            $this->options['tree'] = $this->tree;
+            $this->options['index'] = ($index = $this->tree->getIndexPage()) ? $index : $this->tree->getFirstPage();
+            if ($this->options['multilanguage']) {
                 foreach ($this->options['languages'] as $key => $name) {
-                    $params['entry_page'][$key] = $this->tree->value[$key]->getFirstPage();
+                    $this->options['entry_page'][$key] = $this->tree->value[$key]->getFirstPage();
                 }
             } else {
-                $params['entry_page'] = $this->tree->getFirstPage();
+                $this->options['entry_page'] = $this->tree->getFirstPage();
             }
         }
 
-        $params['index_key'] = 'index.html';
-        $params['base_page'] = $params['base_url'] = '';
+        $this->options['index_key'] = 'index.html';
+        $this->options['base_page'] = $this->options['base_url'] = '';
 
-        return $params;
+        return $this->options;
     }
 }

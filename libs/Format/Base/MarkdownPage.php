@@ -1,6 +1,7 @@
 <?php namespace Todaymade\Daux\Format\Base;
 
 use League\CommonMark\CommonMarkConverter;
+use Todaymade\Daux\Config;
 use Todaymade\Daux\Tree\Content;
 
 abstract class MarkdownPage extends SimplePage
@@ -11,7 +12,7 @@ abstract class MarkdownPage extends SimplePage
     protected $file;
 
     /**
-     * @var array
+     * @var Config
      */
     protected $params;
 
@@ -25,7 +26,7 @@ abstract class MarkdownPage extends SimplePage
         $this->file = $file;
     }
 
-    public function setParams(array $params)
+    public function setParams(Config $params)
     {
         $this->params = $params;
     }
