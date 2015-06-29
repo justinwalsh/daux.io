@@ -158,7 +158,7 @@ class Publisher
             return true;
         }
 
-        $trimmed_local = trim($local);
+        $trimmed_local = trim($local->getContent());
         $trimmed_distant = trim($published['content']);
 
         if ($trimmed_local == $trimmed_distant) {
@@ -174,6 +174,17 @@ class Publisher
             return false;
         }
 
+        //DEBUG
+        if (getenv("DEBUG") && strtolower(getenv("DEBUG")) != "false") {
+            $prefix = 'static/export/';
+            if (!is_dir($prefix)) {
+                mkdir($prefix, 0777, true);
+            }
+            $url = $local->getFile()->getUrl();
+            file_put_contents($prefix . strtr($url, ['/' => '_', '.html' => '_local.html']), $trimmed_local);
+            file_put_contents($prefix . strtr($url, ['/' => '_', '.html' => '_distant.html']), $trimmed_distant);
+        }
+
         return true;
     }
 
@@ -187,7 +198,7 @@ class Publisher
         echo "- " . $this->niceTitle($entry['file']->getUrl());
 
         try {
-            if ($this->shouldUpdate($entry['page']->getContent(), $published)) {
+            if ($this->shouldUpdate($entry['page'], $published)) {
                 $this->client->updatePage(
                     $parent_id,
                     $published['id'],
