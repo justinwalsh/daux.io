@@ -2,6 +2,7 @@
 
 use DOMDocument;
 use Todaymade\Daux\DauxHelper;
+use Todaymade\Daux\Format\Confluence\CommonMark\CommonMarkConverter;
 
 class MarkdownPage extends \Todaymade\Daux\Format\Base\MarkdownPage
 {
@@ -9,7 +10,7 @@ class MarkdownPage extends \Todaymade\Daux\Format\Base\MarkdownPage
 
     protected function getMarkdownConverter()
     {
-        return new CommonMarkConverter();
+        return new CommonMarkConverter(['daux' => $this->params]);
     }
 
     protected function generatePage()
@@ -80,7 +81,6 @@ class MarkdownPage extends \Todaymade\Daux\Format\Base\MarkdownPage
 
     private function createImageTag($filename, $attributes)
     {
-
         $img = "<ac:image";
 
         foreach ($attributes as $name => $value) {

@@ -1,4 +1,4 @@
-<?php namespace Todaymade\Daux\Format\Confluence;
+<?php namespace Todaymade\Daux\Format\Confluence\CommonMark;
 
 use League\CommonMark\Block\Element\AbstractBlock;
 use League\CommonMark\Block\Element\FencedCode;

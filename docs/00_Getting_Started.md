@@ -367,3 +367,5 @@ If you have a global mime map entry for `.less` files set for the server, you wi
 ## Support
 
 If you need help using Daux.io, or have found a bug, please create an issue on the <a href="https://github.com/justinwalsh/daux.io/issues" target="_blank">GitHub repo</a>.
+
+[Code Highlighting examples](!Examples/Code_Highlighting)
