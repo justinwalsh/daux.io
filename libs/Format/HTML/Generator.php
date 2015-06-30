@@ -31,7 +31,7 @@ class Generator
         $params['theme'] = DauxHelper::getTheme($params, $base_url);
 
         $params['image'] = str_replace('<base_url>', $base_url, $params['image']);
-        if ($base_url !== '') {
+        if ($base_url !== '' && empty($params['entry_page'])) {
             $params['entry_page'] = $tree->getFirstPage();
         }
         foreach ($tree->value as $key => $node) {
