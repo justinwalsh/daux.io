@@ -9,6 +9,7 @@ class Daux
 
     public static $VALID_MARKDOWN_EXTENSIONS;
     public $local_base;
+    public $internal_base;
     private $docs_path;
 
     /**
@@ -25,7 +26,11 @@ class Daux
     {
         $this->mode = $mode;
 
-        $this->local_base = dirname(__DIR__);
+        $this->local_base = $this->internal_base = dirname(__DIR__);
+
+        if (defined('PHAR_DIR')) {
+            $this->local_base = PHAR_DIR;
+        }
     }
 
     public static function initConstants()
@@ -113,8 +118,7 @@ class Daux
     }
 
     /**
-     * @todo make it an object
-     * @return array
+     * @return Config
      */
     public function getParams()
     {
@@ -127,7 +131,7 @@ class Daux
             'mode' => $this->mode,
             'local_base' => $this->local_base,
             'docs_path' => $this->docs_path,
-            'templates' => $this->local_base . DS . 'templates',
+            'templates' => $this->internal_base . DS . 'templates',
         ];
         $this->options->conservativeMerge($default);
 

@@ -7,6 +7,7 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'Todaymade\\Daux\\' => array($baseDir . '/libs'),
+    'Symfony\\Component\\Finder\\' => array($vendorDir . '/symfony/finder'),
     'Symfony\\Component\\Console\\' => array($vendorDir . '/symfony/console'),
     'React\\Promise\\' => array($vendorDir . '/react/promise/src'),
     'League\\Plates\\' => array($vendorDir . '/league/plates/src'),
