@@ -1,19 +1,23 @@
 <?php namespace Todaymade\Daux\Format\Confluence;
 
+use Symfony\Component\Console\Output\OutputInterface;
 use Todaymade\Daux\Config;
 use Todaymade\Daux\Daux;
+use Todaymade\Daux\Format\Base\RunAction;
 use Todaymade\Daux\Tree\Content;
 use Todaymade\Daux\Tree\Directory;
 use Todaymade\Daux\Tree\Entry;
 
 class Generator
 {
+    use RunAction;
+
     /**
      * @var string
      */
     protected $prefix;
 
-    public function generate(Daux $daux)
+    public function generate(Daux $daux, OutputInterface $output, $width)
     {
         $confluence = $daux->getParams()['confluence'];
 
@@ -21,15 +25,24 @@ class Generator
 
         $params = $daux->getParams();
 
-        echo "Generating Tree...\n";
-        $tree = $this->generateRecursive($daux->tree, $params);
-        $tree['title'] = $this->prefix . $daux->getParams()['title'];
+        $tree = $this->runAction(
+            "Generating Tree ...",
+            $output,
+            $width,
+            function() use ($daux, $params) {
+                $tree = $this->generateRecursive($daux->tree, $params);
+                $tree['title'] = $this->prefix . $daux->getParams()['title'];
 
-        echo "Start Publishing...\n";
+                return $tree;
+            }
+        );
+
+        $output->writeln("Start Publishing...");
+
         $publisher = new Publisher($confluence);
+        $publisher->output = $output;
+        $publisher->width = $width;
         $publisher->publish($tree);
-
-        echo "Done !\n";
     }
 
     private function generateRecursive(Entry $tree, Config $params, $base_url = '')

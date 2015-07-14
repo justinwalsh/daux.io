@@ -2,9 +2,12 @@
 
 use GuzzleHttp\Exception\BadResponseException;
 use GuzzleHttp\Exception\ParseException;
+use Todaymade\Daux\Format\Base\RunAction;
 
 class Publisher
 {
+
+    use RunAction;
 
     /**
      * @var Api
@@ -21,12 +24,33 @@ class Publisher
      */
     protected $previous_title;
 
+    /**
+     * @var string terminal width
+     */
+    public $width;
+
+    /**
+     * @var
+     */
+    public $output;
+
+    /**
+     * @param $confluence
+     */
     public function __construct($confluence)
     {
         $this->confluence = $confluence;
 
         $this->client = new Api($confluence['base_url'], $confluence['user'], $confluence['pass']);
         $this->client->setSpace($confluence['space_id']);
+    }
+
+    public function run($title, $closure) {
+        try {
+            return $this->runAction($title, $this->output, $this->width, $closure);
+        } catch (BadResponseException $e) {
+            echo " X Failed with message: " . $e->getMessage() . "\n";
+        }
     }
 
     public function publish(array $tree)
@@ -41,15 +65,23 @@ class Publisher
             }
         }
 
-        echo "Getting already published pages...\n";
-        if ($published != null) {
-            $published['children'] = $this->client->getHierarchy($published['id']);
-        }
+        $this->run(
+            "Getting already published pages...",
+            function() use (&$published) {
+                if ($published != null) {
+                    $published['children'] = $this->client->getHierarchy($published['id']);
+                }
+            }
+        );
 
-        echo "Create placeholder pages...\n";
-        $published = $this->createRecursive($this->confluence['ancestor_id'], $tree, $published);
+        $published = $this->run(
+            "Create placeholder pages...",
+            function() use ($tree, $published) {
+                return $this->createRecursive($this->confluence['ancestor_id'], $tree, $published);
+            }
+        );
 
-        echo "Publishing updates...\n";
+        $this->output->writeLn("Publishing updates...");
         $this->updateRecursive($this->confluence['ancestor_id'], $tree, $published);
     }
 
@@ -195,32 +227,30 @@ class Publisher
             echo "Updating Pages...\n";
         }
 
-        echo "- " . $this->niceTitle($entry['file']->getUrl());
-
-        try {
-            if ($this->shouldUpdate($entry['page'], $published)) {
-                $this->client->updatePage(
-                    $parent_id,
-                    $published['id'],
-                    $published['version'] + 1,
-                    $entry['title'],
-                    $entry['page']->getContent()
-                );
-                echo " √\n";
-            } else {
-                echo " √ (No update needed)\n";
-            }
-
-            if (count($entry['page']->attachments)) {
-                foreach ($entry['page']->attachments as $attachment) {
-                    echo "  With attachment: $attachment[filename]";
-                    $this->client->uploadAttachment($published['id'], $attachment);
-                    echo " √\n";
+        $this->run(
+            "- " . $this->niceTitle($entry['file']->getUrl()),
+            function() use ($entry, $published, $parent_id) {
+                if ($this->shouldUpdate($entry['page'], $published)) {
+                    $this->client->updatePage(
+                        $parent_id,
+                        $published['id'],
+                        $published['version'] + 1,
+                        $entry['title'],
+                        $entry['page']->getContent()
+                    );
                 }
             }
+        );
 
-        } catch (BadResponseException $e) {
-            echo " X Failed with message: " . $e->getMessage() . "\n";
+        if (count($entry['page']->attachments)) {
+            foreach ($entry['page']->attachments as $attachment) {
+                $this->run(
+                    "  With attachment: $attachment[filename]",
+                    function() use($published, $attachment) {
+                        $this->client->uploadAttachment($published['id'], $attachment);
+                    }
+                );
+            }
         }
     }
 }

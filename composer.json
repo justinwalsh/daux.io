@@ -15,7 +15,8 @@
         "php": ">=5.4",
         "league/plates": "~3.1",
         "guzzlehttp/guzzle": "~5.3",
-        "league/commonmark": "0.8.*"
+        "league/commonmark": "0.8.*",
+        "symfony/console": "~2.7"
     },
     "autoload": {
         "psr-4": {"Todaymade\\Daux\\": "libs/"}
