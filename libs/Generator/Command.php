@@ -31,11 +31,12 @@ class Command extends SymfonyCommand
 
         $width = $this->getApplication()->getTerminalDimensions()[0];
 
-        switch(strtolower($input->getOption('processor'))) {
-            case 'none':
-            default:
-                //nothing
-        }
+		$processor = $input->getOption('processor');
+		if (!empty($processor) && $processor != 'none') {
+			if (file_exists($processor)) {
+				include $processor;
+			}
+		}
 
         switch(strtolower($input->getOption('format'))) {
             case 'confluence':
