@@ -39,7 +39,7 @@ class Command extends SymfonyCommand
 
         switch(strtolower($input->getOption('format'))) {
             case 'confluence':
-                (new ConfluenceGenerator())->generate($daux, $input->getOption('destination'), $output, $width);
+                (new ConfluenceGenerator())->generate($daux, $output, $width);
                 break;
             case 'html':
             default:

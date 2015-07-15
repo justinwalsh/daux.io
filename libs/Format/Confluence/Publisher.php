@@ -49,7 +49,7 @@ class Publisher
         try {
             return $this->runAction($title, $this->output, $this->width, $closure);
         } catch (BadResponseException $e) {
-            echo " X Failed with message: " . $e->getMessage() . "\n";
+			$this->output->writeLn("    <error>" . $e->getMessage() . "</error>");
         }
     }
 
