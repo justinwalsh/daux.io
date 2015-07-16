@@ -53,7 +53,7 @@ abstract class MarkdownPage extends SimplePage
 
     public static function fromFile(Content $file, $params)
     {
-        $page = new static($file->title, file_get_contents($file->getPath()));
+        $page = new static($file->getTitle(), $file->getContent());
         $page->setFile($file);
         $page->setParams($params);
 

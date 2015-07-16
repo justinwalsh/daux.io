@@ -56,7 +56,7 @@ class MarkdownPage extends \Todaymade\Daux\Format\Base\MarkdownPage
                 $entry_page['View Documentation'] = $params['base_page'] . $params['entry_page']->getUrl();
             }
         } elseif ($params['file_uri'] === 'index') {
-            $entry_page[$params['entry_page']->title] = $params['base_page'] . $params['entry_page']->getUrl();
+            $entry_page[$params['entry_page']->getTitle()] = $params['base_page'] . $params['entry_page']->getUrl();
         }
 
         $page = [

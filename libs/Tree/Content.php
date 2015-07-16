@@ -4,7 +4,7 @@ use Todaymade\Daux\DauxHelper;
 
 class Content extends Entry
 {
-    public $title;
+	protected $content;
 
     public function __construct($path = '', $parents = array())
     {
@@ -12,6 +12,20 @@ class Content extends Entry
 
         $this->value = $this->uri;
     }
+	
+	public function getContent()
+	{
+		if (!$this->content) {
+			$this->content = file_get_contents($this->getPath());
+		}
+		
+		return $this->content;
+	}
+	
+	public function setContent($content)
+	{
+		$this->content = $content;
+	}
 
     protected function getFilename($file)
     {

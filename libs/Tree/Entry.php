@@ -15,40 +15,28 @@ abstract class Entry
 
     public function __construct($path = '', $parents = array())
     {
-        if (!isset($path) || $path == '' || !file_exists($path)) {
-            return;
-        }
-        $this->local_path = $path;
-        $this->parents = $parents;
-        $this->last_modified = filemtime($path);
-        $this->name = DauxHelper::pathinfo($path)['filename'];
-        $this->title = $this->getTitleInternal($this->name);
-        $this->uri = $this->getUrlInternal($this->getFilename($path));
-        $this->index_page = false;
+		$this->setPath($path);
+		$this->setParents($parents);
     }
+	
     public function getName()
     {
         return $this->name;
     }
-
-    public function setUri($uri)
-    {
-        $this->uri = $uri;
-    }
-
+	
+	public function setName($name)
+	{
+		$this->name = $name;
+	}
+	
     public function getUri()
     {
         return $this->uri;
     }
 
-    public function getUrl()
+    public function setUri($uri)
     {
-        $url = '';
-        foreach ($this->parents as $node) {
-            $url .= $node->uri . '/';
-        }
-        $url .= $this->uri;
-        return $url;
+        $this->uri = $uri;
     }
 
     public function getIndexPage()
@@ -101,16 +89,39 @@ abstract class Entry
     {
         return $this->title;
     }
+	
+	public function setTitle($title)
+	{
+		$this->title = $title;
+	}
 
     public function getParents()
     {
         return $this->parents;
     }
+	
+	public function setParents($parents)
+	{
+		$this->parents = $parents;
+	}
 
     public function getPath()
     {
         return $this->local_path;
     }
+	
+	public function setPath($path)
+	{
+        if (!isset($path) || $path == '' || !file_exists($path)) {
+            return;
+        }
+        $this->local_path = $path;
+        $this->last_modified = filemtime($path);
+        $this->name = DauxHelper::pathinfo($path)['filename'];
+        $this->title = $this->getTitleInternal($this->name);
+        $this->uri = $this->getUrlInternal($this->getFilename($path));
+        $this->index_page = false;
+	}
 
     public function write($content)
     {
@@ -120,6 +131,16 @@ abstract class Entry
 
         file_put_contents($this->local_path, $content);
         return true;
+    }
+	
+    public function getUrl()
+    {
+        $url = '';
+        foreach ($this->parents as $node) {
+            $url .= $node->uri . '/';
+        }
+        $url .= $this->uri;
+        return $url;
     }
 
     protected function getFilename($file)
