@@ -1,6 +1,7 @@
 <?php namespace Todaymade\Daux\Tree;
 
 use Todaymade\Daux\Daux;
+use Todaymade\Daux\DauxHelper;
 
 class Builder
 {
@@ -59,5 +60,49 @@ class Builder
             $node->setIndexPage(false);
         }
         return $node;
+    }
+
+    public static function getOrCreateDir($parent, $title) {
+        $slug = DauxHelper::slug($title);
+
+        if (array_key_exists($slug, $parent->value)) {
+            return $parent->value[$slug];
+        }
+
+        $dir = new Directory();
+        $dir->setTitle($title);
+        $dir->setUri($slug);
+        $parent->value[$slug] = $dir;
+
+        return $dir;
+    }
+
+    public static function getOrCreatePage($parents, $title) {
+        $slug = DauxHelper::slug($title);
+        $uri = $slug . ".html";
+
+        $nearestParent = end($parents);
+
+        if (array_key_exists($uri, $nearestParent->value)) {
+            return $nearestParent->value[$uri];
+        }
+
+        $page = new Content('', $parents);
+        $page->setUri($uri);
+        $page->setContent("-"); //set an almost empty content to avoid problems
+
+        if ($title == 'index') {
+            $page->setName('_index');
+            $page->setTitle($nearestParent->getTitle());
+            $page->value = 'index';
+            $nearestParent->setIndexPage($page);
+        } else {
+            $page->setName($slug);
+            $page->setTitle($title);
+        }
+
+        $nearestParent->value[$uri] = $page;
+
+        return $page;
     }
 }
