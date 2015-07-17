@@ -33,10 +33,16 @@ class Command extends SymfonyCommand
 
 		$processor = $input->getOption('processor');
 		if (!empty($processor) && $processor != 'none') {
-			if (file_exists($processor)) {
-				include $processor;
-			}
+            $class = "\\Todaymade\\Daux\\Extension\\" . $processor;
+            if (class_exists($class)) {
+                $daux->setProcessor(new $class($daux, $output, $width));
+            } else if (file_exists($processor)) {
+                include $processor;
+            }
 		}
+
+        // Improve the tree with a processor
+        $daux->getProcessor()->manipulateTree($daux->tree);
 
         switch(strtolower($input->getOption('format'))) {
             case 'confluence':

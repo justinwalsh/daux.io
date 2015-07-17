@@ -20,6 +20,9 @@
         "symfony/finder": "~2.7"
     },
     "autoload": {
-        "psr-4": {"Todaymade\\Daux\\": "libs/"}
+        "psr-4": {
+            "Todaymade\\Daux\\Extension\\": "daux/",
+            "Todaymade\\Daux\\": "libs/"
+        }
     }
 }

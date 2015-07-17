@@ -66,13 +66,7 @@ class Compiler
         }
 
         // Composer autoload
-        $this->addFile($phar, new \SplFileInfo(__DIR__ . '/../vendor/autoload.php'));
-        $this->addFile($phar, new \SplFileInfo(__DIR__ . '/../vendor/composer/autoload_classmap.php'));
-        $this->addFile($phar, new \SplFileInfo(__DIR__ . '/../vendor/composer/autoload_files.php'));
-        $this->addFile($phar, new \SplFileInfo(__DIR__ . '/../vendor/composer/autoload_namespaces.php'));
-        $this->addFile($phar, new \SplFileInfo(__DIR__ . '/../vendor/composer/autoload_psr4.php'));
-        $this->addFile($phar, new \SplFileInfo(__DIR__ . '/../vendor/composer/autoload_real.php'));
-        $this->addFile($phar, new \SplFileInfo(__DIR__ . '/../vendor/composer/ClassLoader.php'));
+        $this->addComposer($phar);
         $this->addBinary($phar);
 
         // Stubs
@@ -97,6 +91,20 @@ class Compiler
         }
 
         $phar->addFromString($path, $content);
+    }
+
+    private function addComposer($phar)
+    {
+        $this->addFile($phar, new \SplFileInfo(__DIR__ . '/../vendor/autoload.php'));
+        $this->addFile($phar, new \SplFileInfo(__DIR__ . '/../vendor/composer/autoload_classmap.php'));
+        $this->addFile($phar, new \SplFileInfo(__DIR__ . '/../vendor/composer/autoload_files.php'));
+        $this->addFile($phar, new \SplFileInfo(__DIR__ . '/../vendor/composer/autoload_namespaces.php'));
+        $this->addFile($phar, new \SplFileInfo(__DIR__ . '/../vendor/composer/autoload_real.php'));
+        $this->addFile($phar, new \SplFileInfo(__DIR__ . '/../vendor/composer/ClassLoader.php'));
+
+        $content = file_get_contents(__DIR__ . '/../vendor/composer/autoload_psr4.php');
+        $content = str_replace('$baseDir . \'/daux\'', 'PHAR_DIR . \'/daux\'', $content);
+        $phar->addFromString('vendor/composer/autoload_psr4.php', $content);
     }
 
     private function addBinary($phar)

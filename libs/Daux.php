@@ -1,5 +1,6 @@
 <?php namespace Todaymade\Daux;
 
+use Symfony\Component\Console\Output\NullOutput;
 use Todaymade\Daux\Tree\Builder;
 
 class Daux
@@ -11,6 +12,11 @@ class Daux
     public $local_base;
     public $internal_base;
     private $docs_path;
+
+    /**
+     * @var Processor
+     */
+    protected $processor;
 
     /**
      * @var Tree\Entry
@@ -151,5 +157,25 @@ class Daux
         $this->options['base_page'] = $this->options['base_url'] = '';
 
         return $this->options;
+    }
+
+    /**
+     * @return Processor
+     */
+    public function getProcessor()
+    {
+        if (!$this->processor) {
+            $this->processor = new Processor($this, new NullOutput(), 0);
+        }
+
+        return $this->processor;
+    }
+
+    /**
+     * @param Processor $processor
+     */
+    public function setProcessor(Processor $processor)
+    {
+        $this->processor = $processor;
     }
 }
