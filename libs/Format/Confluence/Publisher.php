@@ -97,30 +97,18 @@ class Publisher
 
     protected function createPage($parent_id, $entry, $published)
     {
-        if ($this->previous_title != "Creating") {
-            $this->previous_title = "Creating";
-            echo "Creating Pages...\n";
-        }
-
-        echo "- " . $this->niceTitle($entry['file']->getUrl());
+        echo "- " . $this->niceTitle($entry['file']->getUrl()) . "\n";
         $published['version'] = 1;
         $published['id'] = $this->client->createPage($parent_id, $entry['title'], "The content will come very soon !");
-        echo " √ \n";
 
         return $published;
     }
 
     protected function createPlaceholderPage($parent_id, $entry, $published)
     {
-        if ($this->previous_title != "Creating Placeholder") {
-            $this->previous_title = "Creating Placeholder";
-            echo "Creating Placeholder Pages...\n";
-        }
-
-        echo "- " . $entry['title'];
+        echo "- " . $entry['title'] . "\n";
         $published['version'] = 1;
         $published['id'] = $this->client->createPage($parent_id, $entry['title'], "");
-        echo " √ \n";
 
         return $published;
     }

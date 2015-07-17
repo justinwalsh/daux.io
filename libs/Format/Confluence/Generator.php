@@ -6,7 +6,6 @@ use Todaymade\Daux\Daux;
 use Todaymade\Daux\Format\Base\RunAction;
 use Todaymade\Daux\Tree\Content;
 use Todaymade\Daux\Tree\Directory;
-use Todaymade\Daux\Tree\Entry;
 
 class Generator
 {
@@ -45,7 +44,7 @@ class Generator
         $publisher->publish($tree);
     }
 
-    private function generateRecursive(Entry $tree, Config $params, $base_url = '')
+    private function generateRecursive(Directory $tree, Config $params, $base_url = '')
     {
         $final = ['title' => $this->prefix . $tree->getTitle()];
         $params['base_url'] = $params['base_page'] = $base_url;

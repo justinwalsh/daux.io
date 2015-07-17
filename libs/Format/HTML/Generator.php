@@ -35,7 +35,7 @@ class Generator
     /**
      * Recursively generate the documentation
      *
-     * @param \Todaymade\Daux\Tree\Entry $tree
+     * @param Directory $tree
      * @param string $output_dir
      * @param \Todaymade\Daux\Config $params
      * @param OutputInterface $output
@@ -43,7 +43,7 @@ class Generator
      * @param string $base_url
      * @throws \Exception
      */
-    private function generateRecursive($tree, $output_dir, $params, $output, $width, $base_url = '')
+    private function generateRecursive(Directory $tree, $output_dir, $params, $output, $width, $base_url = '')
     {
         $params['base_url'] = $params['base_page'] = $base_url;
 
