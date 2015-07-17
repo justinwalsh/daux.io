@@ -6,7 +6,6 @@ use Todaymade\Daux\Exception;
 use Todaymade\Daux\Format\HTML\MarkdownPage;
 use Todaymade\Daux\Format\HTML\RawPage;
 use Todaymade\Daux\Format\HTML\SimplePage;
-use Todaymade\Daux\Tree\Directory;
 use Todaymade\Daux\Tree\Raw;
 
 class Server
@@ -16,6 +15,11 @@ class Server
     private $host;
     private $base_url;
 
+    /**
+     * Serve the documentation
+     *
+     * @throws Exception
+     */
     public static function serve()
     {
         $daux = new Daux(Daux::LIVE_MODE);
@@ -63,6 +67,9 @@ class Server
         }
     }
 
+    /**
+     * @return \Todaymade\Daux\Config
+     */
     public function getParams()
     {
         $params = $this->daux->getParams();
@@ -83,6 +90,14 @@ class Server
         return $params;
     }
 
+    /**
+     * Handle an incoming request
+     *
+     * @param array $query
+     * @return \Todaymade\Daux\Tree\Entry
+     * @throws Exception
+     * @throws NotFoundException
+     */
     public function handle($query = [])
     {
         $this->params = $this->getParams();
@@ -108,6 +123,14 @@ class Server
         }
     }
 
+    /**
+     * @param string $request
+     * @param string $content
+     * @return SimplePage
+     *
+     * @throws Exception
+     * @throws NotFoundException
+     */
     private function saveFile($request, $content)
     {
         $file = $this->getFile($request);
@@ -123,6 +146,11 @@ class Server
         return new SimplePage('Success', 'Successfully Edited');
     }
 
+    /**
+     * @param string $request
+     * @return \Todaymade\Daux\Tree\Entry
+     * @throws NotFoundException
+     */
     private function getPage($request)
     {
         $file = DauxHelper::getFile($this->daux->tree, $request);

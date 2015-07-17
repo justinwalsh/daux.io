@@ -4,7 +4,6 @@ use Symfony\Component\Console\Command\Command as SymfonyCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-
 use Todaymade\Daux\Daux;
 use Todaymade\Daux\Format\HTML\Generator as HTMLGenerator;
 use Todaymade\Daux\Format\Confluence\Generator as ConfluenceGenerator;
@@ -31,20 +30,20 @@ class Command extends SymfonyCommand
 
         $width = $this->getApplication()->getTerminalDimensions()[0];
 
-		$processor = $input->getOption('processor');
-		if (!empty($processor) && $processor != 'none') {
+        $processor = $input->getOption('processor');
+        if (!empty($processor) && $processor != 'none') {
             $class = "\\Todaymade\\Daux\\Extension\\" . $processor;
             if (class_exists($class)) {
                 $daux->setProcessor(new $class($daux, $output, $width));
-            } else if (file_exists($processor)) {
+            } elseif (file_exists($processor)) {
                 include $processor;
             }
-		}
+        }
 
         // Improve the tree with a processor
         $daux->getProcessor()->manipulateTree($daux->tree);
 
-        switch(strtolower($input->getOption('format'))) {
+        switch (strtolower($input->getOption('format'))) {
             case 'confluence':
                 (new ConfluenceGenerator())->generate($daux, $output, $width);
                 break;

@@ -21,6 +21,11 @@ class Processor
      */
     protected $width;
 
+    /**
+     * @param Daux $daux
+     * @param OutputInterface $output
+     * @param integer $width
+     */
     public function __construct(Daux $daux, OutputInterface $output, $width)
     {
         $this->daux = $daux;
@@ -28,10 +33,24 @@ class Processor
         $this->width = $width;
     }
 
+    /**
+     * With this connection point, you can transform
+     * the tree as you want, move pages, modify
+     * pages and even add new ones.
+     *
+     * @param Directory $root
+     */
     public function manipulateTree(Directory $root)
     {
     }
 
+    /**
+     * This connection point provides
+     * a way to extend the Markdown
+     * parser and renderer.
+     *
+     * @param Environment $environment
+     */
     public function extendCommonMarkEnvironment(Environment $environment)
     {
     }

@@ -19,9 +19,10 @@ class Daux
     protected $processor;
 
     /**
-     * @var Tree\Entry
+     * @var Tree\Directory
      */
     public $tree;
+
     /**
      * @var Config
      */
@@ -84,6 +85,14 @@ class Daux
         $this->options->merge($default_config);
     }
 
+    /**
+     * Load the configuration files, first, "config.json"
+     * in the documentation and then the file specified
+     * when running the configuration
+     *
+     * @param string $override_file
+     * @throws Exception
+     */
     private function loadConfigOverrides($override_file)
     {
         // Read documentation overrides

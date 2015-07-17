@@ -21,7 +21,7 @@ class MarkdownPage extends \Todaymade\Daux\Format\Base\MarkdownPage
         // We do it after generation so we can catch the images that were in html already
         $page = preg_replace_callback(
             "/<img\\s+[^>]*src=['\"]([^\"]*)['\"][^>]*>/",
-            function ($matches) {
+            function($matches) {
 
                 if ($result = $this->findImage($matches[1], $matches[0])) {
                     return $result;
@@ -84,7 +84,7 @@ class MarkdownPage extends \Todaymade\Daux\Format\Base\MarkdownPage
         $img = "<ac:image";
 
         foreach ($attributes as $name => $value) {
-            $img .=  ' ac:' . $name.'="'.htmlentities($value, ENT_QUOTES, 'UTF-8', false).'"';
+            $img .= ' ac:' . $name . '="' . htmlentities($value, ENT_QUOTES, 'UTF-8', false) . '"';
         }
 
         $img .= "><ri:attachment ri:filename=\"$filename\" /></ac:image>";

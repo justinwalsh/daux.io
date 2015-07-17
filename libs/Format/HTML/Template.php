@@ -7,6 +7,10 @@ class Template
 {
     protected $engine;
 
+    /**
+     * @param string $base
+     * @param string $theme
+     */
     public function __construct($base, $theme)
     {
         // Create new Plates instance
@@ -19,6 +23,11 @@ class Template
         $this->registerFunctions();
     }
 
+    /**
+     * @param string $name
+     * @param array $data
+     * @return string
+     */
     public function render($name, array $data = array())
     {
         $this->engine->addData([
@@ -94,7 +103,7 @@ class Template
                 $nav[] = [
                     'title' => $node->getTitle(),
                     'href' => $base_page . $link,
-                    'class' => ($current_url === $link)? 'active' : ''
+                    'class' => ($current_url === $link) ? 'active' : ''
                 ];
             }
             if ($node instanceof \Todaymade\Daux\Tree\Directory) {
@@ -102,7 +111,7 @@ class Template
 
                 $folder = [
                     'title' => $node->getTitle(),
-                    'class' => (strpos($current_url, $link) === 0)? 'open' : '',
+                    'class' => (strpos($current_url, $link) === 0) ? 'open' : '',
                 ];
 
                 if ($mode === Daux::STATIC_MODE) {
@@ -123,6 +132,10 @@ class Template
         return $nav;
     }
 
+    /**
+     * @param string $separator
+     * @return string
+     */
     private function getSeparator($separator)
     {
         switch ($separator) {

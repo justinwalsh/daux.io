@@ -3,11 +3,9 @@
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\BadResponseException;
 use GuzzleHttp\Exception\ParseException;
-use GuzzleHttp\Exception\TransferException;
 
 class Api
 {
-
     protected $base_url;
     protected $user;
     protected $pass;
@@ -75,60 +73,23 @@ class Api
     }
 
     /**
-     * /rest/api/content/{id}/child/{type}
+     * Get a list of pages
      *
-     * @param $rootPage
-     * @return mixed
+     * @param integer $rootPage
+     * @param bool $recursive
+     * @return array
      */
-    public function getList($rootPage)
+    public function getList($rootPage, $recursive = false)
     {
-        //We do a limit of 15 as it appears that confluence has
-        //a bug when retrieving more than 20 entries with "body.storage"
-        $url = "content/$rootPage/child/page?expand=version,body.storage&limit=15";
+        $increment = 15;
+
+        // We set a limit of 15 as it appears that
+        // Confluence fails silently when retrieving
+        // more than 20 entries with "body.storage"
+        $base_url = $url = "content/$rootPage/child/page?expand=version,body.storage&limit=$increment";
+        $start = 0;
 
         $pages = [];
-
-        do {
-            try {
-                $list = $this->getClient()->get($url)->json();
-            } catch (BadResponseException $e) {
-                throw $this->handleError($e);
-            }
-
-            foreach ($list['results'] as $result) {
-                $pages[$result['title']] = [
-                    "id" => $result['id'],
-                    "title" => $result['title'],
-                    "version" => $result['version']['number'],
-                    "content" => $result['body']['storage']['value'],
-                ];
-            }
-
-            if (array_key_exists('next', $list['_links'])) {
-                $url = $list['_links']['next'];
-            }
-
-        } while (array_key_exists('next', $list['_links']));
-
-        return $pages;
-    }
-
-    /**
-     * /rest/api/content/{id}/child/{type}
-     *
-     * @param $rootPage
-     * @return mixed
-     */
-    public function getHierarchy($rootPage)
-    {
-		$increment = 15;
-		
-        //We do a limit of 15 as it appears that confluence has
-        //a bug when retrieving more than 20 entries with "body.storage"
-        $base_url = $url = "content/$rootPage/child/page?expand=version,body.storage&limit=$increment";
-		$start = 0;
-
-        $children = [];
 
         do {
             try {
@@ -138,24 +99,35 @@ class Api
             }
 
             foreach ($hierarchy['results'] as $result) {
-                $children[$result['title']] = [
+                $pages[$result['title']] = [
                     "id" => $result['id'],
                     "title" => $result['title'],
                     "version" => $result['version']['number'],
                     "content" => $result['body']['storage']['value'],
-                    "children" => $this->getHierarchy($result['id'])
                 ];
+
+                if ($recursive) {
+                    $pages[$result['title']]['children'] = $this->getList($result['id'], true);
+                }
             }
-			
-			//We don't use _links->next as after ~30 elements it doesn't show any new elements
-			$start += $increment;
-			$url = "$base_url&start=$start";
+
+            // We don't use _links->next as after ~30 elements
+            // it doesn't show any new elements. This seems
+            // to be a bug in Confluence
+            $start += $increment;
+            $url = "$base_url&start=$start";
 
         } while (!empty($hierarchy['results']));
 
-        return $children;
+        return $pages;
     }
 
+    /**
+     * @param integer $parent_id
+     * @param string $title
+     * @param string $content
+     * @return integer
+     */
     public function createPage($parent_id, $title, $content)
     {
         $body = [
@@ -167,7 +139,7 @@ class Api
         ];
 
         try {
-            $response = $this->getClient()->post('content', [ 'json' => $body ])->json();
+            $response = $this->getClient()->post('content', ['json' => $body])->json();
         } catch (BadResponseException $e) {
             throw $this->handleError($e);
         }
@@ -175,6 +147,13 @@ class Api
         return $response['id'];
     }
 
+    /**
+     * @param integer $parent_id
+     * @param integer $page_id
+     * @param integer $newVersion
+     * @param string $title
+     * @param string $content
+     */
     public function updatePage($parent_id, $page_id, $newVersion, $title, $content)
     {
         $body = [
@@ -193,6 +172,12 @@ class Api
         }
     }
 
+    /**
+     * Delete a page
+     *
+     * @param integer $page_id
+     * @return mixed
+     */
     public function deletePage($page_id)
     {
         try {
@@ -202,6 +187,10 @@ class Api
         }
     }
 
+    /**
+     * @param integer $id
+     * @param array $attachment
+     */
     public function uploadAttachment($id, $attachment)
     {
         //get if attachment is uploaded
@@ -211,13 +200,13 @@ class Api
             throw $this->handleError($e);
         }
 
-        $url = "content/$id/child/attachment" . (count($result['results'])? "/{$result['results'][0]['id']}/data" : "");
+        $url = "content/$id/child/attachment" . count($result['results']) ? "/{$result['results'][0]['id']}/data" : "";
 
         try {
             $this->getClient()->post(
                 $url,
                 [
-                    'body' => ['file' => fopen($attachment['file']->getPath(), 'r')] ,
+                    'body' => ['file' => fopen($attachment['file']->getPath(), 'r')],
                     'headers' => ['X-Atlassian-Token' => 'nocheck'],
                 ]
             );

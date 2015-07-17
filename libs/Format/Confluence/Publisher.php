@@ -45,11 +45,12 @@ class Publisher
         $this->client->setSpace($confluence['space_id']);
     }
 
-    public function run($title, $closure) {
+    public function run($title, $closure)
+    {
         try {
             return $this->runAction($title, $this->output, $this->width, $closure);
         } catch (BadResponseException $e) {
-			$this->output->writeLn("    <error>" . $e->getMessage() . "</error>");
+            $this->output->writeLn("    <error>" . $e->getMessage() . "</error>");
         }
     }
 
@@ -69,7 +70,7 @@ class Publisher
             "Getting already published pages...",
             function() use (&$published) {
                 if ($published != null) {
-                    $published['children'] = $this->client->getHierarchy($published['id']);
+                    $published['children'] = $this->client->getList($published['id'], true);
                 }
             }
         );
@@ -149,7 +150,7 @@ class Publisher
 
     protected function createRecursive($parent_id, $entry, $published)
     {
-        $callback = function ($parent_id, $entry, $published) {
+        $callback = function($parent_id, $entry, $published) {
 
             //TODO :: remove deleted pages
 
@@ -173,7 +174,7 @@ class Publisher
 
     protected function updateRecursive($parent_id, $entry, $published)
     {
-        $callback = function ($parent_id, $entry, $published) {
+        $callback = function($parent_id, $entry, $published) {
             if (array_key_exists('id', $published) && array_key_exists('page', $entry)) {
                 $this->updatePage($parent_id, $entry, $published);
             }
@@ -246,7 +247,7 @@ class Publisher
             foreach ($entry['page']->attachments as $attachment) {
                 $this->run(
                     "  With attachment: $attachment[filename]",
-                    function() use($published, $attachment) {
+                    function() use ($published, $attachment) {
                         $this->client->uploadAttachment($published['id'], $attachment);
                     }
                 );

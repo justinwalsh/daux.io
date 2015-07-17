@@ -5,6 +5,15 @@ use Todaymade\Daux\DauxHelper;
 
 class Builder
 {
+    /**
+     * Build the initial tree
+     *
+     * @param string $dir
+     * @param array $ignore
+     * @param \Todaymade\Daux\Config $params
+     * @param array $parents
+     * @return Directory|void
+     */
     public static function build($dir, $ignore, $params, $parents = null)
     {
         if (!$dh = opendir($dir)) {
@@ -62,7 +71,13 @@ class Builder
         return $node;
     }
 
-    public static function getOrCreateDir($parent, $title) {
+    /**
+     * @param Entry $parent
+     * @param String $title
+     * @return Directory
+     */
+    public static function getOrCreateDir($parent, $title)
+    {
         $slug = DauxHelper::slug($title);
 
         if (array_key_exists($slug, $parent->value)) {
@@ -77,7 +92,13 @@ class Builder
         return $dir;
     }
 
-    public static function getOrCreatePage($parents, $title) {
+    /**
+     * @param array $parents
+     * @param string $title
+     * @return Content
+     */
+    public static function getOrCreatePage($parents, $title)
+    {
         $slug = DauxHelper::slug($title);
         $uri = $slug . ".html";
 

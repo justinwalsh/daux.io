@@ -2,11 +2,18 @@
 
 use ArrayObject;
 
-class Config extends ArrayObject {
-
-    public function merge($newValues, $override = true) {
+class Config extends ArrayObject
+{
+    /**
+     * Merge an array into the object
+     *
+     * @param array $newValues
+     * @param bool $override
+     */
+    public function merge($newValues, $override = true)
+    {
         foreach ($newValues as $key => $value) {
-            if (array_key_exists($key, $this) && $override == false) {
+            if ($override === false && array_key_exists($key, $this)) {
                 continue;
             }
 
@@ -14,7 +21,13 @@ class Config extends ArrayObject {
         }
     }
 
-    public function conservativeMerge($newValues) {
+    /**
+     * Merge an array into the object, ignore already added keys.
+     *
+     * @param $newValues
+     */
+    public function conservativeMerge($newValues)
+    {
         $this->merge($newValues, false);
     }
 }

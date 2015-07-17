@@ -30,7 +30,7 @@ class LinkRenderer extends \Todaymade\Daux\Format\Base\CommonMark\LinkRenderer
             'ri:space-key' => $this->daux['confluence']['space_id']
         ];
 
-        $page  = strval(new HtmlElement('ri:page', $link_props, '', true));
+        $page = strval(new HtmlElement('ri:page', $link_props, '', true));
         $children = $htmlRenderer->renderInlines($inline->getChildren());
         if (strpos($children, "<") !== false) {
             $children = '<ac:link-body>' . $children . '</ac:link-body>';

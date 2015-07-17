@@ -4,6 +4,11 @@ use Todaymade\Daux\Tree\Directory;
 
 class DauxHelper
 {
+    /**
+     * @param Config $params
+     * @param string $current_url
+     * @return array
+     */
     public static function getTheme($params, $current_url)
     {
         $theme_folder = $params['local_base'] . DS . 'resources' . DS . 'themes' . DS . $params['theme-name'];
@@ -39,21 +44,19 @@ class DauxHelper
         $theme['templates'] = strtr($theme['templates'], $substitutions);
         $theme['favicon'] = utf8_encode(strtr($theme['favicon'], $substitutions));
 
-        foreach ($theme['css'] as $key => $css) {
-            $theme['css'][$key] = utf8_encode(strtr($css, $substitutions));
-        }
-
-        foreach ($theme['fonts'] as $key => $font) {
-            $theme['fonts'][$key] = utf8_encode(strtr($font, $substitutions));
-        }
-
-        foreach ($theme['js'] as $key => $js) {
-            $theme['js'][$key] = utf8_encode(strtr($js, $substitutions));
+        foreach (['css', 'js', 'fonts'] as $element) {
+            foreach ($theme[$element] as $key => $value) {
+                $theme[$element][$key] = utf8_encode(strtr($value, $substitutions));
+            }
         }
 
         return $theme;
     }
 
+    /**
+     * @param string $path
+     * @return string
+     */
     public static function getCleanPath($path)
     {
         $path = str_replace(array('/', '\\'), DIRECTORY_SEPARATOR, $path);
@@ -72,24 +75,31 @@ class DauxHelper
         return implode(DIRECTORY_SEPARATOR, $absolutes);
     }
 
+    /**
+     * Get pathinfo for a file
+     *
+     * @param string $path
+     * @return array
+     */
     public static function pathinfo($path)
     {
         preg_match('%^(.*?)[\\\\/]*(([^/\\\\]*?)(\.([^\.\\\\/]+?)|))[\\\\/\.]*$%im', $path, $m);
-        if (isset($m[1])) {
-            $ret['dir']=$m[1];
-        }
-        if (isset($m[2])) {
-            $ret['basename']=$m[2];
-        }
-        if (isset($m[5])) {
-            $ret['extension']=$m[5];
-        }
-        if (isset($m[3])) {
-            $ret['filename']=$m[3];
+        $ret = [];
+        foreach (['dir' => 1, 'basename' => 2, 'filename' => 3, 'extension' => 5] as $key => $group) {
+            if (isset($m[$group])) {
+                $ret[$key] = $m[$group];
+            }
         }
         return $ret;
     }
 
+    /**
+     * Locate a file in the tree. Returns the file if found or false
+     *
+     * @param Directory $tree
+     * @param string $request
+     * @return Tree\Entry|false
+     */
     public static function getFile($tree, $request)
     {
         $request = explode('/', $request);
@@ -148,11 +158,14 @@ class DauxHelper
 
         $separator = '_';
         // Convert all dashes into underscores
-        $title = preg_replace('!['.preg_quote("-").']+!u', $separator, $title);
+        $title = preg_replace('![' . preg_quote("-") . ']+!u', $separator, $title);
+
         // Remove all characters that are not the separator, letters, numbers, or whitespace.
-        $title = preg_replace('![^'.preg_quote($separator).'\pL\pN\s]+!u', '', $title);
+        $title = preg_replace('![^' . preg_quote($separator) . '\pL\pN\s]+!u', '', $title);
+
         // Replace all separator characters and whitespace by a single separator
-        $title = preg_replace('!['.preg_quote($separator).'\s]+!u', $separator, $title);
+        $title = preg_replace('![' . preg_quote($separator) . '\s]+!u', $separator, $title);
+
         return trim($title, $separator);
     }
 
@@ -167,7 +180,9 @@ class DauxHelper
     {
         static $charsArray;
 
-        if (isset($charsArray)) return $charsArray;
+        if (isset($charsArray)) {
+            return $charsArray;
+        }
 
         return $charsArray = array(
             'a'    => array(
@@ -238,7 +253,7 @@ class DauxHelper
                 'Ἇ', 'ᾈ', 'ᾉ', 'ᾊ', 'ᾋ', 'ᾌ', 'ᾍ', 'ᾎ', 'ᾏ', 'Ᾰ',
                 'Ᾱ', 'Ὰ', 'Ά', 'ᾼ', 'А'),
             'B'    => array('Б', 'Β'),
-            'C'    => array('Ç','Ć', 'Č', 'Ĉ', 'Ċ'),
+            'C'    => array('Ç', 'Ć', 'Č', 'Ĉ', 'Ċ'),
             'D'    => array('Ď', 'Ð', 'Đ', 'Ɖ', 'Ɗ', 'Ƌ', 'ᴅ', 'ᴆ', 'Д', 'Δ'),
             'E'    => array('É', 'È', 'Ẻ', 'Ẽ', 'Ẹ', 'Ê', 'Ế', 'Ề', 'Ể', 'Ễ',
                 'Ệ', 'Ë', 'Ē', 'Ę', 'Ě', 'Ĕ', 'Ė', 'Ε', 'Έ', 'Ἐ',

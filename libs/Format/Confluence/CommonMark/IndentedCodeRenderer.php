@@ -24,7 +24,7 @@ class IndentedCodeRenderer implements BlockRendererInterface
         return new HtmlElement(
             'ac:structured-macro',
             ['ac:name' => 'code'],
-            new HtmlElement('ac:plain-text-body', [], '<![CDATA['.$block->getStringContent().']]>')
+            new HtmlElement('ac:plain-text-body', [], '<![CDATA[' . $block->getStringContent() . ']]>')
         );
     }
 }

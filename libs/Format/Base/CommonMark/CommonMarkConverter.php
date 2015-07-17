@@ -27,7 +27,7 @@ class CommonMarkConverter extends \League\CommonMark\CommonMarkConverter
 
     protected function getLinkRenderer(Environment $environment)
     {
-      return new LinkRenderer($environment->getConfig('daux'));
+        return new LinkRenderer($environment->getConfig('daux'));
     }
 
     protected function extendEnvironment(Environment $environment)

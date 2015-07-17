@@ -22,12 +22,12 @@ class LinkRenderer extends \League\CommonMark\Inline\Renderer\LinkRenderer
     }
 
     /**
-     * @param $url
+     * @param string $url
      * @return Entry
      * @throws Exception
      */
-    protected function resolveInternalFile($url) {
-
+    protected function resolveInternalFile($url)
+    {
         $file = DauxHelper::getFile($this->daux['tree'], $url);
         if ($file) {
             return $file;

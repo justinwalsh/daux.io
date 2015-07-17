@@ -32,6 +32,17 @@ class Generator
         $this->generateRecursive($daux->tree, $destination, $params, $output, $width);
     }
 
+    /**
+     * Recursively generate the documentation
+     *
+     * @param \Todaymade\Daux\Tree\Entry $tree
+     * @param string $output_dir
+     * @param \Todaymade\Daux\Config $params
+     * @param OutputInterface $output
+     * @param integer $width
+     * @param string $base_url
+     * @throws \Exception
+     */
     private function generateRecursive($tree, $output_dir, $params, $output, $width, $base_url = '')
     {
         $params['base_url'] = $params['base_page'] = $base_url;
@@ -46,7 +57,7 @@ class Generator
         foreach ($tree->value as $key => $node) {
             if ($node instanceof Directory) {
                 $new_output_dir = $output_dir . DS . $key;
-                @mkdir($new_output_dir);
+                mkdir($new_output_dir);
                 $this->generateRecursive($node, $new_output_dir, $params, $output, $width, '../' . $base_url);
             } elseif ($node instanceof Content) {
                 $this->runAction(
