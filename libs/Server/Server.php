@@ -104,46 +104,11 @@ class Server
 
         $request = $this->getRequest();
         $request = urldecode($request);
-        $request_type = isset($query['method']) ? $query['method'] : '';
         if ($request == 'first_page') {
             $request = $this->daux->tree->getFirstPage()->getUri();
         }
 
-        switch ($request_type) {
-            case 'DauxEdit':
-                if (!$this->daux->options['file_editor']) {
-                    throw new Exception('Editing is currently disabled in config');
-                }
-
-                $content = isset($query['markdown']) ? $query['markdown'] : '';
-                return $this->saveFile($request, $content);
-
-            default:
-                return $this->getPage($request);
-        }
-    }
-
-    /**
-     * @param string $request
-     * @param string $content
-     * @return SimplePage
-     *
-     * @throws Exception
-     * @throws NotFoundException
-     */
-    private function saveFile($request, $content)
-    {
-        $file = $this->getFile($request);
-
-        if ($file === false) {
-            throw new NotFoundException('The Page you requested is yet to be made. Try again later.');
-        }
-
-        if (!$file->write($content)) {
-            throw new Exception('The file you wish to write to is not writable.');
-        }
-
-        return new SimplePage('Success', 'Successfully Edited');
+        return $this->getPage($request);
     }
 
     /**

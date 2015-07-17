@@ -182,20 +182,6 @@ abstract class Entry
     }
 
     /**
-     * @param string $content
-     * @return bool
-     */
-    public function write($content)
-    {
-        if (!is_writable($this->local_path)) {
-            return false;
-        }
-
-        file_put_contents($this->local_path, $content);
-        return true;
-    }
-
-    /**
      * @return string
      */
     public function getUrl()

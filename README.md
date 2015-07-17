@@ -170,17 +170,6 @@ Include custom links in the sidebar.
 }
 ```
 
-###File editor:
-![File editor](https://f.cloud.github.com/assets/1788727/1954191/44358884-81d1-11e3-859d-254b9fb81808.png)
-
-Enable front-end Markdown editor. _Disabled by default_.
-
-```json
-{
-	"file_editor": true
-}
-```
-
 ###Google Analytics:
 This will embed the google analytics tracking code.
 

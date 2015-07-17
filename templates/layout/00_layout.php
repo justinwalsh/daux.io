@@ -47,8 +47,6 @@
     <!-- JS -->
     <?php foreach ($params['theme']['js'] as $js) echo '<script src="' . $js . '"></script>'; ?>
 
-    <!-- Front end file editor -->
-    <?php if ($params['file_editor']) echo '<script src="'. $base_url. 'resources/js/editor.js"></script>'; ?>
     <script src="<?php echo $base_url; ?>resources/js/custom.js"></script>
 </body>
 </html>
