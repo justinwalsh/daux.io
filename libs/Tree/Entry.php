@@ -87,7 +87,7 @@ abstract class Entry
     }
 
     /**
-     * @return Content
+     * @return Content|false
      */
     public function getFirstPage()
     {
@@ -95,25 +95,29 @@ abstract class Entry
             return $this->first_page;
         }
 
-        if ($this instanceof Directory) {
-            foreach ($this->value as $node) {
-                if ($node instanceof Content) {
-                    if (!count($node->getParents()) && $node->title == 'index') {
-                        //the homepage should not count as first page
-                        continue;
-                    }
+        if (!$this instanceof Directory) {
+            return false;
+        }
 
-                    $this->first_page = $node;
-                    return $node;
+        foreach ($this->value as $node) {
+            if ($node instanceof Content) {
+                if (!count($node->getParents()) && $node->title == 'index') {
+                    //the homepage should not count as first page
+                    continue;
                 }
-            }
-            foreach ($this->value as $node) {
-                if ($node instanceof Directory && $page = $node->getFirstPage()) {
-                    $this->first_page = $page;
-                    return $page;
-                }
+
+                $this->first_page = $node;
+                return $node;
             }
         }
+
+        foreach ($this->value as $node) {
+            if ($node instanceof Directory && $page = $node->getFirstPage()) {
+                $this->first_page = $page;
+                return $page;
+            }
+        }
+
         return false;
     }
 
