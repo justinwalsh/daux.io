@@ -121,9 +121,12 @@ class Api
      */
     public function getHierarchy($rootPage)
     {
+		$increment = 15;
+		
         //We do a limit of 15 as it appears that confluence has
         //a bug when retrieving more than 20 entries with "body.storage"
-        $url = "content/$rootPage/child/page?expand=version,body.storage&limit=15";
+        $base_url = $url = "content/$rootPage/child/page?expand=version,body.storage&limit=$increment";
+		$start = 0;
 
         $children = [];
 
@@ -143,12 +146,12 @@ class Api
                     "children" => $this->getHierarchy($result['id'])
                 ];
             }
+			
+			//We don't use _links->next as after ~30 elements it doesn't show any new elements
+			$start += $increment;
+			$url = "$base_url&start=$start";
 
-            if (array_key_exists('next', $hierarchy['_links'])) {
-                $url = $hierarchy['_links']['next'];
-            }
-
-        } while (array_key_exists('next', $hierarchy['_links']));
+        } while (!empty($hierarchy['results']));
 
         return $children;
     }
