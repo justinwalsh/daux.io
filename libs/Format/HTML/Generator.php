@@ -1,5 +1,6 @@
 <?php namespace Todaymade\Daux\Format\HTML;
 
+use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Todaymade\Daux\Config;
 use Todaymade\Daux\Daux;
@@ -9,12 +10,14 @@ use Todaymade\Daux\Generator\Helper;
 use Todaymade\Daux\Tree\Directory;
 use Todaymade\Daux\Tree\Content;
 
-class Generator
+class Generator implements \Todaymade\Daux\Format\Base\Generator
 {
     use RunAction;
 
-    public function generate(Daux $daux, $destination, OutputInterface $output, $width)
+    public function generate(Daux $daux, InputInterface $input, OutputInterface $output, $width)
     {
+        $destination = $input->getOption('destination');
+
         $params = $daux->getParams();
         if (is_null($destination)) {
             $destination = $daux->local_base . DS . 'static';

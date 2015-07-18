@@ -32,24 +32,48 @@ class Command extends SymfonyCommand
 
         $processor = $input->getOption('processor');
         if (!empty($processor) && $processor != 'none') {
-            $class = "\\Todaymade\\Daux\\Extension\\" . $processor;
-            if (class_exists($class)) {
-                $daux->setProcessor(new $class($daux, $output, $width));
-            } elseif (file_exists($processor)) {
-                include $processor;
-            }
+            $this->prepareProcessor($processor, $daux, $output, $width);
         }
 
         // Improve the tree with a processor
         $daux->getProcessor()->manipulateTree($daux->tree);
 
-        switch (strtolower($input->getOption('format'))) {
-            case 'confluence':
-                (new ConfluenceGenerator())->generate($daux, $output, $width);
-                break;
-            case 'html':
-            default:
-                (new HTMLGenerator())->generate($daux, $input->getOption('destination'), $output, $width);
+        $this->launchGeneration($daux, $input, $output, $width);
+    }
+
+    protected function prepareProcessor($processor, Daux $daux, OutputInterface $output, $width)
+    {
+        $class = "\\Todaymade\\Daux\\Extension\\" . $processor;
+        if (class_exists($class)) {
+            $daux->setProcessor(new $class($daux, $output, $width));
+        } elseif (file_exists($processor)) {
+            include $processor;
         }
+    }
+
+    protected function launchGeneration(Daux $daux, InputInterface $input, OutputInterface $output, $width)
+    {
+        $generators = $daux->getGenerators();
+
+        $format = strtolower($input->getOption('format'));
+        if (empty($format)) {
+            $format = 'html';
+        }
+
+        if (!array_key_exists($format, $generators)) {
+            throw new \RuntimeException("The format '$format' doesn't exist, did you forget to set your processor ?");
+        }
+
+        $class = $generators[$format];
+        if (!class_exists($class)) {
+            throw new \RuntimeException("Class '$class' not found. We cannot use it as a Generator");
+        }
+
+        $interface = 'Todaymade\Daux\Format\Base\Generator';
+        if (!in_array('Todaymade\Daux\Format\Base\Generator', class_implements($class))) {
+            throw new \RuntimeException("the class '$class' does not implement the '$interface' interface");
+        }
+
+        (new $class())->generate($daux, $input, $output, $width);
     }
 }

@@ -1,5 +1,6 @@
 <?php namespace Todaymade\Daux\Format\Confluence;
 
+use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Todaymade\Daux\Config;
 use Todaymade\Daux\Daux;
@@ -7,7 +8,7 @@ use Todaymade\Daux\Format\Base\RunAction;
 use Todaymade\Daux\Tree\Content;
 use Todaymade\Daux\Tree\Directory;
 
-class Generator
+class Generator implements \Todaymade\Daux\Format\Base\Generator
 {
     use RunAction;
 
@@ -16,7 +17,7 @@ class Generator
      */
     protected $prefix;
 
-    public function generate(Daux $daux, OutputInterface $output, $width)
+    public function generate(Daux $daux, InputInterface $input, OutputInterface $output, $width)
     {
         $confluence = $daux->getParams()['confluence'];
 

@@ -54,4 +54,18 @@ class Processor
     public function extendCommonMarkEnvironment(Environment $environment)
     {
     }
+
+    /**
+     * Provide new generators with this extension point. You
+     * can simply return an array, the key is the format's
+     * name, the value is a class name implementing the
+     * `Todaymade\Daux\Format\Base\Generator` contract.
+     * You can also replace base generators.
+     *
+     * @return array
+     */
+    public function addGenerators()
+    {
+        return [];
+    }
 }

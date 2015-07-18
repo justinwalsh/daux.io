@@ -210,5 +210,22 @@ class Daux
     public function setProcessor(Processor $processor)
     {
         $this->processor = $processor;
+
+        // This is not the cleanest but it's
+        // the best i've found to use the
+        // processor in very remote places
+        $this->options['processor_instance'] = $processor;
+    }
+
+    public function getGenerators()
+    {
+        $default = [
+            'confluence' => '\Todaymade\Daux\Format\Confluence\Generator',
+            'html' => '\Todaymade\Daux\Format\HTML\Generator',
+        ];
+
+        $extended = $this->getProcessor()->addGenerators();
+
+        return array_replace($default, $extended);
     }
 }

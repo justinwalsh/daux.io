@@ -18,8 +18,9 @@ class CommonMarkConverter extends \League\CommonMark\CommonMarkConverter
 
         $this->extendEnvironment($environment);
 
-        //TODO :: finish
-        //$daux->getProcessor()->extendCommonMarkEnvironment($environment);
+        if (array_key_exists('processor_instance', $config['daux'])) {
+            $config['daux']['processor_instance']->extendCommonMarkEnvironment($environment);
+        }
 
         $this->docParser = new DocParser($environment);
         $this->htmlRenderer = new HtmlRenderer($environment);
