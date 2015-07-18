@@ -1,6 +1,5 @@
 <?php namespace Todaymade\Daux\Tree;
 
-use Todaymade\Daux\Config;
 use Todaymade\Daux\Daux;
 use Todaymade\Daux\DauxHelper;
 

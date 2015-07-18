@@ -1,6 +1,7 @@
 <?php namespace Todaymade\Daux\Format\HTML;
 
 use Symfony\Component\Console\Output\OutputInterface;
+use Todaymade\Daux\Config;
 use Todaymade\Daux\Daux;
 use Todaymade\Daux\DauxHelper;
 use Todaymade\Daux\Format\Base\RunAction;
@@ -32,6 +33,19 @@ class Generator
         $this->generateRecursive($daux->tree, $destination, $params, $output, $width);
     }
 
+    private function rebaseConfig(Config $config, $base_url)
+    {
+        // Avoid changing the url if it is already correct
+        if ($config['base_url'] == $base_url && !empty($config['theme']) && !is_string($config['theme'])) {
+            return;
+        }
+
+        // Change base url for all links on the pages
+        $config['base_url'] = $config['base_page'] = $base_url;
+        $config['theme'] = DauxHelper::getTheme($config, $base_url);
+        $config['image'] = str_replace('<base_url>', $base_url, $config['image']);
+    }
+
     /**
      * Recursively generate the documentation
      *
@@ -45,20 +59,20 @@ class Generator
      */
     private function generateRecursive(Directory $tree, $output_dir, $params, $output, $width, $base_url = '')
     {
-        $params['base_url'] = $params['base_page'] = $base_url;
+        $this->rebaseConfig($params, $base_url);
 
-        // Rebase Theme
-        $params['theme'] = DauxHelper::getTheme($params, $base_url);
-
-        $params['image'] = str_replace('<base_url>', $base_url, $params['image']);
         if ($base_url !== '' && empty($params['entry_page'])) {
             $params['entry_page'] = $tree->getFirstPage();
         }
+
         foreach ($tree->getEntries() as $key => $node) {
             if ($node instanceof Directory) {
                 $new_output_dir = $output_dir . DS . $key;
                 mkdir($new_output_dir);
                 $this->generateRecursive($node, $new_output_dir, $params, $output, $width, '../' . $base_url);
+
+                // Rebase configuration again as $params is a shared object
+                $this->rebaseConfig($params, $base_url);
             } elseif ($node instanceof Content) {
                 $this->runAction(
                     "- " . $node->getUrl(),
