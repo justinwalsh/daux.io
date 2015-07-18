@@ -10,8 +10,11 @@ class Helper
      */
     public static function copyAssets($path, $local_base)
     {
-        mkdir($path);
-        static::rmdir($path);
+        if (is_dir($path)) {
+            static::rmdir($path);
+        } else {
+            mkdir($path);
+        }
 
         mkdir($path . DS . 'resources');
         static::copyRecursive($local_base . DS . 'resources', $path . DS . 'resources');
@@ -46,8 +49,11 @@ class Helper
      */
     private static function copyRecursive($source, $destination)
     {
+        if (!is_dir($destination)) {
+            mkdir($destination);
+        }
+
         $dir = opendir($source);
-        mkdir($destination);
         while (false !== ($file = readdir($dir))) {
             if ($file != '.' && $file != '..') {
                 if (is_dir($source . '/' . $file)) {
