@@ -107,7 +107,7 @@ class Template
                     'href' => $base_page . $link,
                     'class' => ($current_url === $link) ? 'active' : ''
                 ];
-            } else if ($node instanceof Directory) {
+            } elseif ($node instanceof Directory) {
                 $link = ($path === '') ? $url : $path . '/' . $url;
 
                 $folder = [

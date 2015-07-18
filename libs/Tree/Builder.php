@@ -1,5 +1,6 @@
 <?php namespace Todaymade\Daux\Tree;
 
+use Todaymade\Daux\Config;
 use Todaymade\Daux\Daux;
 use Todaymade\Daux\DauxHelper;
 
@@ -8,25 +9,19 @@ class Builder
     /**
      * Build the initial tree
      *
-     * @param string $dir
+     * @param Directory $node
      * @param array $ignore
-     * @param \Todaymade\Daux\Config $params
-     * @param array $parents
-     * @return Directory|void
+     * @param Config $params
      */
-    public static function build($dir, $ignore, $params, $parents = null)
+    public static function build($node, $ignore, Config $params)
     {
-        if (!$dh = opendir($dir)) {
+        if (!$dh = opendir($node->getPath())) {
             return;
         }
 
-        $node = new Directory($dir, $parents);
-
-        $new_parents = $parents;
-        if (is_null($new_parents)) {
-            $new_parents = array();
-        } else {
-            $new_parents[] = $node;
+        if ($node instanceof Root) {
+            // Ignore config.json in the root directory
+            $ignore['files'][] = 'config.json';
         }
 
         while (($file = readdir($dh)) !== false) {
@@ -34,7 +29,7 @@ class Builder
                 continue;
             }
 
-            $path = $dir . DS . $file;
+            $path = $node->getPath() . DS . $file;
 
             if (is_dir($path) && in_array($file, $ignore['folders'])) {
                 continue;
@@ -45,19 +40,12 @@ class Builder
 
             $entry = null;
             if (is_dir($path)) {
-                $entry = static::build($path, $ignore, $params, $new_parents);
-            } elseif (in_array(pathinfo($path, PATHINFO_EXTENSION), Daux::$VALID_MARKDOWN_EXTENSIONS)) {
-                $entry = new Content($path, $new_parents);
-
-                if ($params['mode'] === Daux::STATIC_MODE) {
-                    $entry->setUri($entry->getUri() . '.html');
-                }
+                $new = new Directory($node, static::getUriFromFilename(static::getFilename($path)), $path);
+                $new->setName(DauxHelper::pathinfo($path)['filename']);
+                $new->setTitle(static::getTitleFromFilename($new->getName()));
+                static::build($new, $ignore, $params);
             } else {
-                $entry = new Raw($path, $new_parents);
-            }
-
-            if ($entry instanceof Entry) {
-                $node->addChild($entry);
+                static::createContent($node, $path, $params);
             }
         }
 
@@ -68,7 +56,91 @@ class Builder
         } else {
             $node->setIndexPage(false);
         }
-        return $node;
+    }
+
+    /**
+     * @param Directory $parent
+     * @param string $path
+     * @param Config $params
+     * @return Content|Raw
+     */
+    public static function createContent(Directory $parent, $path, Config $params)
+    {
+        $name = DauxHelper::pathinfo($path)['filename'];
+
+        if (in_array(pathinfo($path, PATHINFO_EXTENSION), Daux::$VALID_MARKDOWN_EXTENSIONS)) {
+            $uri = static::getUriFromFilename($name);
+            if ($params['mode'] === Daux::STATIC_MODE) {
+                $uri .= '.html';
+            }
+
+            $entry = new Content($parent, $uri, $path, filemtime($path));
+        } else {
+            $entry = new Raw($parent, static::getUriFromFilename(static::getFilename($path)), $path, filemtime($path));
+        }
+
+        if ($entry->getUri() == $params['index_key']) {
+            if ($parent instanceof Root) {
+                $entry->setTitle($params['title']);
+            } else {
+                $entry->setTitle($parent->getTitle());
+            }
+        } else {
+            $entry->setTitle(static::getTitleFromFilename($name));
+        }
+
+        $entry->setIndexPage(false);
+        $entry->setName($name);
+
+        return $entry;
+    }
+
+    /**
+     * @param string $file
+     * @return string
+     */
+    protected static function getFilename($file)
+    {
+        $parts = explode('/', $file);
+        return end($parts);
+    }
+
+    /**
+     * @param string $filename
+     * @return string
+     */
+    protected static function getTitleFromFilename($filename)
+    {
+        $filename = explode('_', $filename);
+        if ($filename[0] == '' || is_numeric($filename[0])) {
+            unset($filename[0]);
+        } else {
+            $t = $filename[0];
+            if ($t[0] == '-') {
+                $filename[0] = substr($t, 1);
+            }
+        }
+        $filename = implode(' ', $filename);
+        return $filename;
+    }
+
+    /**
+     * @param string $filename
+     * @return string
+     */
+    protected static function getUriFromFilename($filename)
+    {
+        $filename = explode('_', $filename);
+        if ($filename[0] == '' || is_numeric($filename[0])) {
+            unset($filename[0]);
+        } else {
+            $t = $filename[0];
+            if ($t[0] == '-') {
+                $filename[0] = substr($t, 1);
+            }
+        }
+        $filename = implode('_', $filename);
+        return $filename;
     }
 
     /**
@@ -84,47 +156,37 @@ class Builder
             return $parent->getEntries()[$slug];
         }
 
-        $dir = new Directory();
+        $dir = new Directory($parent, $slug);
         $dir->setTitle($title);
-        $dir->setUri($slug);
-        $parent->addChild($dir);
 
         return $dir;
     }
 
     /**
-     * @param array $parents
+     * @param Directory $parent
      * @param string $title
      * @return Content
      */
-    public static function getOrCreatePage($parents, $title)
+    public static function getOrCreatePage(Directory $parent, $title)
     {
         $slug = DauxHelper::slug($title);
         $uri = $slug . ".html";
 
-        /**
-         * @var Directory $nearestParent
-         */
-        $nearestParent = end($parents);
-
-        if (array_key_exists($uri, $nearestParent->getEntries())) {
-            return $nearestParent->getEntries()[$uri];
+        if (array_key_exists($uri, $parent->getEntries())) {
+            return $parent->getEntries()[$uri];
         }
 
-        $page = new Content('', $parents);
-        $page->setUri($uri);
+        $page = new Content($parent, $uri);
         $page->setContent("-"); //set an almost empty content to avoid problems
 
         if ($title == 'index') {
             $page->setName('_index');
-            $page->setTitle($nearestParent->getTitle());
-            $nearestParent->setIndexPage($page);
+            $page->setTitle($parent->getTitle());
+            $parent->setIndexPage($page);
         } else {
             $page->setName($slug);
             $page->setTitle($title);
         }
-
-        $nearestParent->addChild($page);
 
         return $page;
     }

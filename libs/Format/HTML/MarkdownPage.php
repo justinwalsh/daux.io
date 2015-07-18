@@ -11,8 +11,7 @@ class MarkdownPage extends \Todaymade\Daux\Format\Base\MarkdownPage
         if ($this->title === 'index') {
             $minimum_parent_dir_size = ($this->params['multilanguage']) ? 2 : 1;
             if (count($this->file->getParents()) >= $minimum_parent_dir_size) {
-                $parents = $this->file->getParents();
-                $this->title = end($parents)->getTitle();
+                $this->title = $this->file->getParent()->getTitle();
             } else {
                 $this->homepage = ($this->file->getName() === '_index');
                 $this->title = $this->params['title'];

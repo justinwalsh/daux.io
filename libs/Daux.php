@@ -2,6 +2,7 @@
 
 use Symfony\Component\Console\Output\NullOutput;
 use Todaymade\Daux\Tree\Builder;
+use Todaymade\Daux\Tree\Root;
 
 class Daux
 {
@@ -124,7 +125,9 @@ class Daux
 
     private function generateTree()
     {
-        $this->tree = Builder::build($this->docs_path, $this->options['ignore'], $this->getParams());
+        $this->tree = new Root($this->docs_path);
+        Builder::build($this->tree, $this->options['ignore'], $this->getParams());
+
         if (!empty($this->options['languages'])) {
             foreach ($this->options['languages'] as $key => $node) {
                 $this->tree->getEntries()[$key]->title = $node;

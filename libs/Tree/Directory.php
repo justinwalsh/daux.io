@@ -16,9 +16,6 @@ class Directory extends Entry
 
     public function addChild(Entry $entry)
     {
-        //TODO :: set parent in the entry
-        //TODO :: remove child from previous parent
-
         $this->children[$entry->getUri()] = $entry;
     }
 
@@ -70,5 +67,16 @@ class Directory extends Entry
                 return ($p[0] === '-') ? 1 : -1;
             }
         }
+    }
+
+    public function dump()
+    {
+        $dump = parent::dump();
+
+        foreach ($this->getEntries() as $entry) {
+            $dump['children'][] = $entry->dump();
+        }
+
+        return $dump;
     }
 }

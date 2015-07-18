@@ -1,7 +1,5 @@
 <?php namespace Todaymade\Daux\Tree;
 
-use Todaymade\Daux\DauxHelper;
-
 abstract class Entry
 {
     /** @var string */
@@ -19,23 +17,33 @@ abstract class Entry
     /** @var string */
     protected $uri;
 
+    /** @var Directory */
+    protected $parent;
+
     /** @var string */
-    protected $local_path;
+    protected $path;
 
     /** @var integer */
     protected $last_modified;
 
-    /** @var array */
-    protected $parents;
-
     /**
+     * @param Directory $parent
+     * @param string $uri
      * @param string $path
-     * @param array $parents
+     * @param integer $last_modified
      */
-    public function __construct($path = '', $parents = array())
+    public function __construct(Directory $parent, $uri, $path = null, $last_modified = null)
     {
-        $this->setPath($path);
-        $this->setParents($parents);
+        $this->setUri($uri);
+        $this->setParent($parent);
+
+        if ($path) {
+            $this->path = $path;
+        }
+
+        if ($last_modified) {
+            $this->last_modified = $last_modified;
+        }
     }
 
     /**
@@ -67,7 +75,15 @@ abstract class Entry
      */
     public function setUri($uri)
     {
+        if ($this->parent) {
+            $this->parent->removeChild($this);
+        }
+
         $this->uri = $uri;
+
+        if ($this->parent) {
+            $this->parent->addChild($this);
+        }
     }
 
     /**
@@ -102,7 +118,7 @@ abstract class Entry
         // First we try to find a real page
         foreach ($this->getEntries() as $node) {
             if ($node instanceof Content) {
-                if (!count($node->getParents()) && $node->title == 'index') {
+                if (!$node->getParent() && $node->title == 'index') {
                     //the homepage should not count as first page
                     continue;
                 }
@@ -148,19 +164,40 @@ abstract class Entry
     }
 
     /**
-     * @return array
+     * @return Directory
      */
-    public function getParents()
+    public function getParent()
     {
-        return $this->parents;
+        return $this->parent;
     }
 
     /**
-     * @param array $parents
+     * Return all parents starting with the root
+     *
+     * @return array<Directory>
      */
-    public function setParents($parents)
+    public function getParents()
     {
-        $this->parents = $parents;
+        $parents = [];
+        if ($this->parent && !$this->parent instanceof Root) {
+            $parents = $this->parent->getParents();
+            $parents[] = $this->parent;
+        }
+
+        return $parents;
+    }
+
+    /**
+     * @param Directory $parent
+     */
+    protected function setParent(Directory $parent)
+    {
+        if ($this->parent) {
+            $this->parent->removeChild($this);
+        }
+
+        $parent->addChild($this);
+        $this->parent = $parent;
     }
 
     /**
@@ -168,23 +205,7 @@ abstract class Entry
      */
     public function getPath()
     {
-        return $this->local_path;
-    }
-
-    /**
-     * @param string $path
-     */
-    public function setPath($path)
-    {
-        if (!isset($path) || $path == '' || !file_exists($path)) {
-            return;
-        }
-        $this->local_path = $path;
-        $this->last_modified = filemtime($path);
-        $this->name = DauxHelper::pathinfo($path)['filename'];
-        $this->title = $this->getTitleInternal($this->name);
-        $this->uri = $this->getUrlInternal($this->getFilename($path));
-        $this->index_page = false;
+        return $this->path;
     }
 
     /**
@@ -193,58 +214,26 @@ abstract class Entry
     public function getUrl()
     {
         $url = '';
-        foreach ($this->parents as $node) {
-            $url .= $node->uri . '/';
+
+        if ($this->getParent() && !$this->getParent() instanceof Root) {
+            $url = $this->getParent()->getUrl() . '/' . $url;
         }
-        $url .= $this->uri;
+
+        $url .= $this->getUri();
         return $url;
     }
 
-    /**
-     * @param string $file
-     * @return string
-     */
-    protected function getFilename($file)
+    public function dump()
     {
-        $parts = explode('/', $file);
-        return end($parts);
-    }
-
-    /**
-     * @param string $filename
-     * @return string
-     */
-    protected function getTitleInternal($filename)
-    {
-        $filename = explode('_', $filename);
-        if ($filename[0] == '' || is_numeric($filename[0])) {
-            unset($filename[0]);
-        } else {
-            $t = $filename[0];
-            if ($t[0] == '-') {
-                $filename[0] = substr($t, 1);
-            }
-        }
-        $filename = implode(' ', $filename);
-        return $filename;
-    }
-
-    /**
-     * @param string $filename
-     * @return string
-     */
-    protected function getUrlInternal($filename)
-    {
-        $filename = explode('_', $filename);
-        if ($filename[0] == '' || is_numeric($filename[0])) {
-            unset($filename[0]);
-        } else {
-            $t = $filename[0];
-            if ($t[0] == '-') {
-                $filename[0] = substr($t, 1);
-            }
-        }
-        $filename = implode('_', $filename);
-        return $filename;
+        return [
+            'title' => $this->getTitle(),
+            'type' => get_class($this),
+            'name' => $this->getName(),
+            'uri' => $this->getUri(),
+            'url' => $this->getUrl(),
+            'index' => $this->getIndexPage()? $this->getIndexPage()->getUrl() : '',
+            'first' => $this->getFirstPage() ? $this->getFirstPage()->getUrl() : '',
+            'path' => $this->path
+        ];
     }
 }
