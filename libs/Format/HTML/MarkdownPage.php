@@ -1,5 +1,8 @@
 <?php namespace Todaymade\Daux\Format\HTML;
 
+use Todaymade\Daux\Daux;
+use Todaymade\Daux\Tree\Root;
+
 class MarkdownPage extends \Todaymade\Daux\Format\Base\MarkdownPage
 {
     private $language;
@@ -8,13 +11,13 @@ class MarkdownPage extends \Todaymade\Daux\Format\Base\MarkdownPage
     private function initialize()
     {
         $this->homepage = false;
-        if ($this->title === 'index') {
-            $minimum_parent_dir_size = ($this->params['multilanguage']) ? 2 : 1;
-            if (count($this->file->getParents()) >= $minimum_parent_dir_size) {
-                $this->title = $this->file->getParent()->getTitle();
-            } else {
-                $this->homepage = ($this->file->getName() === '_index');
-                $this->title = $this->params['title'];
+        if ($this->file->getParent()->getIndexPage() == $this->file) {
+            if ($this->params['multilanguage']) {
+                if ($this->file->getParent()->getParent() instanceof Root) {
+                    $this->homepage = true;
+                }
+            } elseif ($this->file->getParent() instanceof Root) {
+                $this->homepage = true;
             }
         }
 
@@ -50,7 +53,7 @@ class MarkdownPage extends \Todaymade\Daux\Format\Base\MarkdownPage
         $params = $this->params;
 
         $entry_page = [];
-        if ($params['request'] === $params['index_key']) {
+        if ($this->homepage) {
             if ($params['multilanguage']) {
                 foreach ($params['languages'] as $key => $name) {
                     $entry_page[$name] = $params['base_page'] . $params['entry_page'][$key]->getUrl();
@@ -58,8 +61,6 @@ class MarkdownPage extends \Todaymade\Daux\Format\Base\MarkdownPage
             } else {
                 $entry_page['View Documentation'] = $params['base_page'] . $params['entry_page']->getUrl();
             }
-        } elseif ($params['file_uri'] === 'index') {
-            $entry_page[$params['entry_page']->getTitle()] = $params['base_page'] . $params['entry_page']->getUrl();
         }
 
         $page = [
