@@ -11,9 +11,8 @@ class Builder
      *
      * @param Directory $node
      * @param array $ignore
-     * @param Config $params
      */
-    public static function build($node, $ignore, Config $params)
+    public static function build($node, $ignore)
     {
         if (!$dh = opendir($node->getPath())) {
             return;
@@ -42,45 +41,44 @@ class Builder
                 $new = new Directory($node, static::getUriFromFilename(static::getFilename($path)), $path);
                 $new->setName(DauxHelper::pathinfo($path)['filename']);
                 $new->setTitle(static::getTitleFromFilename($new->getName()));
-                static::build($new, $ignore, $params);
+                static::build($new, $ignore);
             } else {
-                static::createContent($node, $path, $params);
+                static::createContent($node, $path);
             }
         }
 
         $node->sort();
-        if (isset($node->getEntries()[$params['index_key']])) {
-            $node->getEntries()[$params['index_key']]->setFirstPage($node->getFirstPage());
-            $node->setIndexPage($node->getEntries()[$params['index_key']]);
-        } else {
-            $node->setIndexPage(false);
-        }
     }
 
     /**
      * @param Directory $parent
      * @param string $path
-     * @param Config $params
      * @return Content|Raw
      */
-    public static function createContent(Directory $parent, $path, Config $params)
+    public static function createContent(Directory $parent, $path)
     {
         $name = DauxHelper::pathinfo($path)['filename'];
 
-        if (in_array(pathinfo($path, PATHINFO_EXTENSION), Daux::$VALID_MARKDOWN_EXTENSIONS)) {
-            $uri = static::getUriFromFilename($name);
-            if ($params['mode'] === Daux::STATIC_MODE) {
-                $uri .= '.html';
-            }
-
-            $entry = new Content($parent, $uri, $path, filemtime($path));
-        } else {
+        if (!in_array(pathinfo($path, PATHINFO_EXTENSION), Daux::$VALID_MARKDOWN_EXTENSIONS)) {
             $entry = new Raw($parent, static::getUriFromFilename(static::getFilename($path)), $path, filemtime($path));
+            $entry->setTitle(static::getTitleFromFilename($name));
+            $entry->setName($name);
+
+            return $entry;
         }
 
-        if ($entry->getUri() == $params['index_key']) {
+        $config = $parent->getConfig();
+
+        $uri = static::getUriFromFilename($name);
+        if ($config['mode'] === Daux::STATIC_MODE) {
+            $uri .= '.html';
+        }
+
+        $entry = new Content($parent, $uri, $path, filemtime($path));
+
+        if ($entry->getUri() == $config['index_key']) {
             if ($parent instanceof Root) {
-                $entry->setTitle($params['title']);
+                $entry->setTitle($config['title']);
             } else {
                 $entry->setTitle($parent->getTitle());
             }
@@ -88,7 +86,6 @@ class Builder
             $entry->setTitle(static::getTitleFromFilename($name));
         }
 
-        $entry->setIndexPage(false);
         $entry->setName($name);
 
         return $entry;
@@ -181,7 +178,6 @@ class Builder
         if ($title == 'index') {
             $page->setName('_index');
             $page->setTitle($parent->getTitle());
-            $parent->setIndexPage($page);
         } else {
             $page->setName($slug);
             $page->setTitle($title);

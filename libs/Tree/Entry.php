@@ -8,12 +8,6 @@ abstract class Entry
     /** @var string */
     protected $name;
 
-    /** @var Content */
-    protected $index_page;
-
-    /** @var Content */
-    protected $first_page;
-
     /** @var string */
     protected $uri;
 
@@ -84,68 +78,6 @@ abstract class Entry
         if ($this->parent) {
             $this->parent->addChild($this);
         }
-    }
-
-    /**
-     * @return Content
-     */
-    public function getIndexPage()
-    {
-        return $this->index_page;
-    }
-
-    /**
-     * @param Content $index_page
-     */
-    public function setIndexPage($index_page)
-    {
-        $this->index_page = $index_page;
-    }
-
-    /**
-     * @return Content|false
-     */
-    public function getFirstPage()
-    {
-        if ($this->first_page) {
-            return $this->first_page;
-        }
-
-        if (!$this instanceof Directory) {
-            return false;
-        }
-
-        // First we try to find a real page
-        foreach ($this->getEntries() as $node) {
-            if ($node instanceof Content) {
-                // TODO :: this condition looks weird ...
-                if (!$node->getParent() && $node->getTitle() == 'index') {
-                    //the homepage should not count as first page
-                    continue;
-                }
-
-                $this->setFirstPage($node);
-                return $node;
-            }
-        }
-
-        // If we can't find one we check in the sub-directories
-        foreach ($this->getEntries() as $node) {
-            if ($node instanceof Directory && $page = $node->getFirstPage()) {
-                $this->setFirstPage($page);
-                return $page;
-            }
-        }
-
-        return false;
-    }
-
-    /**
-     * @param Content $first_page
-     */
-    public function setFirstPage($first_page)
-    {
-        $this->first_page = $first_page;
     }
 
     /**
@@ -232,8 +164,6 @@ abstract class Entry
             'name' => $this->getName(),
             'uri' => $this->getUri(),
             'url' => $this->getUrl(),
-            'index' => $this->getIndexPage() ? $this->getIndexPage()->getUrl() : '',
-            'first' => $this->getFirstPage() ? $this->getFirstPage()->getUrl() : '',
             'path' => $this->path
         ];
     }

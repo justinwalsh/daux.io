@@ -2,7 +2,11 @@
 
 class Directory extends Entry
 {
+    /** @var Entry[] */
     protected $children = [];
+
+    /** @var Content */
+    protected $first_page;
 
     public function sort()
     {
@@ -25,6 +29,78 @@ class Directory extends Entry
     public function removeChild(Entry $entry)
     {
         unset($this->children[$entry->getUri()]);
+    }
+
+    /**
+     * @return \Todaymade\Daux\Config
+     */
+    public function getConfig()
+    {
+        if (!$this->parent) {
+            throw new \RuntimeException("Could not retrieve configuration. Are you sure that your tree has a Root ?");
+        }
+
+        return $this->parent->getConfig();
+    }
+
+    /**
+     * @return Content|null
+     */
+    public function getIndexPage()
+    {
+        $index_key = $this->getConfig()['index_key'];
+
+        if (isset($this->children[$index_key])) {
+            return $this->children[$index_key];
+        }
+
+        return null;
+    }
+
+    /**
+     * @return Content|false
+     */
+    public function getFirstPage()
+    {
+        if ($this->first_page) {
+            return $this->first_page;
+        }
+
+        if (!$this instanceof Directory) {
+            return false;
+        }
+
+        // First we try to find a real page
+        foreach ($this->getEntries() as $node) {
+            if ($node instanceof Content) {
+                // TODO :: this condition looks weird ...
+                if (!$node->getParent() && $node->getTitle() == 'index') {
+                    //the homepage should not count as first page
+                    continue;
+                }
+
+                $this->setFirstPage($node);
+                return $node;
+            }
+        }
+
+        // If we can't find one we check in the sub-directories
+        foreach ($this->getEntries() as $node) {
+            if ($node instanceof Directory && $page = $node->getFirstPage()) {
+                $this->setFirstPage($page);
+                return $page;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * @param Content $first_page
+     */
+    public function setFirstPage($first_page)
+    {
+        $this->first_page = $first_page;
     }
 
     private function compareEntries($a, $b)
@@ -75,6 +151,9 @@ class Directory extends Entry
     public function dump()
     {
         $dump = parent::dump();
+
+        $dump['index'] = $this->getIndexPage() ? $this->getIndexPage()->getUrl() : '';
+        $dump['first'] = $this->getFirstPage() ? $this->getFirstPage()->getUrl() : '';
 
         foreach ($this->getEntries() as $entry) {
             $dump['children'][] = $entry->dump();

@@ -146,8 +146,8 @@ class Daux
      */
     private function generateTree()
     {
-        $this->tree = new Root($this->docs_path);
-        Builder::build($this->tree, $this->options['ignore'], $this->getParams());
+        $this->tree = new Root($this->getParams(), $this->docs_path);
+        Builder::build($this->tree, $this->options['ignore']);
 
         if (!empty($this->options['languages'])) {
             foreach ($this->options['languages'] as $key => $node) {
@@ -176,7 +176,7 @@ class Daux
 
         if ($this->tree) {
             $this->options['tree'] = $this->tree;
-            $this->options['index'] = ($index = $this->tree->getIndexPage()) ? $index : $this->tree->getFirstPage();
+            $this->options['index'] = $this->tree->getIndexPage() ?: $this->tree->getFirstPage();
             if ($this->options['multilanguage']) {
                 foreach ($this->options['languages'] as $key => $name) {
                     $this->options['entry_page'][$key] = $this->tree->getEntries()[$key]->getFirstPage();

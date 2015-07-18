@@ -133,8 +133,8 @@ class DauxHelper
             return $tree;
         }
 
-        if ($tree->getIndexPage()) {
-            return $tree->getIndexPage();
+        if ($index = $tree->getIndexPage()) {
+            return $index;
         }
 
         return false;
