@@ -57,14 +57,14 @@ class Builder
             }
 
             if ($entry instanceof Entry) {
-                $node->value[$entry->getUri()] = $entry;
+                $node->addChild($entry);
             }
         }
 
         $node->sort();
-        if (isset($node->value[$params['index_key']])) {
-            $node->value[$params['index_key']]->setFirstPage($node->getFirstPage());
-            $node->setIndexPage($node->value[$params['index_key']]);
+        if (isset($node->getEntries()[$params['index_key']])) {
+            $node->getEntries()[$params['index_key']]->setFirstPage($node->getFirstPage());
+            $node->setIndexPage($node->getEntries()[$params['index_key']]);
         } else {
             $node->setIndexPage(false);
         }
@@ -72,22 +72,22 @@ class Builder
     }
 
     /**
-     * @param Entry $parent
+     * @param Directory $parent
      * @param String $title
      * @return Directory
      */
-    public static function getOrCreateDir($parent, $title)
+    public static function getOrCreateDir(Directory $parent, $title)
     {
         $slug = DauxHelper::slug($title);
 
-        if (array_key_exists($slug, $parent->value)) {
-            return $parent->value[$slug];
+        if (array_key_exists($slug, $parent->getEntries())) {
+            return $parent->getEntries()[$slug];
         }
 
         $dir = new Directory();
         $dir->setTitle($title);
         $dir->setUri($slug);
-        $parent->value[$slug] = $dir;
+        $parent->addChild($dir);
 
         return $dir;
     }
@@ -102,10 +102,13 @@ class Builder
         $slug = DauxHelper::slug($title);
         $uri = $slug . ".html";
 
+        /**
+         * @var Directory $nearestParent
+         */
         $nearestParent = end($parents);
 
-        if (array_key_exists($uri, $nearestParent->value)) {
-            return $nearestParent->value[$uri];
+        if (array_key_exists($uri, $nearestParent->getEntries())) {
+            return $nearestParent->getEntries()[$uri];
         }
 
         $page = new Content('', $parents);
@@ -115,14 +118,13 @@ class Builder
         if ($title == 'index') {
             $page->setName('_index');
             $page->setTitle($nearestParent->getTitle());
-            $page->value = 'index';
             $nearestParent->setIndexPage($page);
         } else {
             $page->setName($slug);
             $page->setTitle($title);
         }
 
-        $nearestParent->value[$uri] = $page;
+        $nearestParent->addChild($page);
 
         return $page;
     }

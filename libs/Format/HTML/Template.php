@@ -2,6 +2,8 @@
 
 use League\Plates\Engine;
 use Todaymade\Daux\Daux;
+use Todaymade\Daux\Tree\Content;
+use Todaymade\Daux\Tree\Directory;
 
 class Template
 {
@@ -88,13 +90,13 @@ class Template
         return "<ul class='nav nav-list'>$nav</ul>";
     }
 
-    private function buildNavigation($tree, $path, $current_url, $base_page, $mode)
+    private function buildNavigation(Directory $tree, $path, $current_url, $base_page, $mode)
     {
         $nav = [];
-        foreach ($tree->value as $node) {
+        foreach ($tree->getEntries() as $node) {
             $url = $node->getUri();
-            if ($node instanceof \Todaymade\Daux\Tree\Content) {
-                if ($node->value === 'index') {
+            if ($node instanceof Content) {
+                if ($node->getName() === '_index') {
                     continue;
                 }
 
@@ -105,8 +107,7 @@ class Template
                     'href' => $base_page . $link,
                     'class' => ($current_url === $link) ? 'active' : ''
                 ];
-            }
-            if ($node instanceof \Todaymade\Daux\Tree\Directory) {
+            } else if ($node instanceof Directory) {
                 $link = ($path === '') ? $url : $path . '/' . $url;
 
                 $folder = [

@@ -2,11 +2,29 @@
 
 class Directory extends Entry
 {
-    public $value = [];
+    protected $children = [];
 
     public function sort()
     {
-        uasort($this->value, array($this, 'compareEntries'));
+        uasort($this->children, array($this, 'compareEntries'));
+    }
+
+    public function getEntries()
+    {
+        return $this->children;
+    }
+
+    public function addChild(Entry $entry)
+    {
+        //TODO :: set parent in the entry
+        //TODO :: remove child from previous parent
+
+        $this->children[$entry->getUri()] = $entry;
+    }
+
+    public function removeChild(Entry $entry)
+    {
+        unset($this->children[$entry->getUri()]);
     }
 
     private function compareEntries($a, $b)

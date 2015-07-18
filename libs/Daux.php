@@ -127,7 +127,7 @@ class Daux
         $this->tree = Builder::build($this->docs_path, $this->options['ignore'], $this->getParams());
         if (!empty($this->options['languages'])) {
             foreach ($this->options['languages'] as $key => $node) {
-                $this->tree->value[$key]->title = $node;
+                $this->tree->getEntries()[$key]->title = $node;
             }
         }
     }
@@ -155,7 +155,7 @@ class Daux
             $this->options['index'] = ($index = $this->tree->getIndexPage()) ? $index : $this->tree->getFirstPage();
             if ($this->options['multilanguage']) {
                 foreach ($this->options['languages'] as $key => $name) {
-                    $this->options['entry_page'][$key] = $this->tree->value[$key]->getFirstPage();
+                    $this->options['entry_page'][$key] = $this->tree->getEntries()[$key]->getFirstPage();
                 }
             } else {
                 $this->options['entry_page'] = $this->tree->getFirstPage();

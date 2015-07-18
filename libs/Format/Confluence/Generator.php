@@ -53,7 +53,7 @@ class Generator
         if ($base_url !== '') {
             $params['entry_page'] = $tree->getFirstPage();
         }
-        foreach ($tree->value as $key => $node) {
+        foreach ($tree->getEntries() as $key => $node) {
             if ($node instanceof Directory) {
                 $final['children'][$this->prefix . $node->getTitle()] = $this->generateRecursive(
                     $node,

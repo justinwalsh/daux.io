@@ -99,21 +99,23 @@ abstract class Entry
             return false;
         }
 
-        foreach ($this->value as $node) {
+        // First we try to find a real page
+        foreach ($this->getEntries() as $node) {
             if ($node instanceof Content) {
                 if (!count($node->getParents()) && $node->title == 'index') {
                     //the homepage should not count as first page
                     continue;
                 }
 
-                $this->first_page = $node;
+                $this->setFirstPage($node);
                 return $node;
             }
         }
 
-        foreach ($this->value as $node) {
+        // If we can't find one we check in the sub-directories
+        foreach ($this->getEntries() as $node) {
             if ($node instanceof Directory && $page = $node->getFirstPage()) {
-                $this->first_page = $page;
+                $this->setFirstPage($page);
                 return $page;
             }
         }

@@ -9,13 +9,6 @@ class Content extends Entry
      */
     protected $content;
 
-    public function __construct($path = '', $parents = array())
-    {
-        parent::__construct($path, $parents);
-
-        $this->value = $this->uri;
-    }
-
     /**
      * @return string
      */

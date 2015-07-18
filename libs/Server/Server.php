@@ -130,7 +130,7 @@ class Server
         $params = $this->params;
 
         $params['request'] = $request;
-        $params['file_uri'] = $file->value;
+        $params['file_uri'] = $file->getUri();
         if ($request !== 'index') {
             $params['entry_page'] = $file->getFirstPage();
         }

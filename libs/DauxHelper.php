@@ -113,8 +113,8 @@ class DauxHelper
             // if the node exists in the current request tree,
             // change the $tree variable to reference the new
             // node and proceed to the next url part
-            if (isset($tree->value[$node])) {
-                $tree = $tree->value[$node];
+            if (isset($tree->getEntries()[$node])) {
+                $tree = $tree->getEntries()[$node];
                 continue;
             }
 

@@ -54,7 +54,7 @@ class Generator
         if ($base_url !== '' && empty($params['entry_page'])) {
             $params['entry_page'] = $tree->getFirstPage();
         }
-        foreach ($tree->value as $key => $node) {
+        foreach ($tree->getEntries() as $key => $node) {
             if ($node instanceof Directory) {
                 $new_output_dir = $output_dir . DS . $key;
                 mkdir($new_output_dir);
