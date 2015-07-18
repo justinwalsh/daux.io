@@ -1,6 +1,5 @@
 <?php namespace Todaymade\Daux\Format\HTML;
 
-use Todaymade\Daux\Daux;
 use Todaymade\Daux\Tree\Root;
 
 class MarkdownPage extends \Todaymade\Daux\Format\Base\MarkdownPage

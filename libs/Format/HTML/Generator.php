@@ -5,6 +5,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Todaymade\Daux\Config;
 use Todaymade\Daux\Daux;
 use Todaymade\Daux\DauxHelper;
+use Todaymade\Daux\Format\Base\CommonMark\CommonMarkConverter;
 use Todaymade\Daux\Format\Base\RunAction;
 use Todaymade\Daux\Generator\Helper;
 use Todaymade\Daux\Tree\Directory;
@@ -14,6 +15,11 @@ class Generator implements \Todaymade\Daux\Format\Base\Generator
 {
     use RunAction;
 
+    /**
+     * @var CommonMarkConverter
+     */
+    protected $converter;
+
     public function generate(Daux $daux, InputInterface $input, OutputInterface $output, $width)
     {
         $destination = $input->getOption('destination');
@@ -22,6 +28,8 @@ class Generator implements \Todaymade\Daux\Format\Base\Generator
         if (is_null($destination)) {
             $destination = $daux->local_base . DS . 'static';
         }
+
+        $this->converter = new CommonMarkConverter(['daux' => $params]);
 
         $this->runAction(
             "Copying Static assets ...",
@@ -85,7 +93,7 @@ class Generator implements \Todaymade\Daux\Format\Base\Generator
                         $params['request'] = $node->getUrl();
                         $params['file_uri'] = $node->getName();
 
-                        $page = MarkdownPage::fromFile($node, $params);
+                        $page = MarkdownPage::fromFile($node, $params, $this->converter);
                         file_put_contents($output_dir . DS . $key, $page->getContent());
                     }
                 );

@@ -2,16 +2,10 @@
 
 use DOMDocument;
 use Todaymade\Daux\DauxHelper;
-use Todaymade\Daux\Format\Confluence\CommonMark\CommonMarkConverter;
 
 class MarkdownPage extends \Todaymade\Daux\Format\Base\MarkdownPage
 {
     public $attachments = [];
-
-    protected function getMarkdownConverter()
-    {
-        return new CommonMarkConverter(['daux' => $this->params]);
-    }
 
     protected function generatePage()
     {

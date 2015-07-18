@@ -4,6 +4,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Todaymade\Daux\Config;
 use Todaymade\Daux\Daux;
+use Todaymade\Daux\Format\Confluence\CommonMark\CommonMarkConverter;
 use Todaymade\Daux\Format\Base\RunAction;
 use Todaymade\Daux\Tree\Content;
 use Todaymade\Daux\Tree\Directory;
@@ -17,13 +18,19 @@ class Generator implements \Todaymade\Daux\Format\Base\Generator
      */
     protected $prefix;
 
+    /**
+     * @var CommonMarkConverter
+     */
+    protected $converter;
+
     public function generate(Daux $daux, InputInterface $input, OutputInterface $output, $width)
     {
-        $confluence = $daux->getParams()['confluence'];
+        $params = $daux->getParams();
 
+        $confluence = $params['confluence'];
         $this->prefix = trim($confluence['prefix']) . " ";
 
-        $params = $daux->getParams();
+        $this->converter = new CommonMarkConverter(['daux' => $params]);
 
         $tree = $this->runAction(
             "Generating Tree ...",
@@ -68,7 +75,7 @@ class Generator implements \Todaymade\Daux\Format\Base\Generator
                 $data = [
                     'title' => $this->prefix . $node->getTitle(),
                     'file' => $node,
-                    'page' => MarkdownPage::fromFile($node, $params),
+                    'page' => MarkdownPage::fromFile($node, $params, $this->converter),
                 ];
 
                 // As the page is lazily generated

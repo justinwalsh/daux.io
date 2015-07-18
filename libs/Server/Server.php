@@ -3,6 +3,7 @@
 use Todaymade\Daux\Daux;
 use Todaymade\Daux\DauxHelper;
 use Todaymade\Daux\Exception;
+use Todaymade\Daux\Format\Base\CommonMark\CommonMarkConverter;
 use Todaymade\Daux\Format\HTML\MarkdownPage;
 use Todaymade\Daux\Format\HTML\RawPage;
 use Todaymade\Daux\Tree\Raw;
@@ -133,7 +134,7 @@ class Server
         if ($request !== 'index') {
             $params['entry_page'] = $file->getFirstPage();
         }
-        return MarkdownPage::fromFile($file, $params);
+        return MarkdownPage::fromFile($file, $params, new CommonMarkConverter(['daux' => $params]));
     }
 
     public function getRequest()

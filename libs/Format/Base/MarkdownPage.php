@@ -1,7 +1,7 @@
 <?php namespace Todaymade\Daux\Format\Base;
 
+use League\CommonMark\CommonMarkConverter;
 use Todaymade\Daux\Config;
-use Todaymade\Daux\Format\Base\CommonMark\CommonMarkConverter;
 use Todaymade\Daux\Tree\Content;
 
 abstract class MarkdownPage extends SimplePage
@@ -15,6 +15,11 @@ abstract class MarkdownPage extends SimplePage
      * @var Config
      */
     protected $params;
+
+    /**
+     * @var CommonMarkConverter
+     */
+    protected $converter;
 
     public function __construct($title, $content)
     {
@@ -38,7 +43,7 @@ abstract class MarkdownPage extends SimplePage
 
     protected function getMarkdownConverter()
     {
-        return new CommonMarkConverter(['daux' => $this->params]);
+        return $this->converter;
     }
 
     protected function convertPage($content)
@@ -51,11 +56,12 @@ abstract class MarkdownPage extends SimplePage
         return $this->convertPage($this->content);
     }
 
-    public static function fromFile(Content $file, $params)
+    public static function fromFile(Content $file, $params, CommonMarkConverter $converter)
     {
         $page = new static($file->getTitle(), $file->getContent());
         $page->setFile($file);
         $page->setParams($params);
+        $page->converter = $converter;
 
         return $page;
     }
