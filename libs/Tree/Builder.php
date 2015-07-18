@@ -38,7 +38,6 @@ class Builder
                 continue;
             }
 
-            $entry = null;
             if (is_dir($path)) {
                 $new = new Directory($node, static::getUriFromFilename(static::getFilename($path)), $path);
                 $new->setName(DauxHelper::pathinfo($path)['filename']);

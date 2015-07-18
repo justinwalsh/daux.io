@@ -20,12 +20,16 @@ class MarkdownPage extends \Todaymade\Daux\Format\Base\MarkdownPage
 
         $this->language = '';
         if ($this->params['multilanguage'] && count($this->file->getParents())) {
-            reset($this->file->getParents());
-            $language_dir = current($this->file->getParents());
-            $this->language = $language_dir->name;
+            $language_dir = $this->file->getParents()[0];
+            $this->language = $language_dir->getName();
         }
     }
 
+    /**
+     * @param \Todaymade\Daux\Tree\Directory[] $parents
+     * @param bool $multilanguage
+     * @return array
+     */
     private function getBreadcrumbTrail($parents, $multilanguage)
     {
         if ($multilanguage && !empty($parents)) {

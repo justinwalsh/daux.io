@@ -37,11 +37,11 @@ abstract class Entry
         $this->setUri($uri);
         $this->setParent($parent);
 
-        if ($path) {
+        if ($path !== null) {
             $this->path = $path;
         }
 
-        if ($last_modified) {
+        if ($last_modified !== null) {
             $this->last_modified = $last_modified;
         }
     }
@@ -118,7 +118,8 @@ abstract class Entry
         // First we try to find a real page
         foreach ($this->getEntries() as $node) {
             if ($node instanceof Content) {
-                if (!$node->getParent() && $node->title == 'index') {
+                // TODO :: this condition looks weird ...
+                if (!$node->getParent() && $node->getTitle() == 'index') {
                     //the homepage should not count as first page
                     continue;
                 }
@@ -174,7 +175,7 @@ abstract class Entry
     /**
      * Return all parents starting with the root
      *
-     * @return array<Directory>
+     * @return Directory[]
      */
     public function getParents()
     {
@@ -231,7 +232,7 @@ abstract class Entry
             'name' => $this->getName(),
             'uri' => $this->getUri(),
             'url' => $this->getUrl(),
-            'index' => $this->getIndexPage()? $this->getIndexPage()->getUrl() : '',
+            'index' => $this->getIndexPage() ? $this->getIndexPage()->getUrl() : '',
             'first' => $this->getFirstPage() ? $this->getFirstPage()->getUrl() : '',
             'path' => $this->path
         ];

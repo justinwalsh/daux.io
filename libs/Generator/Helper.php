@@ -25,7 +25,7 @@ class Helper
      *
      * @param string $dir
      */
-    private static function rmdir($dir)
+    protected static function rmdir($dir)
     {
         $it = new \RecursiveDirectoryIterator($dir);
         $files = new \RecursiveIteratorIterator($it, \RecursiveIteratorIterator::CHILD_FIRST);
@@ -47,7 +47,7 @@ class Helper
      * @param string $source
      * @param string $destination
      */
-    private static function copyRecursive($source, $destination)
+    protected static function copyRecursive($source, $destination)
     {
         if (!is_dir($destination)) {
             mkdir($destination);

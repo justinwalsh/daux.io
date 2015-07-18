@@ -5,7 +5,6 @@ use Todaymade\Daux\DauxHelper;
 use Todaymade\Daux\Exception;
 use Todaymade\Daux\Format\HTML\MarkdownPage;
 use Todaymade\Daux\Format\HTML\RawPage;
-use Todaymade\Daux\Format\HTML\SimplePage;
 use Todaymade\Daux\Tree\Raw;
 
 class Server

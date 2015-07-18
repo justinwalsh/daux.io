@@ -109,9 +109,9 @@ class Compiler
 
     private function addBinary($phar)
     {
-        $content = file_get_contents(__DIR__ . '/../generate.php');
-        //$content = preg_replace('{^#!/usr/bin/env php\s*}', '', $content);
-        $phar->addFromString('generate.php', $content);
+        $content = file_get_contents(__DIR__ . '/../generate');
+        $content = preg_replace('{^#!/usr/bin/env php\s*}', '', $content);
+        $phar->addFromString('generate', $content);
     }
 
     /**
@@ -166,7 +166,7 @@ define('PHAR_DIR', dirname(__FILE__));
 
 Phar::mapPhar('daux.phar');
 
-require 'phar://daux.phar/generate.php';
+require 'phar://daux.phar/generate';
 
 __HALT_COMPILER();
 EOF;
