@@ -66,16 +66,11 @@ class Directory extends Entry
             return $this->first_page;
         }
 
-        if (!$this instanceof Directory) {
-            return false;
-        }
-
         // First we try to find a real page
         foreach ($this->getEntries() as $node) {
             if ($node instanceof Content) {
-                // TODO :: this condition looks weird ...
-                if (!$node->getParent() && $node->getTitle() == 'index') {
-                    //the homepage should not count as first page
+                if ($this instanceof Root && $this->getIndexPage() == $node) {
+                    // The homepage should not count as first page
                     continue;
                 }
 
