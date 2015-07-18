@@ -9,33 +9,42 @@ class Daux
     const STATIC_MODE = 'DAUX_STATIC';
     const LIVE_MODE = 'DAUX_LIVE';
 
+    /** @var string[] */
     public static $VALID_MARKDOWN_EXTENSIONS;
+
+    /** @var string */
     public $local_base;
+
+    /** @var string */
     public $internal_base;
+
+    /** @var string */
     private $docs_path;
 
-    /**
-     * @var Processor
-     */
+    /** @var Processor */
     protected $processor;
 
-    /**
-     * @var Tree\Directory
-     */
+    /** @var Tree\Root */
     public $tree;
 
-    /**
-     * @var Config
-     */
+    /** @var Config */
     public $options;
+
+    /** @var string */
     private $mode;
 
+    /**
+     * @param string $mode
+     */
     public function __construct($mode)
     {
         $this->mode = $mode;
 
         $this->local_base = $this->internal_base = dirname(__DIR__);
 
+        // In case we're inside the phar archive
+        // we save the path to the directory
+        // in which it is contained
         if (defined('PHAR_DIR')) {
             $this->local_base = PHAR_DIR;
         }
@@ -46,6 +55,10 @@ class Daux
         define("DS", DIRECTORY_SEPARATOR);
     }
 
+    /**
+     * @param string $override_file
+     * @throws Exception
+     */
     public function initialize($override_file = 'config.json')
     {
         //global.json (docs dir, markdown files)
@@ -57,6 +70,11 @@ class Daux
         $this->generateTree();
     }
 
+    /**
+     * Load and validate the global configuration
+     *
+     * @throws Exception
+     */
     private function loadConfig()
     {
         $default_config = [
@@ -123,6 +141,9 @@ class Daux
         }
     }
 
+    /**
+     * Generate the tree that will be used
+     */
     private function generateTree()
     {
         $this->tree = new Root($this->docs_path);
@@ -130,7 +151,7 @@ class Daux
 
         if (!empty($this->options['languages'])) {
             foreach ($this->options['languages'] as $key => $node) {
-                $this->tree->getEntries()[$key]->title = $node;
+                $this->tree->getEntries()[$key]->setTitle($node);
             }
         }
     }

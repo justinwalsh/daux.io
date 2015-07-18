@@ -98,7 +98,7 @@ class DauxHelper
      *
      * @param Directory $tree
      * @param string $request
-     * @return Tree\Content|Tree\Raw
+     * @return Tree\Content|Tree\Raw|false
      */
     public static function getFile($tree, $request)
     {

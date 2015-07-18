@@ -9,6 +9,9 @@ class Directory extends Entry
         uasort($this->children, array($this, 'compareEntries'));
     }
 
+    /**
+     * @return Entry[]
+     */
     public function getEntries()
     {
         return $this->children;
