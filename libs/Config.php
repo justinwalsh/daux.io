@@ -13,11 +13,27 @@ class Config extends ArrayObject
     public function merge($newValues, $override = true)
     {
         foreach ($newValues as $key => $value) {
-            if ($override === false && array_key_exists($key, $this)) {
+            // If the key doesn't exist yet,
+            // we can simply set it.
+            if (!array_key_exists($key, $this)) {
+                $this[$key] = $value;
                 continue;
             }
 
-            $this[$key] = $value;
+            // We already know this value exists
+            // so if we're in conservative mode
+            // we can skip this key
+            if ($override === false) {
+                continue;
+            }
+
+            // Merge the values only if
+            // both values are arrays
+            if (is_array($this[$key]) && is_array($value)) {
+                $this[$key] = array_replace_recursive($this[$key], $value);
+            } else {
+                $this[$key] = $value;
+            }
         }
     }
 

@@ -1,6 +1,6 @@
 <?php $this->layout('theme::layout/05_page') ?>
 <article>
-    <?php if ($params['date_modified']) { ?>
+    <?php if ($params['html']['date_modified']) { ?>
         <div class="page-header sub-header clearfix">
             <h1><?php
                 if ($page['breadcrumbs']) echo $this->get_breadcrumb_title($page, $base_page);

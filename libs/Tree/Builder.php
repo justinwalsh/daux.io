@@ -58,15 +58,15 @@ class Builder
     {
         $name = DauxHelper::pathinfo($path)['filename'];
 
-        if (!in_array(pathinfo($path, PATHINFO_EXTENSION), Daux::$VALID_MARKDOWN_EXTENSIONS)) {
+        $config = $parent->getConfig();
+
+        if (!in_array(pathinfo($path, PATHINFO_EXTENSION), $config['valid_content_extensions'])) {
             $entry = new Raw($parent, static::getUriFromFilename(static::getFilename($path)), $path, filemtime($path));
             $entry->setTitle(static::getTitleFromFilename($name));
             $entry->setName($name);
 
             return $entry;
         }
-
-        $config = $parent->getConfig();
 
         $uri = static::getUriFromFilename($name);
         if ($config['mode'] === Daux::STATIC_MODE) {

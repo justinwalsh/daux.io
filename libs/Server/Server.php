@@ -77,7 +77,7 @@ class Server
 
         DauxHelper::rebaseConfiguration($params, '//' . $this->base_url);
         $params['base_page'] = '//' . $this->base_url;
-        if (!$this->daux->options['clean_urls']) {
+        if (!$this->daux->options['live']['clean_urls']) {
             $params['base_page'] .= 'index.php/';
         }
 

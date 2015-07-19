@@ -1,7 +1,7 @@
 <?php $this->layout('theme::layout/00_layout') ?>
 
-<?php if ($params['repo']) { ?>
-    <a href="https://github.com/<?php echo $params['repo']; ?>" target="_blank" id="github-ribbon" class="hidden-print"><img src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"></a>
+<?php if ($params['html']['repo']) { ?>
+    <a href="https://github.com/<?php echo $params['html']['repo']; ?>" target="_blank" id="github-ribbon" class="hidden-print"><img src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"></a>
 <?php } ?>
 <div class="container-fluid fluid-height wrapper">
     <div class="navbar navbar-fixed-top hidden-print">
@@ -26,15 +26,15 @@
                 else echo $this->get_navigation($tree, '', isset($params['request'])? $params['request'] : '', $base_page, $params['mode']);
                 ?>
 
-                <?php if (!empty($params['links']) || !empty($params['twitter']) || $params['toggle_code']) { ?>
+                <?php if (!empty($params['html']['links']) || !empty($params['html']['twitter']) || $params['html']['toggle_code']) { ?>
                     <div class="well well-sidebar">
 
                         <!-- Links -->
-                        <?php foreach ($params['links'] as $name => $url) echo '<a href="' . $url . '" target="_blank">' . $name . '</a><br>'; ?>
-                        <?php if ($params['toggle_code']) echo '<a href="#" id="toggleCodeBlockBtn" onclick="toggleCodeBlocks();">Show Code Blocks Inline</a><br>'; ?>
+                        <?php foreach ($params['html']['links'] as $name => $url) echo '<a href="' . $url . '" target="_blank">' . $name . '</a><br>'; ?>
+                        <?php if ($params['html']['toggle_code']) echo '<a href="#" id="toggleCodeBlockBtn" onclick="toggleCodeBlocks();">Show Code Blocks Inline</a><br>'; ?>
 
                         <!-- Twitter -->
-                        <?php foreach ($params['twitter'] as $handle) { ?>
+                        <?php foreach ($params['html']['twitter'] as $handle) { ?>
                             <div class="twitter">
                                 <hr/>
                                 <iframe allowtransparency="true" frameborder="0" scrolling="no" style="width:162px; height:20px;" src="https://platform.twitter.com/widgets/follow_button.html?screen_name=<?php echo $handle;?>&amp;show_count=false"></iframe>
@@ -44,7 +44,7 @@
                 <?php } ?>
             </div>
         </div>
-        <div class="right-column <?php echo ($params['float']?'float-view':''); ?> content-area col-sm-9">
+        <div class="right-column <?php echo ($params['html']['float']?'float-view':''); ?> content-area col-sm-9">
             <div class="content-page">
                 <?= $this->section('content'); ?>
             </div>

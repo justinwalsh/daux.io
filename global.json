@@ -1,31 +1,42 @@
 {
     "docs_directory": "docs",
-    "valid_markdown_extensions": ["md", "markdown"],
+    "valid_content_extensions": ["md", "markdown"],
 
     "title": "My Project",
     "tagline": "My Stylish Documentation",
     "author": "I, Me & Myself",
     "image": "",
-    "repo": "",
-    "twitter": [],
-    "links": {
-    },
-
     "languages": {},
-    "theme": "daux-blue",
+
     "ignore": {
         "files": [],
         "folders": []
     },
 
-    "breadcrumbs": false,
-    "clean_urls": false,
-    "toggle_code": false,
-    "date_modified": false,
-    "float": false,
     "timezone": "America/Los_Angeles",
 
-    "google_analytics": false,
-    "piwik_analytics": false,
-    "piwik_analytics_id": "0"
+    "live": {
+        "clean_urls": false
+    },
+
+    "html": {
+        "theme": "daux-blue",
+        "breadcrumbs": false,
+        "toggle_code": false,
+        "date_modified": false,
+        "float": false,
+
+        "repo": "",
+        "twitter": [],
+        "links": {
+        },
+
+        "google_analytics": false,
+        "piwik_analytics": false,
+        "piwik_analytics_id": "0"
+    },
+
+    "confluence": {
+        "prefix": ""
+    }
 }

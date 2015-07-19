@@ -9,9 +9,6 @@ class Daux
     const STATIC_MODE = 'DAUX_STATIC';
     const LIVE_MODE = 'DAUX_LIVE';
 
-    /** @var string[] */
-    public static $VALID_MARKDOWN_EXTENSIONS;
-
     /** @var string */
     public $local_base;
 
@@ -85,7 +82,7 @@ class Daux
     {
         $default_config = [
             'docs_directory' => 'docs',
-            'valid_markdown_extensions' => ['md', 'markdown']
+            'valid_content_extensions' => ['md', 'markdown']
         ];
 
         $global_config_file = $this->local_base . DS . 'global.json';
@@ -103,8 +100,6 @@ class Daux
         if (!is_dir($this->docs_path) && !is_dir($this->docs_path = $this->local_base . DS . $this->docs_path)) {
             throw new Exception('The Docs directory does not exist. Check the path again : ' . $this->docs_path);
         }
-
-        static::$VALID_MARKDOWN_EXTENSIONS = $default_config['valid_markdown_extensions'];
 
         $this->options = new Config();
         $this->options->merge($default_config);
@@ -173,7 +168,6 @@ class Daux
                 'multilanguage' => !empty($this->options['languages']),
 
                 //Paths and tree
-                'theme-name' => $this->options['theme'],
                 'mode' => $this->mode,
                 'local_base' => $this->local_base,
                 'docs_path' => $this->docs_path,

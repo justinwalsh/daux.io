@@ -73,12 +73,12 @@ class MarkdownPage extends \Todaymade\Daux\Format\Base\MarkdownPage
             'markdown' => $this->content,
             'request' => $params['request'],
             'content' => $this->convertPage($this->content),
-            'breadcrumbs' => $params['breadcrumbs']
+            'breadcrumbs' => $params['html']['breadcrumbs']
         ];
 
         if ($page['breadcrumbs']) {
             $page['breadcrumb_trail'] = $this->getBreadcrumbTrail($this->file->getParents(), $params['multilanguage']);
-            $page['breadcrumb_separator'] = $params['breadcrumb_separator'];
+            $page['breadcrumb_separator'] = $params['html']['breadcrumb_separator'];
         }
 
         $template = new Template($params['templates'], $params['theme']['templates']);

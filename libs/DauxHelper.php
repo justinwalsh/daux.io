@@ -7,7 +7,7 @@ class DauxHelper
     public static function rebaseConfiguration(Config $config, $base_url)
     {
         // Avoid changing the url if it is already correct
-        if ($config['base_url'] == $base_url && !empty($config['theme']) && !is_string($config['theme'])) {
+        if ($config['base_url'] == $base_url && !empty($config['theme'])) {
             return;
         }
 
@@ -24,8 +24,8 @@ class DauxHelper
      */
     public static function getTheme($params, $current_url)
     {
-        $theme_folder = $params['local_base'] . DS . 'resources' . DS . 'themes' . DS . $params['theme-name'];
-        $theme_url = $params['base_url'] . "resources/themes/" . $params['theme-name'] . '/';
+        $theme_folder = $params['local_base'] . DS . 'resources' . DS . 'themes' . DS . $params['html']['theme'];
+        $theme_url = $params['base_url'] . "resources/themes/" . $params['html']['theme'] . '/';
 
         $theme = array();
         if (is_file($theme_folder . DS . "config.json")) {
@@ -37,7 +37,7 @@ class DauxHelper
 
         //Default parameters for theme
         $theme += [
-            'name' => $params['theme-name'],
+            'name' => $params['html']['theme'],
             'css' => [],
             'js' => [],
             'fonts' => [],

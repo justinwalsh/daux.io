@@ -26,11 +26,11 @@
 <body>
     <?= $this->section('content'); ?>
 
-    <?php if ($params['google_analytics']) {
-        $this->insert('theme::partials/google_analytics', ['analytics' => $params['google_analytics'], 'host' => array_key_exists('host', $params)? $params['host'] : '']);
+    <?php if ($params['html']['google_analytics']) {
+        $this->insert('theme::partials/google_analytics', ['analytics' => $params['html']['google_analytics'], 'host' => array_key_exists('host', $params)? $params['host'] : '']);
     } ?>
-    <?php if ($params['piwik_analytics']) {
-        $this->insert('theme::partials/piwik_analytics', ['url' => $params['piwik_analytics'], 'id' => $params['piwik_analytics_id']]);
+    <?php if ($params['html']['piwik_analytics']) {
+        $this->insert('theme::partials/piwik_analytics', ['url' => $params['html']['piwik_analytics'], 'id' => $params['html']['piwik_analytics_id']]);
     } ?>
 
 
