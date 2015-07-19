@@ -69,8 +69,6 @@ class Daux
 
         //config.json
         $this->loadConfigOverrides($override_file);
-
-        $this->generateTree();
     }
 
     /**
@@ -145,7 +143,7 @@ class Daux
     /**
      * Generate the tree that will be used
      */
-    private function generateTree()
+    public function generateTree()
     {
         $this->tree = new Root($this->getParams(), $this->docs_path);
         Builder::build($this->tree, $this->options['ignore']);

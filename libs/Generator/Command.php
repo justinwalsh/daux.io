@@ -33,7 +33,8 @@ class Command extends SymfonyCommand
         // Instiantiate the processor if one is defined
         $this->prepareProcessor($daux, $input, $output, $width);
 
-        // Improve the tree with a processor
+        // Generate the tree
+        $daux->generateTree();
         $daux->getProcessor()->manipulateTree($daux->tree);
 
         // Set the format if requested

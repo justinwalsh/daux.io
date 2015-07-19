@@ -96,7 +96,7 @@ class Template
         foreach ($tree->getEntries() as $node) {
             $url = $node->getUri();
             if ($node instanceof Content) {
-                if ($node->getName() === '_index') {
+                if (in_array($node->getName(), ['index', '_index'])) {
                     continue;
                 }
 

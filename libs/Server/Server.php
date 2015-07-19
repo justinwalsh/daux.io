@@ -5,7 +5,6 @@ use Todaymade\Daux\Daux;
 use Todaymade\Daux\DauxHelper;
 use Todaymade\Daux\Exception;
 use Todaymade\Daux\Format\Base\LiveGenerator;
-use Todaymade\Daux\Format\HTML\Generator;
 use Todaymade\Daux\Format\HTML\RawPage;
 
 class Server
@@ -23,7 +22,6 @@ class Server
     public static function serve()
     {
         $daux = new Daux(Daux::LIVE_MODE);
-
         $daux->initialize();
 
         $class = $daux->getProcessorClass();
@@ -31,14 +29,17 @@ class Server
             $daux->setProcessor(new $class($daux, new NullOutput(), 0));
         }
 
+        // Set this critical configuration
+        // for the tree generation
+        $daux->getParams()['index_key'] = 'index';
+
         // Improve the tree with a processor
+        $daux->generateTree();
         $daux->getProcessor()->manipulateTree($daux->tree);
 
         $server = new static($daux);
 
         try {
-
-
             $page = $server->handle($_REQUEST);
         } catch (NotFoundException $e) {
             http_response_code(404);
@@ -85,7 +86,6 @@ class Server
     {
         $params = $this->daux->getParams();
 
-        $params['index_key'] = 'index';
         $params['host'] = $this->host;
 
         DauxHelper::rebaseConfiguration($params, '//' . $this->base_url);
@@ -111,8 +111,8 @@ class Server
 
         $request = $this->getRequest();
         $request = urldecode($request);
-        if ($request == 'first_page') {
-            $request = $this->daux->tree->getFirstPage()->getUri();
+        if ($request == 'index_page') {
+            $request = $this->daux->tree->getIndexPage()->getUri();
         }
 
         return $this->getPage($request);
@@ -171,7 +171,7 @@ class Server
         }
         $uri = str_replace(array('//', '../'), '/', trim($uri, '/'));
         if ($uri == "") {
-            $uri = "first_page";
+            $uri = "index_page";
         }
         return $uri;
     }
