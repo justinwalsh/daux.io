@@ -54,19 +54,6 @@ class Generator implements \Todaymade\Daux\Format\Base\Generator
         $this->generateRecursive($this->daux->tree, $destination, $params, $output, $width);
     }
 
-    private function rebaseConfig(Config $config, $base_url)
-    {
-        // Avoid changing the url if it is already correct
-        if ($config['base_url'] == $base_url && !empty($config['theme']) && !is_string($config['theme'])) {
-            return;
-        }
-
-        // Change base url for all links on the pages
-        $config['base_url'] = $config['base_page'] = $base_url;
-        $config['theme'] = DauxHelper::getTheme($config, $base_url);
-        $config['image'] = str_replace('<base_url>', $base_url, $config['image']);
-    }
-
     /**
      * Recursively generate the documentation
      *
@@ -80,7 +67,7 @@ class Generator implements \Todaymade\Daux\Format\Base\Generator
      */
     private function generateRecursive(Directory $tree, $output_dir, $params, $output, $width, $base_url = '')
     {
-        $this->rebaseConfig($params, $base_url);
+        DauxHelper::rebaseConfiguration($params, $base_url);
 
         if ($base_url !== '' && empty($params['entry_page'])) {
             $params['entry_page'] = $tree->getFirstPage();
@@ -93,7 +80,7 @@ class Generator implements \Todaymade\Daux\Format\Base\Generator
                 $this->generateRecursive($node, $new_output_dir, $params, $output, $width, '../' . $base_url);
 
                 // Rebase configuration again as $params is a shared object
-                $this->rebaseConfig($params, $base_url);
+                DauxHelper::rebaseConfiguration($params, $base_url);
             } else {
                 $this->runAction(
                     "- " . $node->getUrl(),

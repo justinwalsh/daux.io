@@ -74,16 +74,12 @@ class Server
 
         $params['index_key'] = 'index';
         $params['host'] = $this->host;
-        $params['base_page'] = $params['base_url'] = '//' . $this->base_url;
+
+        DauxHelper::rebaseConfiguration($params, '//' . $this->base_url);
+        $params['base_page'] = '//' . $this->base_url;
         if (!$this->daux->options['clean_urls']) {
             $params['base_page'] .= 'index.php/';
         }
-
-        if ($params['image'] !== '') {
-            $params['image'] = str_replace('<base_url>', $params['base_url'], $params['image']);
-        }
-
-        $params['theme'] = DauxHelper::getTheme($params, $this->base_url);
 
         return $params;
     }

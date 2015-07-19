@@ -4,6 +4,19 @@ use Todaymade\Daux\Tree\Directory;
 
 class DauxHelper
 {
+    public static function rebaseConfiguration(Config $config, $base_url)
+    {
+        // Avoid changing the url if it is already correct
+        if ($config['base_url'] == $base_url && !empty($config['theme']) && !is_string($config['theme'])) {
+            return;
+        }
+
+        // Change base url for all links on the pages
+        $config['base_url'] = $config['base_page'] = $base_url;
+        $config['theme'] = static::getTheme($config, $base_url);
+        $config['image'] = str_replace('<base_url>', $base_url, $config['image']);
+    }
+
     /**
      * @param Config $params
      * @param string $current_url

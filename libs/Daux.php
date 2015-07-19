@@ -33,6 +33,12 @@ class Daux
     /** @var string */
     private $mode;
 
+    /** @var bool */
+    private $merged_defaults = false;
+
+    /** @var bool */
+    private $merged_tree = false;
+
     /**
      * @param string $mode
      */
@@ -161,20 +167,27 @@ class Daux
      */
     public function getParams()
     {
-        $default = [
-            //Features
-            'multilanguage' => !empty($this->options['languages']),
+        if (!$this->merged_defaults) {
+            $default = [
+                //Features
+                'multilanguage' => !empty($this->options['languages']),
 
-            //Paths and tree
-            'theme-name' => $this->options['theme'],
-            'mode' => $this->mode,
-            'local_base' => $this->local_base,
-            'docs_path' => $this->docs_path,
-            'templates' => $this->internal_base . DS . 'templates',
-        ];
-        $this->options->conservativeMerge($default);
+                //Paths and tree
+                'theme-name' => $this->options['theme'],
+                'mode' => $this->mode,
+                'local_base' => $this->local_base,
+                'docs_path' => $this->docs_path,
+                'templates' => $this->internal_base . DS . 'templates',
+            ];
+            $this->options->conservativeMerge($default);
 
-        if ($this->tree) {
+            $this->options['index_key'] = 'index.html';
+            $this->options['base_page'] = $this->options['base_url'] = '';
+
+            $this->merged_defaults = true;
+        }
+
+        if ($this->tree && !$this->merged_tree) {
             $this->options['tree'] = $this->tree;
             $this->options['index'] = $this->tree->getIndexPage() ?: $this->tree->getFirstPage();
             if ($this->options['multilanguage']) {
@@ -184,10 +197,8 @@ class Daux
             } else {
                 $this->options['entry_page'] = $this->tree->getFirstPage();
             }
+            $this->merged_tree = true;
         }
-
-        $this->options['index_key'] = 'index.html';
-        $this->options['base_page'] = $this->options['base_url'] = '';
 
         return $this->options;
     }
