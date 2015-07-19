@@ -22,8 +22,8 @@
             <div id="sub-nav-collapse" class="sub-nav-collapse">
                 <!-- Navigation -->
                 <?php
-                if ($page['language'] !== '') echo $this->get_navigation($tree->value[$page['language']], $page['language'], $params['request'], $base_page, $params['mode']);
-                else echo $this->get_navigation($tree, '', $params['request'], $base_page, $params['mode']);
+                if ($page['language'] !== '') echo $this->get_navigation($tree->value[$page['language']], $page['language'], isset($params['request'])? $params['request'] : '', $base_page, $params['mode']);
+                else echo $this->get_navigation($tree, '', isset($params['request'])? $params['request'] : '', $base_page, $params['mode']);
                 ?>
 
                 <?php if (!empty($params['links']) || !empty($params['twitter']) || $params['toggle_code']) { ?>

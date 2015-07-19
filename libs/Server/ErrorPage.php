@@ -34,6 +34,7 @@ class ErrorPage extends SimplePage
         $page = [
             'title' => $this->title,
             'content' => $this->content,
+            'language' => '',
         ];
 
         $template = new Template($params['templates'], $params['theme']['templates']);
