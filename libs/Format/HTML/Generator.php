@@ -8,40 +8,50 @@ use Todaymade\Daux\DauxHelper;
 use Todaymade\Daux\Format\Base\CommonMark\CommonMarkConverter;
 use Todaymade\Daux\Format\Base\RunAction;
 use Todaymade\Daux\Generator\Helper;
-use Todaymade\Daux\Tree\Directory;
 use Todaymade\Daux\Tree\Content;
+use Todaymade\Daux\Tree\Directory;
+use Todaymade\Daux\Tree\Entry;
+use Todaymade\Daux\Tree\Raw;
 
 class Generator implements \Todaymade\Daux\Format\Base\Generator
 {
     use RunAction;
 
-    /**
-     * @var CommonMarkConverter
-     */
+    /** @var CommonMarkConverter */
     protected $converter;
 
-    public function generate(Daux $daux, InputInterface $input, OutputInterface $output, $width)
+    /** @var Daux */
+    protected $daux;
+
+    /**
+     * @param Daux $daux
+     */
+    public function __construct(Daux $daux)
+    {
+        $this->daux = $daux;
+        $this->converter = new CommonMarkConverter(['daux' => $this->daux->getParams()]);
+    }
+
+    public function generateAll(InputInterface $input, OutputInterface $output, $width)
     {
         $destination = $input->getOption('destination');
 
-        $params = $daux->getParams();
+        $params = $this->daux->getParams();
         if (is_null($destination)) {
-            $destination = $daux->local_base . DS . 'static';
+            $destination = $this->daux->local_base . DS . 'static';
         }
-
-        $this->converter = new CommonMarkConverter(['daux' => $params]);
 
         $this->runAction(
             "Copying Static assets ...",
             $output,
             $width,
-            function() use ($destination, $daux) {
-                Helper::copyAssets($destination, $daux->local_base);
+            function () use ($destination) {
+                Helper::copyAssets($destination, $this->daux->local_base);
             }
         );
 
         $output->writeLn("Generating ...");
-        $this->generateRecursive($daux->tree, $destination, $params, $output, $width);
+        $this->generateRecursive($this->daux->tree, $destination, $params, $output, $width);
     }
 
     private function rebaseConfig(Config $config, $base_url)
@@ -84,29 +94,32 @@ class Generator implements \Todaymade\Daux\Format\Base\Generator
 
                 // Rebase configuration again as $params is a shared object
                 $this->rebaseConfig($params, $base_url);
-            } elseif ($node instanceof Content) {
-                $this->runAction(
-                    "- " . $node->getUrl(),
-                    $output,
-                    $width,
-                    function() use ($node, $output_dir, $key, $params) {
-                        $params['request'] = $node->getUrl();
-                        $params['file_uri'] = $node->getName();
-
-                        $page = MarkdownPage::fromFile($node, $params, $this->converter);
-                        file_put_contents($output_dir . DS . $key, $page->getContent());
-                    }
-                );
             } else {
                 $this->runAction(
                     "- " . $node->getUrl(),
                     $output,
                     $width,
-                    function() use ($node, $output_dir, $key) {
-                        copy($node->getPath(), $output_dir . DS . $key);
+                    function () use ($node, $output_dir, $key, $params) {
+                        if (!$node instanceof Content) {
+                            copy($node->getPath(), $output_dir . DS . $key);
+                            return;
+                        }
+
+                        $generated = $this->generateOne($node, $params);
+                        file_put_contents($output_dir . DS . $key, $generated->getContent());
                     }
                 );
             }
         }
+    }
+
+    public function generateOne(Entry $node, $params)
+    {
+        if ($node instanceof Raw) {
+            return new RawPage($node->getPath());
+        }
+
+        $params['request'] = $node->getUrl();
+        return MarkdownPage::fromFile($node, $params, $this->converter);
     }
 }

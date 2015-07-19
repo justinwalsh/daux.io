@@ -13,32 +13,38 @@ class Generator implements \Todaymade\Daux\Format\Base\Generator
 {
     use RunAction;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     protected $prefix;
 
-    /**
-     * @var CommonMarkConverter
-     */
+    /** @var CommonMarkConverter */
     protected $converter;
 
-    public function generate(Daux $daux, InputInterface $input, OutputInterface $output, $width)
+    /** @var Daux */
+    protected $daux;
+
+    /**
+     * @param Daux $daux
+     */
+    public function __construct(Daux $daux)
     {
-        $params = $daux->getParams();
+        $this->daux = $daux;
+        $this->converter = new CommonMarkConverter(['daux' => $this->daux->getParams()]);
+    }
+
+    public function generateAll(InputInterface $input, OutputInterface $output, $width)
+    {
+        $params = $this->daux->getParams();
 
         $confluence = $params['confluence'];
         $this->prefix = trim($confluence['prefix']) . " ";
-
-        $this->converter = new CommonMarkConverter(['daux' => $params]);
 
         $tree = $this->runAction(
             "Generating Tree ...",
             $output,
             $width,
-            function() use ($daux, $params) {
-                $tree = $this->generateRecursive($daux->tree, $params);
-                $tree['title'] = $this->prefix . $daux->getParams()['title'];
+            function() use ($params) {
+                $tree = $this->generateRecursive($this->daux->tree, $params);
+                $tree['title'] = $this->prefix . $params['title'];
 
                 return $tree;
             }
@@ -70,7 +76,6 @@ class Generator implements \Todaymade\Daux\Format\Base\Generator
                 );
             } elseif ($node instanceof Content) {
                 $params['request'] = $node->getUrl();
-                $params['file_uri'] = $node->getName();
 
                 $data = [
                     'title' => $this->prefix . $node->getTitle(),

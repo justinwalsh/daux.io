@@ -3,10 +3,8 @@
 use Todaymade\Daux\Daux;
 use Todaymade\Daux\DauxHelper;
 use Todaymade\Daux\Exception;
-use Todaymade\Daux\Format\Base\CommonMark\CommonMarkConverter;
-use Todaymade\Daux\Format\HTML\MarkdownPage;
+use Todaymade\Daux\Format\HTML\Generator;
 use Todaymade\Daux\Format\HTML\RawPage;
-use Todaymade\Daux\Tree\Raw;
 
 class Server
 {
@@ -123,18 +121,9 @@ class Server
             throw new NotFoundException('The Page you requested is yet to be made. Try again later.');
         }
 
-        if ($file instanceof Raw) {
-            return new RawPage($file->getPath());
-        }
-
-        $params = $this->params;
-
-        $params['request'] = $request;
-        $params['file_uri'] = $file->getUri();
-        if ($request !== 'index') {
-            $params['entry_page'] = $file->getFirstPage();
-        }
-        return MarkdownPage::fromFile($file, $params, new CommonMarkConverter(['daux' => $params]));
+        // TODO :: make it possible to replace the generator in live code
+        $generator = new Generator($this->daux);
+        return $generator->generateOne($file, $this->params);
     }
 
     public function getRequest()

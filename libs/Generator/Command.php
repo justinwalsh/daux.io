@@ -74,6 +74,6 @@ class Command extends SymfonyCommand
             throw new \RuntimeException("the class '$class' does not implement the '$interface' interface");
         }
 
-        (new $class())->generate($daux, $input, $output, $width);
+        (new $class($daux))->generateAll($input, $output, $width);
     }
 }
