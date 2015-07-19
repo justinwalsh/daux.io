@@ -75,7 +75,14 @@ if (php_sapi_name() === 'cli-server') {
     $_SERVER['SCRIPT_NAME'] = '/index.php';
 }
 
-require_once("vendor/autoload.php");
+if (file_exists('vendor/autoload.php')) {
+    require_once('vendor/autoload.php');
+} elseif (file_exists('daux.phar')) {
+    define('PHAR_DIR', __DIR__);
+    require_once("phar://" . __DIR__ . "/daux.phar/vendor/autoload.php");
+} else {
+    throw new Exception("Impossible to load Daux, missing vendor and phar");
+}
 
 \Todaymade\Daux\Daux::initConstants();
 
