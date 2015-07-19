@@ -19,8 +19,12 @@
 * Built On Bootstrap
 * No Build Step
 * Git/SVN Friendly
-* Google Analytics
+* Supports Google Analytics and Piwik Analytics
 * Optional code float layout
+* Static Output Generation
+* Internal documentation links
+* Multiple Output Formats
+* Extend Daux.io with Processors
 
 <div class="clear"></div>
 <hr/>
