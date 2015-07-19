@@ -6,6 +6,7 @@ use Todaymade\Daux\Config;
 use Todaymade\Daux\Daux;
 use Todaymade\Daux\DauxHelper;
 use Todaymade\Daux\Format\Base\CommonMark\CommonMarkConverter;
+use Todaymade\Daux\Format\Base\LiveGenerator;
 use Todaymade\Daux\Format\Base\RunAction;
 use Todaymade\Daux\Generator\Helper;
 use Todaymade\Daux\Tree\Content;
@@ -13,7 +14,7 @@ use Todaymade\Daux\Tree\Directory;
 use Todaymade\Daux\Tree\Entry;
 use Todaymade\Daux\Tree\Raw;
 
-class Generator implements \Todaymade\Daux\Format\Base\Generator
+class Generator implements \Todaymade\Daux\Format\Base\Generator, LiveGenerator
 {
     use RunAction;
 
@@ -100,7 +101,12 @@ class Generator implements \Todaymade\Daux\Format\Base\Generator
         }
     }
 
-    public function generateOne(Entry $node, $params)
+    /**
+     * @param Entry $node
+     * @param Config $params
+     * @return \Todaymade\Daux\Format\Base\Page
+     */
+    public function generateOne(Entry $node, Config $params)
     {
         if ($node instanceof Raw) {
             return new RawPage($node->getPath());

@@ -1,8 +1,10 @@
 <?php namespace Todaymade\Daux\Server;
 
+use Symfony\Component\Console\Output\NullOutput;
 use Todaymade\Daux\Daux;
 use Todaymade\Daux\DauxHelper;
 use Todaymade\Daux\Exception;
+use Todaymade\Daux\Format\Base\LiveGenerator;
 use Todaymade\Daux\Format\HTML\Generator;
 use Todaymade\Daux\Format\HTML\RawPage;
 
@@ -22,9 +24,20 @@ class Server
     {
         $daux = new Daux(Daux::LIVE_MODE);
 
+        $daux->initialize();
+
+        $class = $daux->getProcessorClass();
+        if ($class) {
+            $daux->setProcessor(new $class($daux, new NullOutput(), 0));
+        }
+
+        // Improve the tree with a processor
+        $daux->getProcessor()->manipulateTree($daux->tree);
+
+        $server = new static($daux);
+
         try {
-            $daux->initialize();
-            $server = new static($daux);
+
 
             $page = $server->handle($_REQUEST);
         } catch (NotFoundException $e) {
@@ -117,9 +130,16 @@ class Server
             throw new NotFoundException('The Page you requested is yet to be made. Try again later.');
         }
 
-        // TODO :: make it possible to replace the generator in live code
-        $generator = new Generator($this->daux);
-        return $generator->generateOne($file, $this->params);
+        $generator = $this->daux->getGenerator();
+
+        if (!$generator instanceof LiveGenerator) {
+            throw new \RuntimeException(
+                "The generator '" . get_class($generator) . "' does not implement the interface " .
+                "'Todaymade\\Daux\\Format\\Base\\LiveGenerator' and thus doesn't support live rendering."
+            );
+        }
+
+        return $this->daux->getGenerator()->generateOne($file, $this->params);
     }
 
     public function getRequest()

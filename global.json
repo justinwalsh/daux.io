@@ -8,6 +8,9 @@
     "image": "",
     "languages": {},
 
+    "format": "html",
+    "processor": "",
+
     "ignore": {
         "files": [],
         "folders": []

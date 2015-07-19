@@ -233,4 +233,49 @@ class Daux
 
         return array_replace($default, $extended);
     }
+
+
+    public function getProcessorClass()
+    {
+        $processor = $this->getParams()['processor'];
+
+        if (empty($processor)) {
+            return null;
+        }
+
+        $class = "\\Todaymade\\Daux\\Extension\\" . $processor;
+        if (!class_exists($class)) {
+            throw new \RuntimeException("Class '$class' not found. We cannot use it as a Processor");
+        }
+
+        //TODO :: check that it implements processor
+
+        return $class;
+    }
+
+    /**
+     * @return \Todaymade\Daux\Format\Base\Generator
+     */
+    public function getGenerator()
+    {
+        $generators = $this->getGenerators();
+
+        $format = $this->getParams()['format'];
+
+        if (!array_key_exists($format, $generators)) {
+            throw new \RuntimeException("The format '$format' doesn't exist, did you forget to set your processor ?");
+        }
+
+        $class = $generators[$format];
+        if (!class_exists($class)) {
+            throw new \RuntimeException("Class '$class' not found. We cannot use it as a Generator");
+        }
+
+        $interface = 'Todaymade\Daux\Format\Base\Generator';
+        if (!in_array('Todaymade\Daux\Format\Base\Generator', class_implements($class))) {
+            throw new \RuntimeException("The class '$class' does not implement the '$interface' interface");
+        }
+
+        return new $class($this);
+    }
 }

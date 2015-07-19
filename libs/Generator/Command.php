@@ -19,7 +19,7 @@ class Command extends SymfonyCommand
             ->setDescription('Generate documentation')
             ->addOption('configuration', 'c', InputArgument::OPTIONAL, 'Configuration file')
             ->addOption('format', 'f', InputArgument::OPTIONAL, 'Output format, html or confluence', 'html')
-            ->addOption('processor', 'p', InputArgument::OPTIONAL, 'Manipulations on the tree', 'none')
+            ->addOption('processor', 'p', InputArgument::OPTIONAL, 'Manipulations on the tree')
             ->addOption('destination', 'd', InputArgument::OPTIONAL, $description, 'static');
     }
 
@@ -30,50 +30,30 @@ class Command extends SymfonyCommand
 
         $width = $this->getApplication()->getTerminalDimensions()[0];
 
-        $processor = $input->getOption('processor');
-        if (!empty($processor) && $processor != 'none') {
-            $this->prepareProcessor($processor, $daux, $output, $width);
-        }
+        // Instiantiate the processor if one is defined
+        $this->prepareProcessor($daux, $input, $output, $width);
 
         // Improve the tree with a processor
         $daux->getProcessor()->manipulateTree($daux->tree);
 
-        $this->launchGeneration($daux, $input, $output, $width);
+        // Set the format if requested
+        if ($input->getOption('format')) {
+            $daux->getParams()['format'] = $input->getOption('format');
+        }
+
+        // Generate the documentation
+        $daux->getGenerator()->generateAll($input, $output, $width);
     }
 
-    protected function prepareProcessor($processor, Daux $daux, OutputInterface $output, $width)
+    protected function prepareProcessor(Daux $daux, InputInterface $input, OutputInterface $output, $width)
     {
-        $class = "\\Todaymade\\Daux\\Extension\\" . $processor;
-        if (class_exists($class)) {
+        if ($input->getOption('processor')) {
+            $daux->getParams()['processor'] = $input->getOption('processor');
+        }
+
+        $class = $daux->getProcessorClass();
+        if ($class) {
             $daux->setProcessor(new $class($daux, $output, $width));
-        } elseif (file_exists($processor)) {
-            include $processor;
         }
-    }
-
-    protected function launchGeneration(Daux $daux, InputInterface $input, OutputInterface $output, $width)
-    {
-        $generators = $daux->getGenerators();
-
-        $format = strtolower($input->getOption('format'));
-        if (empty($format)) {
-            $format = 'html';
-        }
-
-        if (!array_key_exists($format, $generators)) {
-            throw new \RuntimeException("The format '$format' doesn't exist, did you forget to set your processor ?");
-        }
-
-        $class = $generators[$format];
-        if (!class_exists($class)) {
-            throw new \RuntimeException("Class '$class' not found. We cannot use it as a Generator");
-        }
-
-        $interface = 'Todaymade\Daux\Format\Base\Generator';
-        if (!in_array('Todaymade\Daux\Format\Base\Generator', class_implements($class))) {
-            throw new \RuntimeException("the class '$class' does not implement the '$interface' interface");
-        }
-
-        (new $class($daux))->generateAll($input, $output, $width);
     }
 }
