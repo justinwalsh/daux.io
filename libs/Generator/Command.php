@@ -5,8 +5,6 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Todaymade\Daux\Daux;
-use Todaymade\Daux\Format\HTML\Generator as HTMLGenerator;
-use Todaymade\Daux\Format\Confluence\Generator as ConfluenceGenerator;
 
 class Command extends SymfonyCommand
 {
@@ -53,7 +51,7 @@ class Command extends SymfonyCommand
         }
 
         $class = $daux->getProcessorClass();
-        if ($class) {
+        if (!empty($class)) {
             $daux->setProcessor(new $class($daux, $output, $width));
         }
     }

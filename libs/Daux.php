@@ -53,22 +53,32 @@ class Daux
         }
     }
 
-    public static function initConstants()
-    {
-        define("DS", DIRECTORY_SEPARATOR);
-    }
-
     /**
      * @param string $override_file
      * @throws Exception
      */
     public function initialize($override_file = 'config.json')
     {
-        //global.json (docs dir, markdown files)
-        $this->loadConfig();
+        // global.json
+        $this->loadBaseConfiguration();
 
-        //config.json
-        $this->loadConfigOverrides($override_file);
+        // Check the documentation path
+        $this->docs_path = $this->options['docs_directory'];
+        if (!is_dir($this->docs_path) &&
+            !is_dir($this->docs_path = $this->local_base . DIRECTORY_SEPARATOR . $this->docs_path)
+        ) {
+            throw new Exception('The Docs directory does not exist. Check the path again : ' . $this->docs_path);
+        }
+
+        // <docs>/config.json, <overrides.json>
+        $this->loadConfigurationOverrides($override_file);
+
+        // Set a valid default timezone
+        if (isset($this->options['timezone'])) {
+            date_default_timezone_set($this->options['timezone']);
+        } elseif (!ini_get('date.timezone')) {
+            date_default_timezone_set('GMT');
+        }
     }
 
     /**
@@ -76,31 +86,18 @@ class Daux
      *
      * @throws Exception
      */
-    private function loadConfig()
+    protected function loadBaseConfiguration()
     {
-        $default_config = [
+        $this->options = new Config();
+
+        // Set the default configuration
+        $this->options->merge([
             'docs_directory' => 'docs',
             'valid_content_extensions' => ['md', 'markdown']
-        ];
+        ]);
 
-        $global_config_file = $this->local_base . DS . 'global.json';
-
-        if (!file_exists($global_config_file)) {
-            throw new Exception('The Global Config file is missing. Requested File : ' . $global_config_file);
-        }
-
-        $default_config = array_merge($default_config, json_decode(file_get_contents($global_config_file), true));
-        if (!isset($default_config)) {
-            throw new Exception('The Global Config file is corrupt. Check that the JSON encoding is correct');
-        }
-
-        $this->docs_path = $default_config['docs_directory'];
-        if (!is_dir($this->docs_path) && !is_dir($this->docs_path = $this->local_base . DS . $this->docs_path)) {
-            throw new Exception('The Docs directory does not exist. Check the path again : ' . $this->docs_path);
-        }
-
-        $this->options = new Config();
-        $this->options->merge($default_config);
+        // Load the global configuration
+        $this->loadConfiguration($this->local_base . DIRECTORY_SEPARATOR . 'global.json', false);
     }
 
     /**
@@ -111,33 +108,37 @@ class Daux
      * @param string $override_file
      * @throws Exception
      */
-    private function loadConfigOverrides($override_file)
+    protected function loadConfigurationOverrides($override_file)
     {
         // Read documentation overrides
-        $config_file = $this->docs_path . DS . 'config.json';
-        if (file_exists($config_file)) {
-            $config = json_decode(file_get_contents($config_file), true);
-            if (!isset($config)) {
-                throw new Exception('The local config file is missing. Check path : ' . $config_file);
-            }
-            $this->options->merge($config);
-        }
+        $this->loadConfiguration($this->docs_path . DIRECTORY_SEPARATOR . 'config.json');
 
         // Read command line overrides
-        $config_file = $this->local_base . DS . $override_file;
-        if (!is_null($override_file) && file_exists($config_file)) {
-            $config = json_decode(file_get_contents($config_file), true);
-            if (!isset($config)) {
-                throw new Exception('The local config file is missing. Check path : ' . $config_file);
+        if (!is_null($override_file)) {
+            $this->loadConfiguration($this->local_base . DIRECTORY_SEPARATOR . $override_file);
+        }
+    }
+
+    /**
+     * @param string $config_file
+     * @param bool $optional
+     * @throws Exception
+     */
+    protected function loadConfiguration($config_file, $optional = true)
+    {
+        if (!file_exists($config_file)) {
+            if ($optional) {
+                return;
             }
-            $this->options->merge($config);
+
+            throw new Exception('The configuration file is missing. Check path : ' . $config_file);
         }
 
-        if (isset($this->options['timezone'])) {
-            date_default_timezone_set($this->options['timezone']);
-        } elseif (!ini_get('date.timezone')) {
-            date_default_timezone_set('GMT');
+        $config = json_decode(file_get_contents($config_file), true);
+        if (!isset($config)) {
+            throw new Exception('The configuration file "' . $config_file . '" is corrupt. Is your JSON well-formed ?');
         }
+        $this->options->merge($config);
     }
 
     /**
@@ -169,7 +170,7 @@ class Daux
                 'mode' => $this->mode,
                 'local_base' => $this->local_base,
                 'docs_path' => $this->docs_path,
-                'templates' => $this->internal_base . DS . 'templates',
+                'templates' => $this->internal_base . DIRECTORY_SEPARATOR . 'templates',
             ];
             $this->options->conservativeMerge($default);
 

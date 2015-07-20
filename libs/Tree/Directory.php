@@ -58,7 +58,7 @@ class Directory extends Entry
     }
 
     /**
-     * @return Content|false
+     * @return Content|null
      */
     public function getFirstPage()
     {
@@ -87,7 +87,7 @@ class Directory extends Entry
             }
         }
 
-        return false;
+        return null;
     }
 
     /**

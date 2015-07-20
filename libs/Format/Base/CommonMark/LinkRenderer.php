@@ -49,6 +49,17 @@ class LinkRenderer extends \League\CommonMark\Inline\Renderer\LinkRenderer
      */
     public function render(AbstractInline $inline, HtmlRendererInterface $htmlRenderer)
     {
+        // This can't be in the method type as
+        // the method is an abstract and should
+        // have the same interface
+        if (!$inline instanceof Link) {
+            throw new \RuntimeException(
+                "Wrong type passed to " . __CLASS__ . "::" . __METHOD__ .
+                " the expected type was 'League\\CommonMark\\Inline\\Element\\Link' but '" .
+                get_class($inline) . "' was provided"
+            );
+        }
+
         $element = parent::render($inline, $htmlRenderer);
 
         $url = $inline->getUrl();

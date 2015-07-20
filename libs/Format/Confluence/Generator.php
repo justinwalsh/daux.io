@@ -31,6 +31,9 @@ class Generator implements \Todaymade\Daux\Format\Base\Generator
         $this->converter = new CommonMarkConverter(['daux' => $this->daux->getParams()]);
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function generateAll(InputInterface $input, OutputInterface $output, $width)
     {
         $params = $this->daux->getParams();

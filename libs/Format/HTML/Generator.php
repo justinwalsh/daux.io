@@ -39,14 +39,14 @@ class Generator implements \Todaymade\Daux\Format\Base\Generator, LiveGenerator
 
         $params = $this->daux->getParams();
         if (is_null($destination)) {
-            $destination = $this->daux->local_base . DS . 'static';
+            $destination = $this->daux->local_base . DIRECTORY_SEPARATOR . 'static';
         }
 
         $this->runAction(
             "Copying Static assets ...",
             $output,
             $width,
-            function () use ($destination) {
+            function() use ($destination) {
                 Helper::copyAssets($destination, $this->daux->local_base);
             }
         );
@@ -76,7 +76,7 @@ class Generator implements \Todaymade\Daux\Format\Base\Generator, LiveGenerator
 
         foreach ($tree->getEntries() as $key => $node) {
             if ($node instanceof Directory) {
-                $new_output_dir = $output_dir . DS . $key;
+                $new_output_dir = $output_dir . DIRECTORY_SEPARATOR . $key;
                 mkdir($new_output_dir);
                 $this->generateRecursive($node, $new_output_dir, $params, $output, $width, '../' . $base_url);
 
@@ -87,14 +87,14 @@ class Generator implements \Todaymade\Daux\Format\Base\Generator, LiveGenerator
                     "- " . $node->getUrl(),
                     $output,
                     $width,
-                    function () use ($node, $output_dir, $key, $params) {
+                    function() use ($node, $output_dir, $key, $params) {
                         if (!$node instanceof Content) {
-                            copy($node->getPath(), $output_dir . DS . $key);
+                            copy($node->getPath(), $output_dir . DIRECTORY_SEPARATOR . $key);
                             return;
                         }
 
                         $generated = $this->generateOne($node, $params);
-                        file_put_contents($output_dir . DS . $key, $generated->getContent());
+                        file_put_contents($output_dir . DIRECTORY_SEPARATOR . $key, $generated->getContent());
                     }
                 );
             }

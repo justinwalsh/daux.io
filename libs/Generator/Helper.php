@@ -16,8 +16,11 @@ class Helper
             mkdir($path);
         }
 
-        mkdir($path . DS . 'resources');
-        static::copyRecursive($local_base . DS . 'resources', $path . DS . 'resources');
+        mkdir($path . DIRECTORY_SEPARATOR . 'resources');
+        static::copyRecursive(
+            $local_base . DIRECTORY_SEPARATOR . 'resources',
+            $path . DIRECTORY_SEPARATOR . 'resources'
+        );
     }
 
     /**

@@ -25,7 +25,7 @@ class Server
         $daux->initialize();
 
         $class = $daux->getProcessorClass();
-        if ($class) {
+        if (!empty($class)) {
             $daux->setProcessor(new $class($daux, new NullOutput(), 0));
         }
 
@@ -101,7 +101,7 @@ class Server
      * Handle an incoming request
      *
      * @param array $query
-     * @return \Todaymade\Daux\Tree\Entry
+     * @return \Todaymade\Daux\Format\Base\Page
      * @throws Exception
      * @throws NotFoundException
      */
@@ -120,7 +120,7 @@ class Server
 
     /**
      * @param string $request
-     * @return \Todaymade\Daux\Tree\Entry
+     * @return \Todaymade\Daux\Format\Base\Page
      * @throws NotFoundException
      */
     private function getPage($request)

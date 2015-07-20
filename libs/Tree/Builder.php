@@ -27,7 +27,7 @@ class Builder
                 continue;
             }
 
-            $path = $node->getPath() . DS . $file;
+            $path = $node->getPath() . DIRECTORY_SEPARATOR . $file;
 
             if (is_dir($path) && in_array($file, $ignore['folders'])) {
                 continue;
@@ -37,9 +37,9 @@ class Builder
             }
 
             if (is_dir($path)) {
-                $new = new Directory($node, static::getUriFromFilename(static::getFilename($path)), $path);
+                $new = new Directory($node, static::removeSortingInformations(static::getFilename($path)), $path);
                 $new->setName(DauxHelper::pathinfo($path)['filename']);
-                $new->setTitle(static::getTitleFromFilename($new->getName()));
+                $new->setTitle(static::removeSortingInformations($new->getName(), ' '));
                 static::build($new, $ignore);
             } else {
                 static::createContent($node, $path);
@@ -61,14 +61,14 @@ class Builder
         $config = $parent->getConfig();
 
         if (!in_array(pathinfo($path, PATHINFO_EXTENSION), $config['valid_content_extensions'])) {
-            $entry = new Raw($parent, static::getUriFromFilename(static::getFilename($path)), $path, filemtime($path));
-            $entry->setTitle(static::getTitleFromFilename($name));
+            $entry = new Raw($parent, static::removeSortingInformations(static::getFilename($path)), $path, filemtime($path));
+            $entry->setTitle(static::removeSortingInformations($name, ' '));
             $entry->setName($name);
 
             return $entry;
         }
 
-        $uri = static::getUriFromFilename($name);
+        $uri = static::removeSortingInformations($name);
         if ($config['mode'] === Daux::STATIC_MODE) {
             $uri .= '.html';
         }
@@ -82,7 +82,7 @@ class Builder
                 $entry->setTitle($parent->getTitle());
             }
         } else {
-            $entry->setTitle(static::getTitleFromFilename($name));
+            $entry->setTitle(static::removeSortingInformations($name, ' '));
         }
 
         $entry->setName($name);
@@ -104,7 +104,7 @@ class Builder
      * @param string $filename
      * @return string
      */
-    protected static function getTitleFromFilename($filename)
+    protected static function removeSortingInformations($filename, $separator = '_')
     {
         $filename = explode('_', $filename);
         if ($filename[0] == '' || is_numeric($filename[0])) {
@@ -115,26 +115,7 @@ class Builder
                 $filename[0] = substr($t, 1);
             }
         }
-        $filename = implode(' ', $filename);
-        return $filename;
-    }
-
-    /**
-     * @param string $filename
-     * @return string
-     */
-    protected static function getUriFromFilename($filename)
-    {
-        $filename = explode('_', $filename);
-        if ($filename[0] == '' || is_numeric($filename[0])) {
-            unset($filename[0]);
-        } else {
-            $t = $filename[0];
-            if ($t[0] == '-') {
-                $filename[0] = substr($t, 1);
-            }
-        }
-        $filename = implode('_', $filename);
+        $filename = implode($separator, $filename);
         return $filename;
     }
 

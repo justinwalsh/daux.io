@@ -4,6 +4,12 @@ use Todaymade\Daux\Tree\Directory;
 
 class DauxHelper
 {
+    /**
+     * Set a new base_url for the configuration
+     *
+     * @param Config $config
+     * @param string $base_url
+     */
     public static function rebaseConfiguration(Config $config, $base_url)
     {
         // Avoid changing the url if it is already correct
@@ -24,12 +30,13 @@ class DauxHelper
      */
     public static function getTheme($params, $current_url)
     {
-        $theme_folder = $params['local_base'] . DS . 'resources' . DS . 'themes' . DS . $params['html']['theme'];
+        $theme_folder = $params['local_base'] . DIRECTORY_SEPARATOR . 'resources' .
+            DIRECTORY_SEPARATOR . 'themes' . DIRECTORY_SEPARATOR . $params['html']['theme'];
         $theme_url = $params['base_url'] . "resources/themes/" . $params['html']['theme'] . '/';
 
         $theme = array();
-        if (is_file($theme_folder . DS . "config.json")) {
-            $theme = json_decode(file_get_contents($theme_folder . DS . "config.json"), true);
+        if (is_file($theme_folder . DIRECTORY_SEPARATOR . "config.json")) {
+            $theme = json_decode(file_get_contents($theme_folder . DIRECTORY_SEPARATOR . "config.json"), true);
             if (!$theme) {
                 $theme = array();
             }
@@ -44,7 +51,7 @@ class DauxHelper
             'require-jquery' => false,
             'bootstrap-js' => false,
             'favicon' => '<base_url>resources/img/favicon.png',
-            'templates' => $theme_folder . DS . 'templates',
+            'templates' => $theme_folder . DIRECTORY_SEPARATOR . 'templates',
         ];
 
         $substitutions = [

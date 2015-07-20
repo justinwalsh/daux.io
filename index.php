@@ -84,6 +84,4 @@ if (file_exists('vendor/autoload.php')) {
     throw new Exception("Impossible to load Daux, missing vendor and phar");
 }
 
-\Todaymade\Daux\Daux::initConstants();
-
 \Todaymade\Daux\Server\Server::serve($_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'], $_REQUEST);

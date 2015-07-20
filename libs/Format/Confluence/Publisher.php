@@ -25,7 +25,7 @@ class Publisher
     protected $previous_title;
 
     /**
-     * @var string terminal width
+     * @var integer terminal width
      */
     public $width;
 
