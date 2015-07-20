@@ -11,7 +11,8 @@ module.exports = function (grunt) {
                 options: {
                     keepalive: true,
                     open: true,
-                    port: 8085
+                    port: 8085,
+                    router: "index.php"
                 }
             }
         },
