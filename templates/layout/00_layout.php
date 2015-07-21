@@ -56,6 +56,6 @@
         echo '<script src="' . $js . '"></script>';
     } ?>
 
-    <script src="<?= $base_url; ?>resources/js/custom.js"></script>
+    <script src="<?= $base_url; ?>resources/js/daux.js"></script>
 </body>
 </html>
