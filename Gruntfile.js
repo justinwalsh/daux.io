@@ -11,7 +11,8 @@ module.exports = function (grunt) {
                 options: {
                     keepalive: true,
                     open: true,
-                    port: 8085
+                    port: 8085,
+                    router: "index.php"
                 }
             }
         },
@@ -22,16 +23,16 @@ module.exports = function (grunt) {
                     report: 'min'
                 },
                 files: {
-                    "css/daux-blue.min.css": "less/daux-blue.less",
-                    "css/daux-green.min.css": "less/daux-green.less",
-                    "css/daux-navy.min.css": "less/daux-navy.less",
-                    "css/daux-red.min.css": "less/daux-red.less"
+                    "resources/themes/daux-blue/css/theme.min.css": "resources/themes/daux-blue/less/theme.less",
+                    "resources/themes/daux-green/css/theme.min.css": "resources/themes/daux-green/less/theme.less",
+                    "resources/themes/daux-navy/css/theme.min.css": "resources/themes/daux-navy/less/theme.less",
+                    "resources/themes/daux-red/css/theme.min.css": "resources/themes/daux-red/less/theme.less"
                 }
             }
         },
         watch: {
             scripts: {
-                files: ['less/**/*.less'],
+                files: ['templates/default/theme/**/*.less'],
                 tasks: ['less'],
                 options: {
                     nospawn: true
