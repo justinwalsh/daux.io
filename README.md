@@ -74,7 +74,7 @@ If you want to create a beautiful landing page for your project, simply create a
 {
 	"title": "Daux.io",
 	"tagline": "The Easiest Way To Document Your Project",
-	"image": "<base_url>img/app.png"
+	"image": "app.png"
 }
 ```
 

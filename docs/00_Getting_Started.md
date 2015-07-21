@@ -75,7 +75,7 @@ If you want to create a beautiful landing page for your project, simply create a
 {
 	"title": "Daux.io",
 	"tagline": "The Easiest Way To Document Your Project",
-	"image": "<base_url>img/app.png"
+	"image": "app.png"
 }
 ```
 
@@ -123,7 +123,7 @@ We have 4 built-in Bootstrap themes. To use one of the themes, just set the `the
 ```
 
 ###Custom Theme:
-To use a custom theme, just copy over the theme folder as well as the `.thm` file for that theme into the `themes` directory and set its value in the `theme` param in config.json
+To use a custom theme, just copy over the theme folder into the `themes` directory and set its value in the `theme` param in config.json
 
 ```json
 {

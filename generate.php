@@ -1,6 +1,4 @@
 <?php
-    require_once("libs/daux.php");
-
 /*
 
 Daux.io
@@ -64,9 +62,16 @@ negligence or otherwise) arising in any way out of the use of this
 software, even if advised of the possibility of such damage.
 
 */
-    if (isset($argv[1])) $Daux = new \Todaymade\Daux\Daux($argv[1]);
-    else $Daux = new \Todaymade\Daux\Daux();
-    $Daux->initialize();
-    if (isset($argv[2])) $Daux->generate_static($argv[2]);
-    else $Daux->generate_static();  
-?>
+
+define('LOCAL_BASE', preg_replace('/\/generate.php$/', '', $_SERVER['SCRIPT_FILENAME']));
+
+require_once("vendor/autoload.php");
+
+\Todaymade\Daux\Daux::initConstants();
+
+$global_config = (isset($argv[1]))? $argv[1] : null;
+$destination = (isset($argv[2]))? $argv[2] : null;
+
+$generator = new \Todaymade\Daux\Generator\Generator();
+
+$generator->generate($global_config, $destination);

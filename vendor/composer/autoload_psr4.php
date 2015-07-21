@@ -6,4 +6,7 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'Todaymade\\Daux\\' => array($baseDir . '/libs'),
+    'League\\Plates\\' => array($vendorDir . '/league/plates/src'),
+    'League\\CommonMark\\' => array($vendorDir . '/league/commonmark/src'),
 );
