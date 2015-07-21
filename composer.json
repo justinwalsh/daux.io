@@ -13,6 +13,7 @@
     ],
     "require": {
         "php": ">=5.3",
-        "erusev/parsedown": "~1.0"
+        "erusev/parsedown": "*",
+        "erusev/parsedown-extra": "*"
     }
 }

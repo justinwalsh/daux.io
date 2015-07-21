@@ -161,7 +161,15 @@
 
         private function generate_page() {
             $params = $this->params;
-            $Parsedown = new \Parsedown();
+            
+            $Parsedown = null;
+
+            if($this->params['parsedown_extra_support']) {
+                $Parsedown = new \ParsedownExtra();
+            } else {
+                $Parsedown = new \Parsedown();
+            }
+
             if ($params['request'] === $params['index_key']) {
                 if ($params['multilanguage']) {
                     foreach ($params['languages'] as $key => $name) {
