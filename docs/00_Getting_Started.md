@@ -36,7 +36,12 @@ Do you use Daux.io? Send me a pull request or open an [issue](https://github.com
 
 ## Download
 
-Download this repository as a zip, and unpack. Copy the files to a web server that can run PHP 5.3 or greater. You can also run the documentation locally using Grunt.js, which is covered at the end of this readme.
+Download this repository as a zip, and unpack. Copy the files to a web server that can run PHP 5.3 or greater.
+You can also run the documentation locally using Grunt.js, which is covered at the end of this readme.
+
+If you don't intend to modify Daux.io and just want to use it, you only need to copy `resources`, `daux.phar`, `global.json`, `generate`, `serve` and `index.php` With these, you're ready to create your documentation.
+
+If however you wish to do some advanced modifications, I recommend you use the raw version and run `composer install` to get started.
 
 ## Generating a set of static files
 
@@ -231,6 +236,27 @@ Directory structure:
 │   │   ├── 05_More_Examples
 │   │   │   ├── Hello_World.md
 │   │   │   ├── 05_Code_Highlighting.md
+```
+
+### Format
+Change the output format. It is recommended you set only formats that support the live mode as this will also
+be read by the integrated web server. And you set the other formats (like confluence) only by command line
+
+```json
+{
+	"format": "html"
+}
+```
+
+### Processor
+You can set the processor in the documentation or as an option to the command line. If you need it when running the server, you should add it to the configuration.
+
+More information on how to create a Processor can be found [here](!For_Developers/Creating_a_Processor).
+ 
+```json
+{
+    "processor": "MyProcessor"
+}
 ```
 
 ### HTML Export Configuration
