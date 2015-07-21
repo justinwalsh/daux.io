@@ -4,7 +4,7 @@
     <a href="https://github.com/<?= $params['html']['repo']; ?>" target="_blank" id="github-ribbon" class="hidden-print"><img src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"></a>
 <?php } ?>
 <div class="container-fluid fluid-height wrapper">
-    <div class="navbar navbar-fixed-top hidden-print">
+    <div class="navbar navbar-static-top hidden-print">
         <div class="container-fluid">
             <?php $this->insert('theme::partials/navbar_content', ['params' => $params]); ?>
         </div>
@@ -30,7 +30,7 @@
                 ?>
 
                 <?php if (!empty($params['html']['links']) || !empty($params['html']['twitter']) || $params['html']['toggle_code']) { ?>
-                    <div class="well well-sidebar">
+                    <div class="sidebar-links">
 
                         <!-- Links -->
                         <?php
