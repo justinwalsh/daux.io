@@ -8,6 +8,7 @@
             "folders": ["99_Not_Ready"]
     },
     "live": {
+        "inherit_index": true,
         "clean_urls": true
     },
     "html": {
