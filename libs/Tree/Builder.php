@@ -145,8 +145,10 @@ class Builder
      */
     public static function getOrCreatePage(Directory $parent, $title)
     {
-        $slug = DauxHelper::slug($title);
-        $uri = $slug . ".html";
+        $uri = $slug = DauxHelper::slug($title);
+        if ($parent->getConfig()['mode'] === Daux::STATIC_MODE) {
+            $uri = $slug . ".html";
+        }
 
         if (array_key_exists($uri, $parent->getEntries())) {
             return $parent->getEntries()[$uri];

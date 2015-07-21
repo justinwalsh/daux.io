@@ -2,7 +2,7 @@
 
 use League\CommonMark\Environment;
 use Symfony\Component\Console\Output\OutputInterface;
-use Todaymade\Daux\Tree\Directory;
+use Todaymade\Daux\Tree\Root;
 
 class Processor
 {
@@ -38,9 +38,9 @@ class Processor
      * the tree as you want, move pages, modify
      * pages and even add new ones.
      *
-     * @param Directory $root
+     * @param Root $root
      */
-    public function manipulateTree(Directory $root)
+    public function manipulateTree(Root $root)
     {
     }
 

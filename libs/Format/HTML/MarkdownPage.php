@@ -40,7 +40,8 @@ class MarkdownPage extends \Todaymade\Daux\Format\Base\MarkdownPage
         $breadcrumb_trail = array();
         if (!empty($parents)) {
             foreach ($parents as $node) {
-                $breadcrumb_trail[$node->getTitle()] = $node->getUrl();
+                $page = $node->getIndexPage() ?: $node->getFirstPage();
+                $breadcrumb_trail[$node->getTitle()] = $page? $page->getUrl() : '';
             }
         }
         return $breadcrumb_trail;
