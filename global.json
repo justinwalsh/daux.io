@@ -16,6 +16,10 @@
         "folders": []
     },
 
+    "filter": {
+        "ips": []
+    },
+
     "timezone": "America/Los_Angeles",
 
     "live": {

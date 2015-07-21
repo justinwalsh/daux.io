@@ -197,13 +197,24 @@ You can Also give a specific Piwik ID as well.
 ```
 
 ###Ignore:
-Set custom files and entire folders to ignore within your `/docs` folder. For files make sure to include the file extension in the name. For both files and folders, names are case-sensitive.
+Set custom files and entire folders to ignore within your `/docs` folder. For files make sure to include the file extension in the name. For both files and folders, names are case-sensitive.  Ignore rules can be overridden at the directory level using a config.json file within a directory.
 
 ```json
 	{
 		"ignore": {
 			"files": ["Work_In_Progress.md"],
 			"folders": ["99_Not_Ready"]
+		}
+	}
+```
+
+###Filter:
+Set filter(s) that will restrict a visitors access to a specific folder.  Filter rules can be overridden at the directory level using a config.json file within a directory.
+
+```json
+	{
+		"filter": {
+			"ips": ["192.168.1.1"]
 		}
 	}
 ```

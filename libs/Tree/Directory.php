@@ -2,6 +2,9 @@
 
 class Directory extends Entry
 {
+    /** @var Config */
+    protected $config;
+
     /** @var Entry[] */
     protected $children = [];
 
@@ -36,11 +39,34 @@ class Directory extends Entry
      */
     public function getConfig()
     {
+
+        /**
+         * Return if override
+         */
+        if( !empty($this->config) ){
+            return $this->config;
+        }
+
+        /**
+         * Validate parent node exists
+         */
         if (!$this->parent) {
             throw new \RuntimeException("Could not retrieve configuration. Are you sure that your tree has a Root ?");
         }
 
+        /**
+         * Call parent getConfig
+         */
         return $this->parent->getConfig();
+
+    }
+
+    /**
+     * @param Config $config
+     */
+    public function setConfig($config)
+    {
+        $this->config = $config;
     }
 
     /**

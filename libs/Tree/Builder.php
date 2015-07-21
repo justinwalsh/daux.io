@@ -37,11 +37,57 @@ class Builder
             }
 
             if (is_dir($path)) {
+
+                /**
+                 * Load Configuration
+                 */
+                $config = clone $node->getConfig();
+
+                /**
+                 * Load directory specific overrides
+                 */
+                $config_override_file = $path . DIRECTORY_SEPARATOR . 'config.json';
+                if( is_readable($config_override_file) ){
+                  $config_overrides = json_decode(file_get_contents($config_override_file), true);
+                  if (!isset($config_overrides)) {
+                    throw new \RuntimeException('The configuration file "' . $config_override_file . '" is corrupt. Is your JSON well-formed ?');
+                  }
+                  $config->merge($config_overrides);
+                }
+
+                /**
+                 * Abort pushing onto tree if failed ip filter
+                 */
+                if(
+                  !empty($config['filter'])
+                  && !empty($config['filter']['ips'])
+                  && !in_array($_SERVER['REMOTE_ADDR'], $config['filter']['ips'])
+                  ){
+                  continue;
+                }
+
+                /*
+                  Initialize Directory
+                 */
                 $new = new Directory($node, static::removeSortingInformations(static::getFilename($path)), $path);
                 $new->setName(DauxHelper::pathinfo($path)['filename']);
                 $new->setTitle(static::removeSortingInformations($new->getName(), ' '));
+                if( isset($config_overrides) ){
+                  $new->setConfig( $config );
+                  if( isset($config['ignore']) ){
+                    if( isset($config['ignore']['folders']) ){
+                      $ignore['folders'] = $config['ignore']['folders'];
+                    }
+                    if( isset($config['ignore']['files']) ){
+                      $ignore['files'] = $config['ignore']['files'];
+                    }
+                  }
+                  unset($config_overrides);
+                }
                 static::build($new, $ignore);
-            } else {
+
+            }
+            else {
                 static::createContent($node, $path);
             }
         }
