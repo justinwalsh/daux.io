@@ -3,9 +3,9 @@
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Todaymade\Daux\Config;
+use Todaymade\Daux\Console\RunAction;
 use Todaymade\Daux\Daux;
 use Todaymade\Daux\Format\Confluence\CommonMark\CommonMarkConverter;
-use Todaymade\Daux\Format\Base\RunAction;
 use Todaymade\Daux\Tree\Content;
 use Todaymade\Daux\Tree\Directory;
 

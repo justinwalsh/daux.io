@@ -66,5 +66,5 @@ software, even if advised of the possibility of such damage.
 
 require_once("vendor/autoload.php");
 
-$application = new \Todaymade\Daux\Generator\Application();
+$application = new \Todaymade\Daux\Console\Application();
 $application->run();

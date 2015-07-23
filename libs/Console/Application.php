@@ -1,4 +1,4 @@
-<?php namespace Todaymade\Daux\Generator;
+<?php namespace Todaymade\Daux\Console;
 
 use Symfony\Component\Console\Application as SymfonyApplication;
 use Symfony\Component\Console\Input\InputInterface;
@@ -29,7 +29,7 @@ class Application extends SymfonyApplication
         // which is used when using the --help option
         $defaultCommands = parent::getDefaultCommands();
 
-        $defaultCommands[] = new Command();
+        $defaultCommands[] = new Generate();
 
         return $defaultCommands;
     }

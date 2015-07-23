@@ -1,4 +1,4 @@
-<?php namespace Todaymade\Daux\Generator;
+<?php namespace Todaymade\Daux\Console;
 
 use Symfony\Component\Console\Command\Command as SymfonyCommand;
 use Symfony\Component\Console\Input\InputArgument;
@@ -6,7 +6,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Todaymade\Daux\Daux;
 
-class Command extends SymfonyCommand
+class Generate extends SymfonyCommand
 {
     protected function configure()
     {
