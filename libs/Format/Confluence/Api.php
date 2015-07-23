@@ -200,7 +200,7 @@ class Api
             throw $this->handleError($e);
         }
 
-        $url = "content/$id/child/attachment" . count($result['results']) ? "/{$result['results'][0]['id']}/data" : "";
+        $url = "content/$id/child/attachment" . (count($result['results']) ? "/{$result['results'][0]['id']}/data" : "");
 
         try {
             $this->getClient()->post(
@@ -213,7 +213,5 @@ class Api
         } catch (BadResponseException $e) {
             throw $this->handleError($e);
         }
-
-        //FIXME :: When doing an update, Confluence does a null pointer exception
     }
 }
