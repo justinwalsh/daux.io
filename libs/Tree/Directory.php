@@ -84,10 +84,8 @@ class Directory extends Entry
           if(
             $node instanceof Directory
             && strpos($node->getUri(), '.') !== 0
-            ){
-            if( $node->seekFirstPage() ){
-              return $node->seekFirstPage();
-            }
+            && $childNode = $node->seekFirstPage() ){
+            return $childNode;
           }
         }
       }
