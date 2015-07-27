@@ -65,6 +65,7 @@
             $homepage = $page['homepage'];
             $project_title = utf8_encode($params['title']);
             $index = utf8_encode($base_page . $params['index']->value);
+            if ($params['mode'] === \TodayMade\Daux\Daux::STATIC_MODE) $index .= '.html';
             $tree = $params['tree'];
             $entry_page = $page['entry_page'];
             ob_start();
