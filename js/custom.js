@@ -26,19 +26,22 @@ function setCodeBlockStyle(x) {
     switch (x) {
         default:
         case 0:
-            toggleCodeBlockBtn.innerHTML = "Show Code Blocks Inline";
+            if(toggleCodeBlockBtn)
+              toggleCodeBlockBtn.innerHTML = "Show Code Blocks Inline";
             codeBlockView.addClass('float-view');
             codeBlocks.removeClass('hidden');
             break;
         case 1:
-            toggleCodeBlockBtn.innerHTML = "Hide Code Blocks";
+            if(toggleCodeBlockBtn)
+              toggleCodeBlockBtn.innerHTML = "Hide Code Blocks";
             codeBlockView.removeClass('float-view');
             codeBlocks.removeClass('hidden');
             break;
         case 2:
-            toggleCodeBlockBtn.innerHTML = "Show Code Blocks";
+            if(toggleCodeBlockBtn)
+              toggleCodeBlockBtn.innerHTML = "Show Code Blocks";
             codeBlockView.removeClass('float-view');
-            codeBlocks.addClass('hidden');          
+            codeBlocks.addClass('hidden');
             break;
     }
 }
@@ -56,7 +59,7 @@ $(function () {
     codeBlocks = $('.content-page article > pre');
     codeBlockState = localStorage.getItem("codeBlockState");
     if (!codeBlockState) {
-        codeBlockState = 0;
+        codeBlockState = (codeBlockView.hasClass('float-view')) ? 0 : 1;
         localStorage.setItem("codeBlockState", codeBlockState);
     } else codeBlockState = parseInt(codeBlockState);
     if (!codeBlockView.size()) return;
