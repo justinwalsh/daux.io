@@ -1,6 +1,7 @@
 <?php namespace Todaymade\Daux;
 
 use Symfony\Component\Console\Output\NullOutput;
+use Todaymade\Daux\Format\Base\ContentTypes\ContentTypeHandler;
 use Todaymade\Daux\Tree\Builder;
 use Todaymade\Daux\Tree\Root;
 
@@ -14,6 +15,17 @@ class Daux
 
     /** @var string */
     public $internal_base;
+
+    /** @var \Todaymade\Daux\Format\Base\Generator */
+    protected $generator;
+
+    /** @var \Todaymade\Daux\Format\Base\ContentTypes\ContentTypeHandler */
+    protected $typeHandler;
+
+    /**
+     * @var string[]
+     */
+    protected $validExtensions;
 
     /** @var string */
     private $docs_path;
@@ -146,6 +158,8 @@ class Daux
      */
     public function generateTree()
     {
+        $this->options['valid_content_extensions'] = $this->getContentExtensions();
+
         $this->tree = new Root($this->getParams(), $this->docs_path);
         Builder::build($this->tree, $this->options['ignore']);
 
@@ -257,6 +271,10 @@ class Daux
      */
     public function getGenerator()
     {
+        if ($this->generator) {
+            return $this->generator;
+        }
+
         $generators = $this->getGenerators();
 
         $format = $this->getParams()['format'];
@@ -275,6 +293,35 @@ class Daux
             throw new \RuntimeException("The class '$class' does not implement the '$interface' interface");
         }
 
-        return new $class($this);
+        return $this->generator = new $class($this);
+    }
+
+    public function getContentTypeHandler()
+    {
+        if ($this->typeHandler) {
+            return $this->typeHandler;
+        }
+
+        $base_types = $this->getGenerator()->getContentTypes();
+
+        $extended = $this->getProcessor()->addContentType();
+
+        $types = array_merge($base_types, $extended);
+
+        return $this->typeHandler = new ContentTypeHandler($types);
+    }
+
+    /**
+     * Get all content file extensions
+     *
+     * @return string[]
+     */
+    public function getContentExtensions()
+    {
+        if ($this->validExtensions) {
+            return $this->validExtensions;
+        }
+
+        return $this->validExtensions = $this->getContentTypeHandler()->getContentExtensions();
     }
 }

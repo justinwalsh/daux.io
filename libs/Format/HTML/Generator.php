@@ -7,6 +7,7 @@ use Todaymade\Daux\Console\RunAction;
 use Todaymade\Daux\Daux;
 use Todaymade\Daux\DauxHelper;
 use Todaymade\Daux\Format\Base\CommonMark\CommonMarkConverter;
+use Todaymade\Daux\Format\Base\ContentTypes\ContentTypeHandler;
 use Todaymade\Daux\Format\Base\LiveGenerator;
 use Todaymade\Daux\GeneratorHelper;
 use Todaymade\Daux\Tree\Content;
@@ -18,9 +19,6 @@ class Generator implements \Todaymade\Daux\Format\Base\Generator, LiveGenerator
 {
     use RunAction;
 
-    /** @var CommonMarkConverter */
-    protected $converter;
-
     /** @var Daux */
     protected $daux;
 
@@ -30,7 +28,16 @@ class Generator implements \Todaymade\Daux\Format\Base\Generator, LiveGenerator
     public function __construct(Daux $daux)
     {
         $this->daux = $daux;
-        $this->converter = new CommonMarkConverter(['daux' => $this->daux->getParams()]);
+    }
+
+    /**
+     * @return array
+     */
+    public function getContentTypes()
+    {
+        return [
+            new \Todaymade\Daux\Format\Base\ContentTypes\Markdown\ContentType($this->daux->getParams())
+        ];
     }
 
     public function generateAll(InputInterface $input, OutputInterface $output, $width)
@@ -113,6 +120,6 @@ class Generator implements \Todaymade\Daux\Format\Base\Generator, LiveGenerator
         }
 
         $params['request'] = $node->getUrl();
-        return MarkdownPage::fromFile($node, $params, $this->converter);
+        return ContentPage::fromFile($node, $params, $this->daux->getContentTypeHandler()->getType($node));
     }
 }

@@ -23,8 +23,14 @@ class Generate extends SymfonyCommand
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        // Initialize the system
         $daux = new Daux(Daux::STATIC_MODE);
         $daux->initialize($input->getOption('configuration'));
+
+        // Set the format if requested
+        if ($input->getOption('format')) {
+            $daux->getParams()['format'] = $input->getOption('format');
+        }
 
         $width = $this->getApplication()->getTerminalDimensions()[0];
 
@@ -34,11 +40,6 @@ class Generate extends SymfonyCommand
         // Generate the tree
         $daux->generateTree();
         $daux->getProcessor()->manipulateTree($daux->tree);
-
-        // Set the format if requested
-        if ($input->getOption('format')) {
-            $daux->getParams()['format'] = $input->getOption('format');
-        }
 
         // Generate the documentation
         $daux->getGenerator()->generateAll($input, $output, $width);

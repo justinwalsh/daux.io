@@ -62,9 +62,21 @@ class Processor
      * `Todaymade\Daux\Format\Base\Generator` contract.
      * You can also replace base generators.
      *
-     * @return array
+     * @return string[]
      */
     public function addGenerators()
+    {
+        return [];
+    }
+
+    /**
+     * Provide new content Types to be used during the generation
+     * phase, with this you can change the markdown parser or add
+     * a completely different file type.
+     *
+     * @return \Todaymade\Daux\Format\Base\ContentTypes\ContentType[]
+     */
+    public function addContentType()
     {
         return [];
     }

@@ -2,7 +2,7 @@
 
 use Todaymade\Daux\Tree\Root;
 
-class MarkdownPage extends \Todaymade\Daux\Format\Base\MarkdownPage
+class ContentPage extends \Todaymade\Daux\Format\Base\ContentPage
 {
     private $language;
     private $homepage;
