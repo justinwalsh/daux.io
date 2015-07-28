@@ -18,19 +18,13 @@ class Generate extends SymfonyCommand
             ->addOption('configuration', 'c', InputArgument::OPTIONAL, 'Configuration file')
             ->addOption('format', 'f', InputArgument::OPTIONAL, 'Output format, html or confluence', 'html')
             ->addOption('processor', 'p', InputArgument::OPTIONAL, 'Manipulations on the tree')
+            ->addOption('source', 's', InputArgument::OPTIONAL, 'Where to take the documentation from')
             ->addOption('destination', 'd', InputArgument::OPTIONAL, $description, 'static');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        // Initialize the system
-        $daux = new Daux(Daux::STATIC_MODE);
-        $daux->initialize($input->getOption('configuration'));
-
-        // Set the format if requested
-        if ($input->getOption('format')) {
-            $daux->getParams()['format'] = $input->getOption('format');
-        }
+        $daux = $this->prepareDaux($input);
 
         $width = $this->getApplication()->getTerminalDimensions()[0];
 
@@ -43,6 +37,26 @@ class Generate extends SymfonyCommand
 
         // Generate the documentation
         $daux->getGenerator()->generateAll($input, $output, $width);
+    }
+
+    protected function prepareDaux(InputInterface $input) {
+        $daux = new Daux(Daux::STATIC_MODE);
+
+        // Set the format if requested
+        if ($input->getOption('format')) {
+            $daux->getParams()['format'] = $input->getOption('format');
+        }
+
+        // Set the source directory
+        if ($input->getOption('source')) {
+            $daux->getParams()['docs_directory'] = $input->getOption('source');
+        }
+
+        $daux->setDocumentationPath($daux->getParams()['docs_directory']);
+
+        $daux->initializeConfiguration($input->getOption('configuration'));
+
+        return $daux;
     }
 
     protected function prepareProcessor(Daux $daux, InputInterface $input, OutputInterface $output, $width)

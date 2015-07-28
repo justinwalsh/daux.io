@@ -63,33 +63,40 @@ class Daux
         if (defined('PHAR_DIR')) {
             $this->local_base = PHAR_DIR;
         }
+
+        // global.json
+        $this->loadBaseConfiguration();
     }
 
     /**
      * @param string $override_file
      * @throws Exception
      */
-    public function initialize($override_file = 'config.json')
+    public function initializeConfiguration($override_file = 'config.json')
     {
-        // global.json
-        $this->loadBaseConfiguration();
+        // Read documentation overrides
+        $this->loadConfiguration($this->docs_path . DIRECTORY_SEPARATOR . 'config.json');
 
-        // Check the documentation path
-        $this->docs_path = $this->options['docs_directory'];
-        if (!is_dir($this->docs_path) &&
-            !is_dir($this->docs_path = $this->local_base . DIRECTORY_SEPARATOR . $this->docs_path)
-        ) {
-            throw new Exception('The Docs directory does not exist. Check the path again : ' . $this->docs_path);
+        // Read command line overrides
+        if (!is_null($override_file)) {
+            $this->loadConfiguration($this->local_base . DIRECTORY_SEPARATOR . $override_file);
         }
-
-        // <docs>/config.json, <overrides.json>
-        $this->loadConfigurationOverrides($override_file);
 
         // Set a valid default timezone
         if (isset($this->options['timezone'])) {
             date_default_timezone_set($this->options['timezone']);
         } elseif (!ini_get('date.timezone')) {
             date_default_timezone_set('GMT');
+        }
+    }
+
+    public function setDocumentationPath($path)
+    {
+        $this->docs_path = $path;
+        if (!is_dir($this->docs_path) &&
+            !is_dir($this->docs_path = $this->local_base . DIRECTORY_SEPARATOR . $this->docs_path)
+        ) {
+            throw new Exception('The Docs directory does not exist. Check the path again : ' . $this->docs_path);
         }
     }
 
@@ -110,25 +117,6 @@ class Daux
 
         // Load the global configuration
         $this->loadConfiguration($this->local_base . DIRECTORY_SEPARATOR . 'global.json', false);
-    }
-
-    /**
-     * Load the configuration files, first, "config.json"
-     * in the documentation and then the file specified
-     * when running the configuration
-     *
-     * @param string $override_file
-     * @throws Exception
-     */
-    protected function loadConfigurationOverrides($override_file)
-    {
-        // Read documentation overrides
-        $this->loadConfiguration($this->docs_path . DIRECTORY_SEPARATOR . 'config.json');
-
-        // Read command line overrides
-        if (!is_null($override_file)) {
-            $this->loadConfiguration($this->local_base . DIRECTORY_SEPARATOR . $override_file);
-        }
     }
 
     /**
