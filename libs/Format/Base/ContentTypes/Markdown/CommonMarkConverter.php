@@ -1,4 +1,4 @@
-<?php namespace Todaymade\Daux\Format\Base\CommonMark;
+<?php namespace Todaymade\Daux\Format\Base\ContentTypes\Markdown;
 
 use League\CommonMark\DocParser;
 use League\CommonMark\Environment;

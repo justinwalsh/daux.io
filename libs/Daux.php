@@ -1,6 +1,7 @@
 <?php namespace Todaymade\Daux;
 
 use Symfony\Component\Console\Output\NullOutput;
+use Todaymade\Daux\Format\Base\ContentTypes\ContentTypeHandler;
 use Todaymade\Daux\Tree\Builder;
 use Todaymade\Daux\Tree\Root;
 
@@ -14,6 +15,17 @@ class Daux
 
     /** @var string */
     public $internal_base;
+
+    /** @var \Todaymade\Daux\Format\Base\Generator */
+    protected $generator;
+
+    /** @var \Todaymade\Daux\Format\Base\ContentTypes\ContentTypeHandler */
+    protected $typeHandler;
+
+    /**
+     * @var string[]
+     */
+    protected $validExtensions;
 
     /** @var string */
     private $docs_path;
@@ -51,33 +63,40 @@ class Daux
         if (defined('PHAR_DIR')) {
             $this->local_base = PHAR_DIR;
         }
+
+        // global.json
+        $this->loadBaseConfiguration();
     }
 
     /**
      * @param string $override_file
      * @throws Exception
      */
-    public function initialize($override_file = 'config.json')
+    public function initializeConfiguration($override_file = 'config.json')
     {
-        // global.json
-        $this->loadBaseConfiguration();
+        // Read documentation overrides
+        $this->loadConfiguration($this->docs_path . DIRECTORY_SEPARATOR . 'config.json');
 
-        // Check the documentation path
-        $this->docs_path = $this->options['docs_directory'];
-        if (!is_dir($this->docs_path) &&
-            !is_dir($this->docs_path = $this->local_base . DIRECTORY_SEPARATOR . $this->docs_path)
-        ) {
-            throw new Exception('The Docs directory does not exist. Check the path again : ' . $this->docs_path);
+        // Read command line overrides
+        if (!is_null($override_file)) {
+            $this->loadConfiguration($this->local_base . DIRECTORY_SEPARATOR . $override_file);
         }
-
-        // <docs>/config.json, <overrides.json>
-        $this->loadConfigurationOverrides($override_file);
 
         // Set a valid default timezone
         if (isset($this->options['timezone'])) {
             date_default_timezone_set($this->options['timezone']);
         } elseif (!ini_get('date.timezone')) {
             date_default_timezone_set('GMT');
+        }
+    }
+
+    public function setDocumentationPath($path)
+    {
+        $this->docs_path = $path;
+        if (!is_dir($this->docs_path) &&
+            !is_dir($this->docs_path = $this->local_base . DIRECTORY_SEPARATOR . $this->docs_path)
+        ) {
+            throw new Exception('The Docs directory does not exist. Check the path again : ' . $this->docs_path);
         }
     }
 
@@ -98,25 +117,6 @@ class Daux
 
         // Load the global configuration
         $this->loadConfiguration($this->local_base . DIRECTORY_SEPARATOR . 'global.json', false);
-    }
-
-    /**
-     * Load the configuration files, first, "config.json"
-     * in the documentation and then the file specified
-     * when running the configuration
-     *
-     * @param string $override_file
-     * @throws Exception
-     */
-    protected function loadConfigurationOverrides($override_file)
-    {
-        // Read documentation overrides
-        $this->loadConfiguration($this->docs_path . DIRECTORY_SEPARATOR . 'config.json');
-
-        // Read command line overrides
-        if (!is_null($override_file)) {
-            $this->loadConfiguration($this->local_base . DIRECTORY_SEPARATOR . $override_file);
-        }
     }
 
     /**
@@ -146,6 +146,8 @@ class Daux
      */
     public function generateTree()
     {
+        $this->options['valid_content_extensions'] = $this->getContentExtensions();
+
         $this->tree = new Root($this->getParams(), $this->docs_path);
         Builder::build($this->tree, $this->options['ignore']);
 
@@ -257,6 +259,10 @@ class Daux
      */
     public function getGenerator()
     {
+        if ($this->generator) {
+            return $this->generator;
+        }
+
         $generators = $this->getGenerators();
 
         $format = $this->getParams()['format'];
@@ -275,6 +281,35 @@ class Daux
             throw new \RuntimeException("The class '$class' does not implement the '$interface' interface");
         }
 
-        return new $class($this);
+        return $this->generator = new $class($this);
+    }
+
+    public function getContentTypeHandler()
+    {
+        if ($this->typeHandler) {
+            return $this->typeHandler;
+        }
+
+        $base_types = $this->getGenerator()->getContentTypes();
+
+        $extended = $this->getProcessor()->addContentType();
+
+        $types = array_merge($base_types, $extended);
+
+        return $this->typeHandler = new ContentTypeHandler($types);
+    }
+
+    /**
+     * Get all content file extensions
+     *
+     * @return string[]
+     */
+    public function getContentExtensions()
+    {
+        if ($this->validExtensions) {
+            return $this->validExtensions;
+        }
+
+        return $this->validExtensions = $this->getContentTypeHandler()->getContentExtensions();
     }
 }

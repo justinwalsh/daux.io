@@ -1,6 +1,5 @@
 {
     "docs_directory": "docs",
-    "valid_content_extensions": ["md", "markdown"],
 
     "title": "My Project",
     "tagline": "My Stylish Documentation",
