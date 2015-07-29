@@ -4,10 +4,9 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Todaymade\Daux\Config;
 use Todaymade\Daux\Console\RunAction;
+use Todaymade\Daux\ContentTypes\Markdown\ContentType;
 use Todaymade\Daux\Daux;
 use Todaymade\Daux\DauxHelper;
-use Todaymade\Daux\Format\Base\CommonMark\CommonMarkConverter;
-use Todaymade\Daux\Format\Base\ContentTypes\ContentTypeHandler;
 use Todaymade\Daux\Format\Base\LiveGenerator;
 use Todaymade\Daux\GeneratorHelper;
 use Todaymade\Daux\Tree\Content;
@@ -36,7 +35,7 @@ class Generator implements \Todaymade\Daux\Format\Base\Generator, LiveGenerator
     public function getContentTypes()
     {
         return [
-            new \Todaymade\Daux\Format\Base\ContentTypes\Markdown\ContentType($this->daux->getParams())
+            'markdown' => new ContentType($this->daux->getParams())
         ];
     }
 

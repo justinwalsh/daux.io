@@ -5,8 +5,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Todaymade\Daux\Config;
 use Todaymade\Daux\Console\RunAction;
 use Todaymade\Daux\Daux;
-use Todaymade\Daux\Format\Base\ContentTypes\ContentTypeHandler;
-use Todaymade\Daux\Format\Confluence\CommonMark\CommonMarkConverter;
 use Todaymade\Daux\Tree\Content;
 use Todaymade\Daux\Tree\Directory;
 

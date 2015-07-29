@@ -2,7 +2,7 @@
 
 use League\CommonMark\Environment;
 
-class CommonMarkConverter extends \Todaymade\Daux\Format\Base\ContentTypes\Markdown\CommonMarkConverter
+class CommonMarkConverter extends \Todaymade\Daux\ContentTypes\Markdown\CommonMarkConverter
 {
     protected function getLinkRenderer(Environment $environment)
     {

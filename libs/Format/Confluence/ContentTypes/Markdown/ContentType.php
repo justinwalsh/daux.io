@@ -2,7 +2,7 @@
 
 use Todaymade\Daux\Config;
 
-class ContentType extends \Todaymade\Daux\Format\Base\ContentTypes\Markdown\ContentType
+class ContentType extends \Todaymade\Daux\ContentTypes\Markdown\ContentType
 {
     public function __construct(Config $config)
     {

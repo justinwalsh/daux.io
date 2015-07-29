@@ -3,7 +3,6 @@
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Todaymade\Daux\Daux;
-use Todaymade\Daux\Format\Base\ContentTypes\ContentTypeHandler;
 
 interface Generator
 {

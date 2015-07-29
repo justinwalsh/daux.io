@@ -1,7 +1,7 @@
 <?php namespace Todaymade\Daux;
 
 use Symfony\Component\Console\Output\NullOutput;
-use Todaymade\Daux\Format\Base\ContentTypes\ContentTypeHandler;
+use Todaymade\Daux\ContentTypes\ContentTypeHandler;
 use Todaymade\Daux\Tree\Builder;
 use Todaymade\Daux\Tree\Root;
 
@@ -19,7 +19,7 @@ class Daux
     /** @var \Todaymade\Daux\Format\Base\Generator */
     protected $generator;
 
-    /** @var \Todaymade\Daux\Format\Base\ContentTypes\ContentTypeHandler */
+    /** @var ContentTypeHandler */
     protected $typeHandler;
 
     /**

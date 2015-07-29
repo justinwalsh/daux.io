@@ -1,7 +1,7 @@
 <?php namespace Todaymade\Daux\Format\Base;
 
 use Todaymade\Daux\Config;
-use Todaymade\Daux\Format\Base\ContentTypes\ContentType;
+use Todaymade\Daux\ContentTypes\ContentType;
 use Todaymade\Daux\Tree\Content;
 
 abstract class ContentPage extends SimplePage

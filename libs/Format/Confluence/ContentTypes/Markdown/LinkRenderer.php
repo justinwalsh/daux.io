@@ -5,7 +5,7 @@ use League\CommonMark\HtmlRendererInterface;
 use League\CommonMark\Inline\Element\AbstractInline;
 use League\CommonMark\Inline\Element\Link;
 
-class LinkRenderer extends \Todaymade\Daux\Format\Base\ContentTypes\Markdown\LinkRenderer
+class LinkRenderer extends \Todaymade\Daux\ContentTypes\Markdown\LinkRenderer
 {
     /**
      * @param Link $inline

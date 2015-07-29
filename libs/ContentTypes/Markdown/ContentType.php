@@ -1,8 +1,8 @@
-<?php namespace Todaymade\Daux\Format\Base\ContentTypes\Markdown;
+<?php namespace Todaymade\Daux\ContentTypes\Markdown;
 
 use Todaymade\Daux\Config;
 
-class ContentType implements \Todaymade\Daux\Format\Base\ContentTypes\ContentType
+class ContentType implements \Todaymade\Daux\ContentTypes\ContentType
 {
     /** @var Config */
     protected $config;
