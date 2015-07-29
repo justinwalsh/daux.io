@@ -238,7 +238,7 @@ abbr[data-original-title] {
 }
 .initialism {
   font-size: 90%;
-  text-transform: uppercase;
+  .text-uppercase();
 }
 
 // Blockquotes
@@ -292,12 +292,6 @@ blockquote.pull-right {
       content: '\00A0 \2014'; // nbsp, em dash
     }
   }
-}
-
-// Quotes
-blockquote:before,
-blockquote:after {
-  content: "";
 }
 
 // Addresses

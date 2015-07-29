@@ -3,12 +3,12 @@
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Todaymade\Daux\Config;
+use Todaymade\Daux\Console\RunAction;
 use Todaymade\Daux\Daux;
 use Todaymade\Daux\DauxHelper;
 use Todaymade\Daux\Format\Base\CommonMark\CommonMarkConverter;
 use Todaymade\Daux\Format\Base\LiveGenerator;
-use Todaymade\Daux\Format\Base\RunAction;
-use Todaymade\Daux\Generator\Helper;
+use Todaymade\Daux\GeneratorHelper;
 use Todaymade\Daux\Tree\Content;
 use Todaymade\Daux\Tree\Directory;
 use Todaymade\Daux\Tree\Entry;
@@ -47,7 +47,7 @@ class Generator implements \Todaymade\Daux\Format\Base\Generator, LiveGenerator
             $output,
             $width,
             function() use ($destination) {
-                Helper::copyAssets($destination, $this->daux->local_base);
+                GeneratorHelper::copyAssets($destination, $this->daux->local_base);
             }
         );
 
