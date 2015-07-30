@@ -83,6 +83,6 @@ class ContentPage extends \Todaymade\Daux\Format\Base\ContentPage
         }
 
         $template = new Template($params['templates'], $params['theme']['templates']);
-        return $template->render($this->homepage ? 'home' : 'content', ['page' => $page, 'params' => $params]);
+        return $template->render($this->homepage ? 'theme::home' : 'theme::content', ['page' => $page, 'params' => $params]);
     }
 }
