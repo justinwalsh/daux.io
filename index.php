@@ -76,6 +76,7 @@ if (php_sapi_name() === 'cli-server') {
 }
 
 if (file_exists('vendor/autoload.php')) {
+    define('LOCAL_DIR', isset($_SERVER['DOCUMENT_ROOT']) ? $_SERVER['DOCUMENT_ROOT'] : __DIR__);
     require_once('vendor/autoload.php');
 } elseif (file_exists('daux.phar')) {
     define('PHAR_DIR', __DIR__);
