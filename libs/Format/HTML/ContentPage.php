@@ -2,7 +2,7 @@
 
 use Todaymade\Daux\Tree\Root;
 
-class MarkdownPage extends \Todaymade\Daux\Format\Base\MarkdownPage
+class ContentPage extends \Todaymade\Daux\Format\Base\ContentPage
 {
     private $language;
     private $homepage;
@@ -83,6 +83,6 @@ class MarkdownPage extends \Todaymade\Daux\Format\Base\MarkdownPage
         }
 
         $template = new Template($params['templates'], $params['theme']['templates']);
-        return $template->render($this->homepage ? 'home' : 'content', ['page' => $page, 'params' => $params]);
+        return $template->render($this->homepage ? 'theme::home' : 'theme::content', ['page' => $page, 'params' => $params]);
     }
 }

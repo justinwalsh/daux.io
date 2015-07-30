@@ -108,6 +108,10 @@ class Template
                     'class' => ($current_url === $link) ? 'active' : ''
                 ];
             } elseif ($node instanceof Directory) {
+                if (!$node->hasContent()) {
+                    continue;
+                }
+
                 $link = ($path === '') ? $url : $path . '/' . $url;
 
                 $folder = [

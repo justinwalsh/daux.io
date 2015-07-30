@@ -133,6 +133,27 @@ class Directory extends Entry
         $this->first_page = $first_page;
     }
 
+    /**
+     * Used when creating the navigation.
+     * Hides folders without showable content
+     *
+     * @return bool
+     */
+    public function hasContent()
+    {
+        foreach ($this->getEntries() as $node) {
+            if ($node instanceof Content) {
+                return true;
+            } elseif ($node instanceof Directory) {
+                if ($node->hasContent()) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
     private function compareEntries($a, $b)
     {
         $name_a = explode('_', $a->name);

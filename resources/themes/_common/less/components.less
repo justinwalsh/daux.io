@@ -6,6 +6,8 @@ a {
 }
 
 .btn {
+    display: inline-block;
+
     &.btn-sidebar {
         padding: 7px 10px;
         .kill-background-image;
@@ -44,7 +46,6 @@ code {
     box-shadow: 0 1px 5px rgba(0,0,0,.25);
     background-color: @dark;
     margin-bottom: 0px;
-    z-index: 200;
 
     .container, .container-fluid {
         .kill-background-image;
@@ -63,19 +64,6 @@ code {
             a {
                 color: @light;
             }
-        }
-    }
-
-    @media (min-width: 768px) and (max-width: 979px) {
-        &.navbar-fixed-top {
-            position: fixed;
-        }
-    }
-
-    @media (max-width: 767px) {
-        &.navbar-fixed-top {
-            margin-left: 0px;
-            margin-right: 0px;
         }
     }
 }
@@ -308,26 +296,21 @@ table {
     z-index: 200;
 }
 
-.well {
-    &.well-sidebar {
-        .kill-box-shadow;
-        background-color: transparent;
-        border-radius: 0;
-        border: none;
+.sidebar-links {
+    padding:20px;
 
-        a {
-            font-size: 13px;
-            .roboto-slab.regular;
-            color: @light;
-            line-height: 28px;
-        }
+    a {
+        font-size: 13px;
+        .roboto-slab.regular;
+        color: @light;
+        line-height: 28px;
+    }
 
-        .twitter {
-            hr {
-                border-bottom: none;
-                margin-left: -20px;
-                margin-right: -20px;
-            }
+    .twitter {
+        hr {
+            border-bottom: none;
+            margin-left: -20px;
+            margin-right: -20px;
         }
     }
 }

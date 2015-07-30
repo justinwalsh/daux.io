@@ -3,7 +3,7 @@
 use Todaymade\Daux\Config;
 use Todaymade\Daux\Tree\Entry;
 
-interface LiveGenerator
+interface LiveGenerator extends Generator
 {
     /**
      * @param Entry $node

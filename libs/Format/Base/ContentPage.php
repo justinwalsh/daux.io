@@ -1,10 +1,10 @@
 <?php namespace Todaymade\Daux\Format\Base;
 
-use League\CommonMark\CommonMarkConverter;
 use Todaymade\Daux\Config;
+use Todaymade\Daux\ContentTypes\ContentType;
 use Todaymade\Daux\Tree\Content;
 
-abstract class MarkdownPage extends SimplePage
+abstract class ContentPage extends SimplePage
 {
     /**
      * @var Content
@@ -17,9 +17,9 @@ abstract class MarkdownPage extends SimplePage
     protected $params;
 
     /**
-     * @var CommonMarkConverter
+     * @var ContentType
      */
-    protected $converter;
+    protected $contentType;
 
     public function __construct($title, $content)
     {
@@ -41,14 +41,17 @@ abstract class MarkdownPage extends SimplePage
         $this->params = $params;
     }
 
-    protected function getMarkdownConverter()
+    /**
+     * @param ContentType $contentType
+     */
+    public function setContentType($contentType)
     {
-        return $this->converter;
+        $this->contentType = $contentType;
     }
 
     protected function convertPage($content)
     {
-        return $this->getMarkdownConverter()->convertToHtml($content);
+        return $this->contentType->convert($content);
     }
 
     protected function generatePage()
@@ -56,12 +59,12 @@ abstract class MarkdownPage extends SimplePage
         return $this->convertPage($this->content);
     }
 
-    public static function fromFile(Content $file, $params, CommonMarkConverter $converter)
+    public static function fromFile(Content $file, $params, ContentType $contentType)
     {
         $page = new static($file->getTitle(), $file->getContent());
         $page->setFile($file);
         $page->setParams($params);
-        $page->converter = $converter;
+        $page->setContentType($contentType);
 
         return $page;
     }

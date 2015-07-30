@@ -140,8 +140,8 @@
   position: fixed;
   right: 0;
   left: 0;
-  z-index: @zindex-navbar-fixed;
-  .translate3d(0, 0, 0);
+
+
 
   // Undo the rounded corners
   @media (min-width: @grid-float-breakpoint) {
@@ -284,7 +284,8 @@
 // Extension of the `.form-inline` with some extra flavor for optimum display in
 // our navbars.
 
-.navbar-form {
+//DAUX.io / onigoetz; removed so we can safely remove forms.less
+/*.navbar-form {
   margin-left: -@navbar-padding-horizontal;
   margin-right: -@navbar-padding-horizontal;
   padding: 10px @navbar-padding-horizontal;
@@ -299,6 +300,10 @@
   .form-group {
     @media (max-width: @grid-float-breakpoint-max) {
       margin-bottom: 5px;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
     }
   }
 
@@ -315,7 +320,7 @@
     padding-bottom: 0;
     .box-shadow(none);
   }
-}
+}*/
 
 
 // Dropdown menus
@@ -327,6 +332,8 @@
 }
 // Menu position and menu caret support for dropups via extra dropup class
 .navbar-fixed-bottom .navbar-nav > li > .dropdown-menu {
+  margin-bottom: 0;
+  .border-top-radius(@navbar-border-radius);
   .border-bottom-radius(0);
 }
 

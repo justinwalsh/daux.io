@@ -43,10 +43,7 @@
     <!-- jQuery -->
     <?php
     if ($params['theme']['require-jquery']) {
-        echo '<script src="' . $base_url . 'resources/js/jquery-1.11.0.min.js' . '"></script>';
-    }
-    if ($params['theme']['bootstrap-js']) {
-        echo '<script src="' . $base_url . 'resources/js/bootstrap.min.js' . '"></script>';
+        echo '<script src="' . $base_url . 'resources/js/jquery-1.11.3.min.js' . '"></script>';
     }
     ?>
 
@@ -59,6 +56,6 @@
         echo '<script src="' . $js . '"></script>';
     } ?>
 
-    <script src="<?= $base_url; ?>resources/js/custom.js"></script>
+    <script src="<?= $base_url; ?>resources/js/daux.js"></script>
 </body>
 </html>

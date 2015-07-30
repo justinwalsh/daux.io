@@ -1,11 +1,11 @@
-<?php namespace Todaymade\Daux\Format\Confluence\CommonMark;
+<?php namespace Todaymade\Daux\Format\Confluence\ContentTypes\Markdown;
 
 use League\CommonMark\HtmlElement;
 use League\CommonMark\HtmlRendererInterface;
 use League\CommonMark\Inline\Element\AbstractInline;
 use League\CommonMark\Inline\Element\Link;
 
-class LinkRenderer extends \Todaymade\Daux\Format\Base\CommonMark\LinkRenderer
+class LinkRenderer extends \Todaymade\Daux\ContentTypes\Markdown\LinkRenderer
 {
     /**
      * @param Link $inline

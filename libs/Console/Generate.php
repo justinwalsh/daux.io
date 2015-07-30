@@ -1,4 +1,4 @@
-<?php namespace Todaymade\Daux\Generator;
+<?php namespace Todaymade\Daux\Console;
 
 use Symfony\Component\Console\Command\Command as SymfonyCommand;
 use Symfony\Component\Console\Input\InputArgument;
@@ -6,7 +6,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Todaymade\Daux\Daux;
 
-class Command extends SymfonyCommand
+class Generate extends SymfonyCommand
 {
     protected function configure()
     {
@@ -18,13 +18,13 @@ class Command extends SymfonyCommand
             ->addOption('configuration', 'c', InputArgument::OPTIONAL, 'Configuration file')
             ->addOption('format', 'f', InputArgument::OPTIONAL, 'Output format, html or confluence', 'html')
             ->addOption('processor', 'p', InputArgument::OPTIONAL, 'Manipulations on the tree')
+            ->addOption('source', 's', InputArgument::OPTIONAL, 'Where to take the documentation from')
             ->addOption('destination', 'd', InputArgument::OPTIONAL, $description, 'static');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $daux = new Daux(Daux::STATIC_MODE);
-        $daux->initialize($input->getOption('configuration'));
+        $daux = $this->prepareDaux($input);
 
         $width = $this->getApplication()->getTerminalDimensions()[0];
 
@@ -35,13 +35,28 @@ class Command extends SymfonyCommand
         $daux->generateTree();
         $daux->getProcessor()->manipulateTree($daux->tree);
 
+        // Generate the documentation
+        $daux->getGenerator()->generateAll($input, $output, $width);
+    }
+
+    protected function prepareDaux(InputInterface $input) {
+        $daux = new Daux(Daux::STATIC_MODE);
+
         // Set the format if requested
         if ($input->getOption('format')) {
             $daux->getParams()['format'] = $input->getOption('format');
         }
 
-        // Generate the documentation
-        $daux->getGenerator()->generateAll($input, $output, $width);
+        // Set the source directory
+        if ($input->getOption('source')) {
+            $daux->getParams()['docs_directory'] = $input->getOption('source');
+        }
+
+        $daux->setDocumentationPath($daux->getParams()['docs_directory']);
+
+        $daux->initializeConfiguration($input->getOption('configuration'));
+
+        return $daux;
     }
 
     protected function prepareProcessor(Daux $daux, InputInterface $input, OutputInterface $output, $width)

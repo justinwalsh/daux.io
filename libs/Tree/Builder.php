@@ -140,11 +140,18 @@ class Builder
 
     /**
      * @param Directory $parent
-     * @param string $title
+     * @param string $path
      * @return Content
      */
-    public static function getOrCreatePage(Directory $parent, $title)
+    public static function getOrCreatePage(Directory $parent, $path)
     {
+        $title = DauxHelper::pathinfo($path)['filename'];
+
+        // If the file doesn't have an extension, set .md as a default
+        if (DauxHelper::pathinfo($path)['extension'] == '') {
+            $path .= '.md';
+        }
+
         $uri = $slug = DauxHelper::slug($title);
         if ($parent->getConfig()['mode'] === Daux::STATIC_MODE) {
             $uri = $slug . ".html";
@@ -158,10 +165,11 @@ class Builder
         $page->setContent("-"); //set an almost empty content to avoid problems
 
         if ($title == 'index') {
-            $page->setName('_index');
+            // TODO :: clarify the difference between 'index' and '_index'
+            $page->setName('_index' . DauxHelper::pathinfo($path)['extension']);
             $page->setTitle($parent->getTitle());
         } else {
-            $page->setName($slug);
+            $page->setName($path);
             $page->setTitle($title);
         }
 

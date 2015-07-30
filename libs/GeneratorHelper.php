@@ -1,6 +1,6 @@
-<?php namespace Todaymade\Daux\Generator;
+<?php namespace Todaymade\Daux;
 
-class Helper
+class GeneratorHelper
 {
     /**
      * Copy all files from $path to $local_base

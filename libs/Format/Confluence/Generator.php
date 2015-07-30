@@ -3,9 +3,8 @@
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Todaymade\Daux\Config;
+use Todaymade\Daux\Console\RunAction;
 use Todaymade\Daux\Daux;
-use Todaymade\Daux\Format\Confluence\CommonMark\CommonMarkConverter;
-use Todaymade\Daux\Format\Base\RunAction;
 use Todaymade\Daux\Tree\Content;
 use Todaymade\Daux\Tree\Directory;
 
@@ -16,9 +15,6 @@ class Generator implements \Todaymade\Daux\Format\Base\Generator
     /** @var string */
     protected $prefix;
 
-    /** @var CommonMarkConverter */
-    protected $converter;
-
     /** @var Daux */
     protected $daux;
 
@@ -28,7 +24,16 @@ class Generator implements \Todaymade\Daux\Format\Base\Generator
     public function __construct(Daux $daux)
     {
         $this->daux = $daux;
-        $this->converter = new CommonMarkConverter(['daux' => $this->daux->getParams()]);
+    }
+
+    /**
+     * @return array
+     */
+    public function getContentTypes()
+    {
+        return [
+            new ContentTypes\Markdown\ContentType($this->daux->getParams())
+        ];
     }
 
     /**
@@ -83,7 +88,7 @@ class Generator implements \Todaymade\Daux\Format\Base\Generator
                 $data = [
                     'title' => $this->prefix . $node->getTitle(),
                     'file' => $node,
-                    'page' => MarkdownPage::fromFile($node, $params, $this->converter),
+                    'page' => ContentPage::fromFile($node, $params, $this->daux->getContentTypeHandler()->getType($node)),
                 ];
 
                 // As the page is lazily generated

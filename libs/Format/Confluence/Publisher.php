@@ -1,12 +1,10 @@
 <?php namespace Todaymade\Daux\Format\Confluence;
 
 use GuzzleHttp\Exception\BadResponseException;
-use GuzzleHttp\Exception\ParseException;
-use Todaymade\Daux\Format\Base\RunAction;
+use Todaymade\Daux\Console\RunAction;
 
 class Publisher
 {
-
     use RunAction;
 
     /**

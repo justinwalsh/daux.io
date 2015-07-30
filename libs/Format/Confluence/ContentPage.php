@@ -3,7 +3,7 @@
 use DOMDocument;
 use Todaymade\Daux\DauxHelper;
 
-class MarkdownPage extends \Todaymade\Daux\Format\Base\MarkdownPage
+class ContentPage extends \Todaymade\Daux\Format\Base\ContentPage
 {
     public $attachments = [];
 

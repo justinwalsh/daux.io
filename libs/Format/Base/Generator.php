@@ -18,4 +18,9 @@ interface Generator
      * @return mixed
      */
     public function generateAll(InputInterface $input, OutputInterface $output, $width);
+
+    /**
+     * @return array
+     */
+    public function getContentTypes();
 }

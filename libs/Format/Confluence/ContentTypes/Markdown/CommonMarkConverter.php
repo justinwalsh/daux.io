@@ -1,8 +1,8 @@
-<?php namespace Todaymade\Daux\Format\Confluence\CommonMark;
+<?php namespace Todaymade\Daux\Format\Confluence\ContentTypes\Markdown;
 
 use League\CommonMark\Environment;
 
-class CommonMarkConverter extends \Todaymade\Daux\Format\Base\CommonMark\CommonMarkConverter
+class CommonMarkConverter extends \Todaymade\Daux\ContentTypes\Markdown\CommonMarkConverter
 {
     protected function getLinkRenderer(Environment $environment)
     {
