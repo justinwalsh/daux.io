@@ -1,6 +1,4 @@
 <?php
-require_once("libs/daux.php");
-
 /*
 
 Daux.io
@@ -64,8 +62,27 @@ negligence or otherwise) arising in any way out of the use of this
 software, even if advised of the possibility of such damage.
 
 */
-    $Daux = new \Todaymade\Daux\Daux();
-    $Daux->initialize();
-    $page = $Daux->handle_request($_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'], $_REQUEST);
-    $page->display();
-?>
+
+if (php_sapi_name() === 'cli-server') {
+    // This file allows us to emulate Apache's "mod_rewrite"
+    // functionality from the built-in PHP web server.
+    $uri = urldecode(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH));
+    if ($uri !== '/' && file_exists(__DIR__ . $uri)) {
+        return false;
+    }
+    // When the built in server is used
+    // the script name is the file called
+    $_SERVER['SCRIPT_NAME'] = '/index.php';
+}
+
+if (file_exists('vendor/autoload.php')) {
+    define('LOCAL_DIR', isset($_SERVER['DOCUMENT_ROOT']) ? $_SERVER['DOCUMENT_ROOT'] : __DIR__);
+    require_once('vendor/autoload.php');
+} elseif (file_exists('daux.phar')) {
+    define('PHAR_DIR', __DIR__);
+    require_once("phar://" . __DIR__ . "/daux.phar/vendor/autoload.php");
+} else {
+    throw new Exception("Impossible to load Daux, missing vendor and phar");
+}
+
+\Todaymade\Daux\Server\Server::serve($_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'], $_REQUEST);

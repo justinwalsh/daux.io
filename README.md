@@ -74,7 +74,7 @@ If you want to create a beautiful landing page for your project, simply create a
 {
 	"title": "Daux.io",
 	"tagline": "The Easiest Way To Document Your Project",
-	"image": "<base_url>img/app.png"
+	"image": "app.png"
 }
 ```
 
@@ -167,17 +167,6 @@ Include custom links in the sidebar.
 		"Help/Support/Bugs": "https://github.com/justinwalsh/daux.io/issues",
 		"Made by Todaymade": "http://todaymade.com"
 	}
-}
-```
-
-###File editor:
-![File editor](https://f.cloud.github.com/assets/1788727/1954191/44358884-81d1-11e3-859d-254b9fb81808.png)
-
-Enable front-end Markdown editor. _Disabled by default_.
-
-```json
-{
-	"file_editor": true
 }
 ```
 
