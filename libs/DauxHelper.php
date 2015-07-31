@@ -30,9 +30,8 @@ class DauxHelper
      */
     public static function getTheme($params, $current_url)
     {
-        $theme_folder = $params['local_base'] . DIRECTORY_SEPARATOR . 'resources' .
-            DIRECTORY_SEPARATOR . 'themes' . DIRECTORY_SEPARATOR . $params['html']['theme'];
-        $theme_url = $params['base_url'] . "resources/themes/" . $params['html']['theme'] . '/';
+        $theme_folder = $params['themes_path'] . DIRECTORY_SEPARATOR . $params['html']['theme'];
+        $theme_url = $params['base_url'] . $params['themes_directory'] . '/' . $params['html']['theme'] . '/';
 
         $theme = array();
         if (is_file($theme_folder . DIRECTORY_SEPARATOR . "config.json")) {

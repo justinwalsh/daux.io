@@ -30,6 +30,9 @@ class Daux
     /** @var string */
     private $docs_path;
 
+    /** @var string */
+    private $themes_path;
+
     /** @var Processor */
     protected $processor;
 
@@ -90,6 +93,18 @@ class Daux
         }
     }
 
+    public function setThemesPath($path)
+    {
+        $this->themes_path = $path;
+        if (!is_dir($this->themes_path) &&
+            !is_dir($this->themes_path = $this->local_base . DIRECTORY_SEPARATOR . $this->themes_path)
+        ) {
+            throw new Exception('The Themes directory does not exist. Check the path again : ' . $this->themes_path);
+        }
+        $this->options['themes_path'] = $this->themes_path;
+        $this->options['templates'] = $this->themes_path . DIRECTORY_SEPARATOR . 'core' . DIRECTORY_SEPARATOR . 'templates';
+    }
+
     public function setDocumentationPath($path)
     {
         $this->docs_path = $path;
@@ -98,6 +113,7 @@ class Daux
         ) {
             throw new Exception('The Docs directory does not exist. Check the path again : ' . $this->docs_path);
         }
+        $this->options['docs_path'] = $this->docs_path;
     }
 
     /**
@@ -172,7 +188,8 @@ class Daux
                 'mode' => $this->mode,
                 'local_base' => $this->local_base,
                 'docs_path' => $this->docs_path,
-                'templates' => $this->internal_base . DIRECTORY_SEPARATOR . 'templates',
+                'themes_path' => $this->themes_path,
+                'templates' => $this->themes_path . DIRECTORY_SEPARATOR . 'core' . DIRECTORY_SEPARATOR . 'templates'
             ];
             $this->options->conservativeMerge($default);
 
