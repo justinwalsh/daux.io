@@ -1,6 +1,7 @@
 <?php namespace Todaymade\Daux\ContentTypes\Markdown;
 
 use Todaymade\Daux\Config;
+use Todaymade\Daux\Tree\Content;
 
 class ContentType implements \Todaymade\Daux\ContentTypes\ContentType
 {
@@ -24,8 +25,8 @@ class ContentType implements \Todaymade\Daux\ContentTypes\ContentType
         return ['md', 'markdown'];
     }
 
-    public function convert($html)
+    public function convert($raw, Content $node)
     {
-        return $this->converter->convertToHtml($html);
+        return $this->converter->convertToHtml($raw);
     }
 }

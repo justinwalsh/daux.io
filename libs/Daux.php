@@ -98,6 +98,8 @@ class Daux
         ) {
             throw new Exception('The Docs directory does not exist. Check the path again : ' . $this->docs_path);
         }
+
+        $this->options['docs_path'] = $this->docs_path;
     }
 
     /**

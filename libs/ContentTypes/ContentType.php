@@ -1,6 +1,7 @@
 <?php namespace Todaymade\Daux\ContentTypes;
 
 use Todaymade\Daux\Config;
+use Todaymade\Daux\Tree\Content;
 
 interface ContentType
 {
@@ -13,5 +14,10 @@ interface ContentType
      */
     public function getExtensions();
 
-    public function convert($html);
+    /**
+     * @param string $raw The raw text to render
+     * @param Content $node The original node we are converting
+     * @return string The generated output
+     */
+    public function convert($raw, Content $node);
 }

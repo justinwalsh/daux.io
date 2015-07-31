@@ -51,7 +51,7 @@ abstract class ContentPage extends SimplePage
 
     protected function convertPage($content)
     {
-        return $this->contentType->convert($content);
+        return $this->contentType->convert($content, $this->getFile());
     }
 
     protected function generatePage()
