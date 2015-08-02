@@ -54,7 +54,42 @@ class Directory extends Entry
             return $this->children[$index_key];
         }
 
+        /*
+          If the inherit_index flag is set, then we seek child content
+         */
+        if(
+          !empty($this->getConfig()['live']['inherit_index'])
+          && $first_page = $this->seekFirstPage()
+          ){
+          return $first_page;
+        }
+
         return null;
+    }
+
+    /**
+     * Seek the first available page from descendants
+     * @return Content|null
+     */
+    public function seekFirstPage(){
+      if( $this instanceof Directory ){
+        $index_key = $this->getConfig()['index_key'];
+        if (isset($this->children[$index_key])) {
+          return $this->children[$index_key];
+        }
+        foreach( $this->children AS $node_key => $node ){
+          if( $node instanceof Content ){
+            return $node;
+          }
+          if(
+            $node instanceof Directory
+            && strpos($node->getUri(), '.') !== 0
+            && $childNode = $node->seekFirstPage() ){
+            return $childNode;
+          }
+        }
+      }
+      return null;
     }
 
     /**

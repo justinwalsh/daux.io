@@ -18,6 +18,7 @@
     "timezone": "America/Los_Angeles",
 
     "live": {
+        "inherit_index": false,
         "clean_urls": false
     },
 
