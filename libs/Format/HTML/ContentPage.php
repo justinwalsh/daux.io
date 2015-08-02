@@ -82,7 +82,9 @@ class ContentPage extends \Todaymade\Daux\Format\Base\ContentPage
             $page['breadcrumb_separator'] = $params['html']['breadcrumb_separator'];
         }
 
+        $context = ['page' => $page, 'params' => $params];
+
         $template = new Template($params['templates'], $params['theme']['templates']);
-        return $template->render($this->homepage ? 'theme::home' : 'theme::content', ['page' => $page, 'params' => $params]);
+        return $template->render($this->homepage ? 'theme::home' : 'theme::content', $context);
     }
 }

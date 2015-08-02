@@ -39,7 +39,8 @@ class Generate extends SymfonyCommand
         $daux->getGenerator()->generateAll($input, $output, $width);
     }
 
-    protected function prepareDaux(InputInterface $input) {
+    protected function prepareDaux(InputInterface $input)
+    {
         $daux = new Daux(Daux::STATIC_MODE);
 
         // Set the format if requested

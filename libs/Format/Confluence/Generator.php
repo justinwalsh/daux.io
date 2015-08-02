@@ -85,10 +85,12 @@ class Generator implements \Todaymade\Daux\Format\Base\Generator
             } elseif ($node instanceof Content) {
                 $params['request'] = $node->getUrl();
 
+                $contentType = $this->daux->getContentTypeHandler()->getType($node);
+
                 $data = [
                     'title' => $this->prefix . $node->getTitle(),
                     'file' => $node,
-                    'page' => ContentPage::fromFile($node, $params, $this->daux->getContentTypeHandler()->getType($node)),
+                    'page' => ContentPage::fromFile($node, $params, $contentType),
                 ];
 
                 // As the page is lazily generated

@@ -61,7 +61,9 @@ class Builder
         $config = $parent->getConfig();
 
         if (!in_array(pathinfo($path, PATHINFO_EXTENSION), $config['valid_content_extensions'])) {
-            $entry = new Raw($parent, static::removeSortingInformations(static::getFilename($path)), $path, filemtime($path));
+            $uri = static::removeSortingInformations(static::getFilename($path));
+
+            $entry = new Raw($parent, $uri, $path, filemtime($path));
             $entry->setTitle(static::removeSortingInformations($name, ' '));
             $entry->setName($name);
 

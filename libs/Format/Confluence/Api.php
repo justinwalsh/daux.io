@@ -193,14 +193,21 @@ class Api
      */
     public function uploadAttachment($id, $attachment)
     {
-        //get if attachment is uploaded
+        // Check if an attachment with
+        // this name is uploaded
         try {
             $result = $this->getClient()->get("content/$id/child/attachment?filename=$attachment[filename]")->json();
         } catch (BadResponseException $e) {
             throw $this->handleError($e);
         }
 
-        $url = "content/$id/child/attachment" . (count($result['results']) ? "/{$result['results'][0]['id']}/data" : "");
+        $url = "content/$id/child/attachment";
+
+        // If the attachment is already uploaded,
+        // the update URL is different
+        if (count($result['results'])) {
+            $url .= "/{$result['results'][0]['id']}/data";
+        }
 
         try {
             $this->getClient()->post(
