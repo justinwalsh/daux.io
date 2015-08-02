@@ -57,6 +57,11 @@ class Daux
 
         $this->local_base = $this->internal_base = dirname(__DIR__);
 
+        // If defined by the request environment
+        if (defined('LOCAL_DIR')) {
+            $this->local_base = LOCAL_DIR;
+        }
+
         // In case we're inside the phar archive
         // we save the path to the directory
         // in which it is contained
