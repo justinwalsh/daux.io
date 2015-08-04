@@ -109,7 +109,11 @@ class Builder
     protected static function removeSortingInformations($filename, $separator = '_')
     {
         $filename = explode('_', $filename);
-        if ($filename[0] == '' || is_numeric($filename[0])) {
+
+        // Remove the numeric part of the
+        // filename, only if there is
+        // something after that
+        if ($filename[0] == '' || (is_numeric($filename[0]) && array_key_exists(1, $filename))) {
             unset($filename[0]);
         } else {
             $t = $filename[0];
