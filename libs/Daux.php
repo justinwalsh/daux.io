@@ -102,7 +102,7 @@ class Daux
             throw new Exception('The Themes directory does not exist. Check the path again : ' . $this->themes_path);
         }
         $this->options['themes_path'] = $this->themes_path;
-        $this->options['templates'] = $this->themes_path . DIRECTORY_SEPARATOR . 'core' . DIRECTORY_SEPARATOR . 'templates';
+        $this->options['templates'] = 'templates';
     }
 
     public function setDocumentationPath($path)
@@ -189,7 +189,7 @@ class Daux
                 'local_base' => $this->local_base,
                 'docs_path' => $this->docs_path,
                 'themes_path' => $this->themes_path,
-                'templates' => $this->themes_path . DIRECTORY_SEPARATOR . 'core' . DIRECTORY_SEPARATOR . 'templates'
+                'templates' => 'templates'
             ];
             $this->options->conservativeMerge($default);
 
