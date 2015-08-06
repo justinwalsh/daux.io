@@ -40,7 +40,8 @@ class ContentTypeHandler
      */
     public function getType(Content $node)
     {
-        $extension = pathinfo($node->getPath(), PATHINFO_EXTENSION);
+        $path = $node->getPath() ?: $node->getName();
+        $extension = pathinfo($path, PATHINFO_EXTENSION);
 
         foreach ($this->types as $type) {
             if (in_array($extension, $type->getExtensions())) {
@@ -48,6 +49,6 @@ class ContentTypeHandler
             }
         }
 
-        throw new \RuntimeException("no contentType found for {$node->getPath()}");
+        throw new \RuntimeException("no contentType found for $path");
     }
 }
