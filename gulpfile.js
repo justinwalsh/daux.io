@@ -7,10 +7,11 @@ var gulp = require('gulp'),
     postcss = require('gulp-postcss');
 
 var resources = {
-    daux_blue:{source: "resources/themes/daux-blue/less/theme.less", dest: "resources/themes/daux-blue/css/"},
-    daux_green:{source: "resources/themes/daux-green/less/theme.less", dest: "resources/themes/daux-green/css/"},
-    daux_navy:{source: "resources/themes/daux-navy/less/theme.less", dest: "resources/themes/daux-navy/css/"},
-    daux_red:{source: "resources/themes/daux-red/less/theme.less", dest: "resources/themes/daux-red/css/"}
+    daux:{source: "themes/daux/less/theme.less", dest: "themes/daux/css/"},
+    daux_blue:{source: "themes/daux/less/theme-blue.less", dest: "themes/daux/css/"},
+    daux_green:{source: "themes/daux/less/theme-green.less", dest: "themes/daux/css/"},
+    daux_navy:{source: "themes/daux/less/theme-navy.less", dest: "themes/daux/css/"},
+    daux_red:{source: "themes/daux/less/theme-red.less", dest: "themes/daux/css/"}
 };
 
 var unusedRules = [
@@ -151,7 +152,7 @@ gulp.task("styles", style_tasks);
 gulp.task('watch', function() {
 
     // Watch .less files
-    gulp.watch('resources/themes/**/*.less', ['styles']);
+    gulp.watch('themes/daux/less/**/*.less', ['styles']);
 
 });
 
