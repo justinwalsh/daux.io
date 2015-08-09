@@ -16,10 +16,10 @@ class GeneratorHelper
             mkdir($path);
         }
 
-        mkdir($path . DIRECTORY_SEPARATOR . 'resources');
+        mkdir($path . DIRECTORY_SEPARATOR . 'themes');
         static::copyRecursive(
-            $local_base . DIRECTORY_SEPARATOR . 'resources',
-            $path . DIRECTORY_SEPARATOR . 'resources'
+            $local_base . DIRECTORY_SEPARATOR . 'themes',
+            $path . DIRECTORY_SEPARATOR . 'themes'
         );
     }
 

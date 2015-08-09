@@ -55,6 +55,8 @@ class Generate extends SymfonyCommand
 
         $daux->setDocumentationPath($daux->getParams()['docs_directory']);
 
+        $daux->setThemesPath($daux->getParams()['themes_directory']);
+
         $daux->initializeConfiguration($input->getOption('configuration'));
 
         return $daux;
