@@ -1,5 +1,6 @@
 {
     "docs_directory": "docs",
+    "themes_directory": "themes",
 
     "title": "My Project",
     "tagline": "My Stylish Documentation",

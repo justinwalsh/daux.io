@@ -43,12 +43,12 @@
     <!-- jQuery -->
     <?php
     if ($params['theme']['require-jquery']) {
-        echo '<script src="' . $base_url . 'resources/js/jquery-1.11.3.min.js' . '"></script>';
+        echo '<script src="' . $base_url . 'themes/daux/js/jquery-1.11.3.min.js' . '"></script>';
     }
     ?>
 
     <!-- hightlight.js -->
-    <script src="<?= $base_url; ?>resources/js/highlight.min.js"></script>
+    <script src="<?= $base_url; ?>themes/daux/js/highlight.min.js"></script>
     <script>hljs.initHighlightingOnLoad();</script>
 
     <!-- JS -->
@@ -56,6 +56,6 @@
         echo '<script src="' . $js . '"></script>';
     } ?>
 
-    <script src="<?= $base_url; ?>resources/js/daux.js"></script>
+    <script src="<?= $base_url; ?>themes/daux/js/daux.js"></script>
 </body>
 </html>
