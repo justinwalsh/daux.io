@@ -47,8 +47,6 @@ class DauxHelper
             'css' => [],
             'js' => [],
             'fonts' => [],
-            'require-jquery' => false,
-            'bootstrap-js' => false,
             'favicon' => '<base_url>themes/daux/img/favicon.png',
             'templates' => $theme_folder . DIRECTORY_SEPARATOR . 'templates',
         ];

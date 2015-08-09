@@ -41,11 +41,7 @@
 
 
     <!-- jQuery -->
-    <?php
-    if ($params['theme']['require-jquery']) {
-        echo '<script src="' . $base_url . 'themes/daux/js/jquery-1.11.3.min.js' . '"></script>';
-    }
-    ?>
+    <?= '<script src="' . $base_url . 'themes/daux/js/jquery-1.11.3.min.js' . '"></script>' ?>
 
     <!-- hightlight.js -->
     <script src="<?= $base_url; ?>themes/daux/js/highlight.min.js"></script>
