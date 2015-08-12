@@ -81,6 +81,7 @@
             $t = strrpos($this->base_url, '/index.php');
             if ($t != FALSE) $this->base_url = substr($this->base_url, 0, $t);
             if (substr($this->base_url, -1) !== '/') $this->base_url .= '/';
+            $this->base_url = str_replace('\\', '/', $this->base_url);
         }
 
         private function load_global_config($global_config_file) {
