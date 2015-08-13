@@ -39,7 +39,8 @@ _.debounce = function(func, wait, immediate) {
 
 var codeBlocks, codeBlockView, toggleCodeBlockBtn, codeBlockState;
 function toggleCodeBlocks() {
-    codeBlockState = (codeBlockState + 1) % 3;
+    var hasFloat = $(document.body).hasClass("with-float")? 3 : 2;
+    codeBlockState = (codeBlockState + 1) % hasFloat;
     localStorage.setItem("codeBlockState", codeBlockState);
     setCodeBlockStyle(codeBlockState);
 }
@@ -48,22 +49,46 @@ function setCodeBlockStyle(x) {
     switch (x) {
         default:
         case 0:
-            toggleCodeBlockBtn.innerHTML = "Show Code Blocks Inline";
-            codeBlockView.addClass('float-view');
-            codeBlocks.removeClass('hidden');
+            toggleCodeBlockBtn.html("Show Code Blocks");
+            codeBlockView.removeClass('float-view');
+            codeBlocks.addClass('hidden');
             break;
         case 1:
-            toggleCodeBlockBtn.innerHTML = "Hide Code Blocks";
+            toggleCodeBlockBtn.html("Hide Code Blocks");
             codeBlockView.removeClass('float-view');
             codeBlocks.removeClass('hidden');
             break;
         case 2:
-            toggleCodeBlockBtn.innerHTML = "Show Code Blocks";
-            codeBlockView.removeClass('float-view');
-            codeBlocks.addClass('hidden');
+            toggleCodeBlockBtn.html("Show Code Blocks Inline");
+            codeBlockView.addClass('float-view');
+            codeBlocks.removeClass('hidden');
             break;
     }
 }
+
+//Initialize CodeBlock Visibility Settings
+$(function () {
+    codeBlocks = $('.content-page article > pre');
+    toggleCodeBlockBtn = $('#toggleCodeBlockBtn');
+
+    // If there is no code block we hide the link
+    if (!codeBlocks.size()) {
+        toggleCodeBlockBtn.addClass('hidden');
+        return;
+    }
+
+    codeBlockView = $('.right-column');
+    if (!codeBlockView.size()) return;
+
+    codeBlockState = localStorage.getItem("codeBlockState");
+    if (!codeBlockState) {
+        codeBlockState = 2;
+        localStorage.setItem("codeBlockState", codeBlockState);
+    } else codeBlockState = parseInt(codeBlockState);
+
+    setCodeBlockStyle(codeBlockState);
+});
+
 
 $(function () {
     // Tree navigation
@@ -91,20 +116,5 @@ $(function () {
     }
     $(window).resize(_.debounce(onResize, 100));
     onResize();
-
-    //Initialize CodeBlock Visibility Settings
-    toggleCodeBlockBtn = $('#toggleCodeBlockBtn')[0];
-    codeBlockView = $('.right-column');
-    codeBlocks = $('.content-page article > pre');
-    codeBlockState = localStorage.getItem("codeBlockState");
-    if (!codeBlockState) {
-        codeBlockState = 0;
-        localStorage.setItem("codeBlockState", codeBlockState);
-    } else codeBlockState = parseInt(codeBlockState);
-    if (!codeBlockView.size()) return;
-    if (!codeBlocks.size()) {
-        codeBlockState = 2;
-        toggleCodeBlockBtn.classList.add('hidden');
-    }
-    setCodeBlockStyle(codeBlockState);
 });
+
