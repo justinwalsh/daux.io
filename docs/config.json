@@ -4,8 +4,11 @@
     "author": "Justin Walsh",
     "image": "app.png",
     "ignore": {
-            "files": ["Work_In_Progress.md"],
-            "folders": ["99_Not_Ready"]
+        "files": ["Work_In_Progress.md"],
+        "folders": ["99_Not_Ready"]
+    },
+    "filter": {
+        "ips": []
     },
     "live": {
         "inherit_index": true,
@@ -18,7 +21,6 @@
         "toggle_code": true,
         "date_modified": true,
         "float": true,
-
         "repo": "justinwalsh/daux.io",
         "twitter": ["justin_walsh", "todaymade"],
         "google_analytics": "UA-12653604-10",
