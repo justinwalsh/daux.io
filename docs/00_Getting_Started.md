@@ -442,13 +442,10 @@ For that i've included a short command, run `./serve` in the projects folder to 
 
 ### Running Remotely
 
-Copy the files from the repo to a web server that can run PHP 5.3 or greater.
+#### Clean URLs configuration
 
-There is an included `.htaccess` for Apache web server.
-
-### Clean URLs configuration
-
-Daux provides native support for Clean URLs provided the webserver has its URL Rewrite module enabled. To enable the same, set the toggle in the `config.json` file in the `/docs` folder.
+Daux provides native support for Clean URLs provided the webserver has its URL Rewrite module enabled.
+To enable the same, set the toggle in the `config.json` file in the `/docs` folder.
 
 ```json
 {
@@ -458,7 +455,47 @@ Daux provides native support for Clean URLs provided the webserver has its URL R
 }
 ```
 
-### Running on IIS
+#### Apache
+
+Copy the files from the repo to a web server that can run PHP 5.3 or greater.
+
+There is an included `.htaccess` for Apache web server.
+
+#### Nginx
+
+Daux.io works perfectly fine on Nginx too, just drop this configuration in your `nginx.conf`
+
+```
+server {
+    listen 8085;
+    server_name  localhost;
+
+    index index.html index.php;
+    charset utf-8;
+
+    root /var/www/docs;
+
+    location / {
+        if (!-e $request_filename){
+            rewrite ^(.*)$ /index.php$1;
+        }
+    }
+
+    location ~ \.php {
+        fastcgi_split_path_info ^(.+\.php)(/.+)$;
+
+        fastcgi_pass unix:/var/run/php5-fpm.sock;
+        #fastcgi_pass   127.0.0.1:9000;
+        fastcgi_index index.php;
+
+        include fastcgi_params;
+        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+        fastcgi_param PATH_INFO $fastcgi_path_info;
+    }
+}
+```
+
+### IIS
 
 If you have set up a local or remote IIS web site, you may need a `web.config` with:
 
