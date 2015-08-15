@@ -59,10 +59,13 @@ class GeneratorHelper
         $dir = opendir($source);
         while (false !== ($file = readdir($dir))) {
             if ($file != '.' && $file != '..') {
-                if (is_dir($source . '/' . $file)) {
-                    static::copyRecursive($source . '/' . $file, $destination . '/' . $file);
+                if (is_dir($source . DIRECTORY_SEPARATOR . $file)) {
+                    static::copyRecursive(
+                        $source . DIRECTORY_SEPARATOR . $file,
+                        $destination . DIRECTORY_SEPARATOR . $file
+                    );
                 } else {
-                    copy($source . '/' . $file, $destination . '/' . $file);
+                    copy($source . DIRECTORY_SEPARATOR . $file, $destination . DIRECTORY_SEPARATOR . $file);
                 }
             }
         }

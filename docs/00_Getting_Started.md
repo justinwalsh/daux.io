@@ -490,6 +490,11 @@ The `web.config` needs an entry for `<rewrite>` under `<system.webServer>`:
 
 To use clean URLs on IIS 6, you will need to use a custom URL rewrite module, such as [URL Rewriter](http://urlrewriter.net/).
 
+## Known Issues
+
+- __Windows UTF-8 files support__ Files with UTF-8 characters cannot be handled on windows, this issue has no known fix yet.
+
+
 ## Support
 
 If you need help using Daux.io, or have found a bug, please create an issue on the <a href="https://github.com/justinwalsh/daux.io/issues" target="_blank">GitHub repo</a>.

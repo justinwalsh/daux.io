@@ -71,7 +71,11 @@ class Server
         $this->daux = $daux;
 
         $this->host = $_SERVER['HTTP_HOST'];
-        $this->base_url = $_SERVER['HTTP_HOST'] . dirname($_SERVER['PHP_SELF']);
+
+        // The path has a special treatment on windows, revert the slashes
+        $dir = dirname($_SERVER['PHP_SELF']);
+        $this->base_url = $_SERVER['HTTP_HOST'] . (DIRECTORY_SEPARATOR == "\\"? str_replace($dir,"\\","/") : $dir);
+
         $t = strrpos($this->base_url, '/index.php');
         if ($t != false) {
             $this->base_url = substr($this->base_url, 0, $t);

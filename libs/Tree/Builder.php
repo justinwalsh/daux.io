@@ -98,7 +98,7 @@ class Builder
      */
     protected static function getFilename($file)
     {
-        $parts = explode('/', $file);
+        $parts = explode(DIRECTORY_SEPARATOR, $file);
         return end($parts);
     }
 
