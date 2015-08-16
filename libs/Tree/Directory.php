@@ -1,5 +1,7 @@
 <?php namespace Todaymade\Daux\Tree;
 
+use Todaymade\Daux\Daux;
+
 class Directory extends Entry
 {
     /** @var Entry[] */
@@ -57,11 +59,12 @@ class Directory extends Entry
         /*
           If the inherit_index flag is set, then we seek child content
          */
-        if(
-          !empty($this->getConfig()['live']['inherit_index'])
-          && $first_page = $this->seekFirstPage()
-          ){
-          return $first_page;
+        if (
+            $this->getConfig()['mode'] == Daux::LIVE_MODE
+            && !empty($this->getConfig()['live']['inherit_index'])
+            && $first_page = $this->seekFirstPage()
+        ) {
+            return $first_page;
         }
 
         return null;
