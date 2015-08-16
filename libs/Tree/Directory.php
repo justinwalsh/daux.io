@@ -59,8 +59,7 @@ class Directory extends Entry
         /*
           If the inherit_index flag is set, then we seek child content
          */
-        if (
-            $this->getConfig()['mode'] == Daux::LIVE_MODE
+        if ($this->getConfig()['mode'] == Daux::LIVE_MODE
             && !empty($this->getConfig()['live']['inherit_index'])
             && $first_page = $this->seekFirstPage()
         ) {
@@ -74,25 +73,25 @@ class Directory extends Entry
      * Seek the first available page from descendants
      * @return Content|null
      */
-    public function seekFirstPage(){
-      if( $this instanceof Directory ){
-        $index_key = $this->getConfig()['index_key'];
-        if (isset($this->children[$index_key])) {
-          return $this->children[$index_key];
+    public function seekFirstPage()
+    {
+        if ($this instanceof Directory) {
+            $index_key = $this->getConfig()['index_key'];
+            if (isset($this->children[$index_key])) {
+                return $this->children[$index_key];
+            }
+            foreach ($this->children as $node_key => $node) {
+                if ($node instanceof Content) {
+                    return $node;
+                }
+                if ($node instanceof Directory
+                && strpos($node->getUri(), '.') !== 0
+                && $childNode = $node->seekFirstPage() ) {
+                    return $childNode;
+                }
+            }
         }
-        foreach( $this->children AS $node_key => $node ){
-          if( $node instanceof Content ){
-            return $node;
-          }
-          if(
-            $node instanceof Directory
-            && strpos($node->getUri(), '.') !== 0
-            && $childNode = $node->seekFirstPage() ){
-            return $childNode;
-          }
-        }
-      }
-      return null;
+        return null;
     }
 
     /**

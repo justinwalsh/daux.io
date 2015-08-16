@@ -15,7 +15,8 @@ class Builder
         '.DS_Store', 'Thumbs.db',
     ];
 
-    protected static function isIgnored(\SplFileInfo $file, $ignore) {
+    protected static function isIgnored(\SplFileInfo $file, $ignore)
+    {
         if (in_array($file->getFilename(), static::$IGNORED)) {
             return true;
         }

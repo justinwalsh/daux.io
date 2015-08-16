@@ -74,7 +74,7 @@ class Server
 
         // The path has a special treatment on windows, revert the slashes
         $dir = dirname($_SERVER['PHP_SELF']);
-        $this->base_url = $_SERVER['HTTP_HOST'] . (DIRECTORY_SEPARATOR == "\\"? str_replace($dir,"\\","/") : $dir);
+        $this->base_url = $_SERVER['HTTP_HOST'] . (DIRECTORY_SEPARATOR == "\\"? str_replace($dir, "\\", "/") : $dir);
 
         $t = strrpos($this->base_url, '/index.php');
         if ($t != false) {
