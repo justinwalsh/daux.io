@@ -1,7 +1,5 @@
 <?php namespace Todaymade\Daux\Tree;
 
-use Todaymade\Daux\DauxHelper;
-
 class Content extends Entry
 {
     /**
@@ -27,14 +25,5 @@ class Content extends Entry
     public function setContent($content)
     {
         $this->content = $content;
-    }
-
-    /**
-     * @param string $file
-     * @return string
-     */
-    protected function getFilename($file)
-    {
-        return DauxHelper::pathinfo($file)['filename'];
     }
 }

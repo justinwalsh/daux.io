@@ -137,24 +137,6 @@ class DauxHelper
     }
 
     /**
-     * Get pathinfo for a file
-     *
-     * @param string $path
-     * @return array
-     */
-    public static function pathinfo($path)
-    {
-        preg_match('%^(.*?)[\\\\/]*(([^/\\\\]*?)(\.([^\.\\\\/]+?)|))[\\\\/\.]*$%im', $path, $m);
-        $ret = [];
-        foreach (['dir' => 1, 'basename' => 2, 'filename' => 3, 'extension' => 5] as $key => $group) {
-            if (isset($m[$group])) {
-                $ret[$key] = $m[$group];
-            }
-        }
-        return $ret;
-    }
-
-    /**
      * Locate a file in the tree. Returns the file if found or false
      *
      * @param Directory $tree

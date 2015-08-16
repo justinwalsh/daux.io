@@ -1,5 +1,7 @@
 <?php namespace Todaymade\Daux\Tree;
 
+use SplFileInfo;
+
 abstract class Entry
 {
     /** @var string */
@@ -14,29 +16,25 @@ abstract class Entry
     /** @var Directory */
     protected $parent;
 
+    /** @var SplFileInfo */
+    protected $info;
+
     /** @var string */
     protected $path;
-
-    /** @var integer */
-    protected $last_modified;
 
     /**
      * @param Directory $parent
      * @param string $uri
-     * @param string $path
-     * @param integer $last_modified
+     * @param SplFileInfo $info
      */
-    public function __construct(Directory $parent, $uri, $path = null, $last_modified = null)
+    public function __construct(Directory $parent, $uri, SplFileInfo $info = null)
     {
         $this->setUri($uri);
         $this->setParent($parent);
 
-        if ($path !== null) {
-            $this->path = $path;
-        }
-
-        if ($last_modified !== null) {
-            $this->last_modified = $last_modified;
+        if ($info !== null) {
+            $this->info = $info;
+            $this->path = $info->getPathname();
         }
     }
 
@@ -139,6 +137,14 @@ abstract class Entry
     public function getPath()
     {
         return $this->path;
+    }
+
+    /**
+     * @return SplFileInfo
+     */
+    public function getFileinfo()
+    {
+        return $this->info;
     }
 
     /**
