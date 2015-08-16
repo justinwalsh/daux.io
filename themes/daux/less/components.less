@@ -212,7 +212,7 @@ pre {
             }
 
             .page-header {
-                padding: 0px;
+                padding: 0;
             }
 
             .page-header, blockquote,
@@ -238,6 +238,14 @@ pre {
                 }
             }
 
+            // Paragraphs and code inside lists and
+            // blockquotes should have 100% width
+            li, blockquote {
+                p, pre {
+                    width:100%;
+                }
+            }
+
             ul, ol {
                 li {
                     margin-left: 30px;
@@ -250,8 +258,8 @@ pre {
                 width: 47%;
                 border: none;
                 border-left: 10px solid white;
-                margin: 0px 0px 10px 0px;
-                padding: 0px 0px 0px 10px;
+                margin: 0 0 10px 0;
+                padding: 0 0 0 10px;
             }
         }
     }
