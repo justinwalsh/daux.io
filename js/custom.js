@@ -23,23 +23,25 @@ var a = $('article');
 if (t[0] && a[0] && a[0].scrollHeight > $('.right-column').height()) t[0].style.right = '16px';
 
 function setCodeBlockStyle(x) {
-    switch (x) {
-        default:
-        case 0:
-            toggleCodeBlockBtn.innerHTML = "Show Code Blocks Inline";
-            codeBlockView.addClass('float-view');
-            codeBlocks.removeClass('hidden');
-            break;
-        case 1:
-            toggleCodeBlockBtn.innerHTML = "Hide Code Blocks";
-            codeBlockView.removeClass('float-view');
-            codeBlocks.removeClass('hidden');
-            break;
-        case 2:
-            toggleCodeBlockBtn.innerHTML = "Show Code Blocks";
-            codeBlockView.removeClass('float-view');
-            codeBlocks.addClass('hidden');          
-            break;
+    if(toggleCodeBlockBtn){
+        switch (x) {
+            default:
+            case 0:
+                toggleCodeBlockBtn.innerHTML = "Show Code Blocks Inline";
+                codeBlockView.addClass('float-view');
+                codeBlocks.removeClass('hidden');
+                break;
+            case 1:
+                toggleCodeBlockBtn.innerHTML = "Hide Code Blocks";
+                codeBlockView.removeClass('float-view');
+                codeBlocks.removeClass('hidden');
+                break;
+            case 2:
+                toggleCodeBlockBtn.innerHTML = "Show Code Blocks";
+                codeBlockView.removeClass('float-view');
+                codeBlocks.addClass('hidden');
+                break;
+        }
     }
 }
 
