@@ -62,7 +62,7 @@ $(function () {
         localStorage.setItem("codeBlockState", codeBlockState);
     } else codeBlockState = parseInt(codeBlockState);
     if (!codeBlockView.size()) return;
-    if (!codeBlocks.size()) {
+    if (!codeBlocks.size() && toggleCodeBlockBtn) {
         codeBlockState = 2;
         toggleCodeBlockBtn.classList.add('hidden');
     }
