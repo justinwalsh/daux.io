@@ -249,6 +249,13 @@ EOT;
             if (isset($m[2])) $ret['basename']=$m[2];
             if (isset($m[5])) $ret['extension']=$m[5];
             if (isset($m[3])) $ret['filename']=$m[3];
+
+            // handle folders like .foo
+            if (is_dir($path)) {
+                unset($ret['extension']);
+                $ret['filename'] = $ret['basename'];
+            }
+
             return $ret;
         }
 
