@@ -15,9 +15,10 @@
         "php": ">=5.4",
         "league/plates": "~3.1",
         "guzzlehttp/guzzle": "~5.3",
-        "league/commonmark": "0.8.*",
+        "league/commonmark": "^0.11",
         "symfony/console": "~2.7",
-        "symfony/finder": "~2.7"
+        "symfony/finder": "~2.7",
+        "webuni/commonmark-table-extension": "0.4.*"
     },
     "autoload": {
         "psr-4": {

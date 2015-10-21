@@ -89,17 +89,10 @@ Or perhaps someone a little less eloquent:
 Table for two
 -------------
 
-<table>
-  <tr>
-    <th>ID</th><th>Name</th><th>Rank</th>
-  </tr>
-  <tr>
-    <td>1</td><td>Tom Preston-Werner</td><td>Awesome</td>
-  </tr>
-  <tr>
-    <td>2</td><td>Albert Einstein</td><td>Nearly as awesome</td>
-  </tr>
-</table>
+ID |  Name  | Rank
+---|:------:|------:
+1  | Tom Preston-Werner | Awesome
+2  | Albert Einstein | Nearly as awesome
 
 Crazy linking action
 --------------------

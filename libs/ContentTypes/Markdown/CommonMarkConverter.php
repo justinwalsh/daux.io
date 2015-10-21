@@ -3,6 +3,7 @@
 use League\CommonMark\DocParser;
 use League\CommonMark\Environment;
 use League\CommonMark\HtmlRenderer;
+use Webuni\CommonMark\TableExtension\TableExtension;
 
 class CommonMarkConverter extends \League\CommonMark\CommonMarkConverter
 {
@@ -15,6 +16,7 @@ class CommonMarkConverter extends \League\CommonMark\CommonMarkConverter
     {
         $environment = Environment::createCommonMarkEnvironment();
         $environment->mergeConfig($config);
+        $environment->addExtension(new TableExtension());
 
         $this->extendEnvironment($environment);
 

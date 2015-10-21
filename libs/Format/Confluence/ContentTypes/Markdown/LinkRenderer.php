@@ -1,7 +1,7 @@
 <?php namespace Todaymade\Daux\Format\Confluence\ContentTypes\Markdown;
 
 use League\CommonMark\HtmlElement;
-use League\CommonMark\HtmlRendererInterface;
+use League\CommonMark\ElementRendererInterface;
 use League\CommonMark\Inline\Element\AbstractInline;
 use League\CommonMark\Inline\Element\Link;
 
@@ -9,11 +9,11 @@ class LinkRenderer extends \Todaymade\Daux\ContentTypes\Markdown\LinkRenderer
 {
     /**
      * @param Link $inline
-     * @param HtmlRendererInterface $htmlRenderer
+     * @param ElementRendererInterface $htmlRenderer
      *
      * @return HtmlElement
      */
-    public function render(AbstractInline $inline, HtmlRendererInterface $htmlRenderer)
+    public function render(AbstractInline $inline, ElementRendererInterface $htmlRenderer)
     {
         // This can't be in the method type as
         // the method is an abstract and should
