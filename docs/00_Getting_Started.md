@@ -31,6 +31,7 @@ This is a list of sites using Daux.io:
 * [ICADMIN: An admin panel powered by CodeIgniter.](http://istocode.com/shared/ic-admin/)
 * [TrackJs](http://docs.trackjs.com) (uses a customized theme)
 * [wallabag](http://doc.wallabag.org/index)
+* [Ultimo Docs](http://docs.ultimogroup.co.nz/)
 
 Do you use Daux.io? Send me a pull request or open an [issue](https://github.com/justinwalsh/daux.io/issues) and I will add you to the list.
 
