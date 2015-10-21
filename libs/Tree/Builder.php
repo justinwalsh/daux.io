@@ -58,7 +58,7 @@ class Builder
      */
     public static function build($node, $ignore)
     {
-        if (!$it = new \FilesystemIterator($node->getPath())) {
+        if (($it = new \FilesystemIterator($node->getPath())) == false) {
             return;
         }
 

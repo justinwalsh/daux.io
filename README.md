@@ -35,7 +35,7 @@ Do you use Daux.io? Send me a pull request or open an [issue](https://github.com
 
 ## Download
 
-Download this repository as a zip, and unpack. Copy the files to a web server that can run PHP 5.3 or greater. You can also run the documentation locally using Grunt.js, which is covered at the end of this readme.
+Download this repository as a zip, and unpack. Copy the files to a web server that can run PHP 5.4 or greater. You can also run the documentation locally using Grunt.js, which is covered at the end of this readme.
 
 ## Folders
 
@@ -280,7 +280,7 @@ Directory structure:
 
 ## Running Remotely
 
-Copy the files from the repo to a web server that can run PHP 5.3 or greater.
+Copy the files from the repo to a web server that can run PHP 5.4 or greater.
 
 ## Running Locally
 
