@@ -216,7 +216,7 @@ pre {
             }
 
             .page-header, blockquote,
-            p, ul, ol, dl, h2, h3, h4, h5, h6 {
+            p, ul, ol, dl, h2, h3, h4, h5, h6, hr {
                 float: left;
                 clear: left;
                 width: 47%;
@@ -232,10 +232,14 @@ pre {
                     //border-top: 1px solid @dark;
                 }
 
-                p, ul, ol, dl, h2, h3, h4, h5, h6, pre {
+                p, ul, ol, dl, h2, h3, h4, h5, h6, pre, hr {
                     float: none;
                     display: block;
                 }
+            }
+
+            hr {
+                border-color: #ddd;
             }
 
             // Paragraphs and code inside lists and
@@ -275,7 +279,6 @@ table {
         th, td {
             padding: 8px;
             line-height: 20px;
-            text-align: left;
             vertical-align: top;
             border-top: 1px solid @lines;
             border-left: 1px solid @lines;
