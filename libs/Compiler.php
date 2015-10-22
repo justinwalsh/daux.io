@@ -59,7 +59,8 @@ class Compiler
             ->in(__DIR__ . '/../vendor/guzzlehttp/streams/src/')
             ->in(__DIR__ . '/../vendor/league/commonmark/src/')
             ->in(__DIR__ . '/../vendor/league/plates/src/')
-            ->in(__DIR__ . '/../vendor/react/promise/src/');
+            ->in(__DIR__ . '/../vendor/react/promise/src/')
+            ->in(__DIR__ . '/../vendor/webuni/commonmark-table-extension/src/');
 
         foreach ($finder as $file) {
             $this->addFile($phar, $file);
