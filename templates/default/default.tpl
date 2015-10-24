@@ -217,6 +217,7 @@
                     </div>
                 </div>
                 <div class="right-column <?php echo ($params['float']?'float-view':''); ?> content-area col-sm-9">
+                    <input id="wy-search" type="text" placeholder="Search">
                     <div class="content-page">
                         <article>
                             <?php if ($params['date_modified']) { ?>
@@ -283,6 +284,17 @@
     <!-- hightlight.js -->
     <script src="<?php echo $base_url; ?>js/highlight.min.js"></script>
     <script>hljs.initHighlightingOnLoad();</script>
+
+    <!-- WY search -->
+    <script src="<?php echo $base_url; ?>js/wy-search.js"></script>
+    <style type="text/css">
+        #wy-search {
+            width: 100%;
+        }
+        .wy-hl {
+            background-color: #FFFF00 !important;
+        }
+    </style>
 
     <!-- JS -->
     <?php foreach ($page['theme']['js'] as $js) echo '<script src="' . $js . '"></script>'; ?>
