@@ -25,5 +25,8 @@
             "Todaymade\\Daux\\Extension\\": "daux/",
             "Todaymade\\Daux\\": "libs/"
         }
+    },
+    "require-dev": {
+        "phpunit/phpunit": "~4"
     }
 }

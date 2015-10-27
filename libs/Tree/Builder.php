@@ -76,7 +76,7 @@ class Builder
             if ($file->isDir()) {
                 $new = new Directory($node, static::removeSortingInformations($file->getFilename()), $file);
                 $new->setName(static::getName($file->getPathName()));
-                $new->setTitle(static::removeSortingInformations($new->getName(), ' '));
+                $new->setTitle(str_replace('_', ' ', static::removeSortingInformations($new->getName())));
                 static::build($new, $ignore);
             } else {
                 static::createContent($node, $file);
@@ -101,7 +101,7 @@ class Builder
             $uri = static::removeSortingInformations($file->getFilename());
 
             $entry = new Raw($parent, $uri, $file);
-            $entry->setTitle(static::removeSortingInformations($name, ' '));
+            $entry->setTitle(str_replace('_', ' ', static::removeSortingInformations($name)));
             $entry->setName($name);
 
             return $entry;
@@ -121,7 +121,7 @@ class Builder
                 $entry->setTitle($parent->getTitle());
             }
         } else {
-            $entry->setTitle(static::removeSortingInformations($name, ' '));
+            $entry->setTitle(str_replace('_', ' ', static::removeSortingInformations($name)));
         }
 
         $entry->setName($name);
@@ -133,23 +133,14 @@ class Builder
      * @param string $filename
      * @return string
      */
-    protected static function removeSortingInformations($filename, $separator = '_')
+    public static function removeSortingInformations($filename)
     {
-        $filename = explode('_', $filename);
+        preg_match("/^-?[0-9]*_?(.*)/", $filename, $matches);
 
-        // Remove the numeric part of the
-        // filename, only if there is
-        // something after that
-        if ($filename[0] == '' || (is_numeric($filename[0]) && array_key_exists(1, $filename))) {
-            unset($filename[0]);
-        } else {
-            $t = $filename[0];
-            if ($t[0] == '-') {
-                $filename[0] = substr($t, 1);
-            }
-        }
-        $filename = implode($separator, $filename);
-        return $filename;
+        // Remove the numeric part
+        // of the filename, only if
+        // there is something after
+        return empty($matches[1])? $matches[0] : $matches[1];
     }
 
     /**
