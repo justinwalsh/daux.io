@@ -160,7 +160,7 @@ class Api
             'type' => 'page',
             'space' => ['key' => $this->space],
             'ancestors' => [['type' => 'page', 'id' => $parent_id]],
-            'version' => ['number' => $newVersion, "minorEdit" => false],
+            'version' => ['number' => $newVersion, "minorEdit" => true],
             'title' => $title,
             'body' => ['storage' => ['value' => $content, 'representation' => 'storage']]
         ];
