@@ -16,5 +16,7 @@ class CommonMarkConverter extends \Todaymade\Daux\ContentTypes\Markdown\CommonMa
         //Add code renderer
         $environment->addBlockRenderer('FencedCode', new FencedCodeRenderer());
         $environment->addBlockRenderer('IndentedCode', new IndentedCodeRenderer());
+
+        $environment->addInlineRenderer('Image', new ImageRenderer());
     }
 }
