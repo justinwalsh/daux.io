@@ -42,7 +42,7 @@ class LinkRenderer extends \Todaymade\Daux\ContentTypes\Markdown\LinkRenderer
         ];
 
         $page = strval(new HtmlElement('ri:page', $link_props, '', true));
-        $children = $htmlRenderer->renderInlines($inline->getChildren());
+        $children = $htmlRenderer->renderInlines($inline->children());
         if (strpos($children, "<") !== false) {
             $children = '<ac:link-body>' . $children . '</ac:link-body>';
         } else {
