@@ -14,6 +14,7 @@ class Directory extends Entry
     {
         // Separate the values into buckets to sort them separately
         $buckets = [
+            'index' => [],
             'numeric' => [],
             'normal' => [],
             'down_numeric' => [],
@@ -22,6 +23,11 @@ class Directory extends Entry
 
         foreach ($this->children as $key => $entry) {
             $name = $entry->getName();
+
+            if ($name == 'index' || $name == '_index') {
+                $buckets['index'][$key] = $entry;
+                continue;
+            }
 
             if ($name[0] == "-") {
                 if (is_numeric($name[1])) {

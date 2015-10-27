@@ -37,7 +37,6 @@ class Server
 
         // Improve the tree with a processor
         $daux->generateTree();
-        $daux->getProcessor()->manipulateTree($daux->tree);
 
         $server = new static($daux);
 

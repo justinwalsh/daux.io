@@ -74,7 +74,9 @@ class ContentPage extends \Todaymade\Daux\Format\Base\ContentPage
             'markdown' => $this->content,
             'request' => $params['request'],
             'content' => $this->convertPage($this->content),
-            'breadcrumbs' => $params['html']['breadcrumbs']
+            'breadcrumbs' => $params['html']['breadcrumbs'],
+            'prev' => $this->file->getPrevious(),
+            'next' => $this->file->getNext(),
         ];
 
         if ($page['breadcrumbs']) {

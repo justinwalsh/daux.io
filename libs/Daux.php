@@ -3,6 +3,8 @@
 use Symfony\Component\Console\Output\NullOutput;
 use Todaymade\Daux\ContentTypes\ContentTypeHandler;
 use Todaymade\Daux\Tree\Builder;
+use Todaymade\Daux\Tree\Content;
+use Todaymade\Daux\Tree\Directory;
 use Todaymade\Daux\Tree\Root;
 
 class Daux
@@ -173,6 +175,41 @@ class Daux
                 $this->tree->getEntries()[$key]->setTitle($node);
             }
         }
+
+        // Enhance the tree with processors
+        $this->getProcessor()->manipulateTree($this->tree);
+
+        // Sort the tree one last time before it is finalized
+        $this->sortTree($this->tree);
+
+        $this->finalizeTree($this->tree);
+    }
+
+    public function sortTree(Directory $current) {
+        $current->sort();
+        foreach ($current->getEntries() as $entry) {
+            if ($entry instanceof Directory) {
+                $this->sortTree($entry);
+            }
+        }
+    }
+
+    public function finalizeTree(Directory $current, $prev = null)
+    {
+        foreach ($current->getEntries() as $entry) {
+            if ($entry instanceof Directory) {
+                $prev = $this->finalizeTree($entry, $prev);
+            } elseif ($entry instanceof Content) {
+                if ($prev) {
+                    $prev->setNext($entry);
+                    $entry->setPrevious($prev);
+                }
+
+                $prev = $entry;
+            }
+        }
+
+        return $prev;
     }
 
     /**

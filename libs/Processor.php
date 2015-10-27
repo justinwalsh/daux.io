@@ -74,7 +74,7 @@ class Processor
      * phase, with this you can change the markdown parser or add
      * a completely different file type.
      *
-     * @return \Todaymade\Daux\Format\Base\ContentTypes\ContentType[]
+     * @return \Todaymade\Daux\ContentTypes\ContentType[]
      */
     public function addContentType()
     {

@@ -33,7 +33,6 @@ class Generate extends SymfonyCommand
 
         // Generate the tree
         $daux->generateTree();
-        $daux->getProcessor()->manipulateTree($daux->tree);
 
         // Generate the documentation
         $daux->getGenerator()->generateAll($input, $output, $width);

@@ -31,5 +31,14 @@
     <?php } ?>
 
     <?= $page['content']; ?>
+
+    <?php if(!empty($page['prev']) || !empty($page['next'])) { ?>
+    <nav>
+        <ul class="pager">
+            <?php if(!empty($page['prev'])) { ?><li><a href="<?= $base_url . $page['prev']->getUrl() ?>">Previous</a></li><?php } ?>
+            <?php if(!empty($page['next'])) { ?><li><a href="<?= $base_url . $page['next']->getUrl() ?>">Next</a></li><?php } ?>
+        </ul>
+    </nav>
+    <?php } ?>
 </article>
 

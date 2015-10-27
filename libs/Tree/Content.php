@@ -8,6 +8,16 @@ class Content extends Entry
     protected $content;
 
     /**
+     * @var Content
+     */
+    protected $previous;
+
+    /**
+     * @var Content
+     */
+    protected $next;
+
+    /**
      * @return string
      */
     public function getContent()
@@ -25,5 +35,47 @@ class Content extends Entry
     public function setContent($content)
     {
         $this->content = $content;
+    }
+
+    /**
+     * @return Content
+     */
+    public function getPrevious()
+    {
+        return $this->previous;
+    }
+
+    /**
+     * @param Content $previous
+     */
+    public function setPrevious($previous)
+    {
+        $this->previous = $previous;
+    }
+
+    /**
+     * @return Content
+     */
+    public function getNext()
+    {
+        return $this->next;
+    }
+
+    /**
+     * @param Content $next
+     */
+    public function setNext($next)
+    {
+        $this->next = $next;
+    }
+
+    public function dump()
+    {
+        $dump = parent::dump();
+
+        $dump['prev'] = $this->getPrevious() ? $this->getPrevious()->getUrl() : '';
+        $dump['next'] = $this->getNext() ? $this->getNext()->getUrl() : '';
+
+        return $dump;
     }
 }
