@@ -32,6 +32,7 @@ This is a list of sites using Daux.io:
 * [iGeo-Topo](http://igeo-topo.fr/doc)
 
 Do you use Daux.io? Send me a pull request or open an [issue](https://github.com/justinwalsh/daux.io/issues) and I will add you to the list.
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
 
 ## Download
 
