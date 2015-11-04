@@ -1,4 +1,4 @@
-Highlight.js highlights syntax in code examples on blogs, forums and in fact on any web pages. It's very easy to use because it works automatically: finds blocks of code, detects a language, highlights it. [Learn more.](http://softwaremaniacs.org/soft/highlight/en/)
+Highlight.js highlights syntax in code examples on blogs, forums and in fact on any web pages. It's very easy to use because it works automatically: finds blocks of code, detects a language, highlights it. [Learn more.](https://highlightjs.org/)
 
 You can even use [Github Flavored Markdown](!Examples/GitHub_Flavored_Markdown)
 
@@ -630,38 +630,6 @@ You can even use [Github Flavored Markdown](!Examples/GitHub_Flavored_Markdown)
 	        }
 	    }
 	}
-
-**VBScript**
-
-	' creating configuration storage and initializing with default values
-	Set cfg = CreateObject("Scripting.Dictionary")
-
-	' reading ini file
-	for i = 0 to ubound(ini_strings)
-	    s = trim(ini_strings(i))
-
-	    ' skipping empty strings and comments
-	    if mid(s, 1, 1) <> "#" and len(s) > 0 then
-	      ' obtaining key and value
-	      parts = split(s, "=", -1, 1)
-
-	      if ubound(parts)+1 = 2 then
-	        parts(0) = trim(parts(0))
-	        parts(1) = trim(parts(1))
-
-	        ' reading configuration and filenames
-	        select case lcase(parts(0))
-	          case "uncompressed""_postfix" cfg.item("uncompressed""_postfix") = parts(1)
-	          case "f"
-	                    options = split(parts(1), "|", -1, 1)
-	                    if ubound(options)+1 = 2 then
-	                      ' 0: filename,  1: options
-	                      ff.add trim(options(0)), trim(options(1))
-	                    end if
-	        end select
-	      end if
-	    end if
-	next
 
 **VB.NET**
 
@@ -2124,42 +2092,3 @@ You can even use [Github Flavored Markdown](!Examples/GitHub_Flavored_Markdown)
 	  by A3,TARSKI:def 1,TREES_1:def 2;
 	  hence thesis by A4;
 	end;
-
-
-
-**Special tests**
-
-Explicit Python highlighting
-
-	for x in [1, 2, 3]:
-	  count(x)
-
-
-Language set on <pre>
-
-	for x in [1, 2, 3]:
-	  count(x)
-
-HTML5-style language class (language-python)
-	
-	for x in [1, 2, 3]:
-	  count(x)
-
-Replacing TAB with 4 spaces
-
-	for x in [1, 2, 3]:
-		count(x)
-
-Custom markup
-
-	<<a href="http://dev.w3.org/html5/spec/Overview.html#the-div-element">div</a> id="contents">
-	  <del><p>Hello, World!</del><!-- A comment should not break merging --><ins>Goodbye, cruel world!</ins>
-	</div>
-
-Custom markup + TAB replacement
-
-	for x in [1, 2, 3]:
-	<span style="background:yellow">	</span>count(x)
-		if x == 3:
-		<span style="background:yellow">	</span>count(x + 1)
-
