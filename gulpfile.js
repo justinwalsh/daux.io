@@ -11,7 +11,8 @@ var resources = {
     daux_blue:{source: "themes/daux/less/theme-blue.less", dest: "themes/daux/css/"},
     daux_green:{source: "themes/daux/less/theme-green.less", dest: "themes/daux/css/"},
     daux_navy:{source: "themes/daux/less/theme-navy.less", dest: "themes/daux/css/"},
-    daux_red:{source: "themes/daux/less/theme-red.less", dest: "themes/daux/css/"}
+    daux_red:{source: "themes/daux/less/theme-red.less", dest: "themes/daux/css/"},
+    daux_singlepage:{source: "themes/daux_singlepage/less/main.less", dest: "themes/daux_singlepage/css/"}
 };
 
 var unusedRules = [

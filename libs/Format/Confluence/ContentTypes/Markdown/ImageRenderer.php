@@ -17,11 +17,11 @@ class ImageRenderer extends \League\CommonMark\Inline\Renderer\ImageRenderer
     {
         // External Images need special handling
         if (strpos($inline->getUrl(), 'http') === 0) {
-          return new HtmlElement(
-              'ac:image',
-              [],
-              new HtmlElement('ri:url', ['ri:value' => $inline->getUrl()])
-          );
+            return new HtmlElement(
+                'ac:image',
+                [],
+                new HtmlElement('ri:url', ['ri:value' => $inline->getUrl()])
+            );
         }
 
         return parent::render($inline, $htmlRenderer);

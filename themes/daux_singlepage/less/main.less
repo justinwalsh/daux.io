@@ -1,0 +1,47 @@
+// Core variables and mixins
+@import "vendors/bootstrap/variables.less";
+@import "vendors/bootstrap/normalize.less";
+@import "vendors/bootstrap/scaffolding.less";
+@import "vendors/bootstrap/type.less";
+
+@import "variables.less";
+@import "fonts.less";
+
+@import "highlight.less";
+
+@import "book/markdown.less";
+
+* {
+    -webkit-overflow-scrolling: touch;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-text-size-adjust: none;
+    -webkit-touch-callout: none;
+    -webkit-font-smoothing: antialiased;
+}
+
+html, body {
+    height: 100%;
+}
+
+body {
+    text-rendering: optimizeLegibility;
+	font-smoothing: antialiased;
+	font-family: @font-family-base;
+}
+
+img {
+    max-width: 100% !important;
+}
+
+.page-break	{ display: none; }
+
+
+@media screen {
+    body {
+        margin:1em;
+    }
+}
+
+@media print {
+    @import "print.less";
+}

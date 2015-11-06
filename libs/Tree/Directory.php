@@ -64,7 +64,8 @@ class Directory extends Entry
         $this->children = $final;
     }
 
-    private function sortBucket($bucket, $final) {
+    private function sortBucket($bucket, $final)
+    {
         uasort($bucket, function(Entry $a, Entry $b) {
             return strcasecmp($a->getName(), $b->getName());
         });

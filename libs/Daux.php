@@ -185,7 +185,8 @@ class Daux
         $this->finalizeTree($this->tree);
     }
 
-    public function sortTree(Directory $current) {
+    public function sortTree(Directory $current)
+    {
         $current->sort();
         foreach ($current->getEntries() as $entry) {
             if ($entry instanceof Directory) {
@@ -282,6 +283,7 @@ class Daux
     {
         $default = [
             'confluence' => '\Todaymade\Daux\Format\Confluence\Generator',
+            'html-file' => '\Todaymade\Daux\Format\HTMLFile\Generator',
             'html' => '\Todaymade\Daux\Format\HTML\Generator',
         ];
 

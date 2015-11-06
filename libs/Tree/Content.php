@@ -69,6 +69,11 @@ class Content extends Entry
         $this->next = $next;
     }
 
+    public function isIndex()
+    {
+        return $this->name == 'index' || $this->name == '_index';
+    }
+
     public function dump()
     {
         $dump = parent::dump();

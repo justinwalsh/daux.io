@@ -69,32 +69,16 @@ Daux.io is extendable and comes by default with two export formats:
 
 ## Feature Matrix
 
-<table>
-  <tr>
-    <th>Feature</th><th>HTML</th><th>Confluence</th>
-  </tr>
-  <tr>
-    <td>Landing Pages</td><td>√</td><td>X</td>
-  </tr>
-  <tr>
-    <td>Index Pages</td><td>√</td><td>√</td>
-  </tr>
-  <tr>
-    <td>Internal Links</td><td>√</td><td>√</td>
-  </tr>
-  <tr>
-    <td>Code Highlight</td><td>√</td><td>√ (Using macros)</td>
-  </tr>
-  <tr>
-    <td>Live Mode</td><td>√</td><td>X</td>
-  </tr>
-  <tr>
-    <td>Ordering Pages</td><td>√</td><td>X (API Limitation)</td>
-  </tr>
-  <tr>
-    <td>Google / Piwik analytics</td><td>√</td><td>X</td>
-  </tr>
-</table>
+Feature        | HTML | Single Page HTML | Confluence
+--------------:|:----:|:----------------:|:----------:
+Multilanguage  | √    | X (Soon)         | X
+Landing Pages  | √    | X                | X
+Index Pages    | √    | √                | √
+Internal Links | √    | X (Soon)         | √
+Code Highlight | √    | X (Soon)         | √ (Using macros)
+Live Mode      | √    | X                | X
+Pages Ordering | √    | √                | X (API Limitation)
+Google / Piwik analytics | √ | √         | √ (Configured on Conflence)
 
 ## Folders
 
