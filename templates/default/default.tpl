@@ -126,6 +126,7 @@
                         <?php
                             if ($params['repo']) echo '<a href="https://github.com/' . $params['repo'] . '" class="btn btn-secondary btn-hero">View On GitHub</a>';
                             foreach ($entry_page as $key => $node) echo '<a href="' . $node . '" class="btn btn-primary btn-hero">' . $key . '</a>';
+                            foreach ($params['buttons'] as $key => $node) echo '<a href="' . $node . '" class="btn btn-primary btn-hero">' . $key . '</a>';
                         ?>
                     </div>
                 </div>
