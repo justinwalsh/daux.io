@@ -225,6 +225,7 @@
                     if ($params['image'] !== '') $params['image'] = str_replace('<base_url>', $params['base_url'], $params['image']);
                     $params['repo'] = $this->options['repo'];
                     $params['links'] = $this->options['links'];
+                    $params['buttons'] = $this->options['buttons'];
                     $params['twitter'] = $this->options['twitter'];
                     $params['google_analytics'] = ($g = $this->options['google_analytics']) ?
                         DauxHelper::google_analytics($g, $this->host) : '';
@@ -255,6 +256,7 @@
                     if ($params['image'] !== '') $params['image'] = str_replace('<base_url>', $params['base_url'], $params['image']);
                     $params['repo'] = $this->options['repo'];
                     $params['links'] = $this->options['links'];
+                    $params['buttons'] = $this->options['buttons'];
                     $params['twitter'] = $this->options['twitter'];
                     $params['google_analytics'] = ($g = $this->options['google_analytics']) ?
                         DauxHelper::google_analytics($g, $this->host) : '';
@@ -299,6 +301,7 @@
                     $params['image'] = $this->options['image'];
                     $params['repo'] = $this->options['repo'];
                     $params['links'] = $this->options['links'];
+                    $params['buttons'] = $this->options['buttons'];
                     $params['twitter'] = $this->options['twitter'];
                     $params['google_analytics'] = ($g = $this->options['google_analytics']) ?
                         DauxHelper::google_analytics($g, $this->host) : '';
