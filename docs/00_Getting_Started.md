@@ -2,23 +2,32 @@
 
 ## Features
 
+### For Authors
+
+* [Auto Generated Navigation / Page sorting](!Features/Navigation_and_Sorting)
+* [Internal documentation links](!Features/Internal_links)
+* [Github Flavored Markdown](!Features/GitHub_Flavored_Markdown)
+* [Auto created homepage/landing page](!Features/Landing_page)
+* [Multiple Output Formats](!Features/Multiple_Output_Formats)
+* [Multiple Languages Support](!Features/Multilanguage)
+* [No Build Step](!Features/Live_mode)
+* [Static Output Generation](!Features/Static_Site_Generation)
+
+### For Developers
+
+* [Auto Syntax Highlighting](!Features/Auto_Syntax_Highlight)
+* [Extend Daux.io with Processors](!For_Developers/Creating_a_Processor)
+* Full access to the internal API to create new pages programatically
+* Work with pages metadata
+
+### For Marketing
+
 * 100% Mobile Responsive
-* Supports GitHub Flavored Markdown
-* Auto created homepage/landing page
-* Auto Syntax Highlighting
-* Auto Generated Navigation
 * 4 Built-In Themes or roll your own
 * Functional, Flat Design Style
-* Shareable/Linkable SEO Friendly URLs
-* Built On Bootstrap
-* No Build Step
-* Git/SVN Friendly
-* Supports Google Analytics and Piwik Analytics
 * Optional code float layout
-* Static Output Generation
-* Internal documentation links
-* Multiple Output Formats
-* Extend Daux.io with Processors
+* Shareable/Linkable SEO Friendly URLs
+* Supports Google Analytics and Piwik Analytics
 
 ## Demos
 
@@ -33,9 +42,11 @@ This is a list of sites using Daux.io:
 * [wallabag](http://doc.wallabag.org/index)
 * [Ultimo Docs](http://docs.ultimogroup.co.nz/)
 
-Do you use Daux.io? Send me a pull request or open an [issue](https://github.com/justinwalsh/daux.io/issues) and I will add you to the list.
+Do you use Daux.io? Send us a pull request or open an [issue](https://github.com/justinwalsh/daux.io/issues) and I will add you to the list.
 
-## Download
+## Getting Started
+
+### Download
 
 Download this repository as a zip, and unpack. Copy the files to a web server that can run PHP 5.3 or greater.
 You can also run the documentation locally using Grunt.js, which is covered at the end of this readme.
@@ -44,53 +55,17 @@ If you don't intend to modify Daux.io and just want to use it, you only need to 
 
 If however you wish to do some advanced modifications, I recommend you use the raw version and run `composer install` to get started.
 
-## Generating a set of static files
+### Writing pages
 
-These can be uploaded to a static site hosting service such as pages.github.com
+Creating new pages is very easy:
+1. Create a markdown file (`*.md` or `*.markdown`)
+2. Start writing
 
-Generating a complete set of pages, with navigation
+By default, the generator will look for folders in the `docs` folder.
+Add your folders inside the `docs` folder. This project contains some example folders and files to get you started.
 
-```bash
-./generate --destination=[Output Directory Relative Direction]
-```
-
-For more options, run 
-
-```bash
-./generate --help
-```
-
-## Formats
-
-Daux.io is extendable and comes by default with two export formats:
-
-- Export to HTML
-- Upload to your Atlassian Confluence server
-
-## Feature Matrix
-
-Feature        | HTML | Single Page HTML | Confluence
---------------:|:----:|:----------------:|:----------:
-Multilanguage  | √    | X (Soon)         | X
-Landing Pages  | √    | X                | X
-Index Pages    | √    | √                | √
-Internal Links | √    | X (Soon)         | √
-Code Highlight | √    | X (Soon)         | √ (Using macros)
-Live Mode      | √    | X                | X
-Pages Ordering | √    | √                | X (API Limitation)
-Google / Piwik analytics | √ | √         | √ (Configured on Conflence)
-
-## Folders
-
-By default, the generator will look for folders in the `docs` folder. Add your folders inside the `docs` folder. This project contains some example folders and files to get you started.
-
-You can nest folders any number of levels to get the exact structure you want. The folder structure will be converted to the nested navigation.
-
-If you'd prefer to keep your docs somewhere else (like outside of the daux.io root directory) you can specify your docs path in the `global.json` file.
-
-## Files
-
-The generator will look for Markdown files (`*.md` and `*.markdown`) inside the `docs` folder and any of the subfolders within `docs`. Additional extensions can be added by editing `global.json`
+You can nest folders any number of levels to get the exact structure you want.
+The folder structure will be converted to the nested navigation.
 
 You must use underscores instead of spaces. Here are some example file names and what they will be converted to:
 
@@ -105,412 +80,46 @@ You must use underscores instead of spaces. Here are some example file names and
 
 * File Name With Space.md = FAIL
 
-## Sorting
+### See your pages
 
-To sort your files and folders in a specific way, you can prefix them with a number and underscore, e.g. `/docs/01_Hello_World.md` and `/docs/05_Features.md` This will list *Hello World* before *Features*, overriding the default alpha-numeric sorting. The numbers will be stripped out of the navigation and urls. For the file `6 Ways to Get Rich`, you can use `/docs/_6_Ways_to_Get_Rich.md`
+Now you can see your pages. you have two options for that : serve them directly, or generate to various formats.
 
-You might also wish to stick certain links to the bottom of a page. You can do so by appending a '-' to the start of the filename, e.g. a new file `/docs/-Contact_Us.md` will always appear at the bottom of the current list. Weights can also be added to further sort the bottom entries. e.g. `/docs/-01_Coming.md` will appear before `/docs/-02_Soon.md` but both will only appear after all positive or non-weighted files. 
+We recommend the first one while you write your documentation, you get a much quicker feedback while writing.
 
-## Landing page
+#### Serving files
 
-If you want to create a beautiful landing page for your project, create a `_index.md` file in the root of the `/docs` folder. This file will then be used to create a landing page. You can also add a tagline and image to this page using the config file like this:
+You can use PHP's embedded web server by running the following command in the root of your documentation
 
-```json
-{
-	"title": "Daux.io",
-	"tagline": "The Easiest Way To Document Your Project",
-	"image": "app.png"
-}
+```
+./serve
 ```
 
-Note: The image can be a local or remote image. By default, the path is relative to the root of the documentation
+Upload your files to an apache / nginx server and see your documentation
 
-## Section Index page
+[More informations here](!Features/Live_mode)
 
-By default, a folder will have no index page. if you wish to have one defined all you need to do is add an `index.md` file to the folder. For example, `/docs/01_Examples` has a landing page for that section since there exists a `/docs/01_Examples/index.md` file.
+#### Export to other formats
 
-## Internal links
+Daux.io is extendable and comes by default with three export formats:
 
-You can create links from a page to an other, the link is then resolved to the real page.
+- Export to HTML, same as the website, but can be hosted without PHP.
+- Export all documentation in a single HTML page
+- Upload to your Atlassian Confluence server.
 
-Creating a link to another page is done exactly like a normal markdown link. In the url part, start with `!` and set the absolute path to the file, omitting the numbering and file extension
+[See a detailed feature comparison matrix](!Features/Multiple_Output_Formats)
 
-A link to `01_Examples/05_Code_Highlighting.md` Would be written like this: `[Code Highlight Examples](!Examples/Code_Highlighting)`
+Here's how you run an export:
 
-The page generation will fail if a link is wrong.
+```bash
+./generate
+```
 
+[See here for all options](!Features/Static_Site_Generation)
 
 ## Configuration
 
-To customize the look and feel of your documentation, you can create a `config.json` file in the of the `/docs` folder. The `config.json` file is a JSON object that you can use to change some of the basic settings of the documentation.
+Now that you got the basics, you can also [see what you can configure](!Configuration)
 
-### Title
-Change the title bar in the docs
-
-```json
-{
-	"title": "Daux.io"
-}
-```
-
-### Tagline
-Change the tagline bar in the docs
-
-```json
-{
-	"tagline": "The Easiest Way To Document Your Project"
-}
-```
-
-### Author
-Change the documentation's author
-
-```json
-{
-	"author": "Stéphane Goetz"
-}
-```
-
-### Ignore
-Set custom files and entire folders to ignore within your `/docs` folder. For files make sure to include the file extension in the name. For both files and folders, names are case-sensitive.
-
-```json
-	{
-		"ignore": {
-			"files": ["Work_In_Progress.md"],
-			"folders": ["99_Not_Ready"]
-		}
-	}
-```
-
-### Timezone
-If your server does not have a default timezone set in php.ini, it may return errors when it tries to generate the last modified date/time for docs. To fix these errors, specify a timezone in your config file. Valid options are available in the [PHP Manual](http://php.net/manual/en/timezones.php).
-
-```json
-{
-    "timezone": "America/Los_Angeles"
-}
-```
-
-### Multi-language
-Enables multi-language support which needs seperate directories for each language in `docs/` folder.
-
-```json
-{
-    "languages": { "en": "English", "de": "German" }
-}
-```
-
-Directory structure:
-```
-├── docs/
-│   ├── _index.md
-│   ├── en
-│   │   ├── 00_Getting_Started.md
-│   │   ├── 01_Examples
-│   │   │   ├── 01_GitHub_Flavored_Markdown.md
-│   │   │   ├── 05_Code_Highlighting.md
-│   │   ├── 05_More_Examples
-│   │   │   ├── Hello_World.md
-│   │   │   ├── 05_Code_Highlighting.md
-│   ├── de
-│   │   ├── 00_Getting_Started.md
-│   │   ├── 01_Examples
-│   │   │   ├── 01_GitHub_Flavored_Markdown.md
-│   │   │   ├── 05_Code_Highlighting.md
-│   │   ├── 05_More_Examples
-│   │   │   ├── Hello_World.md
-│   │   │   ├── 05_Code_Highlighting.md
-```
-
-### Format
-Change the output format. It is recommended you set only formats that support the live mode as this will also
-be read by the integrated web server. And you set the other formats (like confluence) only by command line
-
-```json
-{
-	"format": "html"
-}
-```
-
-### Processor
-You can set the processor in the documentation or as an option to the command line. If you need it when running the server, you should add it to the configuration.
-
-More information on how to create a Processor can be found [here](!For_Developers/Creating_a_Processor).
- 
-```json
-{
-    "processor": "MyProcessor"
-}
-```
-
-### HTML Export Configuration
-
-#### Themes
-We have 4 built-in Bootstrap themes. To use one of the themes, just set the `theme` option to one of the following:
-
-* daux-blue
-* daux-green
-* daux-navy
-* daux-red
-
-```json
-{
-    "html": { "theme": "daux-blue" }
-}
-```
-
-#### Custom Theme
-To use a custom theme, just copy over the theme folder into the `themes` directory and set its value in the `theme` param in config.json
-
-```json
-{
-	"html": { "theme": "new-theme" }
-}
-```
-
-#### Code Floating
-By default your code blocks will be floated to a column on the right side of your content. To disable this feature, set the `float` property to `false`.
-
-```json
-{
-	"html": { "float": false }
-}
-```
-
-#### Toggling Code Blocks
-Some users might wish to hide the code blocks & view just the documentation. By setting the `toggle_code` property to `true`, you can offer a toggle button on the page.
-
-```json
-{
-	"html": { "toggle_code": true }
-}
-```
-
-
-#### GitHub Repo
-Add a 'Fork me on GitHub' ribbon.
-
-```json
-{
-	"html": { "repo": "justinwalsh/daux.io" }
-}
-```
-
-#### Twitter
-Include twitter follow buttons in the sidebar.
-
-```json
-{
-	"html": { "twitter": ["justin_walsh", "todaymade"] }
-}
-```
-
-#### Links
-Include custom links in the sidebar.
-
-```json
-{
-	"html": {
-	    "links": {
-		    "GitHub Repo": "https://github.com/justinwalsh/daux.io",
-		    "Help/Support/Bugs": "https://github.com/justinwalsh/daux.io/issues",
-		    "Made by Todaymade": "http://todaymade.com"
-	    }
-	}
-}
-```
-
-#### Google Analytics
-This will embed the google analytics tracking code.
-
-```json
-{
-	"html": { "google_analytics": "UA-XXXXXXXXX-XX" }
-}
-```
-
-#### Piwik Analytics
-This will embed the piwik tracking code.
-
-```json
-{
-	"html": { "piwik_analytics": "my-url-for-piwik.com" }
-}
-```
-
-You can Also give a specific Piwik ID as well.
-
-```json
-{
-	"html": { "piwik_analytics_id": "43" }
-}
-```
-
-#### Breadcrumb titles
-Daux.io provides the option to present page titles as breadcrumb navigation. You can *optionally* specify the separator used for breadcrumbs.
-
-```json
-{
-    "html": {
-		"breadcrumbs": true,
-		"breadcrumb_separator" : " > "
-    }
-}
-```
-
-#### Date Modified
-By default, daux.io will display the last modified time as reported by the system underneath the title for each document. To disable this, change the option in your config.json to false.
-
-```json
-{
-	"html": { "date_modified": false }
-}
-```
-
-### Confluence Upload Configuration
-
-#### Configuring the connection
-The connection requires three parameters `base_url`, `user` and `pass`. While `user` and `pass` don't really need an explanation, for `base_url` you need to set the path to the server without `rest/api`, this will be added automatically.
-
-```json
-{
-    "confluence": {
-		"base_url": "http://my_confluence_server.com/,
-		"user" : "my_username",
-		"pass" : "my_password",
-    }
-}
-```
-
-#### Where to upload
-Now that the connection is defined, you need to tell it where you want your documentation to be uploaded.
-
-For that you need a `space_id` (name that appears at the beginning of the urls) and an `ancestor_id`; the id of the page that will be the parent of the documentation's homepage.
-
-You can obtain the `ancestor_id` id by editing the page you want to define as a parent: the ID is at the end of the URL
-
-```json
-{
-    "confluence": {
-        "space_id": "my_space",
-        "ancestor_id": 50370632
-    }
-}
-```
-
-#### Prefix
-Because confluence can't have two pages with the same name in a space, I recommend you define a prefix for your pages.
-
-```json
-{
-	"confluence": { "prefix": "[DAUX]" }
-}
-```
-
-
-
-## Live mode
-
-Keep in mind, this mode can be used for production, but it is not recommended.
-
-The whole directory must be scanned on each request. This might not make a big impact on small documentations but can be a bottleneck on bigger ones.
-
-### Running Locally
-
-There are several ways to run the docs locally. You can use something like <a href="http://www.mamp.info/en/index.html" target="_blank">MAMP</a> or <a href="http://www.wampserver.com/en/" target="_blank">WAMP</a>.
-
-The easiest is to use PHP 5.4's built-in server.
-
-For that i've included a short command, run `./serve` in the projects folder to start the local web server. By default the server will run at: <a href="http://localhost:8085" target="_blank">http://localhost:8085</a>
-
-
-### Running Remotely
-
-#### Clean URLs configuration
-
-Daux provides native support for Clean URLs provided the webserver has its URL Rewrite module enabled.
-To enable the same, set the toggle in the `config.json` file in the `/docs` folder.
-
-```json
-{
-    "live": {
-	    "clean_urls": true
-	}
-}
-```
-
-#### Apache
-
-Copy the files from the repo to a web server that can run PHP 5.3 or greater.
-
-There is an included `.htaccess` for Apache web server.
-
-#### Nginx
-
-Daux.io works perfectly fine on Nginx too, just drop this configuration in your `nginx.conf`
-
-```
-server {
-    listen 8085;
-    server_name  localhost;
-
-    index index.html index.php;
-    charset utf-8;
-
-    root /var/www/docs;
-
-    location / {
-        if (!-e $request_filename){
-            rewrite ^(.*)$ /index.php$1;
-        }
-    }
-
-    location ~ \.php {
-        fastcgi_split_path_info ^(.+\.php)(/.+)$;
-
-        fastcgi_pass unix:/var/run/php5-fpm.sock;
-        #fastcgi_pass   127.0.0.1:9000;
-        fastcgi_index index.php;
-
-        include fastcgi_params;
-        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
-        fastcgi_param PATH_INFO $fastcgi_path_info;
-    }
-}
-```
-
-### IIS
-
-If you have set up a local or remote IIS web site, you may need a `web.config` with:
-
-* A rewrite configuration, for handling clean urls.
-* A mime type handler for less files, if using a custom theme.
-
-#### Clean URLs
-
-The `web.config` needs an entry for `<rewrite>` under `<system.webServer>`:
-
-```xml
-<configuration>
-	<system.webServer>
-		<rewrite>
-			<rules>
-				<rule name="Main Rule" stopProcessing="true">
-					<match url=".*" />
-					<conditions logicalGrouping="MatchAll">
-						<add input="{REQUEST_FILENAME}" matchType="IsFile" negate="true" />
-						<add input="{REQUEST_FILENAME}" matchType="IsDirectory" negate="true" />
-					</conditions>
-					<action type="Rewrite" url="index.php" appendQueryString="false" />
-				</rule>
-			</rules>
-		</rewrite>
-	</system.webServer>
-</configuration>
-```
-
-To use clean URLs on IIS 6, you will need to use a custom URL rewrite module, such as [URL Rewriter](http://urlrewriter.net/).
 
 ## Known Issues
 
