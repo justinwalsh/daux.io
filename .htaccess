@@ -3,4 +3,4 @@ RewriteEngine On
 
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule !\.(gif|jpg|png|css|js|html|ico|zip|rar|pdf|xml|mp4|mpg|flv|swf|mkv|ogg|avi|woff|svg|eot|ttf|jar)$ index.php [L,QSA]
+RewriteRule . index.php [L,QSA]

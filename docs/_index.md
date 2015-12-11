@@ -6,7 +6,7 @@
 <h3>Features</h3>
 <hr/>
 
-<img src="img/app-thumbs.png" alt="alt text" class="img-responsive pull-right"  style="margin-bottom:20px;">
+<img src="app-thumbs.png" alt="alt text" class="img-responsive pull-right"  style="margin-bottom:20px;">
 
 * 100% Mobile Responsive
 * Supports GitHub Flavored Markdown
@@ -19,8 +19,12 @@
 * Built On Bootstrap
 * No Build Step
 * Git/SVN Friendly
-* Google Analytics
+* Supports Google Analytics and Piwik Analytics
 * Optional code float layout
+* Static Output Generation
+* Internal documentation links
+* Multiple Output Formats
+* Extend Daux.io with Processors
 
 <div class="clear"></div>
 <hr/>
