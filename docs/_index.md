@@ -5,26 +5,44 @@
 <hr/>
 <h3>Features</h3>
 <hr/>
+<div class=row>
+<div class="col-sm-4">
 
-<img src="app-thumbs.png" alt="alt text" class="img-responsive pull-right"  style="margin-bottom:20px;">
+#### For Authors
+
+* [Auto Generated Navigation / Page sorting](!Features/Navigation_and_Sorting)
+* [Internal documentation links](!Features/Internal_links)
+* [Github Flavored Markdown](!Features/GitHub_Flavored_Markdown)
+* [Auto created homepage/landing page](!Features/Landing_page)
+* [Multiple Output Formats](!Features/Multiple_Output_Formats)
+* [Multiple Languages Support](!Features/Multilanguage)
+* [No Build Step](!Features/Live_mode)
+* [Static Output Generation](!Features/Static_Site_Generation)
+
+</div>
+<div class="col-sm-4">
+
+#### For Developers
+
+* [Auto Syntax Highlighting](!Features/Auto_Syntax_Highlight)
+* [Extend Daux.io with Processors](!For_Developers/Creating_a_Processor)
+* Full access to the internal API to create new pages programatically
+* Work with pages metadata
+
+</div>
+<div class="col-sm-4">
+
+#### For Marketing
 
 * 100% Mobile Responsive
-* Supports GitHub Flavored Markdown
-* Auto created homepage/landing page
-* Auto Syntax Highlighting
-* Auto Generated Navigation
 * 4 Built-In Themes or roll your own
 * Functional, Flat Design Style
-* Shareable/Linkable SEO Friendly URLs
-* Built On Bootstrap
-* No Build Step
-* Git/SVN Friendly
-* Supports Google Analytics and Piwik Analytics
 * Optional code float layout
-* Static Output Generation
-* Internal documentation links
-* Multiple Output Formats
-* Extend Daux.io with Processors
+* Shareable/Linkable SEO Friendly URLs
+* Supports Google Analytics and Piwik Analytics
+
+</div>
+</div>
 
 <div class="clear"></div>
 <hr/>
