@@ -96,7 +96,7 @@ function removeUnusedRules(rules) {
     var regexes = prepare_rules(rules);
 
     return function(css) {
-        css.eachRule(function (rule) {
+        css.walkRules(function (rule) {
             var removedSome = false,
                 selectors = rule.selectors,
                 i;
@@ -111,7 +111,7 @@ function removeUnusedRules(rules) {
 
             if(removedSome) {
                 if (selectors.length == 0) {
-                    rule.removeSelf();
+                    rule.remove();
                 } else {
                     rule.selectors = selectors;
                 }
@@ -126,13 +126,21 @@ function removeUnusedRules(rules) {
 
 function createTask(source, dest) {
     return function() {
+        var nano_options = {
+            safe: true,           // Disable dangerous optimisations
+            filterPlugins: false, // This does very weird stuff
+            autoprefixer: {
+                add: true,                // Add needed prefixes
+                remove: true              // Remove unnecessary prefixes
+            }
+        };
+
         return gulp.src(source)
+            .pipe(plumber())
             .pipe(less())
             .pipe(postcss([
                 removeUnusedRules(unusedRules),
-                require('csswring')({
-                    preserveHacks: true
-                })
+                require('cssnano')(nano_options)
             ]))
             .pipe(rename({suffix: '.min'}))
             .pipe(gulp.dest(dest));
