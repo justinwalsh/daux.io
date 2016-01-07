@@ -77,6 +77,8 @@ class Compiler
 
         $this->addFile($phar, new \SplFileInfo(__DIR__ . '/../LICENSE'), false);
 
+        chmod($pharFile, 0775);
+
         unset($phar);
     }
 
