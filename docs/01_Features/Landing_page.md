@@ -8,4 +8,14 @@ If you want to create a beautiful landing page for your project, create a `_inde
 }
 ```
 
-> The image can be a local or remote image. By default, the path is relative to the root of the documentation
+> The image can be a local or remote image. By default, the path is relative to the root of the documentation.
+
+To disable the automatic landing page, you can set `auto_landing` to false in the `html` section of your configuration
+
+```json
+{
+	"html": {
+		"auto_landing": false
+    }
+}
+```

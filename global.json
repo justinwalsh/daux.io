@@ -29,6 +29,7 @@
         "toggle_code": false,
         "date_modified": false,
         "float": false,
+        "auto_landing": true,
 
         "repo": "",
         "twitter": [],
