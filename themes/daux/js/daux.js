@@ -108,7 +108,7 @@ $(function () {
     function onResize() {
         //Fix GitHub Ribbon overlapping Scrollbar
         var a = $('article');
-        if (ribbon.length) {
+        if (ribbon.length && a.length) {
             if (a[0] && a[0].scrollHeight > $('.right-column').height()) {
                 ribbon[0].style.right = '16px';
             } else {
