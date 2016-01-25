@@ -69,6 +69,10 @@ class Api
             $message .= (string) $response->getBody();
         }
 
+        if ($level == '4' && strpos($message, "page with this title already exists") !== false) {
+            return new DuplicateTitleException($message, 0, $e->getPrevious());
+        }
+
         return new BadResponseException($message, $request, $response, $e->getPrevious());
     }
 
