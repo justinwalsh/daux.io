@@ -15,6 +15,11 @@ class Template
      */
     public function __construct($base, $theme)
     {
+        // Use templates from the phar archive if the templates dir doesn't exist.
+        if (!is_dir($base)) {
+            $base = 'phar://daux.phar/templates';
+        }
+
         // Create new Plates instance
         $this->engine = new Engine($base);
         if (!is_dir($theme)) {
