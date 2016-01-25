@@ -21,7 +21,7 @@ class ContentPage extends \Todaymade\Daux\Format\Base\ContentPage
                     $filename = basename($file->getPath());
 
                     //Add the attachment for later upload
-                    $this->attachments[] = ['filename' => $filename, 'file' => $file];
+                    $this->attachments[$filename] = ['filename' => $filename, 'file' => $file];
 
                     return $this->createImageTag($filename, $attributes);
                 }
