@@ -1,8 +1,8 @@
 <?php namespace Todaymade\Daux\Console;
 
 use Symfony\Component\Console\Command\Command as SymfonyCommand;
-use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Todaymade\Daux\Daux;
 
@@ -15,11 +15,12 @@ class Generate extends SymfonyCommand
         $this
             ->setName('generate')
             ->setDescription('Generate documentation')
-            ->addOption('configuration', 'c', InputArgument::OPTIONAL, 'Configuration file')
-            ->addOption('format', 'f', InputArgument::OPTIONAL, 'Output format, html or confluence', 'html')
-            ->addOption('processor', 'p', InputArgument::OPTIONAL, 'Manipulations on the tree')
-            ->addOption('source', 's', InputArgument::OPTIONAL, 'Where to take the documentation from')
-            ->addOption('destination', 'd', InputArgument::OPTIONAL, $description, 'static');
+            ->addOption('configuration', 'c', InputOption::VALUE_REQUIRED, 'Configuration file')
+            ->addOption('format', 'f', InputOption::VALUE_REQUIRED, 'Output format, html or confluence', 'html')
+            ->addOption('processor', 'p', InputOption::VALUE_REQUIRED, 'Manipulations on the tree')
+            ->addOption('source', 's', InputOption::VALUE_REQUIRED, 'Where to take the documentation from')
+            ->addOption('delete', null, InputOption::VALUE_NONE, 'Delete pages not linked to a documentation page (confluence)')
+            ->addOption('destination', 'd', InputOption::VALUE_REQUIRED, $description, 'static');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -57,6 +58,10 @@ class Generate extends SymfonyCommand
         $daux->setThemesPath($daux->getParams()['themes_directory']);
 
         $daux->initializeConfiguration($input->getOption('configuration'));
+
+        if ($input->getOption('delete')) {
+            $daux->getParams()['confluence']['delete'] = true;
+        }
 
         return $daux;
     }

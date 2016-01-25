@@ -42,6 +42,7 @@
     },
 
     "confluence": {
-        "prefix": ""
+        "prefix": "",
+        "delete": false
     }
 }

@@ -74,14 +74,21 @@ class Publisher
         );
 
         $published = $this->run(
-            "Create placeholder pages...",
+            "Create placeholder pages...\n",
             function() use ($tree, $published) {
                 return $this->createRecursive($this->confluence['ancestor_id'], $tree, $published);
             }
         );
 
         $this->output->writeLn("Publishing updates...");
-        $this->updateRecursive($this->confluence['ancestor_id'], $tree, $published);
+        $published = $this->updateRecursive($this->confluence['ancestor_id'], $tree, $published);
+
+        $this->output->writeLn("Deleting obsolete pages...");
+        if (!$this->shouldDelete()) {
+            echo "> The following pages will not be deleted, but just listed for information.\n";
+            echo "> If you want to delete these pages, you need to set the --delete flag on the command.";
+        }
+        $this->deleteRecursive($published);
     }
 
     protected function niceTitle($title)
@@ -115,20 +122,22 @@ class Publisher
     {
         $published = $callback($parent_id, $entry, $published);
 
-        if (array_key_exists('children', $entry)) {
-            foreach ($entry['children'] as $child) {
-                $pub = [];
-                if (isset($published['children']) && array_key_exists($child['title'], $published['children'])) {
-                    $pub = $published['children'][$child['title']];
-                }
+        if (!array_key_exists('children', $entry)) {
+            return $published;
+        }
 
-                $published['children'][$child['title']] = $this->recursiveWithCallback(
-                    $published['id'],
-                    $child,
-                    $pub,
-                    $callback
-                );
+        foreach ($entry['children'] as $child) {
+            $pub = [];
+            if (isset($published['children']) && array_key_exists($child['title'], $published['children'])) {
+                $pub = $published['children'][$child['title']];
             }
+
+            $published['children'][$child['title']] = $this->recursiveWithCallback(
+                $published['id'],
+                $child,
+                $pub,
+                $callback
+            );
         }
 
         return $published;
@@ -137,9 +146,6 @@ class Publisher
     protected function createRecursive($parent_id, $entry, $published)
     {
         $callback = function($parent_id, $entry, $published) {
-
-            //TODO :: remove deleted pages
-
             // nothing to do if the ID already exists
             if (array_key_exists('id', $published)) {
                 return $published;
@@ -164,11 +170,41 @@ class Publisher
             if (array_key_exists('id', $published) && array_key_exists('page', $entry)) {
                 $this->updatePage($parent_id, $entry, $published);
             }
+            $published['needed'] = true;
 
             return $published;
         };
 
         return $this->recursiveWithCallback($parent_id, $entry, $published, $callback);
+    }
+
+    protected function shouldDelete()
+    {
+        return array_key_exists('delete', $this->confluence) && $this->confluence['delete'];
+    }
+
+    protected function deleteRecursive($published, $prefix = '')
+    {
+        foreach($published['children'] as $child) {
+            if (array_key_exists('children', $child) && count($child['children'])) {
+                $this->deleteRecursive($child, $child['title'] . '/');
+            }
+
+            if (!array_key_exists('needed', $child)) {
+
+                if ($this->shouldDelete()) {
+                    $this->run(
+                        "- " . $prefix . $child['title'],
+                        function() use ($child) {
+                            $this->client->deletePage($child['id']);
+                        }
+                    );
+
+                } else {
+                    echo "- " . $prefix . $child['title'] . "\n";
+                }
+            }
+        }
     }
 
     protected function shouldUpdate($local, $published)
