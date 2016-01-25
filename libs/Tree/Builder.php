@@ -190,7 +190,7 @@ class Builder
 
         if ($title == 'index') {
             // TODO :: clarify the difference between 'index' and '_index'
-            $page->setName('_index' . pathinfo($path, PATHINFO_EXTENSION));
+            $page->setName('_index.' . pathinfo($path, PATHINFO_EXTENSION));
             $page->setTitle($parent->getTitle());
         } else {
             $page->setName($path);
