@@ -153,6 +153,8 @@ class DauxHelper
                 return false;
             }
 
+            $node = urldecode($node);
+
             // if the node exists in the current request tree,
             // change the $tree variable to reference the new
             // node and proceed to the next url part
