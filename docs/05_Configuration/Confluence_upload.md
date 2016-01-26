@@ -27,6 +27,10 @@ You can obtain the `ancestor_id` id by editing the page you want to define as a 
 }
 ```
 
+You can also provide a `root_id` instead of an `ancestor_id` in this case, you specify the id as the homepage of your documentation.
+
+You can use that when you're uploading your documentation to the root of a Confluence Space or if your page already exists.
+
 ## Prefix
 Because confluence can't have two pages with the same name in a space, I recommend you define a prefix for your pages.
 
@@ -35,3 +39,32 @@ Because confluence can't have two pages with the same name in a space, I recomme
 	"confluence": { "prefix": "[DAUX]" }
 }
 ```
+
+## Update threshold
+To make the upload quicker, we try to determine if a page changed or not, first with a strict comparison and if it's not completely identical, we compute the difference.
+
+```json
+{
+	"confluence": { "update_threshold": 1 }
+}
+```
+
+If you set `update_threshold` to 1, it will upload only if the page has more than 1% difference with the previous one.
+
+By default the threshold is 2%.
+
+Setting the value to `0` disables the feature altogether.
+
+
+## Delete old pages
+When a page is renamed, there is no way to tell it was renamed, so when uploading to Confluence, the page will be uploaded and the old page will stay here.
+
+By default, it will inform you that some pages aren't needed anymore and you can delete them by hand.
+
+```json
+{
+	"confluence": { "delete": true }
+}
+```
+
+By setting `delete` to `true` (or running `daux.phar` with the `--delete` flag) you tell the generator that it can safely delete the pages.

@@ -54,15 +54,25 @@ class Publisher
 
     public function publish(array $tree)
     {
+
         echo "Finding Root Page...\n";
-        $pages = $this->client->getList($this->confluence['ancestor_id']);
-        $published = null;
-        foreach ($pages as $page) {
-            if ($page['title'] == $tree['title']) {
-                $published = $page;
-                break;
+        if (array_key_exists('ancestor_id', $this->confluence)) {
+            $pages = $this->client->getList($this->confluence['ancestor_id']);
+            $published = null;
+            foreach ($pages as $page) {
+                if ($page['title'] == $tree['title']) {
+                    $published = $page;
+                    break;
+                }
             }
+        } elseif (array_key_exists('root_id', $this->confluence)) {
+            $published = $this->client->getPage($this->confluence['root_id']);
+            $this->confluence['ancestor_id'] = $published['ancestor_id'];
+        } else {
+            throw new \RuntimeException("You must at least specify a `root_id` or `ancestor_id` in your confluence configuration.");
         }
+
+
 
         $this->run(
             "Getting already published pages...",
@@ -104,6 +114,7 @@ class Publisher
     {
         echo "- " . $this->niceTitle($entry['file']->getUrl()) . "\n";
         $published['version'] = 1;
+        $published['title'] = $entry['title'];
         $published['id'] = $this->client->createPage($parent_id, $entry['title'], "The content will come very soon !");
 
         return $published;
@@ -113,6 +124,7 @@ class Publisher
     {
         echo "- " . $entry['title'] . "\n";
         $published['version'] = 1;
+        $published['title'] = $entry['title'];
         $published['id'] = $this->client->createPage($parent_id, $entry['title'], "");
 
         return $published;
@@ -220,13 +232,20 @@ class Publisher
             return false;
         }
 
-        similar_text($trimmed_local, $trimmed_distant, $percent);
-
         // I consider that if the files are 98% identical you
         // don't need to update. This will work for false positives.
         // But sadly will miss if it's just a typo update
-        if ($percent >= 98) {
-            return false;
+        // This is configurable with `update_threshold`
+        $threshold = 98;
+        if (array_key_exists('update_threshold', $this->confluence)) {
+            $threshold = 100 - $this->confluence['update_threshold'];
+        }
+
+        if ($threshold < 100) {
+            similar_text($trimmed_local, $trimmed_distant, $percent);
+            if ($percent > $threshold) {
+                return false;
+            }
         }
 
         //DEBUG

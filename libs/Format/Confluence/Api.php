@@ -76,6 +76,31 @@ class Api
         return new BadResponseException($message, $request, $response, $e->getPrevious());
     }
 
+    public function getPage($id)
+    {
+       $url = "content/$id?expand=ancestors,version,body.storage";
+
+        try {
+            $result = $this->getClient()->get($url)->json();
+        } catch (BadResponseException $e) {
+            throw $this->handleError($e);
+        }
+
+        $ancestor_id = null;
+        if (array_key_exists('ancestors', $result) && count($result['ancestors'])) {
+            $ancestor_page = end($result['ancestors']); // We need the direct parent
+            $ancestor_id = $ancestor_page['id'];
+        }
+
+        return [
+            "id" => $result['id'],
+            "ancestor_id" => $ancestor_id,
+            "title" => $result['title'],
+            "version" => $result['version']['number'],
+            "content" => $result['body']['storage']['value'],
+        ];
+    }
+
     /**
      * Get a list of pages
      *
@@ -137,10 +162,13 @@ class Api
         $body = [
             'type' => 'page',
             'space' => ['key' => $this->space],
-            'ancestors' => [['type' => 'page', 'id' => $parent_id]],
             'title' => $title,
             'body' => ['storage' => ['value' => $content, 'representation' => 'storage']]
         ];
+
+        if ($parent_id) {
+            $body['ancestors'] = [['type' => 'page', 'id' => $parent_id]];
+        }
 
         try {
             $response = $this->getClient()->post('content', ['json' => $body])->json();
@@ -163,11 +191,14 @@ class Api
         $body = [
             'type' => 'page',
             'space' => ['key' => $this->space],
-            'ancestors' => [['type' => 'page', 'id' => $parent_id]],
             'version' => ['number' => $newVersion, "minorEdit" => true],
             'title' => $title,
             'body' => ['storage' => ['value' => $content, 'representation' => 'storage']]
         ];
+
+        if ($parent_id) {
+            $body['ancestors'] = [['type' => 'page', 'id' => $parent_id]];
+        }
 
         try {
             $this->getClient()->put("content/$page_id", ['json' => $body])->json();
