@@ -72,6 +72,10 @@ class Content extends Entry
 
     public function isIndex()
     {
+        // At some point, it was recommended that
+        // an index page starts with an underscore.
+        // This is not mandatory anymore, both with
+        // and without underscore are supported.
         return $this->name == 'index' || $this->name == '_index';
     }
 
