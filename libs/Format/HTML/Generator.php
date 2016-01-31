@@ -9,6 +9,7 @@ use Todaymade\Daux\Daux;
 use Todaymade\Daux\DauxHelper;
 use Todaymade\Daux\Format\Base\LiveGenerator;
 use Todaymade\Daux\GeneratorHelper;
+use Todaymade\Daux\Tree\ComputedRaw;
 use Todaymade\Daux\Tree\Content;
 use Todaymade\Daux\Tree\Directory;
 use Todaymade\Daux\Tree\Entry;
@@ -94,7 +95,7 @@ class Generator implements \Todaymade\Daux\Format\Base\Generator, LiveGenerator
                     $output,
                     $width,
                     function() use ($node, $output_dir, $key, $params) {
-                        if (!$node instanceof Content) {
+                        if ($node instanceof Raw) {
                             copy($node->getPath(), $output_dir . DIRECTORY_SEPARATOR . $key);
                             return;
                         }
@@ -116,6 +117,10 @@ class Generator implements \Todaymade\Daux\Format\Base\Generator, LiveGenerator
     {
         if ($node instanceof Raw) {
             return new RawPage($node->getPath());
+        }
+
+        if ($node instanceof ComputedRaw) {
+            return new ComputedRawPage($node);
         }
 
         $params['request'] = $node->getUrl();
