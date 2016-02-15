@@ -1,8 +1,9 @@
 <?php namespace Todaymade\Daux\Console;
 
 use Symfony\Component\Console\Command\Command as SymfonyCommand;
-use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
+use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Todaymade\Daux\Daux;
 
@@ -20,7 +21,8 @@ class Generate extends SymfonyCommand
             ->addOption('processor', 'p', InputOption::VALUE_REQUIRED, 'Manipulations on the tree')
             ->addOption('source', 's', InputOption::VALUE_REQUIRED, 'Where to take the documentation from')
             ->addOption('delete', null, InputOption::VALUE_NONE, 'Delete pages not linked to a documentation page (confluence)')
-            ->addOption('destination', 'd', InputOption::VALUE_REQUIRED, $description, 'static');
+            ->addOption('destination', 'd', InputOption::VALUE_REQUIRED, $description, 'static')
+            ->addOption('text_search', '-t', InputOption::VALUE_NONE, 'Generate full text search');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)

@@ -45,7 +45,10 @@
     <div class="container">
         <div class="row">
             <div class="col-sm-10 col-sm-offset-1">
-                <?= $page['content']; ?>
+                <div id="tipue_search_content" style="display:none"></div>
+                <div class="doc_content" style="display:none">
+                    <?= $page['content']; ?>
+                </div>
             </div>
         </div>
     </div>

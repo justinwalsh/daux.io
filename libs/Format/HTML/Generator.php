@@ -58,7 +58,59 @@ class Generator implements \Todaymade\Daux\Format\Base\Generator, LiveGenerator
         );
 
         $output->writeLn("Generating ...");
-        $this->generateRecursive($this->daux->tree, $destination, $params, $output, $width);
+
+        $text_search = ($input->getOption('text_search'));
+        $params['text_search'] = $text_search;
+        if ($text_search) {
+            $index_pages = [];
+        }
+        $this->generateRecursive($this->daux->tree, $destination, $params, $output, $width, $index_pages);
+
+        if ($text_search) {
+            $tipuesearch_directory = $this->daux->local_base . DIRECTORY_SEPARATOR . 'tipuesearch' . DIRECTORY_SEPARATOR;
+            file_put_contents($tipuesearch_directory . 'tipuesearch_content.json', json_encode(['pages' => $index_pages]));
+            GeneratorHelper::copyRecursive ($tipuesearch_directory, $destination . DIRECTORY_SEPARATOR . 'tipuesearch');
+        }
+
+    }
+
+    /**
+     * Remove HTML tags, including invisible text such as style and
+     * script code, and embedded objects.  Add line breaks around
+     * block-level tags to prevent word joining after tag removal.
+     * Also collapse whitespace to single space and trim result.
+     * modified from: http://nadeausoftware.com/articles/2007/09/php_tip_how_strip_html_tags_web_page
+     */
+    private function strip_html_tags($text)
+    {
+        $text = preg_replace(
+            array(
+                // Remove invisible content
+                '@<head[^>]*?>.*?</head>@siu',
+                '@<style[^>]*?>.*?</style>@siu',
+                '@<script[^>]*?.*?</script>@siu',
+                '@<object[^>]*?.*?</object>@siu',
+                '@<embed[^>]*?.*?</embed>@siu',
+                '@<applet[^>]*?.*?</applet>@siu',
+                '@<noframes[^>]*?.*?</noframes>@siu',
+                '@<noscript[^>]*?.*?</noscript>@siu',
+                '@<noembed[^>]*?.*?</noembed>@siu',
+                // Add line breaks before and after blocks
+                '@</?((address)|(blockquote)|(center)|(del))@iu',
+                '@</?((div)|(h[1-9])|(ins)|(isindex)|(p)|(pre))@iu',
+                '@</?((dir)|(dl)|(dt)|(dd)|(li)|(menu)|(ol)|(ul))@iu',
+                '@</?((table)|(th)|(td)|(caption))@iu',
+                '@</?((form)|(button)|(fieldset)|(legend)|(input))@iu',
+                '@</?((label)|(select)|(optgroup)|(option)|(textarea))@iu',
+                '@</?((frameset)|(frame)|(iframe))@iu',
+            ),
+            array(
+                ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ',
+                "\n\$0", "\n\$0", "\n\$0", "\n\$0", "\n\$0", "\n\$0",
+                "\n\$0", "\n\$0",
+            ),
+            $text );
+        return trim (preg_replace('/\s+/', ' ', strip_tags($text)));
     }
 
     /**
@@ -72,7 +124,7 @@ class Generator implements \Todaymade\Daux\Format\Base\Generator, LiveGenerator
      * @param string $base_url
      * @throws \Exception
      */
-    private function generateRecursive(Directory $tree, $output_dir, $params, $output, $width, $base_url = '')
+    private function generateRecursive(Directory $tree, $output_dir, $params, $output, $width, &$index_pages, $base_url = '')
     {
         DauxHelper::rebaseConfiguration($params, $base_url);
 
@@ -84,7 +136,7 @@ class Generator implements \Todaymade\Daux\Format\Base\Generator, LiveGenerator
             if ($node instanceof Directory) {
                 $new_output_dir = $output_dir . DIRECTORY_SEPARATOR . $key;
                 mkdir($new_output_dir);
-                $this->generateRecursive($node, $new_output_dir, $params, $output, $width, '../' . $base_url);
+                $this->generateRecursive($node, $new_output_dir, $params, $output, $width, $index_pages, '../' . $base_url);
 
                 // Rebase configuration again as $params is a shared object
                 DauxHelper::rebaseConfiguration($params, $base_url);
@@ -93,7 +145,7 @@ class Generator implements \Todaymade\Daux\Format\Base\Generator, LiveGenerator
                     "- " . $node->getUrl(),
                     $output,
                     $width,
-                    function() use ($node, $output_dir, $key, $params) {
+                    function() use ($node, $output_dir, $key, $params, &$index_pages) {
                         if (!$node instanceof Content) {
                             copy($node->getPath(), $output_dir . DIRECTORY_SEPARATOR . $key);
                             return;
@@ -101,6 +153,14 @@ class Generator implements \Todaymade\Daux\Format\Base\Generator, LiveGenerator
 
                         $generated = $this->generateOne($node, $params);
                         file_put_contents($output_dir . DIRECTORY_SEPARATOR . $key, $generated->getContent());
+                        if (isset($index_pages)) {
+                            array_push($index_pages, [
+                                'title' => $node->getTitle(),
+                                'text' => utf8_encode($this->strip_html_tags($generated->getContent())),
+                                'tags' =>  "",
+                                'url' => $node->getUrl()
+                            ]);
+                        }
                     }
                 );
             }

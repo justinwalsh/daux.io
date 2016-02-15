@@ -23,6 +23,12 @@
         echo "<link href='$css' rel='stylesheet' type='text/css'>";
     } ?>
 
+    <?php if ($params['text_search']) { ?>
+        <!-- Tipue Search -->
+        <link href="<?php echo $base_url; ?>tipuesearch/tipuesearch.css" rel="stylesheet">
+        <link href="http://fonts.googleapis.com/css?family=Open+Sans:300,400" rel="stylesheet">
+    <?php } ?>
+
     <!--[if lt IE 9]>
     <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
@@ -53,5 +59,23 @@
     } ?>
 
     <script src="<?= $base_url; ?>themes/daux/js/daux.js"></script>
+
+    <?php if ($params['text_search']) { ?>
+        <!-- Tipue Search -->
+        <script type="text/javascript" src="<?php echo $base_url; ?>tipuesearch/tipuesearch_set.js"></script>
+        <script type="text/javascript" src="<?php echo $base_url; ?>tipuesearch/tipuesearch.min.js"></script>
+
+        <script>
+            window.onunload = function(){}; // force $(document).ready to be called on back/forward navigation in firefox
+            $(document).ready(function() {
+                $('#tipue_search_input').tipuesearch({
+                    'show': 10,
+                    'mode': 'json',
+                    'base_url': '<?php echo $base_url?>'
+                });
+            });
+        </script>
+    <?php } ?>
+
 </body>
 </html>
