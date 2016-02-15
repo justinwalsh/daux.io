@@ -144,9 +144,7 @@ class Server
             );
         }
 
-        $params = $this->params;
-        $params['text_search'] = false;
-        return $this->daux->getGenerator()->generateOne($file, $params);
+        return $this->daux->getGenerator()->generateOne($file, $this->params);
     }
 
     public function getRequest()
