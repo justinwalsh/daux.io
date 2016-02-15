@@ -60,7 +60,10 @@
         </div>
         <div class="right-column <?= $params['html']['float'] ? 'float-view' : ''; ?> content-area col-sm-9">
             <div class="content-page">
-                <?= $this->section('content'); ?>
+                <div id="tipue_search_content" style="display:none"></div>
+                <div class="doc_content" style="display:none">
+                    <?= $this->section('content'); ?>
+                </div>
             </div>
         </div>
     </div>
