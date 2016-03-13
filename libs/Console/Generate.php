@@ -21,7 +21,7 @@ class Generate extends SymfonyCommand
             ->addOption('source', 's', InputOption::VALUE_REQUIRED, 'Where to take the documentation from')
             ->addOption('delete', null, InputOption::VALUE_NONE, 'Delete pages not linked to a documentation page (confluence)')
             ->addOption('destination', 'd', InputOption::VALUE_REQUIRED, $description, 'static')
-            ->addOption('text_search', '-t', InputOption::VALUE_NONE, 'Generate full text search');
+            ->addOption('search', null, InputOption::VALUE_NONE, 'Generate full text search');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)

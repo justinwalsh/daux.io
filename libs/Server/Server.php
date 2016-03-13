@@ -99,6 +99,9 @@ class Server
             $params['base_page'] .= 'index.php/';
         }
 
+        // Text search would be too slow on live server
+        $params['html']['search'] = false;
+
         return $params;
     }
 
@@ -144,9 +147,7 @@ class Server
             );
         }
 
-        $params = $this->params;
-        $params['text_search'] = false;
-        return $this->daux->getGenerator()->generateOne($file, $params);
+        return $this->daux->getGenerator()->generateOne($file, $this->params);
     }
 
     public function getRequest()

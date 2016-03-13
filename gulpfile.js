@@ -19,6 +19,7 @@ var unusedRules = [
     //We only use one glyphicon ...
     ".glyphicon-",
     "!.glyphicon-chevron-right",
+    "!.glyphicon-search",
 
     //we dont need all buttons
     ".btn-",

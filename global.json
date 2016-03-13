@@ -30,6 +30,7 @@
         "date_modified": false,
         "float": false,
         "auto_landing": true,
+        "search": true,
 
         "repo": "",
         "twitter": [],

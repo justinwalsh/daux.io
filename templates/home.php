@@ -45,16 +45,13 @@
     <div class="container">
         <div class="row">
             <div class="col-sm-10 col-sm-offset-1">
-                <?php if ($params['text_search']) { ?>
+                <?php if ($params['html']['search']) { ?>
                     <div id="tipue_search_content" style="display:none"></div>
-                    <div class="doc_content" style="display:none">
-                        <?= $page['content']; ?>
-                    </div>
-                <?php } else { ?>
-                    <div class="doc_content">
-                        <?= $page['content']; ?>
-                    </div>
                 <?php } ?>
+
+                <div class="doc_content">
+                    <?= $page['content']; ?>
+                </div>
             </div>
         </div>
     </div>

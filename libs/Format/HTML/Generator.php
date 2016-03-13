@@ -10,7 +10,6 @@ use Todaymade\Daux\DauxHelper;
 use Todaymade\Daux\Format\Base\LiveGenerator;
 use Todaymade\Daux\GeneratorHelper;
 use Todaymade\Daux\Tree\ComputedRaw;
-use Todaymade\Daux\Tree\Content;
 use Todaymade\Daux\Tree\Directory;
 use Todaymade\Daux\Tree\Entry;
 use Todaymade\Daux\Tree\Raw;
@@ -21,6 +20,8 @@ class Generator implements \Todaymade\Daux\Format\Base\Generator, LiveGenerator
 
     /** @var Daux */
     protected $daux;
+
+    protected $indexed_pages = [];
 
     /**
      * @param Daux $daux
@@ -60,17 +61,18 @@ class Generator implements \Todaymade\Daux\Format\Base\Generator, LiveGenerator
 
         $output->writeLn("Generating ...");
 
-        $text_search = ($input->getOption('text_search'));
-        $params['text_search'] = $text_search;
-        if ($text_search) {
-            $index_pages = [];
-        }
-        $this->generateRecursive($this->daux->tree, $destination, $params, $output, $width, $index_pages);
+        $params['html']['search'] = $input->getOption('search');
+        $this->generateRecursive($this->daux->tree, $destination, $params, $output, $width, $params['html']['search']);
 
-        if ($text_search) {
-            $tipuesearch_directory = $this->daux->local_base . DIRECTORY_SEPARATOR . 'tipuesearch' . DIRECTORY_SEPARATOR;
-            file_put_contents($tipuesearch_directory . 'tipuesearch_content.json', json_encode(['pages' => $index_pages]));
-            GeneratorHelper::copyRecursive ($tipuesearch_directory, $destination . DIRECTORY_SEPARATOR . 'tipuesearch');
+        if ($params['html']['search']) {
+            GeneratorHelper::copyRecursive(
+                $this->daux->local_base . DIRECTORY_SEPARATOR . 'tipuesearch' . DIRECTORY_SEPARATOR,
+                $destination . DIRECTORY_SEPARATOR . 'tipuesearch'
+            );
+            file_put_contents(
+                $destination . DIRECTORY_SEPARATOR . 'tipuesearch' . DIRECTORY_SEPARATOR . 'tipuesearch_content.json',
+                json_encode(['pages' => $this->indexed_pages])
+            );
         }
 
     }
@@ -110,8 +112,9 @@ class Generator implements \Todaymade\Daux\Format\Base\Generator, LiveGenerator
                 "\n\$0", "\n\$0", "\n\$0", "\n\$0", "\n\$0", "\n\$0",
                 "\n\$0", "\n\$0",
             ),
-            $text );
-        return trim (preg_replace('/\s+/', ' ', strip_tags($text)));
+            $text
+        );
+        return trim(preg_replace('/\s+/', ' ', strip_tags($text)));
     }
 
     /**
@@ -122,10 +125,11 @@ class Generator implements \Todaymade\Daux\Format\Base\Generator, LiveGenerator
      * @param \Todaymade\Daux\Config $params
      * @param OutputInterface $output
      * @param integer $width
+     * @param boolean $index_pages
      * @param string $base_url
      * @throws \Exception
      */
-    private function generateRecursive(Directory $tree, $output_dir, $params, $output, $width, &$index_pages, $base_url = '')
+    private function generateRecursive(Directory $tree, $output_dir, $params, $output, $width, $index_pages, $base_url = '')
     {
         DauxHelper::rebaseConfiguration($params, $base_url);
 
@@ -146,7 +150,7 @@ class Generator implements \Todaymade\Daux\Format\Base\Generator, LiveGenerator
                     "- " . $node->getUrl(),
                     $output,
                     $width,
-                    function() use ($node, $output_dir, $key, $params, &$index_pages) {
+                    function() use ($node, $output_dir, $key, $params, $index_pages) {
                         if ($node instanceof Raw) {
                             copy($node->getPath(), $output_dir . DIRECTORY_SEPARATOR . $key);
                             return;
@@ -154,13 +158,13 @@ class Generator implements \Todaymade\Daux\Format\Base\Generator, LiveGenerator
 
                         $generated = $this->generateOne($node, $params);
                         file_put_contents($output_dir . DIRECTORY_SEPARATOR . $key, $generated->getContent());
-                        if (isset($index_pages)) {
-                            array_push($index_pages, [
+                        if ($index_pages) {
+                            $this->indexed_pages[] =[
                                 'title' => $node->getTitle(),
-                                'text' => utf8_encode($this->strip_html_tags($generated->getContent())),
+                                'text' => utf8_encode($this->strip_html_tags($generated->getPureContent())),
                                 'tags' =>  "",
                                 'url' => $node->getUrl()
-                            ]);
+                            ];
                         }
                     }
                 );

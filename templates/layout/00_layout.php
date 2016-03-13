@@ -23,10 +23,9 @@
         echo "<link href='$css' rel='stylesheet' type='text/css'>";
     } ?>
 
-    <?php if ($params['text_search']) { ?>
+    <?php if ($params['html']['search']) { ?>
         <!-- Tipue Search -->
         <link href="<?php echo $base_url; ?>tipuesearch/tipuesearch.css" rel="stylesheet">
-        <link href="http://fonts.googleapis.com/css?family=Open+Sans:300,400" rel="stylesheet">
     <?php } ?>
 
     <!--[if lt IE 9]>
@@ -60,10 +59,10 @@
 
     <script src="<?= $base_url; ?>themes/daux/js/daux.js"></script>
 
-    <?php if ($params['text_search']) { ?>
+    <?php if ($params['html']['search']) { ?>
         <!-- Tipue Search -->
         <script type="text/javascript" src="<?php echo $base_url; ?>tipuesearch/tipuesearch_set.js"></script>
-        <script type="text/javascript" src="<?php echo $base_url; ?>tipuesearch/tipuesearch.js"></script>
+        <script type="text/javascript" src="<?php echo $base_url; ?>tipuesearch/tipuesearch.min.js"></script>
 
         <script>
             window.onunload = function(){}; // force $(document).ready to be called on back/forward navigation in firefox
