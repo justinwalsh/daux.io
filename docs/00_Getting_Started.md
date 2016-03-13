@@ -34,13 +34,11 @@
 This is a list of sites using Daux.io:
 
 * [Daux.io](http://daux.io)
-* [Gltn - An open-source word processor webapp](http://felkerdigitalmedia.com/gltn/docs/)
+* [jDrupal](http://jdrupal.easystreet3.com/8/docs/)
+* [DrupalGap](http://docs.drupalgap.org/8/)
 * [Invade & Annex 3 - An Arma 3 Co-operative Mission](http://ia3.ahoyworld.co.uk/)
 * [Munee: Standalone PHP 5.3 Asset Optimisation & Manipulation](http://mun.ee)
 * [ICADMIN: An admin panel powered by CodeIgniter.](http://istocode.com/shared/ic-admin/)
-* [TrackJs](http://docs.trackjs.com) (uses a customized theme)
-* [wallabag](http://doc.wallabag.org/index)
-* [Ultimo Docs](http://docs.ultimogroup.co.nz/)
 
 Do you use Daux.io? Send us a pull request or open an [issue](https://github.com/justinwalsh/daux.io/issues) and I will add you to the list.
 
