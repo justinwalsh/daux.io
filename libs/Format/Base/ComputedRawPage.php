@@ -15,4 +15,9 @@ abstract class ComputedRawPage implements Page
     {
         return $this->raw->getContent();
     }
+
+    public function getPureContent()
+    {
+        return $this->raw->getContent();
+    }
 }
