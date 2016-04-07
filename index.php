@@ -81,7 +81,7 @@ if (file_exists('vendor/autoload.php')) {
     define('PHAR_DIR', __DIR__);
     require_once("phar://" . __DIR__ . "/daux.phar/vendor/autoload.php");
 } else {
-    throw new Exception("Impossible to load Daux, missing vendor and phar");
+    throw new Exception("Impossible to load Daux, missing vendor/ or daux.phar");
 }
 
 \Todaymade\Daux\Server\Server::serve($_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'], $_REQUEST);
