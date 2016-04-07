@@ -84,10 +84,19 @@ $(function () {
     codeBlockView = $('.right-column');
     if (!codeBlockView.size()) return;
 
+    var floating = $(document.body).hasClass("with-float");
+
     codeBlockState = localStorage.getItem("codeBlockState");
+
     if (!codeBlockState) {
-        codeBlockState = 2;
-    } else codeBlockState = parseInt(codeBlockState);
+        codeBlockState = floating? 2 : 1;
+    } else {
+        codeBlockState = parseInt(codeBlockState);
+    }
+
+    if (!floating && codeBlockState == 2) {
+        codeBlockState = 1;
+    }
 
     setCodeBlockStyle(codeBlockState);
 });
