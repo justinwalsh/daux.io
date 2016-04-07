@@ -23,6 +23,9 @@ var unusedRules = [
 
     //we dont need all buttons
     ".btn-",
+    "!.btn-group",
+    "!.btn-default",
+    "!.btn-sm",
     "!.btn-primary",
     "!.btn-secondary",
     "!.btn-hero",

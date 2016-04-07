@@ -37,11 +37,21 @@
                         <?php
                         foreach ($params['html']['links'] as $name => $url) {
                             echo '<a href="' . $url . '" target="_blank">' . $name . '</a><br>';
-                        }
-                        if ($params['html']['toggle_code']) {
-                            echo '<a href="#" id="toggleCodeBlockBtn" onclick="toggleCodeBlocks();">Show Code Blocks Inline</a><br>';
-                        }
-                        ?>
+                        } ?>
+
+                        <div id="toggleCodeBlock">
+                        <?php if ($params['html']['toggle_code'] && $params['html']['float']) { ?>
+                            <br />
+                            <span class="code-buttons-text">Code blocks</span>
+                            <div class="btn-group" role="group">
+                              <button id="code-hide" class="btn btn-sm btn-default">No</button>
+                              <button id="code-below" class="btn btn-sm btn-default">Below</button>
+                              <button id="code-float" class="btn btn-sm btn-default">Inline</button>
+                            </div>
+                        <?php } else if ($params['html']['toggle_code']) { ?>
+                            <a id="toggleCodeBlockBtn" href="#" onclick="toggleCodeBlocks();">Show Code Blocks Inline</a><br>
+                        <?php } ?>
+                        </div>
 
                         <!-- Twitter -->
                         <?php foreach ($params['html']['twitter'] as $handle) { ?>
@@ -64,7 +74,7 @@
                     <div id="tipue_search_content" style="display:none"></div>
                 <?php } ?>
 
-                <div class="doc_content"">
+                <div class="doc_content">
                     <?= $this->section('content'); ?>
                 </div>
             </div>
