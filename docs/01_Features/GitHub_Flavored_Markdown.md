@@ -104,4 +104,13 @@ I get 10 times more traffic from [Google] [1] than from
   [2]: http://search.yahoo.com/  "Yahoo Search"
   [3]: http://search.msn.com/    "MSN Search"
 
+Images
+------
+
+Here's an image.
+
+![This is an image](sampleimage.png)
+
+Note: to use images on a landing page (index.md), prefix the image URL with the name of the directory it appears in, omitting the numerical prefix used to order the sections. For example in this section, to display this image on the landing page (index.md), the URL for the image would be "Features/sampleimage.png" to display the same image.
+
 *View the [source of this content](http://github.github.com/github-flavored-markdown/sample_content.html).*
