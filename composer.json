@@ -18,7 +18,8 @@
         "league/commonmark": "^0.13",
         "symfony/console": "~3.0",
         "symfony/finder": "~3.0",
-        "webuni/commonmark-table-extension": "0.4.*"
+        "webuni/commonmark-table-extension": "0.4.*",
+        "myclabs/deep-copy": "^1.5"
     },
     "autoload": {
         "psr-4": {

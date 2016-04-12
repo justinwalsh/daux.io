@@ -1,5 +1,7 @@
 **Daux.io** is an documentation generator that uses a simple folder structure and Markdown files to create custom documentation on the fly. It helps you create great looking documentation in a developer friendly way.
 
+[TOC]
+
 ## Features
 
 ### For Authors
@@ -12,6 +14,7 @@
 * [Multiple Languages Support](!Features/Multilanguage)
 * [No Build Step](!Features/Live_mode)
 * [Static Output Generation](!Features/Static_Site_Generation)
+* [Table of Contents](!Features/Table_of_contents)
 
 ### For Developers
 

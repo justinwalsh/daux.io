@@ -3,6 +3,8 @@
 use League\CommonMark\DocParser;
 use League\CommonMark\Environment;
 use League\CommonMark\HtmlRenderer;
+use Todaymade\Daux\ContentTypes\Markdown\TOC\Parser;
+use Todaymade\Daux\ContentTypes\Markdown\TOC\TOCProcessor;
 use Webuni\CommonMark\TableExtension\TableExtension;
 
 class CommonMarkConverter extends \League\CommonMark\CommonMarkConverter
@@ -17,6 +19,10 @@ class CommonMarkConverter extends \League\CommonMark\CommonMarkConverter
         $environment = Environment::createCommonMarkEnvironment();
         $environment->mergeConfig($config);
         $environment->addExtension(new TableExtension());
+
+        // Table of Contents
+        $environment->addBlockParser(new Parser());
+        $environment->addDocumentProcessor(new TOCProcessor($config['daux']));
 
         $this->extendEnvironment($environment);
 
