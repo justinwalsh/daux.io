@@ -18,6 +18,7 @@
 * [Multiple Languages Support](!Features/Multilanguage)
 * [No Build Step](!Features/Live_mode)
 * [Static Output Generation](!Features/Static_Site_Generation)
+* [Table of Contents](!Features/Table_of_contents)
 
 </div>
 <div class="col-sm-4">

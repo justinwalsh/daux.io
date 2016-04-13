@@ -306,7 +306,9 @@ class Daux
             throw new \RuntimeException("Class '$class' not found. We cannot use it as a Processor");
         }
 
-        //TODO :: check that it implements processor
+        if (!array_key_exists("Todaymade\\Daux\\Processor", class_parents($class))) {
+            throw new \RuntimeException("Class '$class' invalid, should extend '\\Todaymade\\Daux\\Processor'");
+        }
 
         return $class;
     }

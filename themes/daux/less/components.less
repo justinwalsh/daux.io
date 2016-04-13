@@ -68,20 +68,53 @@ code {
     }
 }
 
+.code-buttons-text {
+    font-size: 12px;
+    line-height: 1.5;
+    padding: 6px 10px 6px 0;
+    display: inline-block;
+    vertical-align: middle;
+}
+
 //Sidebar Nav List
 .nav.nav-list {
-    padding-left: 0px;
-    padding-right: 0px;
+    padding-left: 0;
+    padding-right: 0;
 
     li {
         a {
-            margin: 0px;
-            padding: 6px 15px;
+            margin: 0;
+            padding: 6px 15px 6px 20px;
             .roboto-slab.regular;
             color: @dark;
             font-size: 15px;
             text-shadow: none;
             border-color: @lines;
+
+            .arrow {
+                display: inline-block;
+                position: relative;
+
+                width: 16px;
+                margin-left: -16px;
+
+                &:before {
+                    position:absolute;
+
+                    display:block;
+                    content:"";
+
+                    margin:-.25em 0 0 -.4em;
+                    left:50%;
+                    top: 50%;
+                    width: 0.5em;
+                    height: 0.5em;
+                    border-right: 0.15em solid @dark;
+                    border-top: 0.15em solid @dark;
+                    transform: rotate(45deg);
+                    transition-duration:.3s;
+                }
+            }
 
             &:hover {
                 color: @dark;
@@ -100,11 +133,16 @@ code {
             > ul {
                 display: block;
             }
-        }
 
-        &:last-child {
-            &.open {
-                //border-bottom: none;
+            > a {
+                &, &:focus, &:hover {
+                    background-color:transparent;
+                }
+
+                > .arrow:before {
+                    margin-left:-.25em;
+                    transform: rotate(135deg);
+                }
             }
         }
 
@@ -128,10 +166,8 @@ code {
                     }
                 }
 
-                &.active {
-                    a {
-                        color: @dark;
-                    }
+                &.active a {
+                    color: @dark;
                 }
             }
         }
@@ -323,5 +359,36 @@ table {
             margin-left: -20px;
             margin-right: -20px;
         }
+    }
+}
+
+.search {
+    position: relative;
+
+    &__field {
+        padding-right: 30px;
+    }
+
+    &__icon {
+        position: absolute;
+        right: 12px;
+        top: 10px;
+    }
+}
+
+.TableOfContents {
+
+    font-size:16px;
+    padding-left:30px;
+
+    border-left:6px solid #efefef;
+
+    p {
+        margin-bottom:0;
+    }
+
+    .TableOfContents {
+        border-left-width:0;
+        padding-left:20px;
     }
 }

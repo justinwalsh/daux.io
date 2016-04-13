@@ -81,7 +81,7 @@ class ContentPage extends \Todaymade\Daux\Format\Base\ContentPage
             'modified_time' => filemtime($this->file->getPath()),
             'markdown' => $this->content,
             'request' => $params['request'],
-            'content' => $this->convertPage($this->content),
+            'content' => $this->getPureContent(),
             'breadcrumbs' => $params['html']['breadcrumbs'],
             'prev' => $this->file->getPrevious(),
             'next' => $this->file->getNext(),

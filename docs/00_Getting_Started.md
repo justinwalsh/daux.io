@@ -1,5 +1,7 @@
 **Daux.io** is an documentation generator that uses a simple folder structure and Markdown files to create custom documentation on the fly. It helps you create great looking documentation in a developer friendly way.
 
+[TOC]
+
 ## Features
 
 ### For Authors
@@ -12,6 +14,7 @@
 * [Multiple Languages Support](!Features/Multilanguage)
 * [No Build Step](!Features/Live_mode)
 * [Static Output Generation](!Features/Static_Site_Generation)
+* [Table of Contents](!Features/Table_of_contents)
 
 ### For Developers
 
@@ -34,13 +37,11 @@
 This is a list of sites using Daux.io:
 
 * [Daux.io](http://daux.io)
-* [Gltn - An open-source word processor webapp](http://felkerdigitalmedia.com/gltn/docs/)
+* [jDrupal](http://jdrupal.easystreet3.com/8/docs/)
+* [DrupalGap](http://docs.drupalgap.org/8/)
 * [Invade & Annex 3 - An Arma 3 Co-operative Mission](http://ia3.ahoyworld.co.uk/)
 * [Munee: Standalone PHP 5.3 Asset Optimisation & Manipulation](http://mun.ee)
 * [ICADMIN: An admin panel powered by CodeIgniter.](http://istocode.com/shared/ic-admin/)
-* [TrackJs](http://docs.trackjs.com) (uses a customized theme)
-* [wallabag](http://doc.wallabag.org/index)
-* [Ultimo Docs](http://docs.ultimogroup.co.nz/)
 
 Do you use Daux.io? Send us a pull request or open an [issue](https://github.com/justinwalsh/daux.io/issues) and I will add you to the list.
 

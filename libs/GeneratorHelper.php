@@ -50,7 +50,7 @@ class GeneratorHelper
      * @param string $source
      * @param string $destination
      */
-    protected static function copyRecursive($source, $destination)
+    public static function copyRecursive($source, $destination)
     {
         if (!is_dir($destination)) {
             mkdir($destination);

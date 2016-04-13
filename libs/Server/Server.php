@@ -99,6 +99,9 @@ class Server
             $params['base_page'] .= 'index.php/';
         }
 
+        // Text search would be too slow on live server
+        $params['html']['search'] = false;
+
         return $params;
     }
 

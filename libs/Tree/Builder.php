@@ -169,32 +169,35 @@ class Builder
      */
     public static function getOrCreatePage(Directory $parent, $path)
     {
-        $title = static::getName($path);
-
+        $extension = pathinfo($path, PATHINFO_EXTENSION);
         // If the file doesn't have an extension, set .md as a default
-        if (pathinfo($path, PATHINFO_EXTENSION) == '') {
+        if ($extension == '') {
+            $extension = 'md';
             $path .= '.md';
         }
 
-        $uri = $slug = DauxHelper::slug($title);
-        if ($parent->getConfig()['mode'] === Daux::STATIC_MODE) {
-            $uri = $slug . ".html";
+        $raw = !in_array($extension, $parent->getConfig()['valid_content_extensions']);
+
+        $title = $uri = $path;
+        if (!$raw) {
+            $title = static::getName($path);
+            $uri = DauxHelper::slug($title);
+            if ($parent->getConfig()['mode'] === Daux::STATIC_MODE) {
+                $uri .= ".html";
+            }
         }
 
         if (array_key_exists($uri, $parent->getEntries())) {
             return $parent->getEntries()[$uri];
         }
 
-        $page = new Content($parent, $uri);
+        $page = $raw? new ComputedRaw($parent, $uri) : new Content($parent, $uri);
         $page->setContent("-"); //set an almost empty content to avoid problems
+        $page->setName($path);
+        $page->setTitle($title);
 
-        if ($title == 'index') {
-            // TODO :: clarify the difference between 'index' and '_index'
-            $page->setName('_index.' . pathinfo($path, PATHINFO_EXTENSION));
+        if ($title == 'index' || $title == '_index') {
             $page->setTitle($parent->getTitle());
-        } else {
-            $page->setName($path);
-            $page->setTitle($title);
         }
 
         return $page;

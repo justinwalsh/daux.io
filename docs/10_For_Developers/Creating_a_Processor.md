@@ -62,6 +62,12 @@ Two helpers from the class `Todaymade\Daux\Tree\Builder` will greatly help you d
 
 Both methods `getOrCreateDir` and `getOrCreatePage` take two parameters : `parent` and `title`
 
+The page will automatically be treated as markdown and converted like a normal page.
+
+If you create a new ContentType, like let's say LaTeX, you would set the title `My Page.tex` it will keep the title `My Page` and use your renderer.
+  
+If the extension is not mapped to a Generator, it will simply create the file as-is without manipulation.
+
 ### Extend the Markdown Generator
 
 You can extend the Markdown Parser in any way wou want with this method.

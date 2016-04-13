@@ -11,6 +11,11 @@ abstract class SimplePage implements Page
         $this->initializePage($title, $content);
     }
 
+    public function getPureContent()
+    {
+        return $this->content;
+    }
+
     public function getContent()
     {
         if (is_null($this->generated)) {

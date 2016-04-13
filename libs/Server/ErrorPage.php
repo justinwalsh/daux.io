@@ -33,7 +33,7 @@ class ErrorPage extends SimplePage
         $params = $this->params;
         $page = [
             'title' => $this->title,
-            'content' => $this->content,
+            'content' => $this->getPureContent(),
             'language' => '',
         ];
 

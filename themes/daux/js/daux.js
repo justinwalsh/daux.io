@@ -37,16 +37,15 @@ _.debounce = function(func, wait, immediate) {
     };
 };
 
-var codeBlocks, codeBlockView, toggleCodeBlockBtn, codeBlockState;
+var codeBlocks, codeBlockView, toggleCodeBlockBtn, toggleCodeSection, codeBlockState;
 function toggleCodeBlocks() {
-    var hasFloat = $(document.body).hasClass("with-float")? 3 : 2;
-    codeBlockState = (codeBlockState + 1) % hasFloat;
-    localStorage.setItem("codeBlockState", codeBlockState);
-    setCodeBlockStyle(codeBlockState);
+    setCodeBlockStyle(codeBlocks.hasClass('hidden') ? 1 : 0);
 }
 
-function setCodeBlockStyle(x) {
-    switch (x) {
+function setCodeBlockStyle(codeBlockState) {
+    localStorage.setItem("codeBlockState", codeBlockState);
+
+    switch (codeBlockState) {
         default:
         case 0:
             toggleCodeBlockBtn.html("Show Code Blocks");
@@ -69,22 +68,35 @@ function setCodeBlockStyle(x) {
 //Initialize CodeBlock Visibility Settings
 $(function () {
     codeBlocks = $('.content-page article > pre');
+    toggleCodeSection = $('#toggleCodeBlock');
     toggleCodeBlockBtn = $('#toggleCodeBlockBtn');
 
     // If there is no code block we hide the link
     if (!codeBlocks.size()) {
-        toggleCodeBlockBtn.addClass('hidden');
+        toggleCodeSection.addClass('hidden');
         return;
     }
+
+    $('#code-hide').click(function() { setCodeBlockStyle(0); });
+    $('#code-below').click(function() { setCodeBlockStyle(1); });
+    $('#code-float').click(function() { setCodeBlockStyle(2); });
 
     codeBlockView = $('.right-column');
     if (!codeBlockView.size()) return;
 
+    var floating = $(document.body).hasClass("with-float");
+
     codeBlockState = localStorage.getItem("codeBlockState");
+
     if (!codeBlockState) {
-        codeBlockState = 2;
-        localStorage.setItem("codeBlockState", codeBlockState);
-    } else codeBlockState = parseInt(codeBlockState);
+        codeBlockState = floating? 2 : 1;
+    } else {
+        codeBlockState = parseInt(codeBlockState);
+    }
+
+    if (!floating && codeBlockState == 2) {
+        codeBlockState = 1;
+    }
 
     setCodeBlockStyle(codeBlockState);
 });
@@ -96,6 +108,12 @@ $(function () {
         e.preventDefault();
         $(this).parent().siblings().find('ul').slideUp();
         $(this).next().slideToggle();
+    });
+
+    // New Tree navigation
+    $('ul.nav.nav-list > li.has-children > a > .arrow').click(function() {
+        $(this).parent().parent().toggleClass('open');
+        return false;
     });
 
     // Responsive navigation

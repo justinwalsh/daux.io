@@ -78,10 +78,13 @@ class Template
         $nav = "";
         foreach ($entries as $entry) {
             if (array_key_exists('children', $entry)) {
+
+                $icon = '<i class="arrow">&nbsp;</i>';
+
                 if (array_key_exists('href', $entry)) {
-                    $link = '<a href="' . $entry['href'] . '" class="folder">' . $entry['title'] . '</a>';
+                    $link = '<a href="' . $entry['href'] . '" class="folder">' . $icon . $entry['title'] . '</a>';
                 } else {
-                    $link = '<a href="#" class="aj-nav folder">' . $entry['title'] . '</a>';
+                    $link = '<a href="#" class="aj-nav folder">' . $icon . $entry['title'] . '</a>';
                 }
 
                 $link .= $this->renderNavigation($entry['children']);
@@ -110,7 +113,7 @@ class Template
                 $nav[] = [
                     'title' => $node->getTitle(),
                     'href' => $base_page . $link,
-                    'class' => ($current_url === $link) ? 'active' : ''
+                    'class' => $current_url === $link ? 'active' : '',
                 ];
             } elseif ($node instanceof Directory) {
                 if (!$node->hasContent()) {
@@ -121,7 +124,7 @@ class Template
 
                 $folder = [
                     'title' => $node->getTitle(),
-                    'class' => (strpos($current_url, $link) === 0) ? 'open' : '',
+                    'class' => strpos($current_url, $link) === 0 ? 'open' : '',
                 ];
 
                 if ($mode === Daux::STATIC_MODE) {
@@ -135,6 +138,10 @@ class Template
                 //Child pages
                 $new_path = ($path === '') ? $url : $path . '/' . $url;
                 $folder['children'] = $this->buildNavigation($node, $new_path, $current_url, $base_page, $mode);
+
+                if (!empty($folder['children'])) {
+                    $folder['class'] .= ' has-children';
+                }
 
                 $nav[] = $folder;
             }
