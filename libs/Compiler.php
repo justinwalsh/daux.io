@@ -53,14 +53,15 @@ class Compiler
         $finder->files()
             ->ignoreVCS(true)
             ->exclude('Tests')
-            ->in(__DIR__ . '/../vendor/symfony/console')
-            ->in(__DIR__ . '/../vendor/symfony/polyfill-mbstring')
             ->in(__DIR__ . '/../vendor/guzzlehttp/guzzle/src/')
             ->in(__DIR__ . '/../vendor/guzzlehttp/ringphp/src/')
             ->in(__DIR__ . '/../vendor/guzzlehttp/streams/src/')
             ->in(__DIR__ . '/../vendor/league/commonmark/src/')
             ->in(__DIR__ . '/../vendor/league/plates/src/')
+            ->in(__DIR__ . '/../vendor/myclabs/deep-copy')
             ->in(__DIR__ . '/../vendor/react/promise/src/')
+            ->in(__DIR__ . '/../vendor/symfony/console')
+            ->in(__DIR__ . '/../vendor/symfony/polyfill-mbstring')
             ->in(__DIR__ . '/../vendor/webuni/commonmark-table-extension/src/');
 
         foreach ($finder as $file) {
@@ -104,6 +105,7 @@ class Compiler
         $this->addFile($phar, new \SplFileInfo(__DIR__ . '/../vendor/composer/autoload_files.php'));
         $this->addFile($phar, new \SplFileInfo(__DIR__ . '/../vendor/composer/autoload_namespaces.php'));
         $this->addFile($phar, new \SplFileInfo(__DIR__ . '/../vendor/composer/autoload_real.php'));
+        $this->addFile($phar, new \SplFileInfo(__DIR__ . '/../vendor/composer/autoload_static.php'));
         $this->addFile($phar, new \SplFileInfo(__DIR__ . '/../vendor/composer/ClassLoader.php'));
 
         $content = file_get_contents(__DIR__ . '/../vendor/composer/autoload_psr4.php');
