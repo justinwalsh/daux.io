@@ -3,7 +3,9 @@
 use League\CommonMark\DocParser;
 use League\CommonMark\Environment;
 use League\CommonMark\HtmlRenderer;
+use Todaymade\Daux\Config;
 use Todaymade\Daux\ContentTypes\Markdown\TOC\Parser;
+use Todaymade\Daux\ContentTypes\Markdown\TOC\Renderer;
 use Todaymade\Daux\ContentTypes\Markdown\TOC\TOCProcessor;
 use Webuni\CommonMark\TableExtension\TableExtension;
 
@@ -21,10 +23,9 @@ class CommonMarkConverter extends \League\CommonMark\CommonMarkConverter
         $environment->addExtension(new TableExtension());
 
         // Table of Contents
-        $environment->addBlockParser(new Parser());
-        $environment->addDocumentProcessor(new TOCProcessor($config['daux']));
+        $environment->addBlockParser(new TableOfContentsParser());
 
-        $this->extendEnvironment($environment);
+        $this->extendEnvironment($environment, $config['daux']);
 
         if (array_key_exists('processor_instance', $config['daux'])) {
             $config['daux']['processor_instance']->extendCommonMarkEnvironment($environment);
@@ -39,7 +40,7 @@ class CommonMarkConverter extends \League\CommonMark\CommonMarkConverter
         return new LinkRenderer($environment->getConfig('daux'));
     }
 
-    protected function extendEnvironment(Environment $environment)
+    protected function extendEnvironment(Environment $environment, Config $config)
     {
         $environment->addInlineRenderer('Link', $this->getLinkRenderer($environment));
     }

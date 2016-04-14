@@ -18,8 +18,6 @@
 
     "timezone": "America/Los_Angeles",
 
-    "auto_toc": false,
-
     "live": {
         "inherit_index": false,
         "clean_urls": false
@@ -33,6 +31,7 @@
         "float": false,
         "auto_landing": true,
         "search": true,
+        "auto_toc": false,
 
         "repo": "",
         "twitter": [],

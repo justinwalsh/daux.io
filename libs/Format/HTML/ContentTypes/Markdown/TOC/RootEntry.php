@@ -1,4 +1,4 @@
-<?php namespace Todaymade\Daux\ContentTypes\Markdown\TOC;
+<?php namespace Todaymade\Daux\Format\HTML\ContentTypes\Markdown\TOC;
 
 class RootEntry extends Entry
 {

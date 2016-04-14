@@ -1,19 +1,10 @@
-<?php
-/**
- * Created by IntelliJ IDEA.
- * User: onigoetz
- * Date: 09/04/16
- * Time: 23:03
- */
-
-namespace Todaymade\Daux\ContentTypes\Markdown\TOC;
-
+<?php namespace Todaymade\Daux\ContentTypes\Markdown;
 
 use League\CommonMark\Block\Parser\AbstractBlockParser;
 use League\CommonMark\ContextInterface;
 use League\CommonMark\Cursor;
 
-class Parser extends AbstractBlockParser
+class TableOfContentsParser extends AbstractBlockParser
 {
 
     /**
@@ -37,7 +28,7 @@ class Parser extends AbstractBlockParser
             return false;
         }
 
-        $context->addBlock(new Element());
+        $context->addBlock(new TableOfContents());
 
         return true;
     }

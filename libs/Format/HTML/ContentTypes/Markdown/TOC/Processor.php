@@ -1,4 +1,4 @@
-<?php namespace Todaymade\Daux\ContentTypes\Markdown\TOC;
+<?php namespace Todaymade\Daux\Format\HTML\ContentTypes\Markdown\TOC;
 
 use DeepCopy\DeepCopy;
 use League\CommonMark\Block\Element\Document;
@@ -13,9 +13,10 @@ use League\CommonMark\Inline\Element\Text;
 use League\CommonMark\Node\Node;
 use ReflectionMethod;
 use Todaymade\Daux\Config;
+use Todaymade\Daux\ContentTypes\Markdown\TableOfContents;
 use Todaymade\Daux\DauxHelper;
 
-class TOCProcessor implements DocumentProcessorInterface
+class Processor implements DocumentProcessorInterface
 {
     protected $config;
 
@@ -26,7 +27,7 @@ class TOCProcessor implements DocumentProcessorInterface
 
     public function hasAutoTOC()
     {
-        return array_key_exists('auto_toc', $this->config) && $this->config['auto_toc'];
+        return array_key_exists('html', $this->config) && array_key_exists('auto_toc', $this->config['html']) && $this->config['html']['auto_toc'];
     }
 
     /**
@@ -36,7 +37,7 @@ class TOCProcessor implements DocumentProcessorInterface
      */
     public function processDocument(Document $document)
     {
-        /** @var Element[] $tocs */
+        /** @var TableOfContents[] $tocs */
         $tocs = [];
 
         $headings = [];
@@ -45,7 +46,7 @@ class TOCProcessor implements DocumentProcessorInterface
         while ($event = $walker->next()) {
             $node = $event->getNode();
 
-            if ($node instanceof Element && !$event->isEntering()) {
+            if ($node instanceof TableOfContents && !$event->isEntering()) {
                 $tocs[] = $node;
                 continue;
             }
@@ -64,7 +65,7 @@ class TOCProcessor implements DocumentProcessorInterface
 
             if (count($tocs)) {
                 foreach ($tocs as $toc) {
-                    $toc->replaceWith($this->render($generated->getChildren()));
+                    $toc->appendChild($this->render($generated->getChildren()));
                 }
             } else {
                 $document->prependChild($this->render($generated->getChildren()));

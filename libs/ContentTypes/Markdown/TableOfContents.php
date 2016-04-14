@@ -1,9 +1,9 @@
-<?php namespace Todaymade\Daux\ContentTypes\Markdown\TOC;
+<?php namespace Todaymade\Daux\ContentTypes\Markdown;
 
 use League\CommonMark\Block\Element\AbstractBlock;
 use League\CommonMark\Cursor;
 
-class Element extends AbstractBlock
+class TableOfContents extends AbstractBlock
 {
 
     /**
