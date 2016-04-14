@@ -68,3 +68,21 @@ By default, it will inform you that some pages aren't needed anymore and you can
 ```
 
 By setting `delete` to `true` (or running `daux.phar` with the `--delete` flag) you tell the generator that it can safely delete the pages.
+
+
+## Information message
+When you create your page. there is no indication that the upload process will override the content of the pages.
+
+It happens sometimes that users edit the pages to add / fix an information.
+
+You can add a text in a "information" macro on top of the document by setting the following configuration :
+
+```json
+{
+	"confluence": { "header": "These pages are updated automatically, your changes will be overriden." }
+}
+```
+
+It will look like this :
+
+![Info macro](info_macro.png)

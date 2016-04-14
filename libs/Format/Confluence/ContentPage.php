@@ -27,7 +27,13 @@ class ContentPage extends \Todaymade\Daux\Format\Base\ContentPage
                 }
             );
 
-        return $content;
+
+        $intro = '';
+        if (array_key_exists('confluence', $this->params) && array_key_exists('header', $this->params['confluence']) && !empty($this->params['confluence']['header'])) {
+            $intro = '<ac:structured-macro ac:name="info"><ac:rich-text-body>' . $this->params['confluence']['header'] . '</ac:rich-text-body></ac:structured-macro>';
+        }
+
+        return $intro . $content;
     }
 
     private function createImageTag($filename, $attributes)
