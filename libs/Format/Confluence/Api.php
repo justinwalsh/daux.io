@@ -24,10 +24,14 @@ class Api
         $this->space = $space_id;
     }
 
-    protected function getClient()
+    /**
+     * This method is public due to test purposes
+     * @return Client
+     */
+    public function getClient()
     {
         $options = [
-            'base_url' => $this->base_url . 'rest/api/',
+            'base_uri' => $this->base_url . 'rest/api/',
             'defaults' => [
                 'auth' => [$this->user, $this->pass]
             ]
