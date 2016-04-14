@@ -93,10 +93,13 @@ class Publisher
         $this->output->writeLn("Publishing updates...");
         $published = $this->updateRecursive($this->confluence['ancestor_id'], $tree, $published);
 
-        $this->output->writeLn("Deleting obsolete pages...");
-        if (!$this->shouldDelete()) {
+
+        if ($this->shouldDelete()) {
+            $this->output->writeLn("Deleting obsolete pages...");
+        } else {
+            $this->output->writeLn("Listing obsolete pages...");
             echo "> The following pages will not be deleted, but just listed for information.\n";
-            echo "> If you want to delete these pages, you need to set the --delete flag on the command.";
+            echo "> If you want to delete these pages, you need to set the --delete flag on the command.\n";
         }
         $this->deleteRecursive($published);
     }

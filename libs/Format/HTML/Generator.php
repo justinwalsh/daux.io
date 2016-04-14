@@ -4,7 +4,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Todaymade\Daux\Config;
 use Todaymade\Daux\Console\RunAction;
-use Todaymade\Daux\ContentTypes\Markdown\ContentType;
+use Todaymade\Daux\Format\HTML\ContentTypes\Markdown\ContentType;
 use Todaymade\Daux\Daux;
 use Todaymade\Daux\DauxHelper;
 use Todaymade\Daux\Format\Base\LiveGenerator;
@@ -61,7 +61,10 @@ class Generator implements \Todaymade\Daux\Format\Base\Generator, LiveGenerator
 
         $output->writeLn("Generating ...");
 
-        $params['html']['search'] = $input->getOption('search');
+        if (!array_key_exists('search', $params['html']) || !$params['html']['search']) {
+            $params['html']['search'] = $input->getOption('search');
+        }
+
         $this->generateRecursive($this->daux->tree, $destination, $params, $output, $width, $params['html']['search']);
 
         if ($params['html']['search']) {
