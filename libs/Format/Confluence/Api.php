@@ -2,7 +2,6 @@
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\BadResponseException;
-use GuzzleHttp\Exception\ParseException;
 
 class Api
 {
@@ -32,9 +31,7 @@ class Api
     {
         $options = [
             'base_uri' => $this->base_url . 'rest/api/',
-            'defaults' => [
-                'auth' => [$this->user, $this->pass]
-            ]
+            'auth' => [$this->user, $this->pass]
         ];
 
         return new Client($options);
@@ -63,15 +60,13 @@ class Api
         }
 
         $message = $label .
-            ' [url] ' . $request->getUrl() .
+            ' [url] ' . $request->getUri() .
             ' [status code] ' . $response->getStatusCode() .
             ' [message] ';
 
-        try {
-            $message .= $response->json()['message'];
-        } catch (ParseException $e) {
-            $message .= (string) $response->getBody();
-        }
+        $body = $response->getBody();
+        $json = json_decode($body, true);
+        $message .= ($json != null && array_key_exists('message', $json)) ? $json['message'] : $body;
 
         if ($level == '4' && strpos($message, "page with this title already exists") !== false) {
             return new DuplicateTitleException($message, 0, $e->getPrevious());
@@ -85,7 +80,7 @@ class Api
        $url = "content/$id?expand=ancestors,version,body.storage";
 
         try {
-            $result = $this->getClient()->get($url)->json();
+            $result = json_decode($this->getClient()->get($url)->getBody(), true);
         } catch (BadResponseException $e) {
             throw $this->handleError($e);
         }
@@ -126,7 +121,7 @@ class Api
 
         do {
             try {
-                $hierarchy = $this->getClient()->get($url)->json();
+                $hierarchy = json_decode($this->getClient()->get($url)->getBody(), true);
             } catch (BadResponseException $e) {
                 throw $this->handleError($e);
             }
@@ -175,7 +170,7 @@ class Api
         }
 
         try {
-            $response = $this->getClient()->post('content', ['json' => $body])->json();
+            $response = json_decode($this->getClient()->post('content', ['json' => $body])->getBody(), true);
         } catch (BadResponseException $e) {
             throw $this->handleError($e);
         }
@@ -205,7 +200,7 @@ class Api
         }
 
         try {
-            $this->getClient()->put("content/$page_id", ['json' => $body])->json();
+            $this->getClient()->put("content/$page_id", ['json' => $body]);
         } catch (BadResponseException $e) {
             throw $this->handleError($e);
         }
@@ -220,7 +215,7 @@ class Api
     public function deletePage($page_id)
     {
         try {
-            return $this->getClient()->delete('content/' . $page_id)->json();
+            return json_decode($this->getClient()->delete('content/' . $page_id)->getBody(), true);
         } catch (BadResponseException $e) {
             throw $this->handleError($e);
         }
@@ -235,7 +230,7 @@ class Api
         // Check if an attachment with
         // this name is uploaded
         try {
-            $result = $this->getClient()->get("content/$id/child/attachment?filename=$attachment[filename]")->json();
+            $result = json_decode($this->getClient()->get("content/$id/child/attachment?filename=$attachment[filename]")->getBody(), true);
         } catch (BadResponseException $e) {
             throw $this->handleError($e);
         }
@@ -252,7 +247,7 @@ class Api
             $this->getClient()->post(
                 $url,
                 [
-                    'body' => ['file' => fopen($attachment['file']->getPath(), 'r')],
+                    'multipart' => [['name' => 'file', 'contents' => fopen($attachment['file']->getPath(), 'r')]],
                     'headers' => ['X-Atlassian-Token' => 'nocheck'],
                 ]
             );
