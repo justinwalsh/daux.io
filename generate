@@ -64,8 +64,8 @@ software, even if advised of the possibility of such damage.
 
 */
 
-if (file_exists('vendor/autoload.php')) {
-    require_once('vendor/autoload.php');
+if (file_exists(__DIR__ . '/vendor/autoload.php')) {
+    require_once(__DIR__ . '/vendor/autoload.php');
 } elseif (file_exists('daux.phar')) {
     define('PHAR_DIR', __DIR__);
     require_once("phar://" . __DIR__ . "/daux.phar/vendor/autoload.php");

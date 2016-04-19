@@ -184,21 +184,34 @@ class Processor implements DocumentProcessorInterface
         return $list;
     }
 
+    protected function setNull($object, $property) {
+        $prop = new \ReflectionProperty(get_class($object), $property);
+        $prop->setAccessible(true);
+        $prop->setValue($object, null);
+    }
+
     /**
      * @param Heading $node
      * @return Node[]
      */
     protected function cloneChildren(Heading $node)
     {
-        $deepCopy = new DeepCopy();
-
         $firstClone = clone $node;
 
-        // We have no choice but to hack into the system to reset the parent, to avoid cloning the complete tree
-        $method = new ReflectionMethod(get_class($firstClone), 'setParent');
-        $method->setAccessible(true);
-        $method->invoke($firstClone, null);
+        // We have no choice but to hack into the
+        // system to reset the parent, previous and next
+        $this->setNull($firstClone, 'parent');
+        $this->setNull($firstClone, 'previous');
+        $this->setNull($firstClone, 'next');
 
+        // Also, the child elements need to know the next parents
+        foreach ($firstClone->children() as $subnode) {
+            $method = new ReflectionMethod(get_class($subnode), 'setParent');
+            $method->setAccessible(true);
+            $method->invoke($subnode, $firstClone);
+        }
+
+        $deepCopy = new DeepCopy();
         return $deepCopy->copy($firstClone)->children();
     }
 }
