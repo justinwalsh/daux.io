@@ -15,23 +15,25 @@ class ContentTest extends \PHPUnit_Framework_TestCase
     public function providerTestAttributes()
     {
         return array(
-            ['This is content', []],
-            ["title: This is a simple title\n---\nThis is content\n", ['title' => 'This is a simple title']],
-            ["title: This is a simple title\ntitle :This is another title\n---\nThis is content\n", ['title' => 'This is another title']],
-            ["title: This is a simple title\nthis is not metadata\n---\nThis is content\n", ['title' => 'This is a simple title']],
-            ["title: This is only metatada, no content", []],
-            ["title: This is almost only metadata\n---\n", ["title" => "This is almost only metadata"]]
+            ['This is content', [], "This is content"],
+            ["title: This is a simple title\n---\nThis is content\n", ['title' => 'This is a simple title'], "This is content"],
+            ["title: This is a simple title\ntitle :This is another title\n---\nThis is content\n", ['title' => 'This is another title'], "This is content"],
+            ["title: This is a simple title\nthis is not metadata\n---\nThis is content\n", ['title' => 'This is a simple title'], "This is content"],
+            ["title: This is only metatada, no content", [], "title: This is only metatada, no content"],
+            ["title: This is almost only metadata\n---\n", ["title" => "This is almost only metadata"], ""],
+            ["# Some content\n\nhi\n```yml\nvalue: true\n```\n----\n Follow up", [], "# Some content\n\nhi\n```yml\nvalue: true\n```\n----\n Follow up"],
         );
     }
 
     /**
      * @dataProvider providerTestAttributes
      */
-    public function testAttributes($content, $attributes)
+    public function testAttributes($content, $attributes, $finalContent)
     {
         $obj = $this->createContent($content);
 
         $this->assertEquals($attributes, $obj->getAttribute());
+        $this->assertEquals($finalContent, trim($obj->getContent()));
     }
 
     public function testNoAttributes()

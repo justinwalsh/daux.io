@@ -14,12 +14,15 @@ class Content extends Entry
     /** @var array */
     protected $attributes;
 
+    /** @var bool */
+    protected $manuallySetContent = false;
+
     /**
      * @return string
      */
     public function getContent()
     {
-        if (!$this->content) {
+        if (!$this->content && !$this->manuallySetContent) {
             $this->content = file_get_contents($this->getPath());
         }
 
@@ -35,6 +38,7 @@ class Content extends Entry
      */
     public function setContent($content)
     {
+        $this->manuallySetContent = true;
         $this->content = $content;
     }
 
@@ -106,10 +110,15 @@ class Content extends Entry
         // Parse the different attributes
         $lines = preg_split('/\n/', $sections[0]);
         foreach ($lines as $line) {
-            $parts = preg_split('/:/', $line, 2);
-            if (count($parts) !== 2) continue;
-            $key = strtolower(trim($parts[0]));
-            $value = trim($parts[1]);
+            $trimmed = trim($line);
+            if ($trimmed == '') continue; // skip empty lines
+            if ($trimmed[0] == '#') continue; // can be taken as comments
+            
+            $re = "/^([-\\w]*)\\s*?:(.*)/";
+            if (!preg_match($re, $trimmed, $parts)) break; //Break as soon as we have a line that doesn't match
+
+            $key = strtolower(trim($parts[1]));
+            $value = trim($parts[2]);
             $this->attributes[$key] = $value;
         }
 
