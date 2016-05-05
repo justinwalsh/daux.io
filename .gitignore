@@ -4,4 +4,4 @@ node_modules
 /sftp-config.json
 static
 
-vendor
+/vendor

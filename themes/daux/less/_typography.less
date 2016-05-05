@@ -1,0 +1,161 @@
+/* ===========================================================================================
+Base CSS
+============================================================================================== */
+
+//Fonts
+.roboto-slab {
+    &.light {
+        font-family: 'Roboto Slab', @font-family-sans-serif;
+        font-weight: 100;
+    }
+
+    &.book {
+        font-family: 'Roboto Slab', @font-family-sans-serif;
+        font-weight: 300;
+    }
+
+    &.regular {
+        font-family: 'Roboto Slab', @font-family-sans-serif;
+        font-weight: 400;
+    }
+
+    &.bold {
+        font-family: 'Roboto Slab', @font-family-sans-serif;
+        font-weight: 700;
+    }
+}
+
+body {
+    text-rendering: optimizeLegibility;
+    font-smoothing: antialiased;
+
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    .roboto-slab.book;
+}
+
+a {
+    color: @light;
+}
+
+code {
+    color: @dark;
+}
+
+.content-page {
+    @import "../../common/less/_typography.less";
+
+    pre {
+        border: none;
+        border-radius: 0;
+        padding: 10px 30px;
+        margin-left: -20px;
+        margin-right: -20px;
+    }
+}
+
+//Content pages float view
+.float-view {
+    @media (min-width: 1150px) {
+        .content-page {
+            height: 100%;
+            overflow: auto;
+            padding: 0 !important;
+            background-color: transparent !important;
+            position: relative;
+
+            article {
+                width: 100%;
+                min-height: 100%;
+                overflow: auto;
+                position: relative;
+                z-index: 1;
+
+                &::before {
+                    content: "";
+                    width: 50%;
+                    min-height: 100%;
+                    overflow: auto;
+                    background-color: white;
+                    display: block;
+                    margin: 0;
+                    position: absolute;
+                    z-index: -1;
+                }
+            }
+
+            table {
+                float: left;
+                clear: left;
+                width: 47%;
+                margin-left: 1.5%;
+                margin-right: 1.5%;
+                background-color: white;
+                white-space: normal;
+
+                pre, code {
+                    white-space: normal;
+                }
+            }
+
+            .page-header {
+                padding: 0;
+            }
+
+            .page-header, blockquote, p, ul, ol, dl, h2, h3, h4, h5, h6, hr {
+                float: left;
+                clear: left;
+                width: 47%;
+                margin-left: 1.5%;
+                margin-right: 1.5%;
+
+                &::before {
+                    width: 100%;
+                    height: 10px;
+                    display: block;
+                    clear: both;
+                }
+
+                p, ul, ol, dl, h2, h3, h4, h5, h6, pre, hr {
+                    float: none;
+                    display: block;
+                }
+            }
+
+            hr {
+                border-color: #ddd;
+            }
+
+            // Paragraphs and code inside lists and
+            // blockquotes should have 100% width
+            li, blockquote {
+                p, pre {
+                    width: 100%;
+                }
+            }
+
+            ul, ol {
+                li {
+                    margin-left: 30px;
+                }
+            }
+
+            pre {
+                float: left;
+                clear: right;
+                width: 50%;
+                border: none;
+                border-left: 10px solid white;
+                margin: 0 0 10px 0;
+                padding: 0;
+
+                code {
+                    padding: 0 0.5em;
+                }
+            }
+        }
+    }
+}

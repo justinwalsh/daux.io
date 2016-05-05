@@ -4,7 +4,8 @@ var gulp = require('gulp'),
     less = require('gulp-less'),
     rename = require('gulp-rename'),
     plumber = require('gulp-plumber'),
-    postcss = require('gulp-postcss');
+    postcss = require('gulp-postcss'),
+    sourcemaps = require('gulp-sourcemaps');
 
 var resources = {
     daux:{source: "themes/daux/less/theme.less", dest: "themes/daux/css/"},
@@ -140,6 +141,7 @@ function createTask(source, dest) {
         };
 
         return gulp.src(source)
+            //.pipe(sourcemaps.init())
             .pipe(plumber())
             .pipe(less())
             .pipe(postcss([
@@ -147,8 +149,42 @@ function createTask(source, dest) {
                 require('cssnano')(nano_options)
             ]))
             .pipe(rename({suffix: '.min'}))
+            //.pipe(sourcemaps.write())
             .pipe(gulp.dest(dest));
     }
+}
+
+
+function createLinter() {
+    var gulpStylelint = require('gulp-stylelint');
+
+    var rules = {
+        "indentation": 4,
+        "selector-list-comma-newline-after": "always-multi-line",
+        "selector-no-id": true,
+
+        // Autoprefixer
+        "at-rule-no-vendor-prefix": true,
+        "media-feature-name-no-vendor-prefix": true,
+        "property-no-vendor-prefix": true,
+        "selector-no-vendor-prefix": true,
+        "value-no-vendor-prefix": true
+    };
+
+    return gulp
+        .src(['themes/**/less/**/*.less', '!themes/**/vendor/**/*.less'])
+        .pipe(gulpStylelint({
+            failAfterError: true,
+            config: {
+                extends: "stylelint-config-standard",
+                rules: rules
+            },
+            syntax: "less",
+            reporters: [
+                {formatter: 'string', console: true}
+            ],
+            debug: true
+        }));
 }
 
 
@@ -159,13 +195,16 @@ for (var style in resources) {
     style_tasks.push('style_' + style);
 }
 
+gulp.task('lint-css', createLinter);
+style_tasks.push('lint-css');
+
 gulp.task("styles", style_tasks);
 
 
 gulp.task('watch', function() {
 
     // Watch .less files
-    gulp.watch('themes/daux/less/**/*.less', ['styles']);
+    gulp.watch('themes/**/less/**/*.less', ['styles']);
 
 });
 

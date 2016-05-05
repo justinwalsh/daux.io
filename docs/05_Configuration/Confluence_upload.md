@@ -4,9 +4,9 @@ The connection requires three parameters `base_url`, `user` and `pass`. While `u
 ```json
 {
     "confluence": {
-		"base_url": "http://my_confluence_server.com/,
-		"user" : "my_username",
-		"pass" : "my_password",
+        "base_url": "http://my_confluence_server.com/",
+        "user" : "my_username",
+        "pass" : "my_password",
     }
 }
 ```
@@ -36,7 +36,7 @@ Because confluence can't have two pages with the same name in a space, I recomme
 
 ```json
 {
-	"confluence": { "prefix": "[DAUX]" }
+    "confluence": { "prefix": "[DAUX]" }
 }
 ```
 
@@ -45,7 +45,7 @@ To make the upload quicker, we try to determine if a page changed or not, first 
 
 ```json
 {
-	"confluence": { "update_threshold": 1 }
+    "confluence": { "update_threshold": 1 }
 }
 ```
 
@@ -63,7 +63,7 @@ By default, it will inform you that some pages aren't needed anymore and you can
 
 ```json
 {
-	"confluence": { "delete": true }
+    "confluence": { "delete": true }
 }
 ```
 
@@ -79,7 +79,9 @@ You can add a text in a "information" macro on top of the document by setting th
 
 ```json
 {
-	"confluence": { "header": "These pages are updated automatically, your changes will be overriden." }
+    "confluence": {
+        "header": "These pages are updated automatically, your changes will be overriden."
+    }
 }
 ```
 

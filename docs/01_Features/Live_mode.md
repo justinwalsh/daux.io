@@ -2,7 +2,7 @@ Keep in mind, this mode can be used for production, but it is not recommended.
 
 The whole directory must be scanned on each request. This might not make a big impact on small documentations but can be a bottleneck on bigger ones.
 
-### Running Locally
+## Running Locally
 
 There are several ways to run the docs locally. You can use something like <a href="http://www.mamp.info/en/index.html" target="_blank">MAMP</a> or <a href="http://www.wampserver.com/en/" target="_blank">WAMP</a>.
 
@@ -11,9 +11,9 @@ The easiest is to use PHP 5.4's built-in server.
 For that i've included a short command, run `./serve` in the projects folder to start the local web server. By default the server will run at: <a href="http://localhost:8085" target="_blank">http://localhost:8085</a>
 
 
-### Running Remotely
+## Running Remotely
 
-#### Clean URLs configuration
+### Clean URLs configuration
 
 Daux provides native support for Clean URLs provided the webserver has its URL Rewrite module enabled.
 To enable the same, set the toggle in the `config.json` file in the `/docs` folder.
@@ -26,13 +26,13 @@ To enable the same, set the toggle in the `config.json` file in the `/docs` fold
 }
 ```
 
-#### Apache
+### Apache
 
 Copy the files from the repo to a web server that can run PHP 5.3 or greater.
 
 There is an included `.htaccess` for Apache web server.
 
-#### Nginx
+### Nginx
 
 Daux.io works perfectly fine on Nginx too, just drop this configuration in your `nginx.conf`
 
@@ -66,14 +66,14 @@ server {
 }
 ```
 
-### IIS
+## IIS
 
 If you have set up a local or remote IIS web site, you may need a `web.config` with:
 
 * A rewrite configuration, for handling clean urls.
 * A mime type handler for less files, if using a custom theme.
 
-#### Clean URLs
+### Clean URLs
 
 The `web.config` needs an entry for `<rewrite>` under `<system.webServer>`:
 

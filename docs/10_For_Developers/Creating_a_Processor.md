@@ -15,11 +15,11 @@ By default, we created a `daux/Processor.php` file to get you started.
 For the example we're just going to dump the tree and exit.
 
 ```php
-    public function manipulateTree(Root $root)
-    {
-        print_r($root->dump());
-        exit;
-    }
+public function manipulateTree(Root $root)
+{
+    print_r($root->dump());
+    exit;
+}
 ```
 
 also, add this at the beginning of the file:
@@ -43,21 +43,21 @@ By default, Daux.io parses your directory to find pages. but, for a reason or an
 This can be done with: 
 
 ```php
-    public function manipulateTree(Root $root)
-    {
-    }
+public function manipulateTree(Root $root)
+{
+}
 ```
 
 Two helpers from the class `Todaymade\Daux\Tree\Builder` will greatly help you doing that:
 
 ```php
-    $new = Builder::getOrCreateDir($root, 'New Pages');
+$new = Builder::getOrCreateDir($root, 'New Pages');
 
-    $page = Builder::getOrCreatePage($new, 'index');
-    $page->setContent('The index page for the new folder');
+$page = Builder::getOrCreatePage($new, 'index');
+$page->setContent('The index page for the new folder');
 
-    $page = Builder::getOrCreatePage($new, 'A New Hope');
-    $page->setContent('A long time ago in a galaxy far away');
+$page = Builder::getOrCreatePage($new, 'A New Hope');
+$page->setContent('A long time ago in a galaxy far away');
 ```
 
 Both methods `getOrCreateDir` and `getOrCreatePage` take two parameters : `parent` and `title`
@@ -73,9 +73,9 @@ If the extension is not mapped to a Generator, it will simply create the file as
 You can extend the Markdown Parser in any way wou want with this method.
 
 ```php
-    public function extendCommonMarkEnvironment(Environment $environment)
-    {
-    }
+public function extendCommonMarkEnvironment(Environment $environment)
+{
+}
 ```
 
 See the details on [CommonMark's website](http://commonmark.thephpleague.com/customization/overview/).
@@ -87,9 +87,9 @@ You can add new generators to Daux.io and use them right away, they must impleme
 you have to implement `\Todaymade\Daux\Format\Base\LiveGenerator`. 
 
 ```php
-    public function addGenerators()
-    {
-        return ['custom_generator' => '\Todaymade\Daux\Extension\MyNewGenerator'];
-    }
+public function addGenerators()
+{
+    return ['custom_generator' => '\Todaymade\Daux\Extension\MyNewGenerator'];
+}
 ```
 

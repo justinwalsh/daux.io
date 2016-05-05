@@ -63,8 +63,8 @@ Change the `theme` option inside `html`
 
 ```json
 {
-	"html": {
-		"theme": "{theme}-{variant}"
+    "html": {
+        "theme": "{theme}-{variant}"
     }
 }
 ```

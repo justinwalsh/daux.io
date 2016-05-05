@@ -2,9 +2,9 @@ If you want to create a beautiful landing page for your project, create a `_inde
 
 ```json
 {
-	"title": "Daux.io",
-	"tagline": "The Easiest Way To Document Your Project",
-	"image": "app.png"
+    "title": "Daux.io",
+    "tagline": "The Easiest Way To Document Your Project",
+    "image": "app.png"
 }
 ```
 
@@ -14,8 +14,8 @@ To disable the automatic landing page, you can set `auto_landing` to false in th
 
 ```json
 {
-	"html": {
-		"auto_landing": false
+    "html": {
+        "auto_landing": false
     }
 }
 ```

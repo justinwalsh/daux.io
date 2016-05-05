@@ -6,8 +6,8 @@ To enable the generated search, you can set `search` to true in the `html` secti
 
 ```json
 {
-	"html": {
-		"search": true
+    "html": {
+        "search": true
     }
 }
 ```

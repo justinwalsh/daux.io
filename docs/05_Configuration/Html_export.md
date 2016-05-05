@@ -17,7 +17,7 @@ To use a custom theme, just copy over the theme folder into the `themes` directo
 
 ```json
 {
-	"html": { "theme": "new-theme" }
+    "html": { "theme": "new-theme" }
 }
 ```
 
@@ -26,7 +26,7 @@ By default your code blocks will be floated to a column on the right side of you
 
 ```json
 {
-	"html": { "float": false }
+    "html": { "float": false }
 }
 ```
 
@@ -35,7 +35,7 @@ Some users might wish to hide the code blocks & view just the documentation. By 
 
 ```json
 {
-	"html": { "toggle_code": true }
+    "html": { "toggle_code": true }
 }
 ```
 
@@ -45,7 +45,7 @@ Add a 'Fork me on GitHub' ribbon.
 
 ```json
 {
-	"html": { "repo": "justinwalsh/daux.io" }
+    "html": { "repo": "justinwalsh/daux.io" }
 }
 ```
 
@@ -54,7 +54,7 @@ Include twitter follow buttons in the sidebar.
 
 ```json
 {
-	"html": { "twitter": ["justin_walsh", "todaymade"] }
+    "html": { "twitter": ["justin_walsh", "todaymade"] }
 }
 ```
 
@@ -63,13 +63,13 @@ Include custom links in the sidebar.
 
 ```json
 {
-	"html": {
-	    "links": {
-		    "GitHub Repo": "https://github.com/justinwalsh/daux.io",
-		    "Help/Support/Bugs": "https://github.com/justinwalsh/daux.io/issues",
-		    "Made by Todaymade": "http://todaymade.com"
-	    }
-	}
+    "html": {
+        "links": {
+            "GitHub Repo": "https://github.com/justinwalsh/daux.io",
+            "Help/Support/Bugs": "https://github.com/justinwalsh/daux.io/issues",
+            "Made by Todaymade": "http://todaymade.com"
+        }
+    }
 }
 ```
 
@@ -78,7 +78,7 @@ This will embed the google analytics tracking code.
 
 ```json
 {
-	"html": { "google_analytics": "UA-XXXXXXXXX-XX" }
+    "html": { "google_analytics": "UA-XXXXXXXXX-XX" }
 }
 ```
 
@@ -87,7 +87,7 @@ This will embed the piwik tracking code.
 
 ```json
 {
-	"html": { "piwik_analytics": "my-url-for-piwik.com" }
+    "html": { "piwik_analytics": "my-url-for-piwik.com" }
 }
 ```
 
@@ -95,7 +95,7 @@ You can Also give a specific Piwik ID as well.
 
 ```json
 {
-	"html": { "piwik_analytics_id": "43" }
+    "html": { "piwik_analytics_id": "43" }
 }
 ```
 
@@ -105,8 +105,8 @@ Daux.io provides the option to present page titles as breadcrumb navigation. You
 ```json
 {
     "html": {
-		"breadcrumbs": true,
-		"breadcrumb_separator" : " > "
+        "breadcrumbs": true,
+        "breadcrumb_separator" : " > "
     }
 }
 ```
@@ -116,6 +116,6 @@ By default, daux.io will display the last modified time as reported by the syste
 
 ```json
 {
-	"html": { "date_modified": false }
+    "html": { "date_modified": false }
 }
 ```
