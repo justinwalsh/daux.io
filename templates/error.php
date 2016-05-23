@@ -1,9 +1,11 @@
 <?php $this->layout('theme::layout/05_page') ?>
 
-<article>
-    <div class="page-header">
+<article class="Page">
+    <div class="Page__header">
         <h1><?= $page['title']; ?></h1>
     </div>
 
-    <?= $page['content']; ?>
+    <div class="s-content">
+        <?= $page['content']; ?>
+    </div>
 </article>

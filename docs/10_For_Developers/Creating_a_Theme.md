@@ -11,7 +11,7 @@ Here is an example `config.json` file :
     "favicon": "<theme_url>img/favicon.png",
     "css": ["<theme_url>css/theme.min.css"],
     "js": [],
-    "fonts": ["//fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700&subset=latin,cyrillic-ext,cyrillic"],
+    "fonts": ["https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700&subset=latin,cyrillic-ext,cyrillic"],
     "variants": {
         "blue": {
             "favicon": "<theme_url>img/favicon-blue.png",

@@ -6,7 +6,7 @@
 <h3>Features</h3>
 <hr/>
 <div class=row>
-<div class="col-sm-4">
+<div class=col-third>
 
 #### For Authors
 
@@ -21,7 +21,7 @@
 * [Table of Contents](!Features/Table_of_contents)
 
 </div>
-<div class="col-sm-4">
+<div class=col-third>
 
 #### For Developers
 
@@ -31,7 +31,7 @@
 * Work with pages metadata
 
 </div>
-<div class="col-sm-4">
+<div class=col-third>
 
 #### For Marketing
 
@@ -45,7 +45,6 @@
 </div>
 </div>
 
-<div class="clear"></div>
 <hr/>
 
 <!-- Google Code -->
