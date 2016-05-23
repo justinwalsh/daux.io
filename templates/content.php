@@ -1,28 +1,24 @@
 <?php $this->layout('theme::layout/05_page') ?>
-<article>
+<article class="Page">
     <?php if ($params['html']['date_modified']) { ?>
-        <div class="page-header sub-header clearfix">
+        <div class="Page__header">
             <h1><?= $page['breadcrumbs']? $this->get_breadcrumb_title($page, $base_page) : $page['title'] ?></h1>
-            <span style="float: left; font-size: 10px; color: gray;">
-                <?= date("l, F j, Y", $page['modified_time']); ?>
-            </span>
-            <span style="float: right; font-size: 10px; color: gray;">
-                <?= date("g:i A", $page['modified_time']); ?>
-            </span>
         </div>
     <?php } else { ?>
-        <div class="page-header">
+        <div class="Page__header">
             <h1><?= $page['breadcrumbs']? $this->get_breadcrumb_title($page, $base_page) : $page['title'] ?></h1>
         </div>
     <?php } ?>
 
-    <?= $page['content']; ?>
+    <div class="s-content">
+        <?= $page['content']; ?>
+    </div>
 
     <?php if(!empty($page['prev']) || !empty($page['next'])) { ?>
     <nav>
-        <ul class="pager">
-            <?php if(!empty($page['prev'])) { ?><li><a href="<?= $base_url . $page['prev']->getUrl() ?>">Previous</a></li><?php } ?>
-            <?php if(!empty($page['next'])) { ?><li><a href="<?= $base_url . $page['next']->getUrl() ?>">Next</a></li><?php } ?>
+        <ul class="Pager">
+            <?php if(!empty($page['prev'])) { ?><li class=Pager--prev><a href="<?= $base_url . $page['prev']->getUrl() ?>">Previous</a></li><?php } ?>
+            <?php if(!empty($page['next'])) { ?><li class=Pager--next><a href="<?= $base_url . $page['next']->getUrl() ?>">Next</a></li><?php } ?>
         </ul>
     </nav>
     <?php } ?>

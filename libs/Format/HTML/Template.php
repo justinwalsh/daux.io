@@ -79,7 +79,7 @@ class Template
         foreach ($entries as $entry) {
             if (array_key_exists('children', $entry)) {
 
-                $icon = '<i class="arrow">&nbsp;</i>';
+                $icon = '<i class="Nav__arrow">&nbsp;</i>';
 
                 if (array_key_exists('href', $entry)) {
                     $link = '<a href="' . $entry['href'] . '" class="folder">' . $icon . $entry['title'] . '</a>';
@@ -92,10 +92,10 @@ class Template
                 $link = '<a href="' . $entry['href'] . '">' . $entry['title'] . '</a>';
             }
 
-            $nav .= "<li class='$entry[class]'>$link</li>";
+            $nav .= "<li class='Nav__item $entry[class]'>$link</li>";
         }
 
-        return "<ul class='nav nav-list'>$nav</ul>";
+        return "<ul class='Nav'>$nav</ul>";
     }
 
     private function buildNavigation(Directory $tree, $path, $current_url, $base_page, $mode)
@@ -113,7 +113,7 @@ class Template
                 $nav[] = [
                     'title' => $node->getTitle(),
                     'href' => $base_page . $link,
-                    'class' => $current_url === $link ? 'active' : '',
+                    'class' => $current_url === $link ? 'Nav__item--active' : '',
                 ];
             } elseif ($node instanceof Directory) {
                 if (!$node->hasContent()) {
@@ -124,7 +124,7 @@ class Template
 
                 $folder = [
                     'title' => $node->getTitle(),
-                    'class' => strpos($current_url, $link) === 0 ? 'open' : '',
+                    'class' => strpos($current_url, $link) === 0 ? 'Nav__item--open' : '',
                 ];
 
                 if ($mode === Daux::STATIC_MODE) {
@@ -157,7 +157,7 @@ class Template
     {
         switch ($separator) {
             case 'Chevrons':
-                return ' <i class="glyphicon glyphicon-chevron-right"></i> ';
+                return ' <svg class="Page__header--separator" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 477.175 477.175"><path d="M360.73 229.075l-225.1-225.1c-5.3-5.3-13.8-5.3-19.1 0s-5.3 13.8 0 19.1l215.5 215.5-215.5 215.5c-5.3 5.3-5.3 13.8 0 19.1 2.6 2.6 6.1 4 9.5 4 3.4 0 6.9-1.3 9.5-4l225.1-225.1c5.3-5.2 5.3-13.8.1-19z"/></svg> ';
             default:
                 return $separator;
         }

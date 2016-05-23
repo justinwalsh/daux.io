@@ -1,10 +1,6 @@
 // Core variables and mixins
-@import "vendor/bootstrap/variables.less";
-@import "vendor/bootstrap/normalize.less";
-@import "vendor/bootstrap/scaffolding.less";
-@import "vendor/bootstrap/type.less";
 @import "variables.less";
-@import "fonts.less";
+@import "../../common/less/_fonts.less";
 @import "vendor/highlight.less";
 @import "typography.less";
 
@@ -22,7 +18,28 @@ html, body {
 body {
     text-rendering: optimizeLegibility;
     font-smoothing: antialiased;
-    font-family: @font-family-base;
+    font-family: @font-family-text;
+}
+
+a {
+    color: #337ab7;
+    text-decoration: none;
+}
+
+a:focus, a:hover {
+    color: #23527c;
+    text-decoration: underline;
+}
+
+p {
+    margin: 0 0 1em;
+}
+
+hr {
+    clear: both;
+    margin: 1em 0;
+    border: 0;
+    border-top: 1px solid #ddd;
 }
 
 img {

@@ -2,30 +2,8 @@
 Base CSS
 ============================================================================================== */
 
-//Fonts
-.roboto-slab {
-    &.light {
-        font-family: 'Roboto Slab', @font-family-sans-serif;
-        font-weight: 100;
-    }
-
-    &.book {
-        font-family: 'Roboto Slab', @font-family-sans-serif;
-        font-weight: 300;
-    }
-
-    &.regular {
-        font-family: 'Roboto Slab', @font-family-sans-serif;
-        font-weight: 400;
-    }
-
-    &.bold {
-        font-family: 'Roboto Slab', @font-family-sans-serif;
-        font-weight: 700;
-    }
-}
-
 body {
+    font-family: @font-family-text;
     text-rendering: optimizeLegibility;
     font-smoothing: antialiased;
 
@@ -34,18 +12,11 @@ body {
 }
 
 h1, h2, h3, h4, h5, h6 {
-    .roboto-slab.book;
+    font-family: @font-family-heading;
+    font-weight: 300;
 }
 
-a {
-    color: @light;
-}
-
-code {
-    color: @dark;
-}
-
-.content-page {
+.s-content {
     @import "../../common/less/_typography.less";
 
     pre {
@@ -58,9 +29,9 @@ code {
 }
 
 //Content pages float view
-.float-view {
+.Columns__right--float {
     @media (min-width: 1150px) {
-        .content-page {
+        .Columns__right__content {
             height: 100%;
             overflow: auto;
             padding: 0 !important;
@@ -86,13 +57,31 @@ code {
                     z-index: -1;
                 }
             }
+        }
 
+        .Pager,
+        .Page__header,
+        .s-content blockquote,
+        .s-content p,
+        .s-content ul,
+        .s-content ol,
+        .s-content dl,
+        .s-content h2,
+        .s-content h3,
+        .s-content h4,
+        .s-content h5,
+        .s-content h6,
+        .s-content hr,
+        .s-content table {
+            float: left;
+            clear: left;
+            width: 47%;
+            margin-left: 1.5%;
+            margin-right: 1.5%;
+        }
+
+        .s-content {
             table {
-                float: left;
-                clear: left;
-                width: 47%;
-                margin-left: 1.5%;
-                margin-right: 1.5%;
                 background-color: white;
                 white-space: normal;
 
@@ -101,17 +90,7 @@ code {
                 }
             }
 
-            .page-header {
-                padding: 0;
-            }
-
-            .page-header, blockquote, p, ul, ol, dl, h2, h3, h4, h5, h6, hr {
-                float: left;
-                clear: left;
-                width: 47%;
-                margin-left: 1.5%;
-                margin-right: 1.5%;
-
+            blockquote, p, ul, ol, dl, h2, h3, h4, h5, h6, hr {
                 &::before {
                     width: 100%;
                     height: 10px;
@@ -120,6 +99,7 @@ code {
                 }
 
                 p, ul, ol, dl, h2, h3, h4, h5, h6, pre, hr {
+                    width: auto;
                     float: none;
                     display: block;
                 }
@@ -134,12 +114,6 @@ code {
             li, blockquote {
                 p, pre {
                     width: 100%;
-                }
-            }
-
-            ul, ol {
-                li {
-                    margin-left: 30px;
                 }
             }
 

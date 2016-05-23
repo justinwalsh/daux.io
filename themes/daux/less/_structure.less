@@ -1,138 +1,11 @@
-/* ===========================================================================================
-Homepage
-============================================================================================== */
 
-.homepage-hero {
-    padding-top: 60px !important;
-    background-color: @light;
-    .kill-box-shadow;
-    border-radius: 0;
-    border: none;
-    color: @dark;
-    overflow: hidden;
-    padding-bottom: 0;
-    margin-bottom: 0;
-
-    .text-center {
-        .roboto-slab.bold;
-        margin: 10px 0;
-    }
-
-    h2 {
-        margin: 20px 0;
-    }
+*, *::after, *::before {
+    box-sizing: border-box;
 }
 
-.hero-buttons.container-fluid {
-    padding: 20px 0;
-    background-color: @sidebar-hover;
-
-    .btn-hero.btn {
-        .roboto-slab.bold;
-        padding: 20px 30px;
-        .kill-background-image;
-        .kill-box-shadow;
-        border-radius: 0;
-        text-shadow: none;
-        border: none;
-        .opacity(0.80);
-        margin: 0 10px;
-        text-transform: uppercase;
-        border: 5px solid @dark;
-
-        @media (max-width: 768px) {
-            display: block;
-            margin-bottom: 10px;
-        }
-
-        &:hover {
-            .opacity(1.0);
-        }
-
-        &.btn-secondary {
-            background-color: @sidebar-hover;
-            color: @dark;
-        }
-
-        &.btn-primary {
-            background-color: @dark;
-            color: @sidebar-background;
-        }
-    }
-}
-
-.homepage-content.container-fluid {
-    // color: white;
-    // background-color: @text;
-    background-color: white;
-    padding: 40px 0;
-
-    .lead {
-        .roboto-slab.regular;
-    }
-
-    ul, ol {
-        padding: 20px 0;
-        margin: 0 0 10px 0;
-
-        li {
-            list-style: none;
-            padding-bottom: 5px;
-
-            &::before {
-                content: '';
-                width: 0;
-                height: 0;
-                border: 3px solid transparent;
-                border-left: 3px solid @light;
-                float: left;
-                display: block;
-                margin: 6px;
-            }
-        }
-    }
-
-    @media (max-width: 768px) {
-        padding: 40px 20px;
-    }
-}
-
-.homepage-footer.container-fluid {
-    background-color: @dark;
-    .kill-box-shadow;
-    border-radius: 0;
-    color: light;
-    border: none;
-
-    @media (max-width: 768px) {
-        padding: 0 20px;
-    }
-
-    .footer-nav {
-        &:extend(.list-unstyled all);
-        margin: 40px 0;
-
-        li {
-            a {
-                .roboto-slab.bold;
-                font-size: 16px;
-                line-height: 32px;
-
-                &:hover {
-                    color: @light;
-                    text-decoration: underline;
-                }
-            }
-        }
-    }
-
-    .twitter {
-        margin-top: 20px;
-
-        &:first-child {
-            margin-top: 40px;
-        }
-    }
+body {
+    margin: 0;
+    padding: 0;
 }
 
 /* ===========================================================================================
@@ -145,39 +18,59 @@ html, body {
     color: @text;
 }
 
-.columns {
-    .left-column {
+.Columns {
+    &__left {
         background-color: @sidebar-background;
     }
 
-    .right-column {
-        .content-page {
+    &__right {
+        &__content {
             padding: 10px;
             background-color: #fff;
         }
     }
 }
 
-.container-fluid .navbar-static-top {
-    margin-left: -15px;
-    margin-right: -15px;
-}
+.Collapsible {
+    &__container {
+        padding: 10px 15px;
+        display: block;
+        background-color: @lines;
+        border-bottom: 1px solid @lines;
+    }
 
-//mobile friendly sub-nav
-.responsive-collapse {
-    padding: 10px 15px;
-    display: block;
-    background-color: @lines;
-    border-bottom: 1px solid @lines;
-}
+    //mobile friendly sub-nav
+    &__content {
+        display: none;
+    }
 
-.sub-nav-collapse {
-    display: none;
-}
+    &__trigger {
+        padding: 7px 10px;
+        .kill-background-image;
+        .kill-box-shadow;
+        background-color: @sidebar-hover;
+        border: none;
 
-.content-area,
-.article-tree {
-    padding: 0;
+        &--bar {
+            display: block;
+            width: 18px;
+            height: 2px;
+            margin-top: 2px;
+            margin-bottom: 3px;
+            background-color: @dark;
+            .kill-box-shadow;
+        }
+
+        &:hover {
+            .kill-box-shadow;
+            background-color: @dark;
+
+            .icon-bar {
+                background-color: @light;
+                .kill-box-shadow;
+            }
+        }
+    }
 }
 
 @media screen and (min-width: 768px) {
@@ -187,45 +80,53 @@ html, body {
         background-color: @light;
     }
 
-    .navbar-static-top {
+    .Navbar {
         position: fixed;
         z-index: @zindex-navbar-fixed;
         width: 100%;
     }
 
-    .responsive-collapse {
-        display: none;
-    }
+    .Collapsible {
+        &__container {
+            display: none;
+        }
 
-    .sub-nav-collapse {
-        display: block !important;
-    }
-
-    // 100% Height Columns
-    .container-fluid {
-
-        &.fluid-height {
-            height: 100%;
+        &__content {
+            display: block !important;
         }
     }
 
-    .content-area,
-    .article-tree {
-        overflow: auto;
-        height: 100%;
-    }
-
-    .columns {
+    .Columns {
         height: 100%;
         padding-top: @navbar-height;
 
-        .left-column {
+        &::after,
+        &::before {
+            content: " ";
+            display: table;
+        }
+
+        &::after {
+            clear: both;
+        }
+
+        &__left, &__right {
+            position: relative;
+            min-height: 1px;
+            float: left;
+            overflow: auto;
+            height: 100%;
+        }
+
+        &__left {
+            width: 25%;
             border-right: 1px solid @lines;
             overflow-x: hidden;
         }
 
-        .right-column {
-            .content-page {
+        &__right {
+            width: 75%;
+            &__content {
                 padding: 20px;
                 min-height: 100%;
             }
@@ -234,11 +135,15 @@ html, body {
 }
 
 @media print {
-    .content-area {
+    .Columns__right {
         width: 100% !important;
     }
 
     h1 a[href]::after {
         font-size: 50%;
+    }
+
+    .hidden-print {
+        display: none;
     }
 }
