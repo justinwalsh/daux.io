@@ -30,6 +30,7 @@ This is a list of sites using Daux.io:
 * [Sugoi](http://doc.sugoi.ventrux.com/)
 * [wallabag](http://doc.wallabag.org/index)
 * [iGeo-Topo](http://igeo-topo.fr/doc)
+* [Cumulus TV: Android TV app that turns any stream/page into a Live Channel](http://cumulustv.herokuapp.com)
 
 Do you use Daux.io? Send me a pull request or open an [issue](https://github.com/justinwalsh/daux.io/issues) and I will add you to the list.
 
