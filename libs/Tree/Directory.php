@@ -1,8 +1,10 @@
 <?php namespace Todaymade\Daux\Tree;
 
+use ArrayIterator;
+use RuntimeException;
 use Todaymade\Daux\Daux;
 
-class Directory extends Entry
+class Directory extends Entry implements \ArrayAccess, \IteratorAggregate
 {
     /** @var Entry[] */
     protected $children = [];
@@ -230,5 +232,55 @@ class Directory extends Entry
         }
 
         return $dump;
+    }
+
+    /**
+     * Whether a offset exists
+     * @param mixed $offset An offset to check for.
+     * @return boolean true on success or false on failure.
+     */
+    public function offsetExists($offset)
+    {
+        return array_key_exists($offset, $this->children);
+    }
+
+    /**
+     * Offset to retrieve
+     * @param mixed $offset The offset to retrieve.
+     * @return Entry Can return all value types.
+     */
+    public function offsetGet($offset)
+    {
+        return $this->children[$offset];
+    }
+
+    /**
+     * Offset to set
+     * @param mixed $offset The offset to assign the value to.
+     * @param Entry $value The value to set.
+     * @return void
+     */
+    public function offsetSet($offset, $value)
+    {
+        if (!$value instanceof Entry) {
+            throw new RuntimeException("The value is not of type Entry");
+        }
+
+        $this->addChild($value);
+    }
+
+    /**
+     * Offset to unset
+     * @param string $offset the offset to unset
+     * @return void
+     */
+    public function offsetUnset($offset)
+    {
+        unset($this->children[$offset]);
+    }
+
+    public function getIterator()
+    {
+        return new ArrayIterator($this->children);
     }
 }
