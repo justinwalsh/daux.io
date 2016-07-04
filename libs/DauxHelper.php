@@ -1,5 +1,6 @@
 <?php namespace Todaymade\Daux;
 
+use Todaymade\Daux\Tree\Builder;
 use Todaymade\Daux\Tree\Directory;
 
 class DauxHelper
@@ -140,6 +141,16 @@ class DauxHelper
         return implode(DIRECTORY_SEPARATOR, $absolutes);
     }
 
+    public static function getFilenames(Config $config, $part)
+    {
+        $extensions = implode("|", array_map("preg_quote", $config["valid_content_extensions"])) . "|html";
+
+        $raw = preg_replace("/(.*)?\\.(" . $extensions . ")$/", "$1", $part);
+        $raw = Builder::removeSortingInformations($raw);
+
+        return ["$raw.html", $raw];
+    }
+
     /**
      * Locate a file in the tree. Returns the file if found or false
      *
@@ -157,6 +168,16 @@ class DauxHelper
                 return false;
             }
 
+            // Some relative paths may start with ./
+            if ($node == '.') {
+                continue;
+            }
+
+            if ($node == '..') {
+                $tree = $tree->getParent();
+                continue;
+            }
+
             $node = urldecode($node);
 
             // if the node exists in the current request tree,
@@ -165,6 +186,16 @@ class DauxHelper
             if (isset($tree->getEntries()[$node])) {
                 $tree = $tree->getEntries()[$node];
                 continue;
+            }
+
+            // if the node doesn't exist, we can try
+            // two variants of the requested file:
+            // with and w/o the .html extension
+            foreach (static::getFilenames($tree->getConfig(), $node) as $filename) {
+                if (isset($tree->getEntries()[$filename])) {
+                    $tree = $tree->getEntries()[$filename];
+                    continue 2;
+                }
             }
 
             // At this stage, we're in a directory, but no
@@ -194,7 +225,7 @@ class DauxHelper
      *
      * Taken from Stringy
      *
-     * @param  string  $title
+     * @param  string $title
      * @return string
      */
     public static function slug($title)
@@ -356,5 +387,38 @@ class DauxHelper
                 "\xE2\x80\x88", "\xE2\x80\x89", "\xE2\x80\x8A",
                 "\xE2\x80\xAF", "\xE2\x81\x9F", "\xE3\x80\x80"),
         );
+    }
+
+    public static function getRelativePath($from, $to)
+    {
+        // some compatibility fixes for Windows paths
+        $from = is_dir($from) ? rtrim($from, '\/') . '/' : $from;
+        $to = is_dir($to) ? rtrim($to, '\/') . '/' : $to;
+        $from = str_replace('\\', '/', $from);
+        $to = str_replace('\\', '/', $to);
+
+        $from = explode('/', $from);
+        $to = explode('/', $to);
+        $relPath = $to;
+
+        foreach ($from as $depth => $dir) {
+            // find first non-matching dir
+            if ($dir === $to[$depth]) {
+                // ignore this directory
+                array_shift($relPath);
+            } else {
+                // get number of remaining dirs to $from
+                $remaining = count($from) - $depth;
+                if ($remaining > 1) {
+                    // add traversals up to first matching dir
+                    $padLength = (count($relPath) + $remaining - 1) * -1;
+                    $relPath = array_pad($relPath, $padLength, '..');
+                    break;
+                } else {
+                    //$relPath[0] = './' . $relPath[0];
+                }
+            }
+        }
+        return implode('/', $relPath);
     }
 }

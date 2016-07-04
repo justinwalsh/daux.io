@@ -18,4 +18,4 @@ Here is a quick example :
       <!-- here goes the rest of the page -->
     </body>
 
-[See the full list of supported languages in Daux.io](!Examples/Code_Highlighting)
+[See the full list of supported languages in Daux.io](../02_Examples/Code_Highlighting.md)

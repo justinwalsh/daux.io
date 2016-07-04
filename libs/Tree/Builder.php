@@ -17,15 +17,17 @@ class Builder
 
     protected static function isIgnored(\SplFileInfo $file, $ignore)
     {
-        if (in_array($file->getFilename(), static::$IGNORED)) {
+        $filename = $file->getFilename();
+
+        if (in_array($filename, static::$IGNORED)) {
             return true;
         }
 
-        if ($file->isDir() && in_array($file->getFilename(), $ignore['folders'])) {
+        if (array_key_exists('folders', $ignore) && $file->isDir() && in_array($filename, $ignore['folders'])) {
             return true;
         }
 
-        if (!$file->isDir() && in_array($file->getFilename(), $ignore['files'])) {
+        if (array_key_exists('files', $ignore) && !$file->isDir() && in_array($filename, $ignore['files'])) {
             return true;
         }
 

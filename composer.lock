@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "bd4fe65872a143039090e3c62b4c5a40",
-    "content-hash": "de3684c6c65b1602b52e6534aa5e6eda",
+    "hash": "31e312c5eb200fe262cc2557d2b7a5c6",
+    "content-hash": "cae1a4262309f9c2953036c6a756f04b",
     "packages": [
         {
             "name": "guzzlehttp/guzzle",
@@ -666,6 +666,52 @@
                 "instantiate"
             ],
             "time": "2015-06-14 21:17:01"
+        },
+        {
+            "name": "mikey179/vfsStream",
+            "version": "v1.6.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/mikey179/vfsStream.git",
+                "reference": "c19925cd0390d3c436a0203ae859afa460d0474b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/mikey179/vfsStream/zipball/c19925cd0390d3c436a0203ae859afa460d0474b",
+                "reference": "c19925cd0390d3c436a0203ae859afa460d0474b",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~4.5"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.6.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "org\\bovigo\\vfs\\": "src/main/php"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Frank Kleine",
+                    "homepage": "http://frankkleine.de/",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Virtual file system to mock the real file system in unit tests.",
+            "homepage": "http://vfs.bovigo.org/",
+            "time": "2016-04-09 09:42:01"
         },
         {
             "name": "phpdocumentor/reflection-docblock",

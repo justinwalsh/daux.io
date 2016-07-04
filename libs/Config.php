@@ -1,6 +1,7 @@
 <?php namespace Todaymade\Daux;
 
 use ArrayObject;
+use Todaymade\Daux\Tree\Content;
 
 class Config extends ArrayObject
 {
@@ -45,5 +46,15 @@ class Config extends ArrayObject
     public function conservativeMerge($newValues)
     {
         $this->merge($newValues, false);
+    }
+
+    public function getCurrentPage()
+    {
+        return $this['current_page'];
+    }
+
+    public function setCurrentPage(Content $entry)
+    {
+        $this['current_page'] = $entry;
     }
 }

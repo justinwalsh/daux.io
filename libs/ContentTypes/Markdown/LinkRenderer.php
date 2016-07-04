@@ -28,13 +28,30 @@ class LinkRenderer extends \League\CommonMark\Inline\Renderer\LinkRenderer
      */
     protected function resolveInternalFile($url)
     {
-        $file = DauxHelper::getFile($this->daux['tree'], $url);
-        if ($file) {
+        $triedAbsolute = false;
+
+        // Legacy absolute paths could start with
+        // "!" In this case we will try to find
+        // the file starting at the root
+        if ($url[0] == '!' || $url[0] == '/') {
+            $url = ltrim($url, "!/");
+
+            if ($file = DauxHelper::getFile($this->daux['tree'], $url)) {
+                return $file;
+            }
+
+            $triedAbsolute = true;
+        }
+
+        // Seems it's not an absolute path or not found,
+        // so we'll continue with the current folder
+        if ($file = DauxHelper::getFile($this->daux->getCurrentPage()->getParent(), $url)) {
             return $file;
         }
 
-        $file = DauxHelper::getFile($this->daux['tree'], $url . '.html');
-        if ($file) {
+        // If we didn't already try it, we'll
+        // do a pass starting at the root
+        if (!$triedAbsolute && $file = DauxHelper::getFile($this->daux['tree'], $url)) {
             return $file;
         }
 
@@ -42,10 +59,10 @@ class LinkRenderer extends \League\CommonMark\Inline\Renderer\LinkRenderer
     }
 
     /**
-     * @param Link $inline
+     * @param AbstractInline|Link $inline
      * @param ElementRendererInterface $htmlRenderer
-     *
      * @return HtmlElement
+     * @throws Exception
      */
     public function render(AbstractInline $inline, ElementRendererInterface $htmlRenderer)
     {
@@ -63,11 +80,18 @@ class LinkRenderer extends \League\CommonMark\Inline\Renderer\LinkRenderer
         $element = parent::render($inline, $htmlRenderer);
 
         $url = $inline->getUrl();
-        if (!empty($url) && $url[0] == '!') {
-            $file = $this->resolveInternalFile(ltrim($url, "!"));
 
-            $element->setAttribute('href', $this->daux['base_url'] . $file->getUrl());
+        // Absolute urls, empty urls and anchors
+        // should not go through the url resolver
+        if (empty($url) || $url[0] == "#" || preg_match("|^(?:[a-z]+:)?//|", $url)) {
+            return $element;
         }
+
+        $file = $this->resolveInternalFile($url);
+
+        $url = DauxHelper::getRelativePath($this->daux->getCurrentPage()->getUrl(), $file->getUrl());
+
+        $element->setAttribute('href', $url);
 
         return $element;
     }
