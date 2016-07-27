@@ -28,7 +28,11 @@ class DirectoryTest extends \PHPUnit_Framework_TestCase
     public function testSort($list, $expected)
     {
         shuffle($list);
-        $directory = new Directory(new Root(new Config(), ''), 'dir');
+
+        $config = new Config;
+        $config->setDocumentationDirectory('');
+
+        $directory = new Directory(new Root($config), 'dir');
 
         foreach ($list as $value) {
             $entry = new Content($directory, $value);

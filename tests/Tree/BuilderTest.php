@@ -39,7 +39,9 @@ class BuilderTest extends \PHPUnit_Framework_TestCase
 
     public function testGetOrCreateDirNew()
     {
-        $root = new Root(new Config(), '');
+        $config = new Config;
+        $config->setDocumentationDirectory('');
+        $root = new Root($config);
 
 
         $dir = Builder::getOrCreateDir($root, 'directory');
@@ -51,7 +53,9 @@ class BuilderTest extends \PHPUnit_Framework_TestCase
 
     public function testGetOrCreateDirExisting()
     {
-        $root = new Root(new Config(), '');
+        $config = new Config;
+        $config->setDocumentationDirectory('');
+        $root = new Root($config);
         $directory = new Directory($root, 'directory');
         $directory->setTitle('directory');
 
@@ -66,11 +70,12 @@ class BuilderTest extends \PHPUnit_Framework_TestCase
     public function getStaticRoot()
     {
         $config = new Config();
+        $config->setDocumentationDirectory('');
         $config['mode'] = Daux::STATIC_MODE;
         $config['index_key'] = 'index.html';
         $config['valid_content_extensions'] = ['md'];
 
-        return new Root($config, '');
+        return new Root($config);
     }
 
     public function testGetOrCreatePage()

@@ -15,9 +15,14 @@ class Template
      */
     public function __construct($base, $theme)
     {
-        // Use templates from the phar archive if the templates dir doesn't exist.
+        // Use internal templates or the ones in the phar
+        // archive if no templates dir exists in the working directory
         if (!is_dir($base)) {
-            $base = 'phar://daux.phar/templates';
+            if (is_dir(__DIR__ . '/../../../templates')) {
+                $base = __DIR__ . '/../../../templates';
+            } else {
+                $base = 'phar://daux.phar/templates';
+            }
         }
 
         // Create new Plates instance

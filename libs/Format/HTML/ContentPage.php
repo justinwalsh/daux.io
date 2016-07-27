@@ -17,7 +17,7 @@ class ContentPage extends \Todaymade\Daux\Format\Base\ContentPage
             return false;
         }
 
-        if ($this->params['multilanguage']) {
+        if ($this->params->isMultilanguage()) {
             return $this->file->getParent()->getParent() instanceof Root;
         }
 
@@ -29,7 +29,7 @@ class ContentPage extends \Todaymade\Daux\Format\Base\ContentPage
         $this->homepage = $this->isHomepage();
 
         $this->language = '';
-        if ($this->params['multilanguage'] && count($this->file->getParents())) {
+        if ($this->params->isMultilanguage() && count($this->file->getParents())) {
             $language_dir = $this->file->getParents()[0];
             $this->language = $language_dir->getName();
         }
@@ -63,7 +63,7 @@ class ContentPage extends \Todaymade\Daux\Format\Base\ContentPage
 
         $entry_page = [];
         if ($this->homepage) {
-            if ($params['multilanguage']) {
+            if ($params->isMultilanguage()) {
                 foreach ($params['languages'] as $key => $name) {
                     $entry_page[$name] = $params['base_page'] . $params['entry_page'][$key]->getUrl();
                 }
@@ -89,7 +89,7 @@ class ContentPage extends \Todaymade\Daux\Format\Base\ContentPage
         ];
 
         if ($page['breadcrumbs']) {
-            $page['breadcrumb_trail'] = $this->getBreadcrumbTrail($this->file->getParents(), $params['multilanguage']);
+            $page['breadcrumb_trail'] = $this->getBreadcrumbTrail($this->file->getParents(), $params->isMultilanguage());
             $page['breadcrumb_separator'] = $params['html']['breadcrumb_separator'];
         }
 
