@@ -355,6 +355,12 @@ You will only need the mime map entry if you are using a custom theme and receiv
 
 If you have a global mime map entry for `.less` files set for the server, you will receive an internal server (500) error for having duplicate mime map entries.
 
+## Compatibility
+
+Daux.io is compatible with php 5.5 and up.
+
+The reason is because some dependencies we have (mainly Symfony and Guzzle) do not support php 5.4 anymore
+
 ## Support
 
 If you need help using Daux.io, or have found a bug, please create an issue on the <a href="https://github.com/justinwalsh/daux.io/issues" target="_blank">GitHub repo</a>.
