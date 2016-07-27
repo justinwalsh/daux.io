@@ -1,5 +1,7 @@
 <?php namespace Todaymade\Daux\Tree;
 
+use Webuni\FrontMatter\FrontMatter;
+
 class Content extends Entry
 {
     /** @var string */
@@ -99,39 +101,12 @@ class Content extends Entry
         // is called in "getContent"
         $this->attributes = [];
 
-        $content = $this->getContent();
-        $sections = preg_split('/\s+-{3,}\s+/', $content, 2);
+        $frontMatter = new FrontMatter();
 
-        // Only do it if we have two sections
-        if (count($sections) != 2) {
-            return;
-        }
+        $document = $frontMatter->parse($this->getContent());
 
-        // Parse the different attributes
-        $lines = preg_split('/\n/', $sections[0]);
-        foreach ($lines as $line) {
-            $trimmed = trim($line);
-            if ($trimmed == '') {
-                continue;
-            } // skip empty lines
-            if ($trimmed[0] == '#') {
-                continue;
-            } // can be taken as comments
-
-            $re = '/^([-\\w]*)\\s*?:(.*)/';
-            if (!preg_match($re, $trimmed, $parts)) {
-                break;
-            } //Break as soon as we have a line that doesn't match
-
-            $key = strtolower(trim($parts[1]));
-            $value = trim($parts[2]);
-            $this->attributes[$key] = $value;
-        }
-
-        // Only remove the content if we have at least one attribute
-        if (count($this->attributes) > 0) {
-            $this->setContent($sections[1]);
-        }
+        $this->attributes = array_replace_recursive($this->attributes, $document->getData());
+        $this->setContent($document->getContent());
     }
 
     public function setAttributes(array $attributes)
