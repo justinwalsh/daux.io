@@ -4,7 +4,8 @@ use Todaymade\Daux\Config;
 
 class ContentTest extends \PHPUnit_Framework_TestCase
 {
-    protected function createContent($content) {
+    protected function createContent($content)
+    {
         $dir = new Directory(new Root(new Config, ''), '');
         $obj = new Content($dir, '');
         $obj->setContent($content);
@@ -14,15 +15,15 @@ class ContentTest extends \PHPUnit_Framework_TestCase
 
     public function providerTestAttributes()
     {
-        return array(
-            ['This is content', [], "This is content"],
-            ["title: This is a simple title\n---\nThis is content\n", ['title' => 'This is a simple title'], "This is content"],
-            ["title: This is a simple title\ntitle :This is another title\n---\nThis is content\n", ['title' => 'This is another title'], "This is content"],
-            ["title: This is a simple title\nthis is not metadata\n---\nThis is content\n", ['title' => 'This is a simple title'], "This is content"],
-            ["title: This is only metatada, no content", [], "title: This is only metatada, no content"],
-            ["title: This is almost only metadata\n---\n", ["title" => "This is almost only metadata"], ""],
+        return [
+            ['This is content', [], 'This is content'],
+            ["title: This is a simple title\n---\nThis is content\n", ['title' => 'This is a simple title'], 'This is content'],
+            ["title: This is a simple title\ntitle :This is another title\n---\nThis is content\n", ['title' => 'This is another title'], 'This is content'],
+            ["title: This is a simple title\nthis is not metadata\n---\nThis is content\n", ['title' => 'This is a simple title'], 'This is content'],
+            ['title: This is only metatada, no content', [], 'title: This is only metatada, no content'],
+            ["title: This is almost only metadata\n---\n", ['title' => 'This is almost only metadata'], ''],
             ["# Some content\n\nhi\n```yml\nvalue: true\n```\n----\n Follow up", [], "# Some content\n\nhi\n```yml\nvalue: true\n```\n----\n Follow up"],
-        );
+        ];
     }
 
     /**

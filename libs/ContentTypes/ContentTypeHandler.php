@@ -5,7 +5,7 @@ use Todaymade\Daux\Tree\Content;
 class ContentTypeHandler
 {
     /**
-     * @var ContentType[] $types
+     * @var ContentType[]
      */
     protected $types;
 

@@ -2,5 +2,4 @@
 
 class ComputedRawPage extends \Todaymade\Daux\Format\Base\ComputedRawPage
 {
-
 }

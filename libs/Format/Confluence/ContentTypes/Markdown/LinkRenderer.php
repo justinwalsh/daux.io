@@ -20,7 +20,7 @@ class LinkRenderer extends \Todaymade\Daux\ContentTypes\Markdown\LinkRenderer
         // have the same interface
         if (!$inline instanceof Link) {
             throw new \RuntimeException(
-                "Wrong type passed to " . __CLASS__ . "::" . __METHOD__ .
+                'Wrong type passed to ' . __CLASS__ . '::' . __METHOD__ .
                 " the expected type was 'League\\CommonMark\\Inline\\Element\\Link' but '" .
                 get_class($inline) . "' was provided"
             );
@@ -34,16 +34,16 @@ class LinkRenderer extends \Todaymade\Daux\ContentTypes\Markdown\LinkRenderer
         }
 
         //Internal links
-        $file = $this->resolveInternalFile(ltrim($url, "!"));
+        $file = $this->resolveInternalFile(ltrim($url, '!'));
 
         $link_props = [
-            'ri:content-title' => trim($this->daux['confluence']['prefix']) . " " . $file->getTitle(),
-            'ri:space-key' => $this->daux['confluence']['space_id']
+            'ri:content-title' => trim($this->daux['confluence']['prefix']) . ' ' . $file->getTitle(),
+            'ri:space-key' => $this->daux['confluence']['space_id'],
         ];
 
         $page = strval(new HtmlElement('ri:page', $link_props, '', true));
         $children = $htmlRenderer->renderInlines($inline->children());
-        if (strpos($children, "<") !== false) {
+        if (strpos($children, '<') !== false) {
             $children = '<ac:link-body>' . $children . '</ac:link-body>';
         } else {
             $children = '<ac:plain-text-link-body><![CDATA[' . $children . ']]></ac:plain-text-link-body>';

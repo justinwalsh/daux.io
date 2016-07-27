@@ -35,7 +35,7 @@ class Template
      * @param array $data
      * @return string
      */
-    public function render($name, array $data = array())
+    public function render($name, array $data = [])
     {
         $this->engine->addData([
             'base_url' => $data['params']['base_url'],
@@ -50,12 +50,13 @@ class Template
 
     protected function registerFunctions()
     {
-        $this->engine->registerFunction('get_navigation', function($tree, $path, $current_url, $base_page, $mode) {
+        $this->engine->registerFunction('get_navigation', function ($tree, $path, $current_url, $base_page, $mode) {
             $nav = $this->buildNavigation($tree, $path, $current_url, $base_page, $mode);
+
             return $this->renderNavigation($nav);
         });
 
-        $this->engine->registerFunction('get_breadcrumb_title', function($page, $base_page) {
+        $this->engine->registerFunction('get_breadcrumb_title', function ($page, $base_page) {
             $title = '';
             $breadcrumb_trail = $page['breadcrumb_trail'];
             $separator = $this->getSeparator($page['breadcrumb_separator']);
@@ -69,16 +70,16 @@ class Template
             } else {
                 $title .= '<a href="' . $base_page . $page['request'] . '">' . $page['title'] . '</a>';
             }
+
             return $title;
         });
     }
 
     private function renderNavigation($entries)
     {
-        $nav = "";
+        $nav = '';
         foreach ($entries as $entry) {
             if (array_key_exists('children', $entry)) {
-
                 $icon = '<i class="Nav__arrow">&nbsp;</i>';
 
                 if (array_key_exists('href', $entry)) {
@@ -128,7 +129,7 @@ class Template
                 ];
 
                 if ($mode === Daux::STATIC_MODE) {
-                    $link .= "/index.html";
+                    $link .= '/index.html';
                 }
 
                 if ($node->getIndexPage()) {
@@ -146,6 +147,7 @@ class Template
                 $nav[] = $folder;
             }
         }
+
         return $nav;
     }
 

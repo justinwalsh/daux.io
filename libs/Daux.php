@@ -131,7 +131,7 @@ class Daux
         // Set the default configuration
         $this->options->merge([
             'docs_directory' => 'docs',
-            'valid_content_extensions' => ['md', 'markdown']
+            'valid_content_extensions' => ['md', 'markdown'],
         ]);
 
         // Load the global configuration
@@ -228,7 +228,7 @@ class Daux
                 'local_base' => $this->local_base,
                 'docs_path' => $this->docs_path,
                 'themes_path' => $this->themes_path,
-                'templates' => 'templates'
+                'templates' => 'templates',
             ];
             $this->options->conservativeMerge($default);
 
@@ -301,12 +301,12 @@ class Daux
             return null;
         }
 
-        $class = "\\Todaymade\\Daux\\Extension\\" . $processor;
+        $class = '\\Todaymade\\Daux\\Extension\\' . $processor;
         if (!class_exists($class)) {
             throw new \RuntimeException("Class '$class' not found. We cannot use it as a Processor");
         }
 
-        if (!array_key_exists("Todaymade\\Daux\\Processor", class_parents($class))) {
+        if (!array_key_exists('Todaymade\\Daux\\Processor', class_parents($class))) {
             throw new \RuntimeException("Class '$class' invalid, should extend '\\Todaymade\\Daux\\Processor'");
         }
 

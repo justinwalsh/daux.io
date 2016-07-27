@@ -2,7 +2,6 @@
 
 /**
  * Class MimeType
- * @package Defr
  * @author Dennis Fridrich <fridrich.dennis@gmail.com>
  * @see http://www.php.net/mime_content_type
  */
@@ -11,7 +10,7 @@ class MimeType
     /**
      * @var array
      */
-    protected static $mimeTypes = array(
+    protected static $mimeTypes = [
         'txt' => 'text/plain',
         'htm' => 'text/html',
         'html' => 'text/html',
@@ -58,7 +57,7 @@ class MimeType
         // Open Office
         'odt' => 'application/vnd.oasis.opendocument.text',
         'ods' => 'application/vnd.oasis.opendocument.spreadsheet',
-    );
+    ];
     /**
      * @param $filename
      * @return string
@@ -73,6 +72,7 @@ class MimeType
             $finfo = finfo_open(FILEINFO_MIME);
             $mimetype = finfo_file($finfo, $filename);
             finfo_close($finfo);
+
             return $mimetype;
         } else {
             return 'application/octet-stream';

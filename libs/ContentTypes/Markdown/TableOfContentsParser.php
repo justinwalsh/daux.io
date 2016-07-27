@@ -6,7 +6,6 @@ use League\CommonMark\Cursor;
 
 class TableOfContentsParser extends AbstractBlockParser
 {
-
     /**
      * @param ContextInterface $context
      * @param Cursor $cursor

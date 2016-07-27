@@ -111,11 +111,17 @@ class Content extends Entry
         $lines = preg_split('/\n/', $sections[0]);
         foreach ($lines as $line) {
             $trimmed = trim($line);
-            if ($trimmed == '') continue; // skip empty lines
-            if ($trimmed[0] == '#') continue; // can be taken as comments
-            
-            $re = "/^([-\\w]*)\\s*?:(.*)/";
-            if (!preg_match($re, $trimmed, $parts)) break; //Break as soon as we have a line that doesn't match
+            if ($trimmed == '') {
+                continue;
+            } // skip empty lines
+            if ($trimmed[0] == '#') {
+                continue;
+            } // can be taken as comments
+
+            $re = '/^([-\\w]*)\\s*?:(.*)/';
+            if (!preg_match($re, $trimmed, $parts)) {
+                break;
+            } //Break as soon as we have a line that doesn't match
 
             $key = strtolower(trim($parts[1]));
             $value = trim($parts[2]);

@@ -70,7 +70,6 @@ class Processor implements DocumentProcessorInterface
             } else {
                 $document->prependChild($this->render($generated->getChildren()));
             }
-
         }
     }
 
@@ -184,7 +183,8 @@ class Processor implements DocumentProcessorInterface
         return $list;
     }
 
-    protected function setNull($object, $property) {
+    protected function setNull($object, $property)
+    {
         $prop = new \ReflectionProperty(get_class($object), $property);
         $prop->setAccessible(true);
         $prop->setValue($object, null);
@@ -212,6 +212,7 @@ class Processor implements DocumentProcessorInterface
         }
 
         $deepCopy = new DeepCopy();
+
         return $deepCopy->copy($firstClone)->children();
     }
 }

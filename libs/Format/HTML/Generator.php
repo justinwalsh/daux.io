@@ -37,7 +37,7 @@ class Generator implements \Todaymade\Daux\Format\Base\Generator, LiveGenerator
     public function getContentTypes()
     {
         return [
-            'markdown' => new ContentType($this->daux->getParams())
+            'markdown' => new ContentType($this->daux->getParams()),
         ];
     }
 
@@ -51,15 +51,15 @@ class Generator implements \Todaymade\Daux\Format\Base\Generator, LiveGenerator
         }
 
         $this->runAction(
-            "Copying Static assets ...",
+            'Copying Static assets ...',
             $output,
             $width,
-            function() use ($destination) {
+            function () use ($destination) {
                 GeneratorHelper::copyAssets($destination, $this->daux->local_base);
             }
         );
 
-        $output->writeLn("Generating ...");
+        $output->writeLn('Generating ...');
 
         if (!array_key_exists('search', $params['html']) || !$params['html']['search']) {
             $params['html']['search'] = $input->getOption('search');
@@ -77,7 +77,6 @@ class Generator implements \Todaymade\Daux\Format\Base\Generator, LiveGenerator
                 json_encode(['pages' => $this->indexed_pages])
             );
         }
-
     }
 
     /**
@@ -90,7 +89,7 @@ class Generator implements \Todaymade\Daux\Format\Base\Generator, LiveGenerator
     private function strip_html_tags($text)
     {
         $text = preg_replace(
-            array(
+            [
                 // Remove invisible content
                 '@<head[^>]*?>.*?</head>@siu',
                 '@<style[^>]*?>.*?</style>@siu',
@@ -109,14 +108,15 @@ class Generator implements \Todaymade\Daux\Format\Base\Generator, LiveGenerator
                 '@</?((form)|(button)|(fieldset)|(legend)|(input))@iu',
                 '@</?((label)|(select)|(optgroup)|(option)|(textarea))@iu',
                 '@</?((frameset)|(frame)|(iframe))@iu',
-            ),
-            array(
+            ],
+            [
                 ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ',
                 "\n\$0", "\n\$0", "\n\$0", "\n\$0", "\n\$0", "\n\$0",
                 "\n\$0", "\n\$0",
-            ),
+            ],
             $text
         );
+
         return trim(preg_replace('/\s+/', ' ', strip_tags($text)));
     }
 
@@ -127,8 +127,8 @@ class Generator implements \Todaymade\Daux\Format\Base\Generator, LiveGenerator
      * @param string $output_dir
      * @param \Todaymade\Daux\Config $params
      * @param OutputInterface $output
-     * @param integer $width
-     * @param boolean $index_pages
+     * @param int $width
+     * @param bool $index_pages
      * @param string $base_url
      * @throws \Exception
      */
@@ -150,23 +150,24 @@ class Generator implements \Todaymade\Daux\Format\Base\Generator, LiveGenerator
                 DauxHelper::rebaseConfiguration($params, $base_url);
             } else {
                 $this->runAction(
-                    "- " . $node->getUrl(),
+                    '- ' . $node->getUrl(),
                     $output,
                     $width,
-                    function() use ($node, $output_dir, $key, $params, $index_pages) {
+                    function () use ($node, $output_dir, $key, $params, $index_pages) {
                         if ($node instanceof Raw) {
                             copy($node->getPath(), $output_dir . DIRECTORY_SEPARATOR . $key);
+
                             return;
                         }
 
                         $generated = $this->generateOne($node, $params);
                         file_put_contents($output_dir . DIRECTORY_SEPARATOR . $key, $generated->getContent());
                         if ($index_pages) {
-                            $this->indexed_pages[] =[
+                            $this->indexed_pages[] = [
                                 'title' => $node->getTitle(),
                                 'text' => utf8_encode($this->strip_html_tags($generated->getPureContent())),
-                                'tags' =>  "",
-                                'url' => $node->getUrl()
+                                'tags' =>  '',
+                                'url' => $node->getUrl(),
                             ];
                         }
                     }
@@ -191,6 +192,7 @@ class Generator implements \Todaymade\Daux\Format\Base\Generator, LiveGenerator
         }
 
         $params['request'] = $node->getUrl();
+
         return ContentPage::fromFile($node, $params, $this->daux->getContentTypeHandler()->getType($node));
     }
 }

@@ -38,7 +38,7 @@ class ContentPage extends \Todaymade\Daux\Format\Base\ContentPage
 
     private function createImageTag($filename, $attributes)
     {
-        $img = "<ac:image";
+        $img = '<ac:image';
 
         foreach ($attributes as $name => $value) {
             $img .= ' ac:' . $name . '="' . htmlentities($value, ENT_QUOTES, 'UTF-8', false) . '"';

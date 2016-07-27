@@ -27,7 +27,7 @@ class Generator implements \Todaymade\Daux\Format\Base\Generator
     public function getContentTypes()
     {
         return [
-            'markdown' => new ContentType($this->daux->getParams())
+            'markdown' => new ContentType($this->daux->getParams()),
         ];
     }
 
@@ -46,8 +46,8 @@ class Generator implements \Todaymade\Daux\Format\Base\Generator
         $pdf->SetHeaderData('', 0, $params['title'], $params['tagline']);
 
         // set header and footer fonts
-        $pdf->setHeaderFont(array(PDF_FONT_NAME_MAIN, '', PDF_FONT_SIZE_MAIN));
-        $pdf->setFooterFont(array(PDF_FONT_NAME_DATA, '', PDF_FONT_SIZE_DATA));
+        $pdf->setHeaderFont([PDF_FONT_NAME_MAIN, '', PDF_FONT_SIZE_MAIN]);
+        $pdf->setFooterFont([PDF_FONT_NAME_DATA, '', PDF_FONT_SIZE_DATA]);
 
         // set default monospaced font
         $pdf->SetDefaultMonospacedFont(PDF_FONT_MONOSPACED);
@@ -84,7 +84,7 @@ class Generator implements \Todaymade\Daux\Format\Base\Generator
         $current = $this->daux->tree->getIndexPage();
         while ($current) {
             $this->runAction(
-                "Generating " . $current->getTitle(),
+                'Generating ' . $current->getTitle(),
                 $output,
                 $width,
                 function () use ($book, $current, $params) {

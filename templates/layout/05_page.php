@@ -1,8 +1,10 @@
 <?php $this->layout('theme::layout/00_layout') ?>
 
-<?php if ($params['html']['repo']) { ?>
+<?php if ($params['html']['repo']) {
+    ?>
     <a href="https://github.com/<?= $params['html']['repo']; ?>" target="_blank" id="github-ribbon" class="Github hidden-print"><img src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"></a>
-<?php } ?>
+<?php
+} ?>
 
 <div class="Navbar hidden-print">
     <?php $this->insert('theme::partials/navbar_content', ['params' => $params]); ?>
@@ -33,40 +35,54 @@
 
 
             <div class="Links">
-                <?php if (!empty($params['html']['links'])) { ?>
+                <?php if (!empty($params['html']['links'])) {
+                ?>
                     <hr/>
-                    <?php foreach ($params['html']['links'] as $name => $url) { ?>
+                    <?php foreach ($params['html']['links'] as $name => $url) {
+                    ?>
                         <a href="<?= $url ?>" target="_blank"><?= $name ?></a>
                         <br />
-                    <?php } ?>
-                <?php } ?>
+                    <?php
+                } ?>
+                <?php
+            } ?>
 
-                <?php if ($params['html']['toggle_code']) { ?>
+                <?php if ($params['html']['toggle_code']) {
+                ?>
                     <div class="CodeToggler">
                         <hr/>
-                        <?php if ($params['html']['float']) { ?>
+                        <?php if ($params['html']['float']) {
+                    ?>
                             <span class="CodeToggler__text">Code blocks</span>
                             <div class="ButtonGroup" role="group">
                                 <button class="Button Button--default Button--small CodeToggler__button CodeToggler__button--hide">No</button>
                                 <button class="Button Button--default Button--small CodeToggler__button CodeToggler__button--below">Below</button>
                                 <button class="Button Button--default Button--small CodeToggler__button CodeToggler__button--float">Inline</button>
                             </div>
-                        <?php } else { ?>
+                        <?php
+                } else {
+                    ?>
                             <a class="CodeToggler__button CodeToggler__button--main" href="#">Show Code Blocks Inline</a><br>
-                        <?php } ?>
+                        <?php
+                } ?>
                     </div>
-                <?php } ?>
+                <?php
+            } ?>
 
-                <?php if (!empty($params['html']['twitter'])) { ?>
+                <?php if (!empty($params['html']['twitter'])) {
+                ?>
                     <hr/>
                     <div class="Twitter">
-                        <?php foreach ($params['html']['twitter'] as $handle) { ?>
+                        <?php foreach ($params['html']['twitter'] as $handle) {
+                    ?>
                             <iframe allowtransparency="true" frameborder="0" scrolling="no" style="width:162px; height:20px;" src="https://platform.twitter.com/widgets/follow_button.html?screen_name=<?= $handle; ?>&amp;show_count=false"></iframe>
                             <br />
                             <br />
-                        <?php } ?>
+                        <?php
+                } ?>
                     </div>
-                <?php } ?>
+                <?php
+            } ?>
             </div>
         </div>
         <!-- For Mobile -->
@@ -76,9 +92,11 @@
     <div class="Columns__right <?= $params['html']['float'] ? 'Columns__right--float' : ''; ?>">
 
         <div class="Columns__right__content">
-            <?php if ($params['html']['search']) { ?>
+            <?php if ($params['html']['search']) {
+                ?>
                 <div id="tipue_search_content" style="display:none"></div>
-            <?php } ?>
+            <?php
+            } ?>
 
             <div class="doc_content">
                 <?= $this->section('content'); ?>

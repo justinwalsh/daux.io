@@ -5,7 +5,6 @@
  * Date: 06/11/15
  * Time: 20:27
  */
-
 namespace Todaymade\Daux\Format\Base;
 
 use DOMDocument;
@@ -15,7 +14,6 @@ use Todaymade\Daux\Tree\Root;
 
 class EmbedImages
 {
-
     protected $tree;
 
     public function __construct(Root $tree)
@@ -28,7 +26,6 @@ class EmbedImages
         return preg_replace_callback(
             "/<img\\s+[^>]*src=['\"]([^\"]*)['\"][^>]*>/",
             function ($matches) use ($file, $callback) {
-
                 if ($result = $this->findImage($matches[1], $matches[0], $file, $callback)) {
                     return $result;
                 }
@@ -60,7 +57,7 @@ class EmbedImages
     private function findImage($src, $tag, Content $file, $callback)
     {
         //for protocol relative or http requests : keep the original one
-        if (substr($src, 0, strlen("http")) === "http" || substr($src, 0, strlen("//")) === "//") {
+        if (substr($src, 0, strlen('http')) === 'http' || substr($src, 0, strlen('//')) === '//') {
             return $src;
         }
 

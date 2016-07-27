@@ -14,7 +14,7 @@ interface Generator
     /**
      * @param InputInterface $input
      * @param OutputInterface $output
-     * @param integer $width
+     * @param int $width
      * @return mixed
      */
     public function generateAll(InputInterface $input, OutputInterface $output, $width);

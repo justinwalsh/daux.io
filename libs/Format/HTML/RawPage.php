@@ -2,5 +2,4 @@
 
 class RawPage extends \Todaymade\Daux\Format\Base\RawPage
 {
-
 }

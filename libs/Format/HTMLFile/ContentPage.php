@@ -18,11 +18,10 @@ class ContentPage extends \Todaymade\Daux\Format\Base\ContentPage
                 $content,
                 $this->file,
                 function ($src, array $attributes, Raw $file) {
-
                     $content =  base64_encode(file_get_contents($file->getPath()));
                     $attr = '';
                     foreach ($attributes as $name => $value) {
-                        $attr .= ' ' .$name . '="' . htmlentities($value, ENT_QUOTES, 'UTF-8', false) . '"';
+                        $attr .= ' ' . $name . '="' . htmlentities($value, ENT_QUOTES, 'UTF-8', false) . '"';
                     }
 
                     return "<img $attr src=\"data:image/png;base64,$content\"/>";

@@ -78,6 +78,6 @@ class Entry
 
     public function toString()
     {
-        return $this->getLevel() . " - " . $this->getId();
+        return $this->getLevel() . ' - ' . $this->getId();
     }
 }
