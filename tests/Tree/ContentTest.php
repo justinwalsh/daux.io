@@ -20,11 +20,10 @@ class ContentTest extends \PHPUnit_Framework_TestCase
     {
         return [
             ['This is content', [], 'This is content'],
-            ["title: This is a simple title\n---\nThis is content\n", ['title' => 'This is a simple title'], 'This is content'],
-            ["title: This is a simple title\ntitle :This is another title\n---\nThis is content\n", ['title' => 'This is another title'], 'This is content'],
-            ["title: This is a simple title\nthis is not metadata\n---\nThis is content\n", ['title' => 'This is a simple title'], 'This is content'],
+            ["---\ntitle: This is a simple title\n---\nThis is content\n", ['title' => 'This is a simple title'], 'This is content'],
+            ["---\ntitle: This is a simple title\ntags:\n  - One\n  - Second Tag\n---\nThis is content\n", ['title' => 'This is a simple title', 'tags' => ['One', 'Second Tag']], 'This is content'],
             ['title: This is only metatada, no content', [], 'title: This is only metatada, no content'],
-            ["title: This is almost only metadata\n---\n", ['title' => 'This is almost only metadata'], ''],
+            ["---\ntitle: This is almost only metadata\n---\n", ['title' => 'This is almost only metadata'], ''],
             ["# Some content\n\nhi\n```yml\nvalue: true\n```\n----\n Follow up", [], "# Some content\n\nhi\n```yml\nvalue: true\n```\n----\n Follow up"],
         ];
     }
@@ -42,7 +41,7 @@ class ContentTest extends \PHPUnit_Framework_TestCase
 
     public function testNoAttributes()
     {
-        $content = "This is a content with a separator\n----\n this wasn't an attribute";
+        $content = "This is a content with a separator\n---\n this wasn't an attribute";
 
         $obj = $this->createContent($content);
 
@@ -51,8 +50,8 @@ class ContentTest extends \PHPUnit_Framework_TestCase
 
     public function testContentPreserved()
     {
-        $content = "this was an attribute, but also a separator\n----\nand it works";
-        $with_attribute = "title: a title\n----\n$content";
+        $content = "this was an attribute, but also a separator\n---\nand it works";
+        $with_attribute = "---\ntitle: a title\n---\n$content";
 
         $obj = $this->createContent($with_attribute);
 
