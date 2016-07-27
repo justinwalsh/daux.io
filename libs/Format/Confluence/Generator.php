@@ -32,7 +32,7 @@ class Generator implements \Todaymade\Daux\Format\Base\Generator
     public function getContentTypes()
     {
         return [
-            new ContentTypes\Markdown\ContentType($this->daux->getParams())
+            new ContentTypes\Markdown\ContentType($this->daux->getParams()),
         ];
     }
 
@@ -44,13 +44,13 @@ class Generator implements \Todaymade\Daux\Format\Base\Generator
         $params = $this->daux->getParams();
 
         $confluence = $params['confluence'];
-        $this->prefix = trim($confluence['prefix']) . " ";
+        $this->prefix = trim($confluence['prefix']) . ' ';
 
         $tree = $this->runAction(
-            "Generating Tree ...",
+            'Generating Tree ...',
             $output,
             $width,
-            function() use ($params) {
+            function () use ($params) {
                 $tree = $this->generateRecursive($this->daux->tree, $params);
                 $tree['title'] = $this->prefix . $params['title'];
 
@@ -58,7 +58,7 @@ class Generator implements \Todaymade\Daux\Format\Base\Generator
             }
         );
 
-        $output->writeln("Start Publishing...");
+        $output->writeln('Start Publishing...');
 
         $publisher = new Publisher($confluence);
         $publisher->output = $output;

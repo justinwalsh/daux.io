@@ -4,7 +4,9 @@
 <!--[if IE 8]>          <html class="no-js ie8 oldie" lang="en"> <![endif]-->
 <!--[if gt IE 8]><!-->  <html class="no-js" lang="en"> <!--<![endif]-->
 <head>
-    <title><?= $page['title']; ?> <?php if ($page['title'] != $params['title']) { echo "- " . $params['title']; } ?></title>
+    <title><?= $page['title']; ?> <?php if ($page['title'] != $params['title']) {
+    echo '- ' . $params['title'];
+} ?></title>
     <meta name="description" content="<?= $params['tagline']; ?>" />
     <meta name="author" content="<?= $params['author']; ?>">
     <meta charset="UTF-8">
@@ -15,18 +17,20 @@
 
     <!-- Font -->
     <?php foreach ($params['theme']['fonts'] as $font) {
-        echo "<link href='$font' rel='stylesheet' type='text/css'>";
-    } ?>
+    echo "<link href='$font' rel='stylesheet' type='text/css'>";
+} ?>
 
     <!-- CSS -->
     <?php foreach ($params['theme']['css'] as $css) {
-        echo "<link href='$css' rel='stylesheet' type='text/css'>";
-    } ?>
+    echo "<link href='$css' rel='stylesheet' type='text/css'>";
+} ?>
 
-    <?php if ($params['html']['search']) { ?>
+    <?php if ($params['html']['search']) {
+    ?>
         <!-- Tipue Search -->
         <link href="<?= $base_url; ?>tipuesearch/tipuesearch.css" rel="stylesheet">
-    <?php } ?>
+    <?php
+} ?>
 
     <!--[if lt IE 9]>
     <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -58,7 +62,8 @@
 
     <script src="<?= $base_url; ?>themes/daux/js/daux.js"></script>
 
-    <?php if ($params['html']['search']) { ?>
+    <?php if ($params['html']['search']) {
+        ?>
         <!-- Tipue Search -->
         <script type="text/javascript" src="<?php echo $base_url; ?>tipuesearch/tipuesearch_set.js"></script>
         <script type="text/javascript" src="<?php echo $base_url; ?>tipuesearch/tipuesearch.min.js"></script>
@@ -73,7 +78,8 @@
                 });
             });
         </script>
-    <?php } ?>
+    <?php
+    } ?>
 
 </body>
 </html>

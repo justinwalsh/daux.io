@@ -4,9 +4,6 @@ use League\CommonMark\DocParser;
 use League\CommonMark\Environment;
 use League\CommonMark\HtmlRenderer;
 use Todaymade\Daux\Config;
-use Todaymade\Daux\ContentTypes\Markdown\TOC\Parser;
-use Todaymade\Daux\ContentTypes\Markdown\TOC\Renderer;
-use Todaymade\Daux\ContentTypes\Markdown\TOC\TOCProcessor;
 use Webuni\CommonMark\TableExtension\TableExtension;
 
 class CommonMarkConverter extends \League\CommonMark\CommonMarkConverter
@@ -16,7 +13,7 @@ class CommonMarkConverter extends \League\CommonMark\CommonMarkConverter
      *
      * @param array $config
      */
-    public function __construct(array $config = array())
+    public function __construct(array $config = [])
     {
         $environment = Environment::createCommonMarkEnvironment();
         $environment->mergeConfig($config);

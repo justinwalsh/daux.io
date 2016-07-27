@@ -23,7 +23,7 @@ class Publisher
     protected $previous_title;
 
     /**
-     * @var integer terminal width
+     * @var int terminal width
      */
     public $width;
 
@@ -48,13 +48,12 @@ class Publisher
         try {
             return $this->runAction($title, $this->output, $this->width, $closure);
         } catch (BadResponseException $e) {
-            $this->output->writeLn("    <error>" . $e->getMessage() . "</error>");
+            $this->output->writeLn('    <error>' . $e->getMessage() . '</error>');
         }
     }
 
     public function publish(array $tree)
     {
-
         echo "Finding Root Page...\n";
         if (array_key_exists('ancestor_id', $this->confluence)) {
             $pages = $this->client->getList($this->confluence['ancestor_id']);
@@ -69,14 +68,14 @@ class Publisher
             $published = $this->client->getPage($this->confluence['root_id']);
             $this->confluence['ancestor_id'] = $published['ancestor_id'];
         } else {
-            throw new \RuntimeException("You must at least specify a `root_id` or `ancestor_id` in your confluence configuration.");
+            throw new \RuntimeException('You must at least specify a `root_id` or `ancestor_id` in your confluence configuration.');
         }
 
 
 
         $this->run(
-            "Getting already published pages...",
-            function() use (&$published) {
+            'Getting already published pages...',
+            function () use (&$published) {
                 if ($published != null) {
                     $published['children'] = $this->client->getList($published['id'], true);
                 }
@@ -85,19 +84,19 @@ class Publisher
 
         $published = $this->run(
             "Create placeholder pages...\n",
-            function() use ($tree, $published) {
+            function () use ($tree, $published) {
                 return $this->createRecursive($this->confluence['ancestor_id'], $tree, $published);
             }
         );
 
-        $this->output->writeLn("Publishing updates...");
+        $this->output->writeLn('Publishing updates...');
         $published = $this->updateRecursive($this->confluence['ancestor_id'], $tree, $published);
 
 
         if ($this->shouldDelete()) {
-            $this->output->writeLn("Deleting obsolete pages...");
+            $this->output->writeLn('Deleting obsolete pages...');
         } else {
-            $this->output->writeLn("Listing obsolete pages...");
+            $this->output->writeLn('Listing obsolete pages...');
             echo "> The following pages will not be deleted, but just listed for information.\n";
             echo "> If you want to delete these pages, you need to set the --delete flag on the command.\n";
         }
@@ -106,29 +105,29 @@ class Publisher
 
     protected function niceTitle($title)
     {
-        if ($title == "index.html") {
-            return "Homepage";
+        if ($title == 'index.html') {
+            return 'Homepage';
         }
 
-        return rtrim(strtr($title, ['index.html' => '', '.html' => '']), "/");
+        return rtrim(strtr($title, ['index.html' => '', '.html' => '']), '/');
     }
 
     protected function createPage($parent_id, $entry, $published)
     {
-        echo "- " . $this->niceTitle($entry['file']->getUrl()) . "\n";
+        echo '- ' . $this->niceTitle($entry['file']->getUrl()) . "\n";
         $published['version'] = 1;
         $published['title'] = $entry['title'];
-        $published['id'] = $this->client->createPage($parent_id, $entry['title'], "The content will come very soon !");
+        $published['id'] = $this->client->createPage($parent_id, $entry['title'], 'The content will come very soon !');
 
         return $published;
     }
 
     protected function createPlaceholderPage($parent_id, $entry, $published)
     {
-        echo "- " . $entry['title'] . "\n";
+        echo '- ' . $entry['title'] . "\n";
         $published['version'] = 1;
         $published['title'] = $entry['title'];
-        $published['id'] = $this->client->createPage($parent_id, $entry['title'], "");
+        $published['id'] = $this->client->createPage($parent_id, $entry['title'], '');
 
         return $published;
     }
@@ -160,7 +159,7 @@ class Publisher
 
     protected function createRecursive($parent_id, $entry, $published)
     {
-        $callback = function($parent_id, $entry, $published) {
+        $callback = function ($parent_id, $entry, $published) {
             // nothing to do if the ID already exists
             if (array_key_exists('id', $published)) {
                 return $published;
@@ -181,7 +180,7 @@ class Publisher
 
     protected function updateRecursive($parent_id, $entry, $published)
     {
-        $callback = function($parent_id, $entry, $published) {
+        $callback = function ($parent_id, $entry, $published) {
             if (array_key_exists('id', $published) && array_key_exists('page', $entry)) {
                 $this->updatePage($parent_id, $entry, $published);
             }
@@ -200,23 +199,21 @@ class Publisher
 
     protected function deleteRecursive($published, $prefix = '')
     {
-        foreach($published['children'] as $child) {
+        foreach ($published['children'] as $child) {
             if (array_key_exists('children', $child) && count($child['children'])) {
                 $this->deleteRecursive($child, $child['title'] . '/');
             }
 
             if (!array_key_exists('needed', $child)) {
-
                 if ($this->shouldDelete()) {
                     $this->run(
-                        "- " . $prefix . $child['title'],
-                        function() use ($child) {
+                        '- ' . $prefix . $child['title'],
+                        function () use ($child) {
                             $this->client->deletePage($child['id']);
                         }
                     );
-
                 } else {
-                    echo "- " . $prefix . $child['title'] . "\n";
+                    echo '- ' . $prefix . $child['title'] . "\n";
                 }
             }
         }
@@ -252,7 +249,7 @@ class Publisher
         }
 
         //DEBUG
-        if (getenv("DEBUG") && strtolower(getenv("DEBUG")) != "false") {
+        if (getenv('DEBUG') && strtolower(getenv('DEBUG')) != 'false') {
             $prefix = 'static/export/';
             if (!is_dir($prefix)) {
                 mkdir($prefix, 0777, true);
@@ -267,14 +264,14 @@ class Publisher
 
     protected function updatePage($parent_id, $entry, $published)
     {
-        if ($this->previous_title != "Updating") {
-            $this->previous_title = "Updating";
+        if ($this->previous_title != 'Updating') {
+            $this->previous_title = 'Updating';
             echo "Updating Pages...\n";
         }
 
         $this->run(
-            "- " . $this->niceTitle($entry['file']->getUrl()),
-            function() use ($entry, $published, $parent_id) {
+            '- ' . $this->niceTitle($entry['file']->getUrl()),
+            function () use ($entry, $published, $parent_id) {
                 if ($this->shouldUpdate($entry['page'], $published)) {
                     $this->client->updatePage(
                         $parent_id,
@@ -291,7 +288,7 @@ class Publisher
             foreach ($entry['page']->attachments as $attachment) {
                 $this->run(
                     "  With attachment: $attachment[filename]",
-                    function() use ($published, $attachment) {
+                    function () use ($published, $attachment) {
                         $this->client->uploadAttachment($published['id'], $attachment);
                     }
                 );

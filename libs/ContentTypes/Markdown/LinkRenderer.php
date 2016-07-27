@@ -34,7 +34,7 @@ class LinkRenderer extends \League\CommonMark\Inline\Renderer\LinkRenderer
         // "!" In this case we will try to find
         // the file starting at the root
         if ($url[0] == '!' || $url[0] == '/') {
-            $url = ltrim($url, "!/");
+            $url = ltrim($url, '!/');
 
             if ($file = DauxHelper::getFile($this->daux['tree'], $url)) {
                 return $file;
@@ -71,7 +71,7 @@ class LinkRenderer extends \League\CommonMark\Inline\Renderer\LinkRenderer
         // have the same interface
         if (!$inline instanceof Link) {
             throw new \RuntimeException(
-                "Wrong type passed to " . __CLASS__ . "::" . __METHOD__ .
+                'Wrong type passed to ' . __CLASS__ . '::' . __METHOD__ .
                 " the expected type was 'League\\CommonMark\\Inline\\Element\\Link' but '" .
                 get_class($inline) . "' was provided"
             );
@@ -83,7 +83,7 @@ class LinkRenderer extends \League\CommonMark\Inline\Renderer\LinkRenderer
 
         // Absolute urls, empty urls and anchors
         // should not go through the url resolver
-        if (empty($url) || $url[0] == "#" || preg_match("|^(?:[a-z]+:)?//|", $url)) {
+        if (empty($url) || $url[0] == '#' || preg_match('|^(?:[a-z]+:)?//|', $url)) {
             return $element;
         }
 

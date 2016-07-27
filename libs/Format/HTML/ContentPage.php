@@ -18,10 +18,10 @@ class ContentPage extends \Todaymade\Daux\Format\Base\ContentPage
         }
 
         if ($this->params['multilanguage']) {
-            return ($this->file->getParent()->getParent() instanceof Root);
+            return $this->file->getParent()->getParent() instanceof Root;
         }
 
-        return ($this->file->getParent() instanceof Root);
+        return $this->file->getParent() instanceof Root;
     }
 
     private function initialize()
@@ -45,13 +45,14 @@ class ContentPage extends \Todaymade\Daux\Format\Base\ContentPage
         if ($multilanguage && !empty($parents)) {
             $parents = array_splice($parents, 1);
         }
-        $breadcrumb_trail = array();
+        $breadcrumb_trail = [];
         if (!empty($parents)) {
             foreach ($parents as $node) {
                 $page = $node->getIndexPage() ?: $node->getFirstPage();
                 $breadcrumb_trail[$node->getTitle()] = $page ? $page->getUrl() : '';
             }
         }
+
         return $breadcrumb_trail;
     }
 
@@ -95,6 +96,7 @@ class ContentPage extends \Todaymade\Daux\Format\Base\ContentPage
         $context = ['page' => $page, 'params' => $params];
 
         $template = new Template($params['templates'], $params['theme']['templates']);
+
         return $template->render($this->homepage ? 'theme::home' : 'theme::content', $context);
     }
 }

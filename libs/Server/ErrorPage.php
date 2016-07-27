@@ -38,6 +38,7 @@ class ErrorPage extends SimplePage
         ];
 
         $template = new Template($params['templates'], $params['theme']['templates']);
+
         return $template->render('error', ['page' => $page, 'params' => $params]);
     }
 }

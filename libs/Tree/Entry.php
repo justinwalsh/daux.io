@@ -159,6 +159,7 @@ abstract class Entry
         }
 
         $url .= $this->getUri();
+
         return $url;
     }
 
@@ -170,7 +171,7 @@ abstract class Entry
             'name' => $this->getName(),
             'uri' => $this->getUri(),
             'url' => $this->getUrl(),
-            'path' => $this->path
+            'path' => $this->path,
         ];
     }
 }

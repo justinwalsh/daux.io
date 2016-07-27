@@ -46,7 +46,7 @@ class Builder
         preg_match('%^(.*?)[\\\\/]*(([^/\\\\]*?)(\.([^\.\\\\/]+?)|))[\\\\/\.]*$%im', $path, $m);
 
         if (!isset($m[3])) {
-            throw new RuntimeException("Name not found");
+            throw new RuntimeException('Name not found');
         }
 
         return $m[3];
@@ -137,17 +137,17 @@ class Builder
      */
     public static function removeSortingInformations($filename)
     {
-        preg_match("/^-?[0-9]*_?(.*)/", $filename, $matches);
+        preg_match('/^-?[0-9]*_?(.*)/', $filename, $matches);
 
         // Remove the numeric part
         // of the filename, only if
         // there is something after
-        return empty($matches[1])? $matches[0] : $matches[1];
+        return empty($matches[1]) ? $matches[0] : $matches[1];
     }
 
     /**
      * @param Directory $parent
-     * @param String $title
+     * @param string $title
      * @return Directory
      */
     public static function getOrCreateDir(Directory $parent, $title)
@@ -185,7 +185,7 @@ class Builder
             $title = static::getName($path);
             $uri = DauxHelper::slug($title);
             if ($parent->getConfig()['mode'] === Daux::STATIC_MODE) {
-                $uri .= ".html";
+                $uri .= '.html';
             }
         }
 
@@ -193,8 +193,8 @@ class Builder
             return $parent->getEntries()[$uri];
         }
 
-        $page = $raw? new ComputedRaw($parent, $uri) : new Content($parent, $uri);
-        $page->setContent("-"); //set an almost empty content to avoid problems
+        $page = $raw ? new ComputedRaw($parent, $uri) : new Content($parent, $uri);
+        $page->setContent('-'); //set an almost empty content to avoid problems
         $page->setName($path);
         $page->setTitle($title);
 

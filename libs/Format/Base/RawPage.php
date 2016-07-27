@@ -18,11 +18,11 @@ abstract class RawPage implements Page
 
     public function getPureContent()
     {
-        throw new Exception("you should not use this method to show a raw content");
+        throw new Exception('you should not use this method to show a raw content');
     }
 
     public function getContent()
     {
-        throw new Exception("you should not use this method to show a raw content");
+        throw new Exception('you should not use this method to show a raw content');
     }
 }

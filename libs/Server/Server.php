@@ -44,7 +44,7 @@ class Server
             $page = $server->handle($_REQUEST);
         } catch (NotFoundException $e) {
             http_response_code(404);
-            $page = new ErrorPage("An error occured", $e->getMessage(), $daux->getParams());
+            $page = new ErrorPage('An error occured', $e->getMessage(), $daux->getParams());
         }
 
         if ($page instanceof RawPage) {
@@ -53,7 +53,7 @@ class Server
             // Transfer file in 1024 byte chunks to save memory usage.
             if ($fd = fopen($page->getFile(), 'rb')) {
                 while (!feof($fd)) {
-                    print fread($fd, 1024);
+                    echo fread($fd, 1024);
                 }
                 fclose($fd);
             }
@@ -73,7 +73,7 @@ class Server
 
         // The path has a special treatment on windows, revert the slashes
         $dir = dirname($_SERVER['PHP_SELF']);
-        $this->base_url = $_SERVER['HTTP_HOST'] . (DIRECTORY_SEPARATOR == "\\"? str_replace("\\", "/", $dir) : $dir);
+        $this->base_url = $_SERVER['HTTP_HOST'] . (DIRECTORY_SEPARATOR == '\\' ? str_replace('\\', '/', $dir) : $dir);
 
         $t = strrpos($this->base_url, '/index.php');
         if ($t != false) {
@@ -171,16 +171,17 @@ class Server
                 parse_str($_SERVER['QUERY_STRING'], $_GET);
             } else {
                 $_SERVER['QUERY_STRING'] = '';
-                $_GET = array();
+                $_GET = [];
             }
             $uri = parse_url($uri, PHP_URL_PATH);
         } else {
             return false;
         }
-        $uri = str_replace(array('//', '../'), '/', trim($uri, '/'));
-        if ($uri == "") {
-            $uri = "index_page";
+        $uri = str_replace(['//', '../'], '/', trim($uri, '/'));
+        if ($uri == '') {
+            $uri = 'index_page';
         }
+
         return $uri;
     }
 }

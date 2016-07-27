@@ -28,6 +28,7 @@ class ContentType implements \Todaymade\Daux\ContentTypes\ContentType
     public function convert($raw, Content $node)
     {
         $this->config->setCurrentPage($node);
+
         return $this->converter->convertToHtml($raw);
     }
 }

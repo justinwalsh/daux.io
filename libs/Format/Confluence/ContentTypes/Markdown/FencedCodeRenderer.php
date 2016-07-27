@@ -8,7 +8,6 @@ use League\CommonMark\HtmlElement;
 
 class FencedCodeRenderer implements BlockRendererInterface
 {
-
     protected $supported_languages = [
         'actionscript3',
         'bash',
@@ -32,7 +31,7 @@ class FencedCodeRenderer implements BlockRendererInterface
         'ruby',
         'scala',
         'sql',
-        'vb'
+        'vb',
     ];
     protected $known_conversions = ['html' => 'html/xml', 'xml' => 'html/xml', 'js' => 'javascript'];
 

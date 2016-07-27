@@ -17,14 +17,14 @@ class Processor
     protected $output;
 
     /**
-     * @var integer
+     * @var int
      */
     protected $width;
 
     /**
      * @param Daux $daux
      * @param OutputInterface $output
-     * @param integer $width
+     * @param int $width
      */
     public function __construct(Daux $daux, OutputInterface $output, $width)
     {

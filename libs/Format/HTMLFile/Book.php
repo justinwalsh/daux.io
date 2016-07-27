@@ -30,7 +30,7 @@ class Book
             }
         }
 
-        throw new RuntimeException("Could not find the content page");
+        throw new RuntimeException('Could not find the content page');
     }
 
     protected function buildNavigation(Directory $tree)
@@ -51,21 +51,22 @@ class Book
                     continue;
                 }
 
-                $page_index = ($index = $node->getIndexPage())? $index : $node->getFirstPage();
+                $page_index = ($index = $node->getIndexPage()) ? $index : $node->getFirstPage();
 
                 $nav[] = [
                     'title' => $node->getTitle(),
-                    'href' => "#section_" . $this->getSectionId($page_index),
-                    'children' => $this->buildNavigation($node)
+                    'href' => '#section_' . $this->getSectionId($page_index),
+                    'children' => $this->buildNavigation($node),
                 ];
             }
         }
+
         return $nav;
     }
 
     private function renderNavigation($entries)
     {
-        $nav = "";
+        $nav = '';
         foreach ($entries as $entry) {
             if (array_key_exists('children', $entry)) {
                 if (array_key_exists('href', $entry)) {
@@ -87,9 +88,9 @@ class Book
 
     protected function generateTOC()
     {
-        return "<h1>Table of Contents</h1>" .
+        return '<h1>Table of Contents</h1>' .
         $this->renderNavigation($this->buildNavigation($this->tree)) .
-        "</div><div class=\"page-break\">&nbsp;</div>";
+        '</div><div class="page-break">&nbsp;</div>';
     }
 
     protected function generateCover()
@@ -97,7 +98,7 @@ class Book
         return "<div style='margin:4em 30% 4em 0;'>" .
         "<h1 style='font-size:40pt; margin-bottom:0;'>{$this->cover['title']}</h1>" .
         "<p><strong>{$this->cover['subject']}</strong> by {$this->cover['author']}</p>" .
-        "</div><div class=\"page-break\">&nbsp;</div>";
+        '</div><div class="page-break">&nbsp;</div>';
     }
 
     protected function generatePages()
@@ -109,6 +110,7 @@ class Book
             $content .= '<section class="content">' . $page['content'] . '</section>';
             $content .= '<div class="page-break">&nbsp;</div>';
         }
+
         return $content;
     }
 
@@ -137,6 +139,6 @@ class Book
 
     public function generate()
     {
-        return "<!DOCTYPE html><html>" . $this->generateHead() . $this->generateBody() . "</html>";
+        return '<!DOCTYPE html><html>' . $this->generateHead() . $this->generateBody() . '</html>';
     }
 }

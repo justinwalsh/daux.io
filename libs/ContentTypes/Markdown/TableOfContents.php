@@ -5,7 +5,6 @@ use League\CommonMark\Cursor;
 
 class TableOfContents extends AbstractBlock
 {
-
     /**
      * Returns true if this block can contain the given block as a child node
      *

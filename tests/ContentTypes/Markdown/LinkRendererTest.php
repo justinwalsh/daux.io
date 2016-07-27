@@ -36,17 +36,17 @@ class LinkRendererTest extends \PHPUnit_Framework_TestCase
     {
         return [
             // /Widgets/Page
-            ['<a href="http://google.ch">Link</a>', "[Link](http://google.ch)", "Widgets/Page.html"],
-            ['<a href="#features">Link</a>', "[Link](#features)", "Widgets/Page.html"],
-            ['<a href="Button.html">Link</a>', "[Link](Button.md)", "Widgets/Page.html"],
-            ['<a href="Button.html">Link</a>', "[Link](./Button.md)", "Widgets/Page.html"],
-            ['<a href="Button.html">Link</a>', "[Link](Button)", "Widgets/Page.html"],
-            ['<a href="Button.html">Link</a>', "[Link](./Button)", "Widgets/Page.html"],
-            ['<a href="Button.html">Link</a>', "[Link](!Widgets/Button)", "Widgets/Page.html"],
+            ['<a href="http://google.ch">Link</a>', '[Link](http://google.ch)', 'Widgets/Page.html'],
+            ['<a href="#features">Link</a>', '[Link](#features)', 'Widgets/Page.html'],
+            ['<a href="Button.html">Link</a>', '[Link](Button.md)', 'Widgets/Page.html'],
+            ['<a href="Button.html">Link</a>', '[Link](./Button.md)', 'Widgets/Page.html'],
+            ['<a href="Button.html">Link</a>', '[Link](Button)', 'Widgets/Page.html'],
+            ['<a href="Button.html">Link</a>', '[Link](./Button)', 'Widgets/Page.html'],
+            ['<a href="Button.html">Link</a>', '[Link](!Widgets/Button)', 'Widgets/Page.html'],
 
             // /Content/Page
-            ['<a href="../Widgets/Button.html">Link</a>', "[Link](../Widgets/Button.md)", "Content/Page.html"],
-            ['<a href="../Widgets/Button.html">Link</a>', "[Link](!Widgets/Button)", "Content/Page.html"],
+            ['<a href="../Widgets/Button.html">Link</a>', '[Link](../Widgets/Button.md)', 'Content/Page.html'],
+            ['<a href="../Widgets/Button.html">Link</a>', '[Link](!Widgets/Button)', 'Content/Page.html'],
         ];
     }
 

@@ -31,7 +31,7 @@ class Api
     {
         $options = [
             'base_uri' => $this->base_url . 'rest/api/',
-            'auth' => [$this->user, $this->pass]
+            'auth' => [$this->user, $this->pass],
         ];
 
         return new Client($options);
@@ -68,7 +68,7 @@ class Api
         $json = json_decode($body, true);
         $message .= ($json != null && array_key_exists('message', $json)) ? $json['message'] : $body;
 
-        if ($level == '4' && strpos($message, "page with this title already exists") !== false) {
+        if ($level == '4' && strpos($message, 'page with this title already exists') !== false) {
             return new DuplicateTitleException($message, 0, $e->getPrevious());
         }
 
@@ -77,7 +77,7 @@ class Api
 
     public function getPage($id)
     {
-       $url = "content/$id?expand=ancestors,version,body.storage";
+        $url = "content/$id?expand=ancestors,version,body.storage";
 
         try {
             $result = json_decode($this->getClient()->get($url)->getBody(), true);
@@ -92,18 +92,18 @@ class Api
         }
 
         return [
-            "id" => $result['id'],
-            "ancestor_id" => $ancestor_id,
-            "title" => $result['title'],
-            "version" => $result['version']['number'],
-            "content" => $result['body']['storage']['value'],
+            'id' => $result['id'],
+            'ancestor_id' => $ancestor_id,
+            'title' => $result['title'],
+            'version' => $result['version']['number'],
+            'content' => $result['body']['storage']['value'],
         ];
     }
 
     /**
      * Get a list of pages
      *
-     * @param integer $rootPage
+     * @param int $rootPage
      * @param bool $recursive
      * @return array
      */
@@ -128,10 +128,10 @@ class Api
 
             foreach ($hierarchy['results'] as $result) {
                 $pages[$result['title']] = [
-                    "id" => $result['id'],
-                    "title" => $result['title'],
-                    "version" => $result['version']['number'],
-                    "content" => $result['body']['storage']['value'],
+                    'id' => $result['id'],
+                    'title' => $result['title'],
+                    'version' => $result['version']['number'],
+                    'content' => $result['body']['storage']['value'],
                 ];
 
                 if ($recursive) {
@@ -144,17 +144,16 @@ class Api
             // to be a bug in Confluence
             $start += $increment;
             $url = "$base_url&start=$start";
-
         } while (!empty($hierarchy['results']));
 
         return $pages;
     }
 
     /**
-     * @param integer $parent_id
+     * @param int $parent_id
      * @param string $title
      * @param string $content
-     * @return integer
+     * @return int
      */
     public function createPage($parent_id, $title, $content)
     {
@@ -162,7 +161,7 @@ class Api
             'type' => 'page',
             'space' => ['key' => $this->space],
             'title' => $title,
-            'body' => ['storage' => ['value' => $content, 'representation' => 'storage']]
+            'body' => ['storage' => ['value' => $content, 'representation' => 'storage']],
         ];
 
         if ($parent_id) {
@@ -179,9 +178,9 @@ class Api
     }
 
     /**
-     * @param integer $parent_id
-     * @param integer $page_id
-     * @param integer $newVersion
+     * @param int $parent_id
+     * @param int $page_id
+     * @param int $newVersion
      * @param string $title
      * @param string $content
      */
@@ -190,9 +189,9 @@ class Api
         $body = [
             'type' => 'page',
             'space' => ['key' => $this->space],
-            'version' => ['number' => $newVersion, "minorEdit" => true],
+            'version' => ['number' => $newVersion, 'minorEdit' => true],
             'title' => $title,
-            'body' => ['storage' => ['value' => $content, 'representation' => 'storage']]
+            'body' => ['storage' => ['value' => $content, 'representation' => 'storage']],
         ];
 
         if ($parent_id) {
@@ -209,7 +208,7 @@ class Api
     /**
      * Delete a page
      *
-     * @param integer $page_id
+     * @param int $page_id
      * @return mixed
      */
     public function deletePage($page_id)
@@ -222,7 +221,7 @@ class Api
     }
 
     /**
-     * @param integer $id
+     * @param int $id
      * @param array $attachment
      */
     public function uploadAttachment($id, $attachment)

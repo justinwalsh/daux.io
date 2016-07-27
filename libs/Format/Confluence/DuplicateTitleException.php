@@ -2,5 +2,4 @@
 
 class DuplicateTitleException extends \RuntimeException
 {
-
 }

@@ -13,6 +13,6 @@ class RootEntry extends Entry
      */
     public function getParent()
     {
-        throw new \RuntimeException("No Parent Exception");
+        throw new \RuntimeException('No Parent Exception');
     }
 }

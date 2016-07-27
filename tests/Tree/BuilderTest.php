@@ -1,6 +1,5 @@
 <?php namespace Todaymade\Daux\Tree;
 
-
 use Todaymade\Daux\Config;
 use Todaymade\Daux\Daux;
 
@@ -8,26 +7,26 @@ class BuilderTest extends \PHPUnit_Framework_TestCase
 {
     public function providerRemoveSorting()
     {
-        return array(
+        return [
             ['01_before', 'before'],
             ['-Down', 'Down'],
-            ["01_numeric", 'numeric'],
-            ["01_A_File", "A_File"],
-            ["A_File", "A_File"],
-            ["01_Continuing", "Continuing"],
-            ["-01_Coming", "Coming"],
-            ["-02_Soon", "Soon"],
-            ["01_Getting_Started", "Getting_Started"],
-            ["API_Calls", "API_Calls"],
-            ["200_Something_Else-Cool", "Something_Else-Cool"],
-            ["_5_Ways_to_Be_Happy", "5_Ways_to_Be_Happy"],
-            ["Before_but_after", "Before_but_after"],
-            ["Continuing", "Continuing"],
-            ["01_GitHub_Flavored_Markdown", "GitHub_Flavored_Markdown"],
-            ["Code_Test", "Code_Test"],
-            ["05_Code_Highlighting", "Code_Highlighting"],
-            ["1", "1"],
-        );
+            ['01_numeric', 'numeric'],
+            ['01_A_File', 'A_File'],
+            ['A_File', 'A_File'],
+            ['01_Continuing', 'Continuing'],
+            ['-01_Coming', 'Coming'],
+            ['-02_Soon', 'Soon'],
+            ['01_Getting_Started', 'Getting_Started'],
+            ['API_Calls', 'API_Calls'],
+            ['200_Something_Else-Cool', 'Something_Else-Cool'],
+            ['_5_Ways_to_Be_Happy', '5_Ways_to_Be_Happy'],
+            ['Before_but_after', 'Before_but_after'],
+            ['Continuing', 'Continuing'],
+            ['01_GitHub_Flavored_Markdown', 'GitHub_Flavored_Markdown'],
+            ['Code_Test', 'Code_Test'],
+            ['05_Code_Highlighting', 'Code_Highlighting'],
+            ['1', '1'],
+        ];
     }
 
     /**
@@ -38,7 +37,8 @@ class BuilderTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($expected, Builder::removeSortingInformations($value));
     }
 
-    public function testGetOrCreateDirNew() {
+    public function testGetOrCreateDirNew()
+    {
         $root = new Root(new Config(), '');
 
 
@@ -47,10 +47,10 @@ class BuilderTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($root, $dir->getParent());
         $this->assertEquals('directory', $dir->getTitle());
         $this->assertEquals('directory', $dir->getUri());
-
     }
 
-    public function testGetOrCreateDirExisting() {
+    public function testGetOrCreateDirExisting()
+    {
         $root = new Root(new Config(), '');
         $directory = new Directory($root, 'directory');
         $directory->setTitle('directory');
@@ -63,7 +63,8 @@ class BuilderTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($directory, $dir);
     }
 
-    public function getStaticRoot() {
+    public function getStaticRoot()
+    {
         $config = new Config();
         $config['mode'] = Daux::STATIC_MODE;
         $config['index_key'] = 'index.html';

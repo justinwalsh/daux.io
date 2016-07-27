@@ -31,9 +31,9 @@ class Directory extends Entry implements \ArrayAccess, \IteratorAggregate
                 continue;
             }
 
-            if ($name[0] == "-") {
+            if ($name[0] == '-') {
                 if (is_numeric($name[1])) {
-                    $exploded = explode("_", $name);
+                    $exploded = explode('_', $name);
                     $buckets['down_numeric'][abs(substr($exploded[0], 1))][$key] = $entry;
                     continue;
                 }
@@ -43,7 +43,7 @@ class Directory extends Entry implements \ArrayAccess, \IteratorAggregate
             }
 
             if (is_numeric($name[0])) {
-                $exploded = explode("_", $name);
+                $exploded = explode('_', $name);
                 $buckets['numeric'][abs($exploded[0])][$key] = $entry;
                 continue;
             }
@@ -68,7 +68,7 @@ class Directory extends Entry implements \ArrayAccess, \IteratorAggregate
 
     private function sortBucket($bucket, $final)
     {
-        uasort($bucket, function(Entry $a, Entry $b) {
+        uasort($bucket, function (Entry $a, Entry $b) {
             return strcasecmp($a->getName(), $b->getName());
         });
 
@@ -103,7 +103,7 @@ class Directory extends Entry implements \ArrayAccess, \IteratorAggregate
     public function getConfig()
     {
         if (!$this->parent) {
-            throw new \RuntimeException("Could not retrieve configuration. Are you sure that your tree has a Root ?");
+            throw new \RuntimeException('Could not retrieve configuration. Are you sure that your tree has a Root ?');
         }
 
         return $this->parent->getConfig();
@@ -139,7 +139,7 @@ class Directory extends Entry implements \ArrayAccess, \IteratorAggregate
      */
     public function seekFirstPage()
     {
-        if ($this instanceof Directory) {
+        if ($this instanceof self) {
             $index_key = $this->getConfig()['index_key'];
             if (isset($this->children[$index_key])) {
                 return $this->children[$index_key];
@@ -148,13 +148,14 @@ class Directory extends Entry implements \ArrayAccess, \IteratorAggregate
                 if ($node instanceof Content) {
                     return $node;
                 }
-                if ($node instanceof Directory
+                if ($node instanceof self
                 && strpos($node->getUri(), '.') !== 0
-                && $childNode = $node->seekFirstPage() ) {
+                && $childNode = $node->seekFirstPage()) {
                     return $childNode;
                 }
             }
         }
+
         return null;
     }
 
@@ -176,14 +177,16 @@ class Directory extends Entry implements \ArrayAccess, \IteratorAggregate
                 }
 
                 $this->setFirstPage($node);
+
                 return $node;
             }
         }
 
         // If we can't find one we check in the sub-directories
         foreach ($this->getEntries() as $node) {
-            if ($node instanceof Directory && $page = $node->getFirstPage()) {
+            if ($node instanceof self && $page = $node->getFirstPage()) {
                 $this->setFirstPage($page);
+
                 return $page;
             }
         }
@@ -210,7 +213,7 @@ class Directory extends Entry implements \ArrayAccess, \IteratorAggregate
         foreach ($this->getEntries() as $node) {
             if ($node instanceof Content) {
                 return true;
-            } elseif ($node instanceof Directory) {
+            } elseif ($node instanceof self) {
                 if ($node->hasContent()) {
                     return true;
                 }
@@ -237,7 +240,7 @@ class Directory extends Entry implements \ArrayAccess, \IteratorAggregate
     /**
      * Whether a offset exists
      * @param mixed $offset An offset to check for.
-     * @return boolean true on success or false on failure.
+     * @return bool true on success or false on failure.
      */
     public function offsetExists($offset)
     {
@@ -263,7 +266,7 @@ class Directory extends Entry implements \ArrayAccess, \IteratorAggregate
     public function offsetSet($offset, $value)
     {
         if (!$value instanceof Entry) {
-            throw new RuntimeException("The value is not of type Entry");
+            throw new RuntimeException('The value is not of type Entry');
         }
 
         $this->addChild($value);
