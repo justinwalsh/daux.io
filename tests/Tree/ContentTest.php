@@ -6,7 +6,10 @@ class ContentTest extends \PHPUnit_Framework_TestCase
 {
     protected function createContent($content)
     {
-        $dir = new Directory(new Root(new Config, ''), '');
+        $config = new Config;
+        $config->setDocumentationDirectory('');
+
+        $dir = new Directory(new Root($config), '');
         $obj = new Content($dir, '');
         $obj->setContent($content);
 

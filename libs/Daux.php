@@ -29,12 +29,6 @@ class Daux
      */
     protected $validExtensions;
 
-    /** @var string */
-    private $docs_path;
-
-    /** @var string */
-    private $themes_path;
-
     /** @var Processor */
     protected $processor;
 
@@ -79,13 +73,19 @@ class Daux
      */
     public function initializeConfiguration($override_file = 'config.json')
     {
+        // Validate and set theme path
+        $this->getParams()->setDocumentationDirectory($docs_path = $this->normalizeDocumentationPath());
+
         // Read documentation overrides
-        $this->loadConfiguration($this->docs_path . DIRECTORY_SEPARATOR . 'config.json');
+        $this->loadConfiguration($docs_path . DIRECTORY_SEPARATOR . 'config.json');
 
         // Read command line overrides
         if (!is_null($override_file)) {
             $this->loadConfiguration($this->local_base . DIRECTORY_SEPARATOR . $override_file);
         }
+
+        // Validate and set theme path
+        $this->options['themes_path'] = $this->normalizeThemePath($this->getParams()->getThemesDirectory());
 
         // Set a valid default timezone
         if (isset($this->options['timezone'])) {
@@ -95,28 +95,27 @@ class Daux
         }
     }
 
-    public function setThemesPath($path)
-    {
-        $this->themes_path = $path;
-        if (!is_dir($this->themes_path) &&
-            !is_dir($this->themes_path = $this->local_base . DIRECTORY_SEPARATOR . $this->themes_path)
-        ) {
-            throw new Exception('The Themes directory does not exist. Check the path again : ' . $this->themes_path);
+    public function normalizeThemePath($path) {
+        if (is_dir($path)) {
+            return $path;
         }
-        $this->options['themes_path'] = $this->themes_path;
-        $this->options['templates'] = 'templates';
+
+        $newPath = $this->local_base . DIRECTORY_SEPARATOR . $path;
+        if (is_dir($newPath)) {
+            return $newPath;
+        }
+
+        throw new Exception('The Themes directory does not exist. Check the path again : ' . $path);
     }
 
-    public function setDocumentationPath($path)
+    public function normalizeDocumentationPath()
     {
-        $this->docs_path = $path;
-        if (!is_dir($this->docs_path) &&
-            !is_dir($this->docs_path = $this->local_base . DIRECTORY_SEPARATOR . $this->docs_path)
-        ) {
-            throw new Exception('The Docs directory does not exist. Check the path again : ' . $this->docs_path);
+        $path = $this->getParams()->getDocumentationDirectory();
+        if (is_dir($path)) {
+            return $path;
         }
 
-        $this->options['docs_path'] = $this->docs_path;
+        throw new Exception('The Docs directory does not exist. Check the path again : ' . $path);
     }
 
     /**
@@ -132,6 +131,15 @@ class Daux
         $this->options->merge([
             'docs_directory' => 'docs',
             'valid_content_extensions' => ['md', 'markdown'],
+
+            //Paths and tree
+            'mode' => $this->mode,
+            'local_base' => $this->local_base,
+            'templates' => 'templates',
+
+            'index_key' => 'index.html',
+            'base_page' => '',
+            'base_url' => '',
         ]);
 
         // Load the global configuration
@@ -167,7 +175,7 @@ class Daux
     {
         $this->options['valid_content_extensions'] = $this->getContentExtensions();
 
-        $this->tree = new Root($this->getParams(), $this->docs_path);
+        $this->tree = new Root($this->getParams());
         Builder::build($this->tree, $this->options['ignore']);
 
         if (!empty($this->options['languages'])) {
@@ -218,30 +226,10 @@ class Daux
      */
     public function getParams()
     {
-        if (!$this->merged_defaults) {
-            $default = [
-                //Features
-                'multilanguage' => !empty($this->options['languages']),
-
-                //Paths and tree
-                'mode' => $this->mode,
-                'local_base' => $this->local_base,
-                'docs_path' => $this->docs_path,
-                'themes_path' => $this->themes_path,
-                'templates' => 'templates',
-            ];
-            $this->options->conservativeMerge($default);
-
-            $this->options['index_key'] = 'index.html';
-            $this->options['base_page'] = $this->options['base_url'] = '';
-
-            $this->merged_defaults = true;
-        }
-
         if ($this->tree && !$this->merged_tree) {
             $this->options['tree'] = $this->tree;
             $this->options['index'] = $this->tree->getIndexPage() ?: $this->tree->getFirstPage();
-            if ($this->options['multilanguage']) {
+            if ($this->options->isMultilanguage()) {
                 foreach ($this->options['languages'] as $key => $name) {
                     $this->options['entry_page'][$key] = $this->tree->getEntries()[$key]->getFirstPage();
                 }

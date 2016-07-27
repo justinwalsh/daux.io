@@ -29,11 +29,12 @@ class BuilderIntegrationTest extends \PHPUnit_Framework_TestCase
     public function testCreateHierarchy()
     {
         $config = new Config();
+        $config->setDocumentationDirectory($this->root->url());
         $config['valid_content_extensions'] = ['md'];
         $config['mode'] = Daux::STATIC_MODE;
         $config['index_key'] = 'index.html';
 
-        $tree = new Root($config, $this->root->url());
+        $tree = new Root($config);
         Builder::build($tree, []);
 
         $this->assertCount(2, $tree);

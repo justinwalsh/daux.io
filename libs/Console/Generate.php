@@ -51,12 +51,8 @@ class Generate extends SymfonyCommand
 
         // Set the source directory
         if ($input->getOption('source')) {
-            $daux->getParams()['docs_directory'] = $input->getOption('source');
+            $daux->getParams()->setDocumentationDirectory($input->getOption('source'));
         }
-
-        $daux->setDocumentationPath($daux->getParams()['docs_directory']);
-
-        $daux->setThemesPath($daux->getParams()['themes_directory']);
 
         $daux->initializeConfiguration($input->getOption('configuration'));
 

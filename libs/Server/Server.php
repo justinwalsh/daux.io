@@ -22,8 +22,6 @@ class Server
     public static function serve()
     {
         $daux = new Daux(Daux::LIVE_MODE);
-        $daux->setThemesPath($daux->getParams()['themes_directory']);
-        $daux->setDocumentationPath($daux->getParams()['docs_directory']);
         $daux->initializeConfiguration();
 
         $class = $daux->getProcessorClass();

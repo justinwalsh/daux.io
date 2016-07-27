@@ -9,15 +9,13 @@ class Root extends Directory
 
     /**
      * The root doesn't have a parent
-     *
-     * @param string $uri
      */
-    public function __construct(Config $config, $uri)
+    public function __construct(Config $config)
     {
         $this->setConfig($config);
 
-        $this->setUri($uri);
-        $this->path = $uri;
+        $this->setUri($config->getDocumentationDirectory());
+        $this->path = $config->getDocumentationDirectory();
     }
 
     /**

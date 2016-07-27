@@ -22,11 +22,12 @@ class LinkRendererTest extends \PHPUnit_Framework_TestCase
         ];
         $root = vfsStream::setup('root', null, $structure);
 
+        $config->setDocumentationDirectory($root->url());
         $config['valid_content_extensions'] = ['md'];
         $config['mode'] = Daux::STATIC_MODE;
         $config['index_key'] = 'index.html';
 
-        $tree = new Root($config, $root->url());
+        $tree = new Root($config);
         Builder::build($tree, []);
 
         return $tree;

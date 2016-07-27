@@ -54,7 +54,7 @@ class DauxHelper
         self::resolveVariant($params);
 
         $theme_folder = $params['themes_path'] . DIRECTORY_SEPARATOR . $params['html']['theme'];
-        $theme_url = $params['base_url'] . $params['themes_directory'] . '/' . $params['html']['theme'] . '/';
+        $theme_url = $params['base_url'] . $params->getThemesDirectory() . '/' . $params['html']['theme'] . '/';
 
         $theme = [];
         if (is_file($theme_folder . DIRECTORY_SEPARATOR . 'config.json')) {
