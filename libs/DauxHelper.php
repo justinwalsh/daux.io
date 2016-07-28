@@ -34,9 +34,13 @@ class DauxHelper
         }
 
         $theme = explode('-', $params['html']['theme']);
-
-        $params['html']['theme-variant'] = array_pop($theme);
-        $params['html']['theme'] = implode('-', $theme);
+	// do we have a variant or only a theme ?
+	if(isset($theme[1])) {
+        	$params['html']['theme-variant'] = array_pop($theme);
+        	$params['html']['theme'] = implode('-', $theme);
+	} else {
+		$params['html']['theme'] = array_pop($theme);
+	}
 
         if (!is_dir($params['themes_path'] . DIRECTORY_SEPARATOR . $params['html']['theme'])) {
             throw new \RuntimeException("Theme '{$params['html']['theme']}' not found");
