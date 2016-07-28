@@ -29,7 +29,7 @@ class DauxHelper
             return;
         }
 
-        if (is_dir($params['themes_path'] . DIRECTORY_SEPARATOR . $params['html']['theme'])) {
+        if (is_dir(realpath(($params['themes_path'] . DIRECTORY_SEPARATOR . $params['html']['theme'])))) {
             return;
         }
 
@@ -42,7 +42,7 @@ class DauxHelper
 		$params['html']['theme'] = array_pop($theme);
 	}
 
-        if (!is_dir($params['themes_path'] . DIRECTORY_SEPARATOR . $params['html']['theme'])) {
+        if (!is_dir(realpath(($params['themes_path'] . DIRECTORY_SEPARATOR . $params['html']['theme'])))) {
             throw new \RuntimeException("Theme '{$params['html']['theme']}' not found");
         }
     }
