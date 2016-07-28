@@ -103,7 +103,12 @@ class Content extends Entry
 
         $frontMatter = new FrontMatter();
 
-        $document = $frontMatter->parse($this->getContent());
+        $content = $this->getContent();
+        if (substr($content, 0, 3) == "\xef\xbb\xbf") {
+            $content = substr($content, 3);
+        }
+
+        $document = $frontMatter->parse($content);
 
         $this->attributes = array_replace_recursive($this->attributes, $document->getData());
         $this->setContent($document->getContent());
