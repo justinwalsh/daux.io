@@ -1,7 +1,6 @@
 <?php namespace Todaymade\Daux\Console;
 
 use Symfony\Component\Console\Command\Command as SymfonyCommand;
-use Symfony\Component\Console\Exception\InvalidOptionException;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -34,8 +33,7 @@ class Generate extends SymfonyCommand
 
             // HTML Format only
             ->addOption('destination', 'd', InputOption::VALUE_REQUIRED, $description, 'static')
-            ->addOption('search', null, InputOption::VALUE_NONE, 'Generate full text search')
-            ;
+            ->addOption('search', null, InputOption::VALUE_NONE, 'Generate full text search');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -44,6 +42,7 @@ class Generate extends SymfonyCommand
 
         if ($input->getOption('serve')) {
             $this->serve($daux, $input);
+
             return;
         }
 

@@ -58,27 +58,33 @@ class Config extends ArrayObject
         $this['current_page'] = $entry;
     }
 
-    public function getDocumentationDirectory() {
+    public function getDocumentationDirectory()
+    {
         return $this['docs_directory'];
     }
 
-    public function setDocumentationDirectory($documentationPath) {
+    public function setDocumentationDirectory($documentationPath)
+    {
         $this['docs_directory'] = $documentationPath;
     }
 
-    public function getThemesDirectory() {
+    public function getThemesDirectory()
+    {
         return $this['themes_directory'];
     }
 
-    public function setFormat($format) {
+    public function setFormat($format)
+    {
         $this['format'] = $format;
     }
 
-    public function getFormat() {
+    public function getFormat()
+    {
         return $this['format'];
     }
 
-    public function isMultilanguage() {
+    public function isMultilanguage()
+    {
         return array_key_exists('languages', $this) && !empty($this['languages']);
     }
 }

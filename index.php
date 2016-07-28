@@ -75,6 +75,6 @@ if (php_sapi_name() === 'cli-server') {
     $_SERVER['SCRIPT_NAME'] = '/index.php';
 }
 
-require_once(__DIR__ . '/libs/bootstrap.php');
+require_once __DIR__ . '/libs/bootstrap.php';
 
 \Todaymade\Daux\Server\Server::serve();

@@ -66,10 +66,11 @@ class Server
         echo $page->getContent();
     }
 
-    public static function runServer(Config $config, $host, $port) {
+    public static function runServer(Config $config, $host, $port)
+    {
         chdir(__DIR__ . '/../../');
 
-        putenv("DAUX_SOURCE=" . $config->getDocumentationDirectory());
+        putenv('DAUX_SOURCE=' . $config->getDocumentationDirectory());
 
         $base = ProcessUtils::escapeArgument(__DIR__ . '/../../');
         $binary = ProcessUtils::escapeArgument((new PhpExecutableFinder)->find(false));
