@@ -92,7 +92,8 @@ class Daux
         }
     }
 
-    public function normalizeThemePath($path) {
+    public function normalizeThemePath($path)
+    {
         if (is_dir($path)) {
             return $path;
         }
