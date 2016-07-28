@@ -42,9 +42,6 @@ class Daux
     private $mode;
 
     /** @var bool */
-    private $merged_defaults = false;
-
-    /** @var bool */
     private $merged_tree = false;
 
     /**
@@ -110,9 +107,15 @@ class Daux
 
     public function normalizeDocumentationPath()
     {
+        // When running through `daux --serve` we set an environment variable to know where we started from
+        $env = getenv('DAUX_SOURCE');
+        if ($env && is_dir($env)) {
+            return $env;
+        }
+
         $path = $this->getParams()->getDocumentationDirectory();
         if (is_dir($path)) {
-            return $path;
+            return getcwd() . '/' . $path;
         }
 
         throw new Exception('The Docs directory does not exist. Check the path again : ' . $path);
@@ -312,7 +315,7 @@ class Daux
 
         $generators = $this->getGenerators();
 
-        $format = $this->getParams()['format'];
+        $format = $this->getParams()->getFormat();
 
         if (!array_key_exists($format, $generators)) {
             throw new \RuntimeException("The format '$format' doesn't exist, did you forget to set your processor ?");

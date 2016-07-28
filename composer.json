@@ -21,7 +21,8 @@
         "symfony/console": "~3.0",
         "symfony/finder": "~3.0",
         "webuni/commonmark-table-extension": "0.4.*",
-        "webuni/front-matter": "^0.2.0"
+        "webuni/front-matter": "^0.2.0",
+        "symfony/process": "^3.1"
     },
     "autoload": {
         "psr-4": {

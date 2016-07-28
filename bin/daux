@@ -64,14 +64,7 @@ software, even if advised of the possibility of such damage.
 
 */
 
-if (file_exists(__DIR__ . '/../vendor/autoload.php')) {
-    require_once(__DIR__ . '/../vendor/autoload.php');
-} elseif (file_exists(__DIR__ . '/../daux.phar')) {
-    define('PHAR_DIR', __DIR__ . '/..');
-    require_once("phar://" . __DIR__ . "/../daux.phar/vendor/autoload.php");
-} else {
-    throw new Exception("Impossible to load Daux, missing vendor/ or daux.phar");
-}
+require_once(__DIR__ . '/../libs/bootstrap.php');
 
 $application = new \Todaymade\Daux\Console\Application();
 $application->run();
