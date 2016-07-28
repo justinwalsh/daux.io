@@ -70,6 +70,14 @@ class Config extends ArrayObject
         return $this['themes_directory'];
     }
 
+    public function setFormat($format) {
+        $this['format'] = $format;
+    }
+
+    public function getFormat() {
+        return $this['format'];
+    }
+
     public function isMultilanguage() {
         return array_key_exists('languages', $this) && !empty($this['languages']);
     }
