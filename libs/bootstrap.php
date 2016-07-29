@@ -1,13 +1,13 @@
 <?php
 
+// Loaded as a dependency
+if (file_exists(__DIR__ . '/../../../autoload.php')) {
+    return require_once __DIR__ . '/../../../autoload.php';
+}
+
 // Loaded in the project itself
 if (file_exists(__DIR__ . '/../vendor/autoload.php')) {
     return require_once __DIR__ . '/../vendor/autoload.php';
-}
-
-// Loaded as a dependency
-if (file_exists(__DIR__ . '/../../../../autoload.php')) {
-    return require_once __DIR__ . '/../../../../autoload.php';
 }
 
 // Loaded in the project itself, when vendor isn't installed
