@@ -2,7 +2,7 @@
 
 use Webuni\FrontMatter\FrontMatter;
 
-class Content extends Entry
+class Content extends ContentAbstract
 {
     /** @var string */
     protected $content;

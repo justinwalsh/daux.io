@@ -1,12 +1,12 @@
-
-_ = {};
+/** global localStorage */
+var _ = {};
 
 _.now = Date.now || function() {
     return new Date().getTime();
 };
 
 _.debounce = function(func, wait, immediate) {
-    var timeout, args, context, timestamp, result;
+    var timeout, args, context, timestamp;
 
     var later = function() {
         var last = _.now() - timestamp;
@@ -16,8 +16,10 @@ _.debounce = function(func, wait, immediate) {
         } else {
             timeout = null;
             if (!immediate) {
-                result = func.apply(context, args);
-                if (!timeout) context = args = null;
+                func.apply(context, args);
+                if (!timeout) {
+                    context = args = null;
+                }
             }
         }
     };
@@ -27,13 +29,15 @@ _.debounce = function(func, wait, immediate) {
         args = arguments;
         timestamp = _.now();
         var callNow = immediate && !timeout;
-        if (!timeout) timeout = setTimeout(later, wait);
+        if (!timeout) {
+            timeout = setTimeout(later, wait);
+        }
         if (callNow) {
-            result = func.apply(context, args);
+            func.apply(context, args);
             context = args = null;
         }
 
-        return result;
+        return true;
     };
 };
 
@@ -61,15 +65,11 @@ $(function () {
 
         toggleCodeBlockBtns.removeClass("Button--active");
 
-        console.log("Toggle", codeBlockState);
-
         switch (codeBlockState) {
-            default:
-            case 0: // Hidden code blocks
-                toggleCodeBlockBtnHide.addClass("Button--active");
-                toggleCodeBlockBtn.html("Show Code Blocks");
-                codeBlockView.removeClass('Columns__right--float');
-                codeBlocks.addClass('hidden');
+            case 2: // Show code blocks inline
+                toggleCodeBlockBtnFloat.addClass("Button--active");
+                codeBlockView.addClass('Columns__right--float');
+                codeBlocks.removeClass('hidden');
                 break;
             case 1: // Show code blocks below
                 toggleCodeBlockBtnBelow.addClass("Button--active");
@@ -77,10 +77,12 @@ $(function () {
                 codeBlockView.removeClass('Columns__right--float');
                 codeBlocks.removeClass('hidden');
                 break;
-            case 2: // Show code blocks inline
-                toggleCodeBlockBtnFloat.addClass("Button--active");
-                codeBlockView.addClass('Columns__right--float');
-                codeBlocks.removeClass('hidden');
+            case 0: // Hidden code blocks
+            default:
+                toggleCodeBlockBtnHide.addClass("Button--active");
+                toggleCodeBlockBtn.html("Show Code Blocks");
+                codeBlockView.removeClass('Columns__right--float');
+                codeBlocks.addClass('hidden');
                 break;
         }
     }

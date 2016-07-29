@@ -357,7 +357,7 @@ class Daux
      */
     public function getContentExtensions()
     {
-        if ($this->validExtensions) {
+        if (!empty($this->validExtensions)) {
             return $this->validExtensions;
         }
 

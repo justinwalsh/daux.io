@@ -2,6 +2,7 @@
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\BadResponseException;
+use GuzzleHttp\Exception\RequestException;
 
 class Api
 {
@@ -42,7 +43,7 @@ class Api
      * this will give little bit more sense to it and return it
      *
      * @param BadResponseException $e
-     * @return BadResponseException
+     * @return RequestException
      */
     protected function handleError(BadResponseException $e)
     {

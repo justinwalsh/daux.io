@@ -167,7 +167,7 @@ class Builder
     /**
      * @param Directory $parent
      * @param string $path
-     * @return Content
+     * @return ContentAbstract
      */
     public static function getOrCreatePage(Directory $parent, $path)
     {

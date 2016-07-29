@@ -77,8 +77,10 @@ function createLinter() {
 
 var style_tasks = [];
 for (var style in resources) {
-    gulp.task('style_' + style, createTask(resources[style].source, resources[style].dest));
-    style_tasks.push('style_' + style);
+    if (resources.hasOwnProperty(style)) {
+        gulp.task('style_' + style, createTask(resources[style].source, resources[style].dest));
+        style_tasks.push('style_' + style);
+    }
 }
 
 gulp.task('lint-css', createLinter);

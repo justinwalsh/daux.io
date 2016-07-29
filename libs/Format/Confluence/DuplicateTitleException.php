@@ -1,5 +1,5 @@
 <?php namespace Todaymade\Daux\Format\Confluence;
 
-class DuplicateTitleException extends \RuntimeException
+class DuplicateTitleException extends \GuzzleHttp\Exception\RequestException
 {
 }

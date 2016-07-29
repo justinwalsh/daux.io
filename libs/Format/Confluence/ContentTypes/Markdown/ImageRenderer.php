@@ -15,6 +15,10 @@ class ImageRenderer extends \League\CommonMark\Inline\Renderer\ImageRenderer
      */
     public function render(AbstractInline $inline, ElementRendererInterface $htmlRenderer)
     {
+        if (!($inline instanceof Image)) {
+            throw new \InvalidArgumentException('Incompatible inline type: ' . get_class($inline));
+        }
+
         // External Images need special handling
         if (strpos($inline->getUrl(), 'http') === 0) {
             return new HtmlElement(
