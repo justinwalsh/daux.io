@@ -59,7 +59,7 @@ class Compiler
         $finder->files()
             ->ignoreVCS(true)
             ->exclude('Tests')
-            ->notName("*.png")
+            ->notName('*.png')
             ->in(__DIR__ . '/../vendor/guzzlehttp/guzzle/src')
             ->in(__DIR__ . '/../vendor/guzzlehttp/promises/src')
             ->in(__DIR__ . '/../vendor/guzzlehttp/psr7/src')
@@ -76,11 +76,11 @@ class Compiler
             ->in(__DIR__ . '/../vendor/webuni/commonmark-table-extension/src');
 
         $excluded_files = [
-            "README.md",
-            "composer.json",
-            "LICENSE",
-            "CHANGELOG.md",
-            "phpunit.xml.dist",
+            'README.md',
+            'composer.json',
+            'LICENSE',
+            'CHANGELOG.md',
+            'phpunit.xml.dist',
         ];
 
         /** @var \SplFileInfo $file */
