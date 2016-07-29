@@ -4,10 +4,10 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Todaymade\Daux\Config;
 use Todaymade\Daux\Console\RunAction;
-use Todaymade\Daux\Format\HTML\ContentTypes\Markdown\ContentType;
 use Todaymade\Daux\Daux;
 use Todaymade\Daux\DauxHelper;
 use Todaymade\Daux\Format\Base\LiveGenerator;
+use Todaymade\Daux\Format\HTML\ContentTypes\Markdown\ContentType;
 use Todaymade\Daux\GeneratorHelper;
 use Todaymade\Daux\Tree\ComputedRaw;
 use Todaymade\Daux\Tree\Directory;
@@ -85,6 +85,9 @@ class Generator implements \Todaymade\Daux\Format\Base\Generator, LiveGenerator
      * block-level tags to prevent word joining after tag removal.
      * Also collapse whitespace to single space and trim result.
      * modified from: http://nadeausoftware.com/articles/2007/09/php_tip_how_strip_html_tags_web_page
+     *
+     * @param string $text
+     * @return string
      */
     private function strip_html_tags($text)
     {

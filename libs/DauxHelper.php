@@ -121,6 +121,8 @@ class DauxHelper
     }
 
     /**
+     * Remove all '/./' and '/../' in a path, without actually checking the path
+     *
      * @param string $path
      * @return string
      */
@@ -143,6 +145,13 @@ class DauxHelper
         return implode(DIRECTORY_SEPARATOR, $absolutes);
     }
 
+    /**
+     * Get the possible output file names for a source file.
+     *
+     * @param Config $config
+     * @param string $part
+     * @return string[]
+     */
     public static function getFilenames(Config $config, $part)
     {
         $extensions = implode('|', array_map('preg_quote', $config['valid_content_extensions'])) . '|html';
@@ -391,6 +400,11 @@ class DauxHelper
         ];
     }
 
+    /**
+     * @param string $from
+     * @param string $to
+     * @return string
+     */
     public static function getRelativePath($from, $to)
     {
         // some compatibility fixes for Windows paths

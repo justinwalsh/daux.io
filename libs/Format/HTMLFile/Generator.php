@@ -3,8 +3,8 @@
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Todaymade\Daux\Console\RunAction;
-use Todaymade\Daux\Format\HTML\ContentTypes\Markdown\ContentType;
 use Todaymade\Daux\Daux;
+use Todaymade\Daux\Format\HTML\ContentTypes\Markdown\ContentType;
 
 class Generator implements \Todaymade\Daux\Format\Base\Generator
 {

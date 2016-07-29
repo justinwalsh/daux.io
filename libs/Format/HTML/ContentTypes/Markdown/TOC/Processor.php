@@ -55,9 +55,8 @@ class Processor implements DocumentProcessorInterface
                 continue;
             }
 
-            $id = $this->addId($node);
-
-            $headings[] = new Entry($node, $id);
+            $this->ensureHeadingHasId($node);
+            $headings[] = new Entry($node);
         }
 
         if (count($headings) && (count($tocs) || $this->hasAutoTOC())) {
@@ -73,14 +72,17 @@ class Processor implements DocumentProcessorInterface
         }
     }
 
-    protected function addId(Heading $node)
+    /**
+     * @param Heading $node
+     */
+    protected function ensureHeadingHasId(Heading $node)
     {
         // If the node has an ID, no need to generate it
         $attributes = $node->getData('attributes', []);
         if (array_key_exists('id', $attributes) && !empty($attributes['id'])) {
             // TODO :: check for uniqueness
 
-            return $attributes['id'];
+            return;
         }
 
         // Well, seems we have to generate an ID
@@ -186,7 +188,13 @@ class Processor implements DocumentProcessorInterface
         return $list;
     }
 
-    protected function setNull($object, $property)
+    /**
+     * Set the specified property to null on the object.
+     *
+     * @param Heading $object The object to modify
+     * @param string $property The property to nullify
+     */
+    protected function setNull(Heading $object, $property)
     {
         $prop = new \ReflectionProperty(get_class($object), $property);
         $prop->setAccessible(true);

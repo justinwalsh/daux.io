@@ -1,7 +1,7 @@
 <?php namespace Todaymade\Daux\ContentTypes\Markdown;
 
-use League\CommonMark\HtmlElement;
 use League\CommonMark\ElementRendererInterface;
+use League\CommonMark\HtmlElement;
 use League\CommonMark\Inline\Element\AbstractInline;
 use League\CommonMark\Inline\Element\Link;
 use Todaymade\Daux\Config;

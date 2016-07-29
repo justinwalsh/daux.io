@@ -18,7 +18,7 @@ class ContentType implements \Todaymade\Daux\ContentTypes\ContentType
     }
 
     /**
-     * @return array
+     * @return string[]
      */
     public function getExtensions()
     {
