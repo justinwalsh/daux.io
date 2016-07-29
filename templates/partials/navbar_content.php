@@ -7,4 +7,5 @@
         <input type="search" id="tipue_search_input" class="Search__field" placeholder="Search..." autocomplete="on" results=25 autosave=text_search>
     </div>
 <?php
+
 } ?>

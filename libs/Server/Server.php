@@ -1,9 +1,6 @@
 <?php namespace Todaymade\Daux\Server;
 
 use Symfony\Component\Console\Output\NullOutput;
-use Symfony\Component\Process\ProcessUtils;
-use Symfony\Component\Process\PhpExecutableFinder;
-use Todaymade\Daux\Config;
 use Todaymade\Daux\Daux;
 use Todaymade\Daux\DauxHelper;
 use Todaymade\Daux\Exception;

@@ -9,6 +9,7 @@
     ?>
     <a href="https://github.com/<?= $params['html']['repo']; ?>" target="_blank" id="github-ribbon" class="Github hidden-print"><img src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"></a>
 <?php
+
 } ?>
 
 <div class="Homepage">
@@ -46,6 +47,7 @@
                 ?>
                 <div id="tipue_search_content" style="display:none"></div>
             <?php
+
             } ?>
 
             <div class="doc_content s-content">
@@ -66,6 +68,7 @@
                 } ?>
                 </ul>
             <?php
+
             } ?>
 
             <?php if (!empty($params['html']['twitter'])) {
@@ -77,9 +80,11 @@
                         <iframe allowtransparency="true" frameborder="0" scrolling="no" style="width:162px; height:20px;" src="https://platform.twitter.com/widgets/follow_button.html?screen_name=<?= $handle; ?>&amp;show_count=false"></iframe>
                     </div>
                     <?php
+
                 } ?>
                 </div>
             <?php
+
             } ?>
         </div>
     </div>

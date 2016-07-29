@@ -4,6 +4,7 @@
     ?>
     <a href="https://github.com/<?= $params['html']['repo']; ?>" target="_blank" id="github-ribbon" class="Github hidden-print"><img src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"></a>
 <?php
+
 } ?>
 
 <div class="Navbar hidden-print">
@@ -43,8 +44,10 @@
                         <a href="<?= $url ?>" target="_blank"><?= $name ?></a>
                         <br />
                     <?php
+
                 } ?>
                 <?php
+
             } ?>
 
                 <?php if ($params['html']['toggle_code']) {
@@ -60,13 +63,16 @@
                                 <button class="Button Button--default Button--small CodeToggler__button CodeToggler__button--float">Inline</button>
                             </div>
                         <?php
+
                 } else {
                     ?>
                             <a class="CodeToggler__button CodeToggler__button--main" href="#">Show Code Blocks Inline</a><br>
                         <?php
+
                 } ?>
                     </div>
                 <?php
+
             } ?>
 
                 <?php if (!empty($params['html']['twitter'])) {
@@ -79,9 +85,11 @@
                             <br />
                             <br />
                         <?php
+
                 } ?>
                     </div>
                 <?php
+
             } ?>
             </div>
         </div>
@@ -96,6 +104,7 @@
                 ?>
                 <div id="tipue_search_content" style="display:none"></div>
             <?php
+
             } ?>
 
             <div class="doc_content">

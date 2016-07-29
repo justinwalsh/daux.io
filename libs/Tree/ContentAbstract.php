@@ -1,6 +1,5 @@
 <?php namespace Todaymade\Daux\Tree;
 
-
 abstract class ContentAbstract extends Entry
 {
     /** @var string */

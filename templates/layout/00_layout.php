@@ -30,6 +30,7 @@
         <!-- Tipue Search -->
         <link href="<?= $base_url; ?>tipuesearch/tipuesearch.css" rel="stylesheet">
     <?php
+
 } ?>
 
     <!--[if lt IE 9]>
@@ -79,6 +80,7 @@
             });
         </script>
     <?php
+
     } ?>
 
 </body>
