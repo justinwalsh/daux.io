@@ -164,9 +164,9 @@ class Processor implements DocumentProcessorInterface
 
             $a = new Link('#' . $entry->getId());
 
-            $children = $entry->getChildren();
-            if ($children != null) {
-                foreach ($this->cloneChildren($entry->getContent()) as $node) {
+            $content = $entry->getContent();
+            if ($content != null) {
+                foreach ($this->cloneChildren($content) as $node) {
                     $a->appendChild($node);
                 }
             }
