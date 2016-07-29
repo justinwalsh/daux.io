@@ -66,28 +66,6 @@ class Server
         echo $page->getContent();
     }
 
-    public static function runServer(Config $config, $host, $port)
-    {
-        chdir(__DIR__ . '/../../');
-
-        putenv('DAUX_SOURCE=' . $config->getDocumentationDirectory());
-
-        $base = ProcessUtils::escapeArgument(__DIR__ . '/../../');
-        $binary = ProcessUtils::escapeArgument((new PhpExecutableFinder)->find(false));
-
-        echo "Daux development server started on http://{$host}:{$port}/\n";
-
-        if (defined('HHVM_VERSION')) {
-            if (version_compare(HHVM_VERSION, '3.8.0') >= 0) {
-                passthru("{$binary} -m server -v Server.Type=proxygen -v Server.SourceRoot={$base}/ -v Server.IP={$host} -v Server.Port={$port} -v Server.DefaultDocument=server.php -v Server.ErrorDocument404=server.php");
-            } else {
-                throw new Exception("HHVM's built-in server requires HHVM >= 3.8.0.");
-            }
-        } else {
-            passthru("{$binary} -S {$host}:{$port} {$base}/index.php");
-        }
-    }
-
     public function __construct(Daux $daux)
     {
         $this->daux = $daux;
