@@ -26,16 +26,21 @@ class Compiler
      */
     public function compile($pharFile = 'daux.phar')
     {
+        echo "Compiling a new $pharFile\n";
+
         if (file_exists($pharFile)) {
+            echo "-> Deleting the existing phar\n";
             unlink($pharFile);
         }
 
+        echo "-> Creating the new phar\n";
         $phar = new \Phar($pharFile, 0, 'daux.phar');
         $phar->setSignatureAlgorithm(\Phar::SHA1);
 
         $phar->startBuffering();
 
         // Daux
+        echo "-> Adding all daux files\n";
         $finder = new Finder();
         $finder->files()
             ->ignoreVCS(true)
@@ -49,39 +54,66 @@ class Compiler
         }
 
         // Composer libraries
+        echo "-> Adding all composer dependencies\n";
         $finder = new Finder();
         $finder->files()
             ->ignoreVCS(true)
             ->exclude('Tests')
-            ->in(__DIR__ . '/../vendor/guzzlehttp/guzzle/src/')
-            ->in(__DIR__ . '/../vendor/guzzlehttp/promises/src/')
-            ->in(__DIR__ . '/../vendor/guzzlehttp/psr7/src/')
-            ->in(__DIR__ . '/../vendor/league/commonmark/src/')
-            ->in(__DIR__ . '/../vendor/league/plates/src/')
+            ->notName("*.png")
+            ->in(__DIR__ . '/../vendor/guzzlehttp/guzzle/src')
+            ->in(__DIR__ . '/../vendor/guzzlehttp/promises/src')
+            ->in(__DIR__ . '/../vendor/guzzlehttp/psr7/src')
+            ->in(__DIR__ . '/../vendor/league/commonmark/src')
+            ->in(__DIR__ . '/../vendor/league/plates/src')
             ->in(__DIR__ . '/../vendor/myclabs/deep-copy')
-            ->in(__DIR__ . '/../vendor/psr/http-message/src/')
+            ->in(__DIR__ . '/../vendor/psr/http-message/src')
             ->in(__DIR__ . '/../vendor/symfony/console')
             ->in(__DIR__ . '/../vendor/symfony/polyfill-mbstring')
-            ->in(__DIR__ . '/../vendor/webuni/commonmark-table-extension/src/');
+            ->in(__DIR__ . '/../vendor/symfony/process')
+            ->in(__DIR__ . '/../vendor/symfony/process')
+            ->in(__DIR__ . '/../vendor/symfony/yaml')
+            ->in(__DIR__ . '/../vendor/webuni/front-matter/src')
+            ->in(__DIR__ . '/../vendor/webuni/commonmark-table-extension/src');
 
+        $excluded_files = [
+            "README.md",
+            "composer.json",
+            "LICENSE",
+            "CHANGELOG.md",
+            "phpunit.xml.dist",
+        ];
+
+        /** @var \SplFileInfo $file */
+        $count = 0;
         foreach ($finder as $file) {
+            if (in_array($file->getFilename(), $excluded_files)) {
+                continue;
+            }
+            $count++;
             $this->addFile($phar, $file);
         }
+        echo "   Imported $count files\n";
 
         // Composer autoload
+        echo "-> Adding the composer autoloader\n";
         $this->addComposer($phar);
+
+        echo "-> Adding the main binary\n";
         $this->addBinary($phar);
 
-        // Stubs
+        echo "-> Writing the stub\n";
         $phar->setStub($this->getStub());
 
         $phar->stopBuffering();
 
+        echo "-> Writing the licence\n";
         $this->addFile($phar, new \SplFileInfo(__DIR__ . '/../LICENSE'), false);
 
         chmod($pharFile, 0775);
 
         unset($phar);
+
+        echo "Done.\n";
     }
 
     private function addFile($phar, $file, $strip = true)
@@ -120,9 +152,9 @@ class Compiler
 
     private function addBinary($phar)
     {
-        $content = file_get_contents(__DIR__ . '/../generate');
+        $content = file_get_contents(__DIR__ . '/../bin/daux');
         $content = preg_replace('{^#!/usr/bin/env php\s*}', '', $content);
-        $phar->addFromString('generate', $content);
+        $phar->addFromString('bin/daux', $content);
     }
 
     /**
@@ -177,7 +209,7 @@ define('PHAR_DIR', dirname(__FILE__));
 
 Phar::mapPhar('daux.phar');
 
-require 'phar://daux.phar/generate';
+require 'phar://daux.phar/bin/daux';
 
 __HALT_COMPILER();
 EOF;
