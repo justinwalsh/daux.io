@@ -47,14 +47,15 @@ Do you use Daux.io? Send us a pull request or open an [issue](https://github.com
 
 ## Getting Started
 
-### Download
+### Install
 
-Download this repository as a zip, and unpack. Copy the files to a web server that can run PHP 5.3 or greater.
-You can also run the documentation locally using Grunt.js, which is covered at the end of this readme.
+```
+composer global require justinwalsh/daux.io
+```
 
-If you don't intend to modify Daux.io and just want to use it, you only need to copy `resources`, `daux.phar`, `global.json`, `generate`, `serve` and `index.php` With these, you're ready to create your documentation.
+You can then use the `daux` command line to generate your documentation.
 
-If however you wish to do some advanced modifications, I recommend you use the raw version and run `composer install` to get started.
+If the command isn't found, ensure your `$PATH` contains `~/.composer/vendor/bin`
 
 ### Writing pages
 
@@ -109,11 +110,7 @@ Daux.io is extendable and comes by default with three export formats:
 
 [See a detailed feature comparison matrix](01_Features/Multiple_Output_Formats.md)
 
-Here's how you run an export:
-
-```bash
-./generate
-```
+To export, run the `daux` command and your documentation will be generated in `static` (you can change the destination with the `--destination` option)
 
 [See here for all options](01_Features/Static_Site_Generation.md)
 

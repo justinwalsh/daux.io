@@ -6,9 +6,9 @@ The whole directory must be scanned on each request. This might not make a big i
 
 There are several ways to run the docs locally. You can use something like <a href="http://www.mamp.info/en/index.html" target="_blank">MAMP</a> or <a href="http://www.wampserver.com/en/" target="_blank">WAMP</a>.
 
-The easiest is to use PHP 5.4's built-in server.
+The easiest is to use PHP's built-in server.
 
-For that i've included a short command, run `./serve` in the projects folder to start the local web server. By default the server will run at: <a href="http://localhost:8085" target="_blank">http://localhost:8085</a>
+For that i've included a short command, run `daux serve` in the projects folder to start the local web server. By default the server will run at: <a href="http://localhost:8085" target="_blank">http://localhost:8085</a>
 
 
 ## Running Remotely
@@ -28,7 +28,7 @@ To enable the same, set the toggle in the `config.json` file in the `/docs` fold
 
 ### Apache
 
-Copy the files from the repo to a web server that can run PHP 5.3 or greater.
+Copy the files from the repo to a web server that can run PHP 5.5 or greater.
 
 There is an included `.htaccess` for Apache web server.
 

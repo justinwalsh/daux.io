@@ -32,23 +32,38 @@
 
 This is a list of sites using Daux.io:
 
-* [Daux.io](http://daux.io)
-* [Gltn - An open-source word processor webapp](http://felkerdigitalmedia.com/gltn/docs/)
-* [Invade & Annex 3 - An Arma 3 Co-operative Mission](http://ia3.ahoyworld.co.uk/)
-* [Munee: Standalone PHP 5.3 Asset Optimisation & Manipulation](http://mun.ee)
-* [ICADMIN: An admin panel powered by CodeIgniter.](http://istocode.com/shared/ic-admin/)
-* [TrackJs](http://docs.trackjs.com) (uses a customized theme)
-* [Sugoi](http://doc.sugoi.ventrux.com/)
-* [wallabag](http://doc.wallabag.org/index)
-* [iGeo-Topo](http://igeo-topo.fr/doc)
-* [Cumulus TV: Android TV app that turns any stream/page into a Live Channel](http://cumulustv.herokuapp.com)
-* [Vulkan Tutorial](https://vulkan-tutorial.com)
+- With a custom theme:
+    * [Vulkan Tutorial](https://vulkan-tutorial.com)
+    * [TrackJs](http://docs.trackjs.com)
+- With the default Theme
+    * [Daux.io](http://daux.io)
+    * [Gltn - An open-source word processor webapp](http://felkerdigitalmedia.com/gltn/docs/)
+    * [Invade & Annex 3 - An Arma 3 Co-operative Mission](http://ia3.ahoyworld.co.uk/)
+    * [Munee: Standalone PHP 5.3 Asset Optimisation & Manipulation](http://mun.ee)
+    * [ICADMIN: An admin panel powered by CodeIgniter.](http://istocode.com/shared/ic-admin/)
+    * [Cumulus TV: Android TV app that turns any stream/page into a Live Channel](http://cumulustv.herokuapp.com)
 
 Do you use Daux.io? Send me a pull request or open an [issue](https://github.com/justinwalsh/daux.io/issues) and I will add you to the list.
 
-## Download
+## Install
 
-Download this repository as a zip, and unpack. Copy the files to a web server that can run PHP 5.4 or greater. You can also run the documentation locally using Grunt.js, which is covered at the end of this readme.
+```
+composer global require justinwalsh/daux.io
+```
+
+You can then use the `daux` command line to generate your documentation.
+
+If the command isn't found, ensure your `$PATH` contains `~/.composer/vendor/bin`
+
+## Run on a server
+
+Download this repository as a zip, unpack, and put your documentation in the `docs` folder, you can then serve it with Apache or Nginx.
+
+## `daux`
+
+The command line tool has two commands: `generate` and `serve`, running Daux.io without an argument will automatically run the `generate` command.
+
+You can run `daux --help` to get more details about each command.
 
 ## Folders
 
@@ -60,7 +75,7 @@ If you'd prefer to keep your docs somewhere else (like outside of the daux.io ro
 
 ## Files
 
-The generator will look for Markdown files (`*.md` and `*.markdown`) inside the `docs` folder and any of the subfolders within `docs`. Additional extensions can be added by editing `global.json`
+The generator will look for Markdown files (`*.md` and `*.markdown`) inside the `docs` folder and any of the subfolders within `docs`.
 
 You must use underscores instead of spaces. Here are some example file names and what they will be converted to:
 
@@ -99,7 +114,8 @@ If you are interested in having a landing page for a subsection of your docs, al
 
 ## Configuration
 
-To customize the look and feel of your documentation, you can create a `config.json` file in the of the `/docs` folder. The `config.json` file is a simple JSON object that you can use to change some of the basic settings of the documentation.
+To customize the look and feel of your documentation, you can create a `config.json` file in the of the `/docs` folder.
+The `config.json` file is a simple JSON object that you can use to change some of the basic settings of the documentation.
 
 ###Title:
 Change the title bar in the docs
@@ -254,9 +270,9 @@ This feature will insruct the router to seek the first available file to use whe
 
 ```json
 {
-        "live": [
+        "live": {
         	"inherit_index": true
-        ]
+        }
 }
 ```
 
@@ -306,7 +322,7 @@ The Grunt.js task uses the built in web server in PHP 5.4 to host the docs on yo
 * Node.js
 * npm
 * Grunt.js
-* PHP 5.4 or greater (This is because of the built-in web server packaged in 5.4)
+* PHP 5.5 or greater
 
 This project contains a package.json file, so once you have the requirements installed, you can simply run a `npm install` and then `grunt` in the projects folder to start the local web server. By default the server will run at: <a href="http://localhost:8085" target="_blank">http://localhost:8085</a>
 
@@ -317,7 +333,7 @@ These can be uploaded to a static site hosting service such as pages.github.com
 Generating a complete set of pages, with navigation
 
 ```bash
-php generate.php [global.json Relative Location] [Output Directory Relative Direction]
+daux --source=docs --destination=static
 ```
 
 ## Running on IIS
@@ -352,23 +368,9 @@ The `web.config` needs an entry for `<rewrite>` under `<system.webServer>`:
 
 To use clean URLs on IIS 6, you will need to use a custom URL rewrite module, such as [URL Rewriter](http://urlrewriter.net/).
 
-### Less Mime Type
-
-The `web.config` needs a new `<mimeMap>` entry, under `<staticContent>` in `<system.webServer>`:
-
-```xml
-<staticContent>
-	<mimeMap fileExtension=".less" mimeType="text/css" />
-</staticContent>
-```
-
-You will only need the mime map entry if you are using a custom theme and receive 404s for `.less` files.
-
-If you have a global mime map entry for `.less` files set for the server, you will receive an internal server (500) error for having duplicate mime map entries.
-
 ## Compatibility
 
-Daux.io is compatible with php 5.5 and up.
+Daux.io is compatible with PHP 5.5 and up.
 
 The reason is because some dependencies we have (mainly Symfony and Guzzle) do not support php 5.4 anymore
 

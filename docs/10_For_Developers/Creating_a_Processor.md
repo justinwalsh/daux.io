@@ -28,7 +28,7 @@ also, add this at the beginning of the file:
 use Todaymade\Daux\Tree\Root;
 ```
 
-Let's just try if it works by running `./generate --processor=Processor`
+Let's just try if it works by running `daux --processor=Processor`
 
 Yes, you get a big array dump! You're good to go.
 

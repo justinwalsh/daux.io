@@ -8,7 +8,7 @@ If you  don't want to serve the live version of your site, you can also generate
 Generating a complete set of pages, with navigation
 
 ```bash
-./generate --destination=[Output Directory Relative Direction]
+daux --destination=[Output Directory Relative Direction]
 ```
 
 ## Options
@@ -16,7 +16,7 @@ Generating a complete set of pages, with navigation
 For more options, run 
 
 ```bash
-./generate --help
+daux generate --help
 ```
 
 ### Specify the configuration file
@@ -27,7 +27,7 @@ Valid options are `html`, `confluence` or `html-file`.
 You can also add your own formats through Processors
 
 ```bash
-./generate --format=html
+daux --format=html
 ```
 
 ### Specify a processor
@@ -37,7 +37,7 @@ A processor can be specified through the  `--processor` option, this should be t
 By running :
 
 ```bash
-./generate --processor=Processor
+daux --processor=Processor
 ```
 
 Daux will be looking for `Todaymade\Daux\Extension\Processor` inside the `daux` folder.
@@ -49,7 +49,7 @@ You can try to run this command, we added a small example Processor.
 By default, the source is taken from the `docs_directory` configuration value in `global.json` but you can override it here.
 
 ```bash
-./generate --source=docs_to_generate
+daux --source=docs_to_generate
 ```
 
 The path can be absolute or relative
@@ -59,7 +59,7 @@ The path can be absolute or relative
 By default the destination is `static`
 
 ```bash
-./generate --destination=generated_docs
+daux --destination=generated_docs
 ```
 
 The path can be absolute or relative
