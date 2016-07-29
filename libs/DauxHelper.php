@@ -30,16 +30,20 @@ class DauxHelper
             return;
         }
 
-        if (is_dir($params['themes_path'] . DIRECTORY_SEPARATOR . $params['html']['theme'])) {
+        if (is_dir(realpath(($params['themes_path'] . DIRECTORY_SEPARATOR . $params['html']['theme'])))) {
             return;
         }
 
         $theme = explode('-', $params['html']['theme']);
+        // do we have a variant or only a theme ?
+        if(isset($theme[1])) {
+		$params['html']['theme-variant'] = array_pop($theme);
+		$params['html']['theme'] = implode('-', $theme);
+        } else {
+                $params['html']['theme'] = array_pop($theme);
+        }
 
-        $params['html']['theme-variant'] = array_pop($theme);
-        $params['html']['theme'] = implode('-', $theme);
-
-        if (!is_dir($params['themes_path'] . DIRECTORY_SEPARATOR . $params['html']['theme'])) {
+        if (!is_dir(realpath(($params['themes_path'] . DIRECTORY_SEPARATOR . $params['html']['theme'])))) {
             throw new \RuntimeException("Theme '{$params['html']['theme']}' not found");
         }
     }
