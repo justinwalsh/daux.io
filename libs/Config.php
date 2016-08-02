@@ -87,4 +87,17 @@ class Config extends ArrayObject
     {
         return array_key_exists('languages', $this) && !empty($this['languages']);
     }
+
+    public function shouldInheritIndex()
+    {
+        if (array_key_exists('html', $this) && array_key_exists('inherit_index', $this['html'])) {
+            return $this['html']['inherit_index'];
+        }
+
+        if (array_key_exists('live', $this) && array_key_exists('inherit_index', $this['live'])) {
+            return $this['live']['inherit_index'];
+        }
+
+        return false;
+    }
 }

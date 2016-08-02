@@ -133,12 +133,8 @@ class Template
                     'class' => strpos($current_url, $link) === 0 ? 'Nav__item--open' : '',
                 ];
 
-                if ($mode === Daux::STATIC_MODE) {
-                    $link .= '/index.html';
-                }
-
-                if ($node->getIndexPage()) {
-                    $folder['href'] = $base_page . $link;
+                if ($index = $node->getIndexPage()) {
+                    $folder['href'] = $base_page . $index->getUrl();
                 }
 
                 //Child pages

@@ -8,7 +8,6 @@
             "folders": ["99_Not_Ready"]
     },
     "live": {
-        "inherit_index": true,
         "clean_urls": true
     },
     "html": {
@@ -18,6 +17,7 @@
         "toggle_code": true,
         "date_modified": true,
         "float": true,
+        "inherit_index": true,
 
         "repo": "justinwalsh/daux.io",
         "twitter": ["justin_walsh", "todaymade"],

@@ -120,13 +120,7 @@ class Directory extends Entry implements \ArrayAccess, \IteratorAggregate
             return $this->children[$index_key];
         }
 
-        /*
-          If the inherit_index flag is set, then we seek child content
-         */
-        if ($this->getConfig()['mode'] == Daux::LIVE_MODE
-            && !empty($this->getConfig()['live']['inherit_index'])
-            && $first_page = $this->seekFirstPage()
-        ) {
+        if ($this->getConfig()->shouldInheritIndex() && $first_page = $this->seekFirstPage()) {
             return $first_page;
         }
 
