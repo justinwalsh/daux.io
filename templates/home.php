@@ -43,13 +43,6 @@
 <div class="HomepageContent">
     <div class="container">
         <div class="container--inner">
-            <?php if ($params['html']['search']) {
-                ?>
-                <div id="tipue_search_content" style="display:none"></div>
-            <?php
-
-            } ?>
-
             <div class="doc_content s-content">
                 <?= $page['content']; ?>
             </div>

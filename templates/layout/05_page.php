@@ -100,13 +100,6 @@
     <div class="Columns__right <?= $params['html']['float'] ? 'Columns__right--float' : ''; ?>">
 
         <div class="Columns__right__content">
-            <?php if ($params['html']['search']) {
-                ?>
-                <div id="tipue_search_content" style="display:none"></div>
-            <?php
-
-            } ?>
-
             <div class="doc_content">
                 <?= $this->section('content'); ?>
             </div>

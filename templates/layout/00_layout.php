@@ -66,15 +66,12 @@
     <?php if ($params['html']['search']) {
         ?>
         <!-- Tipue Search -->
-        <script type="text/javascript" src="<?php echo $base_url; ?>tipuesearch/tipuesearch_set.js"></script>
-        <script type="text/javascript" src="<?php echo $base_url; ?>tipuesearch/tipuesearch.min.js"></script>
+        <script type="text/javascript" src="<?php echo $base_url; ?>tipuesearch/tipuesearch.js"></script>
 
         <script>
             window.onunload = function(){}; // force $(document).ready to be called on back/forward navigation in firefox
-            $(document).ready(function() {
-                $('#tipue_search_input').tipuesearch({
-                    'show': 10,
-                    'mode': 'json',
+            $(function() {
+                tipuesearch({
                     'base_url': '<?php echo $base_url?>'
                 });
             });
