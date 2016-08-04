@@ -90,14 +90,13 @@ class Config extends ArrayObject
 
     public function shouldInheritIndex()
     {
-        if (array_key_exists('html', $this) && array_key_exists('inherit_index', $this['html'])) {
-            return $this['html']['inherit_index'];
-        }
-
+        // As the global configuration is always present, we
+        // need to test for the existence of the legacy value
+        // first. Then use the current value.
         if (array_key_exists('live', $this) && array_key_exists('inherit_index', $this['live'])) {
             return $this['live']['inherit_index'];
         }
 
-        return false;
+        return $this['html']['inherit_index'];
     }
 }
