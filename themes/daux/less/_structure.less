@@ -46,10 +46,11 @@ html, body {
 
     &__trigger {
         padding: 7px 10px;
-        .kill-background-image;
-        .kill-box-shadow;
         background-color: @sidebar-hover;
         border: none;
+
+        .kill-background-image;
+        .kill-box-shadow;
 
         &--bar {
             display: block;
@@ -62,8 +63,8 @@ html, body {
         }
 
         &:hover {
-            .kill-box-shadow;
             background-color: @dark;
+            .kill-box-shadow;
 
             .icon-bar {
                 background-color: @light;
@@ -74,7 +75,6 @@ html, body {
 }
 
 @media screen and (min-width: 768px) {
-
     body {
         //Needed only for floating code blocks
         background-color: @light;
@@ -126,24 +126,11 @@ html, body {
 
         &__right {
             width: 75%;
+
             &__content {
                 padding: 20px;
                 min-height: 100%;
             }
         }
-    }
-}
-
-@media print {
-    .Columns__right {
-        width: 100% !important;
-    }
-
-    h1 a[href]::after {
-        font-size: 50%;
-    }
-
-    .hidden-print {
-        display: none;
     }
 }

@@ -87,6 +87,7 @@ Components
         // Set corners individual because sometimes a single button can be in a .btn-group and we need :first-child and :last-child to both match
         &:first-child {
             margin-left: 0;
+
             &:not(:last-child):not(.dropdown-toggle) {
                 .border-right-radius(0);
             }
@@ -111,10 +112,8 @@ Components
         font-size: 18px;
         line-height: 20px;
         height: @navbar-height;
-
         color: @light;
         text-shadow: none;
-
         font-family: @font-family-heading;
         font-weight: 700;
     }
@@ -225,7 +224,7 @@ Components
 }
 
 .Page__header {
-    margin: 0 0 10px 0;
+    margin: 0 0 10px;
     padding: 0;
     border-bottom: 1px solid #eee;
 
@@ -267,14 +266,12 @@ Components
     position: relative;
     float: right;
     margin: 8px 20px;
-    vertical-align: middle;
 
     &__field {
         display: block;
         width: 100%;
         height: 34px;
         padding: 6px 30px 6px 0;
-
         color: #555;
         background: #fff;
         border: 1px solid #ccc;
@@ -293,7 +290,6 @@ Components
         position: absolute;
         right: 9px;
         top: 9px;
-
         width: 16px;
         height: 16px;
     }
@@ -332,7 +328,6 @@ Components
         > a {
             display: inline-block;
             padding: 5px 14px;
-
             background-color: #fff;
             border: 1px solid #ddd;
             border-radius: 15px;

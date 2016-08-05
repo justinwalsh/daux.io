@@ -1,19 +1,16 @@
 {
   "name": "daux.io",
-  "version": "0.1.1",
+  "version": "0.3.0",
   "private": true,
   "devDependencies": {
-    "cssnano": "^3.5.2",
-    "grunt": "^0.4.1",
-    "grunt-php": "^1.0.0",
+    "cssnano": "^3.7.3",
     "gulp": "^3.9.1",
-    "gulp-connect-php": "^0.0.7",
-    "gulp-less": "^3.0.3",
+    "gulp-less": "^3.1.0",
     "gulp-plumber": "^1.1.0",
-    "gulp-postcss": "^6.1.0",
+    "gulp-postcss": "^6.1.1",
     "gulp-rename": "^1.2.2",
-    "gulp-sourcemaps": "^2.0.0-alpha",
-    "gulp-stylelint": "^2.0.2",
-    "stylelint-config-standard": "^6.0.0"
+    "gulp-sourcemaps": "^1.6.0",
+    "gulp-stylelint": "^3.0.0",
+    "stylelint-config-standard": "^12.0.0"
   }
 }

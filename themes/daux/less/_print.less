@@ -1,0 +1,20 @@
+@import "../../common/less/_print.less";
+
+.Pager { display: none; }
+
+.Columns__right {
+    width: 100% !important;
+}
+
+.s-content a::after {
+    content: " (" attr(href) ")";
+    font-size: 80%;
+    word-wrap: break-word; /* break long urls that donìt fit the page width */
+}
+
+/* Anchors don't need that */
+.s-content a[href^="#"]::after { content: ""; }
+
+h1 a[href]::after {
+    font-size: 50%;
+}

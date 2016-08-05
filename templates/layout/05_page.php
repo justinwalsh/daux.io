@@ -7,11 +7,11 @@
 
 } ?>
 
-<div class="Navbar hidden-print">
+<header class="Navbar hidden-print">
     <?php $this->insert('theme::partials/navbar_content', ['params' => $params]); ?>
-</div>
+</header>
 <div class="Columns content">
-    <div class="Columns__left hidden-print Collapsible">
+    <aside class="Columns__left Collapsible">
         <div class="Collapsible__container">
             <button type="button" class="Button Collapsible__trigger">
                 <span class="Collapsible__trigger--bar"></span>
@@ -93,12 +93,8 @@
             } ?>
             </div>
         </div>
-        <!-- For Mobile -->
-
-
-    </div>
+    </aside>
     <div class="Columns__right <?= $params['html']['float'] ? 'Columns__right--float' : ''; ?>">
-
         <div class="Columns__right__content">
             <div class="doc_content">
                 <?= $this->section('content'); ?>
