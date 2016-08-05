@@ -368,6 +368,17 @@ The `web.config` needs an entry for `<rewrite>` under `<system.webServer>`:
 
 To use clean URLs on IIS 6, you will need to use a custom URL rewrite module, such as [URL Rewriter](http://urlrewriter.net/).
 
+## Docker
+
+A docker configuration is also provided to run daux within a container, you can either run daux with php5 or php7.
+
+```
+cd docker
+docker-compose -f docker-compose.7.yml up -d
+```
+
+You can then point your browser to http://localhost:8086
+
 ## Compatibility
 
 Daux.io is compatible with PHP 5.5 and up.
