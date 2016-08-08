@@ -136,7 +136,9 @@ We have 4 built-in Bootstrap themes. To use one of the themes, just set the `the
 
 ```json
 {
-	"theme": "daux-blue"
+  "html": {
+    "theme": "daux-green"
+  }
 }
 ```
 
