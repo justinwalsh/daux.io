@@ -118,6 +118,17 @@ To export, run the `daux` command and your documentation will be generated in `s
 
 Now that you got the basics, you can also [see what you can configure](05_Configuration/_index.md)
 
+## PHP Requirements
+
+Daux.io is compatible with PHP 5.5 and up.
+
+The reason is because some dependencies we have (mainly Symfony and Guzzle) do not support php 5.4 anymore.
+
+### Extensions
+
+PHP Needs the following extension to work : `php-mbstring` and `php-xml`.
+
+If you encounter an error similar to `utf8_decode() not found` this means that you're missing the `php-xml` package. (We've seen it happen only on PHP 7)
 
 ## Known Issues
 
