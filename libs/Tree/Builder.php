@@ -110,7 +110,7 @@ class Builder
         }
 
         $uri = static::removeSortingInformations($name);
-        if ($config['mode'] === Daux::STATIC_MODE) {
+        if ($config->isStatic()) {
             $uri .= '.html';
         }
 
@@ -184,7 +184,7 @@ class Builder
         if (!$raw) {
             $title = static::getName($path);
             $uri = DauxHelper::slug($title);
-            if ($parent->getConfig()['mode'] === Daux::STATIC_MODE) {
+            if ($parent->getConfig()->isStatic()) {
                 $uri .= '.html';
             }
         }

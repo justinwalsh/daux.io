@@ -88,6 +88,16 @@ class Config extends ArrayObject
         return array_key_exists('languages', $this) && !empty($this['languages']);
     }
 
+    public function isLive()
+    {
+        return $this['mode'] == Daux::LIVE_MODE;
+    }
+
+    public function isStatic()
+    {
+        return $this['mode'] == Daux::STATIC_MODE;
+    }
+
     public function shouldInheritIndex()
     {
         // As the global configuration is always present, we

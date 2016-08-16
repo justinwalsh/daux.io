@@ -6,7 +6,7 @@ use League\CommonMark\Inline\Element\AbstractInline;
 use League\CommonMark\Inline\Element\Link;
 use Todaymade\Daux\Config;
 use Todaymade\Daux\DauxHelper;
-use Todaymade\Daux\Exception;
+use Todaymade\Daux\Exception\LinkNotFoundException;
 use Todaymade\Daux\Tree\Entry;
 
 class LinkRenderer extends \League\CommonMark\Inline\Renderer\LinkRenderer
@@ -24,7 +24,7 @@ class LinkRenderer extends \League\CommonMark\Inline\Renderer\LinkRenderer
     /**
      * @param string $url
      * @return Entry
-     * @throws Exception
+     * @throws LinkNotFoundException
      */
     protected function resolveInternalFile($url)
     {
@@ -55,14 +55,14 @@ class LinkRenderer extends \League\CommonMark\Inline\Renderer\LinkRenderer
             return $file;
         }
 
-        throw new Exception("Could not locate file '$url'");
+        throw new LinkNotFoundException("Could not locate file '$url'");
     }
 
     /**
      * @param AbstractInline|Link $inline
      * @param ElementRendererInterface $htmlRenderer
      * @return HtmlElement
-     * @throws Exception
+     * @throws LinkNotFoundException
      */
     public function render(AbstractInline $inline, ElementRendererInterface $htmlRenderer)
     {
@@ -81,15 +81,28 @@ class LinkRenderer extends \League\CommonMark\Inline\Renderer\LinkRenderer
 
         $url = $inline->getUrl();
 
-        // Absolute urls, empty urls and anchors
-        // should not go through the url resolver
-        if (empty($url) || $url[0] == '#' || preg_match('|^(?:[a-z]+:)?//|', $url)) {
+        // empty urls and anchors should
+        // not go through the url resolver
+        if (empty($url) || $url[0] == '#') {
             return $element;
         }
 
-        $file = $this->resolveInternalFile($url);
+        // Absolute urls, shouldn't either
+        if (preg_match('|^(?:[a-z]+:)?//|', $url)) {
+            $element->setAttribute('class', 'external');
+            return $element;
+        }
 
-        $url = DauxHelper::getRelativePath($this->daux->getCurrentPage()->getUrl(), $file->getUrl());
+        try {
+            $file = $this->resolveInternalFile($url);
+            $url = DauxHelper::getRelativePath($this->daux->getCurrentPage()->getUrl(), $file->getUrl());
+        } catch(LinkNotFoundException $e) {
+            if ($this->daux->isStatic()) {
+                throw $e;
+            }
+
+            $element->setAttribute('class', 'broken');
+        }
 
         $element->setAttribute('href', $url);
 
