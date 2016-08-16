@@ -8,7 +8,7 @@
             <?= date("l, F j, Y g:i A", $page['modified_time']); ?>
         </span>
         <?php } ?>
-        <?php if ($params['html']['edit_on_github']) { ?>
+        <?php if (array_key_exists('edit_on_github', $params['html']) && $params['html']['edit_on_github']) { ?>
         <span style="float: right; font-size: 10px; color: gray;">
             <a href="https://github.com/<?= $params['html']['edit_on_github'] ?>/<?= $page['relative_path'] ?>" target="_blank">Edit on GitHub</a>
         </span>
