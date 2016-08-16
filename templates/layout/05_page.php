@@ -1,12 +1,5 @@
 <?php $this->layout('theme::layout/00_layout') ?>
 
-<?php if ($params['html']['repo']) {
-    ?>
-    <a href="https://github.com/<?= $params['html']['repo']; ?>" target="_blank" id="github-ribbon" class="Github hidden-print"><img src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"></a>
-<?php
-
-} ?>
-
 <header class="Navbar hidden-print">
     <?php $this->insert('theme::partials/navbar_content', ['params' => $params]); ?>
 </header>

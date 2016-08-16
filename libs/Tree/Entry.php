@@ -140,6 +140,21 @@ abstract class Entry
     }
 
     /**
+     * Get the path to the file from the root of the documentation
+     *
+     * @return string
+     */
+    public function getRelativePath()
+    {
+        $root = $this;
+        while($root->getParent() != null) {
+            $root = $root->getParent();
+        }
+
+        return substr($this->path, strlen($root->getPath()) +1);
+    }
+
+    /**
      * @return SplFileInfo
      */
     public function getFileinfo()

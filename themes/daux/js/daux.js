@@ -1,47 +1,4 @@
 /** global localStorage */
-var _ = {};
-
-_.now = Date.now || function() {
-    return new Date().getTime();
-};
-
-_.debounce = function(func, wait, immediate) {
-    var timeout, args, context, timestamp;
-
-    var later = function() {
-        var last = _.now() - timestamp;
-
-        if (last < wait && last >= 0) {
-            timeout = setTimeout(later, wait - last);
-        } else {
-            timeout = null;
-            if (!immediate) {
-                func.apply(context, args);
-                if (!timeout) {
-                    context = args = null;
-                }
-            }
-        }
-    };
-
-    return function() {
-        context = this;
-        args = arguments;
-        timestamp = _.now();
-        var callNow = immediate && !timeout;
-        if (!timeout) {
-            timeout = setTimeout(later, wait);
-        }
-        if (callNow) {
-            func.apply(context, args);
-            context = args = null;
-        }
-
-        return true;
-    };
-};
-
-
 
 //Initialize CodeBlock Visibility Settings
 $(function () {
@@ -130,21 +87,5 @@ $(function () {
     $('.Collapsible__trigger').click(function () {
         $('.Collapsible__content').slideToggle();
     });
-
-    //Github ribbon placement
-    var ribbon = $('#github-ribbon');
-    function onResize() {
-        //Fix GitHub Ribbon overlapping Scrollbar
-        var a = $('article');
-        if (ribbon.length && a.length) {
-            if (a[0] && a[0].scrollHeight > $('.right-column').height()) {
-                ribbon[0].style.right = '16px';
-            } else {
-                ribbon[0].style.right = '';
-            }
-        }
-    }
-    $(window).resize(_.debounce(onResize, 100));
-    onResize();
 });
 

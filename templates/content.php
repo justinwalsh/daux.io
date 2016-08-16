@@ -1,20 +1,20 @@
 <?php $this->layout('theme::layout/05_page') ?>
 <article class="Page">
-    <?php if ($params['html']['date_modified']) {
-    ?>
-        <div class="Page__header">
-            <h1><?= $page['breadcrumbs'] ? $this->get_breadcrumb_title($page, $base_page) : $page['title'] ?></h1>
-        </div>
-    <?php
 
-} else {
-    ?>
-        <div class="Page__header">
-            <h1><?= $page['breadcrumbs'] ? $this->get_breadcrumb_title($page, $base_page) : $page['title'] ?></h1>
-        </div>
-    <?php
+    <div class="Page__header">
+        <h1><?= $page['breadcrumbs'] ? $this->get_breadcrumb_title($page, $base_page) : $page['title'] ?></h1>
+        <?php if ($params['html']['date_modified']) { ?>
+        <span style="float: left; font-size: 10px; color: gray;">
+            <?= date("l, F j, Y g:i A", $page['modified_time']); ?>
+        </span>
+        <?php } ?>
+        <?php if ($params['html']['edit_on_github']) { ?>
+        <span style="float: right; font-size: 10px; color: gray;">
+            <a href="https://github.com/<?= $params['html']['edit_on_github'] ?>/<?= $page['relative_path'] ?>" target="_blank">Edit on GitHub</a>
+        </span>
+        <?php } ?>
+    </div>
 
-} ?>
 
     <div class="s-content">
         <?= $page['content']; ?>

@@ -20,6 +20,7 @@
         "inherit_index": true,
 
         "repo": "justinwalsh/daux.io",
+        "edit_on_github": "justinwalsh/daux.io/blob/master/docs",
         "twitter": ["justin_walsh", "todaymade"],
         "google_analytics": "UA-12653604-10",
         "links": {
