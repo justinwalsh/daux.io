@@ -87,9 +87,18 @@ class LinkRenderer extends \League\CommonMark\Inline\Renderer\LinkRenderer
             return $element;
         }
 
+        // if there's a hash component in the url, ensure we
+        // don't put that part through the resolver.
+        $urlAndHash = explode("#", $url);
+        $url = $urlAndHash[0];
+
         $file = $this->resolveInternalFile($url);
 
         $url = DauxHelper::getRelativePath($this->daux->getCurrentPage()->getUrl(), $file->getUrl());
+
+        if(isset($urlAndHash[1])) {
+            $url .= "#" . $urlAndHash[1];
+        }
 
         $element->setAttribute('href', $url);
 
