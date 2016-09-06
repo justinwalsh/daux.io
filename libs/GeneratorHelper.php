@@ -1,34 +1,15 @@
 <?php namespace Todaymade\Daux;
 
+use RuntimeException;
+
 class GeneratorHelper
 {
-    /**
-     * Copy all files from $path to $local_base
-     *
-     * @param string $path
-     * @param string $local_base
-     */
-    public static function copyAssets($path, $local_base)
-    {
-        if (is_dir($path)) {
-            static::rmdir($path);
-        } else {
-            mkdir($path);
-        }
-
-        mkdir($path . DIRECTORY_SEPARATOR . 'themes');
-        static::copyRecursive(
-            $local_base . DIRECTORY_SEPARATOR . 'themes',
-            $path . DIRECTORY_SEPARATOR . 'themes'
-        );
-    }
-
     /**
      * Remove a directory recursively
      *
      * @param string $dir
      */
-    protected static function rmdir($dir)
+    public static function rmdir($dir)
     {
         $it = new \RecursiveDirectoryIterator($dir);
         $files = new \RecursiveIteratorIterator($it, \RecursiveIteratorIterator::CHILD_FIRST);
@@ -57,6 +38,11 @@ class GeneratorHelper
         }
 
         $dir = opendir($source);
+
+        if (!$dir) {
+            throw new RuntimeException("Cannot copy '$source' to '$destination'");
+        }
+
         while (false !== ($file = readdir($dir))) {
             if ($file != '.' && $file != '..') {
                 if (is_dir($source . DIRECTORY_SEPARATOR . $file)) {

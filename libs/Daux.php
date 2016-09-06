@@ -70,8 +70,10 @@ class Daux
      */
     public function initializeConfiguration($override_file = 'config.json')
     {
+        $params = $this->getParams();
+
         // Validate and set theme path
-        $this->getParams()->setDocumentationDirectory($docs_path = $this->normalizeDocumentationPath());
+        $params->setDocumentationDirectory($docs_path = $this->normalizeDocumentationPath());
 
         // Read documentation overrides
         $this->loadConfiguration($docs_path . DIRECTORY_SEPARATOR . 'config.json');
@@ -82,11 +84,12 @@ class Daux
         }
 
         // Validate and set theme path
-        $this->options['themes_path'] = $this->normalizeThemePath($this->getParams()->getThemesDirectory());
+        $params->setThemesPath($this->normalizeThemePath($params->getThemesDirectory()));
+
 
         // Set a valid default timezone
-        if (isset($this->options['timezone'])) {
-            date_default_timezone_set($this->options['timezone']);
+        if ($params->hasTimezone()) {
+            date_default_timezone_set($params->getTimezone());
         } elseif (!ini_get('date.timezone')) {
             date_default_timezone_set('GMT');
         }

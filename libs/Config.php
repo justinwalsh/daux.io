@@ -73,6 +73,14 @@ class Config extends ArrayObject
         return $this['themes_directory'];
     }
 
+    public function setThemesPath($themePath) {
+        $this['themes_path'] = $themePath;
+    }
+
+    public function getThemesPath() {
+        return $this['themes_path'];
+    }
+
     public function setFormat($format)
     {
         $this['format'] = $format;
@@ -81,6 +89,16 @@ class Config extends ArrayObject
     public function getFormat()
     {
         return $this['format'];
+    }
+
+    public function hasTimezone()
+    {
+        return isset($this['timezone']);
+    }
+
+    public function getTimezone()
+    {
+        return $this['timezone'];
     }
 
     public function isMultilanguage()

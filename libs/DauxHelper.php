@@ -30,7 +30,7 @@ class DauxHelper
             return;
         }
 
-        if (is_dir(realpath(($params['themes_path'] . DIRECTORY_SEPARATOR . $params['html']['theme'])))) {
+        if (is_dir(realpath(($params->getThemesPath() . DIRECTORY_SEPARATOR . $params['html']['theme'])))) {
             return;
         }
 
@@ -44,7 +44,7 @@ class DauxHelper
             $params['html']['theme'] = array_pop($theme);
         }
 
-        if (!is_dir(realpath(($params['themes_path'] . DIRECTORY_SEPARATOR . $params['html']['theme'])))) {
+        if (!is_dir(realpath(($params->getThemesPath() . DIRECTORY_SEPARATOR . $params['html']['theme'])))) {
             throw new \RuntimeException("Theme '{$params['html']['theme']}' not found");
         }
     }
@@ -58,8 +58,8 @@ class DauxHelper
     {
         self::resolveVariant($params);
 
-        $theme_folder = $params['themes_path'] . DIRECTORY_SEPARATOR . $params['html']['theme'];
-        $theme_url = $params['base_url'] . $params->getThemesDirectory() . '/' . $params['html']['theme'] . '/';
+        $theme_folder = $params->getThemesPath() . DIRECTORY_SEPARATOR . $params['html']['theme'];
+        $theme_url = $params['base_url'] . 'themes/' . $params['html']['theme'] . '/';
 
         $theme = [];
         if (is_file($theme_folder . DIRECTORY_SEPARATOR . 'config.json')) {

@@ -41,6 +41,29 @@ class Generator implements \Todaymade\Daux\Format\Base\Generator, LiveGenerator
         ];
     }
 
+    protected function ensureEmptyDestination($destination) {
+        if (is_dir($destination)) {
+            GeneratorHelper::rmdir($destination);
+        } else {
+            mkdir($destination);
+        }
+    }
+
+    /**
+     * Copy all files from $local to $destination
+     *
+     * @param string $destination
+     * @param string $local_base
+     */
+    protected function copyThemes($destination, $local_base)
+    {
+        mkdir($destination . DIRECTORY_SEPARATOR . 'themes');
+        GeneratorHelper::copyRecursive(
+            $local_base,
+            $destination . DIRECTORY_SEPARATOR . 'themes'
+        );
+    }
+
     public function generateAll(InputInterface $input, OutputInterface $output, $width)
     {
         $destination = $input->getOption('destination');
@@ -54,8 +77,10 @@ class Generator implements \Todaymade\Daux\Format\Base\Generator, LiveGenerator
             'Copying Static assets ...',
             $output,
             $width,
-            function () use ($destination) {
-                GeneratorHelper::copyAssets($destination, $this->daux->local_base);
+            function () use ($destination, $params) {
+                $this->ensureEmptyDestination($destination);
+
+                $this->copyThemes($destination, $params->getThemesPath());
             }
         );
 
