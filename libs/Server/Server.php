@@ -39,7 +39,7 @@ class Server
         $server = new static($daux);
 
         try {
-            $page = $server->handle($_REQUEST);
+            $page = $server->handle();
         } catch (NotFoundException $e) {
             http_response_code(404);
             $page = new ErrorPage('An error occured', $e->getMessage(), $daux->getParams());
@@ -106,22 +106,43 @@ class Server
     /**
      * Handle an incoming request
      *
-     * @param array $query
      * @return \Todaymade\Daux\Format\Base\Page
      * @throws Exception
      * @throws NotFoundException
      */
-    public function handle($query = [])
+    public function handle()
     {
         $this->params = $this->getParams();
 
         $request = $this->getRequest();
         $request = urldecode($request);
+
+        if (substr($request, 0, 7) == 'themes/') {
+            return $this->serveTheme(substr($request, 6));
+        }
+
         if ($request == 'index_page') {
             $request = $this->daux->tree->getIndexPage()->getUri();
         }
 
         return $this->getPage($request);
+    }
+
+    /**
+     * Handle a request on custom themes
+     *
+     * @return \Todaymade\Daux\Format\Base\Page
+     * @throws NotFoundException
+     */
+    public function serveTheme($request)
+    {
+        $file = $this->getParams()->getThemesPath() . $request;
+
+        if (file_exists($file)) {
+            return new RawPage($file);
+        }
+
+        throw new NotFoundException;
     }
 
     /**

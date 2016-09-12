@@ -44,7 +44,7 @@ class DauxHelper
             $params['html']['theme'] = array_pop($theme);
         }
 
-        if (!is_dir(realpath(($params->getThemesPath() . DIRECTORY_SEPARATOR . $params['html']['theme'])))) {
+        if (!is_dir(realpath($params->getThemesPath() . DIRECTORY_SEPARATOR . $params['html']['theme']))) {
             throw new \RuntimeException("Theme '{$params['html']['theme']}' not found");
         }
     }

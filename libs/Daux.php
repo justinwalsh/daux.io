@@ -86,7 +86,6 @@ class Daux
         // Validate and set theme path
         $params->setThemesPath($this->normalizeThemePath($params->getThemesDirectory()));
 
-
         // Set a valid default timezone
         if ($params->hasTimezone()) {
             date_default_timezone_set($params->getTimezone());
@@ -97,8 +96,14 @@ class Daux
 
     public function normalizeThemePath($path)
     {
+        // When running through `daux --serve` we set an environment variable to know where we started from
+        $env = getenv('DAUX_THEME');
+        if ($env && is_dir($env)) {
+            return $env;
+        }
+
         if (is_dir($path)) {
-            return $path;
+            return getcwd() . '/' . $path;
         }
 
         $newPath = $this->local_base . DIRECTORY_SEPARATOR . $path;

@@ -73,11 +73,13 @@ class Config extends ArrayObject
         return $this['themes_directory'];
     }
 
-    public function setThemesPath($themePath) {
+    public function setThemesPath($themePath)
+    {
         $this['themes_path'] = $themePath;
     }
 
-    public function getThemesPath() {
+    public function getThemesPath()
+    {
         return $this['themes_path'];
     }
 
