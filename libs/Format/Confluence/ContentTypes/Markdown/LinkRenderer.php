@@ -8,7 +8,7 @@ use League\CommonMark\Inline\Element\Link;
 class LinkRenderer extends \Todaymade\Daux\ContentTypes\Markdown\LinkRenderer
 {
     /**
-     * @param Link $inline
+     * @param AbstractInline|Link $inline
      * @param ElementRendererInterface $htmlRenderer
      *
      * @return HtmlElement
@@ -28,13 +28,17 @@ class LinkRenderer extends \Todaymade\Daux\ContentTypes\Markdown\LinkRenderer
 
         // Default handling
         $element = parent::render($inline, $htmlRenderer);
+
         $url = $inline->getUrl();
-        if (empty($url) || $url[0] != '!') {
+
+        // empty urls, anchors and absolute urls
+        // should not go through the url resolver
+        if (!$this->isValidUrl($url) || $this->isExternalUrl($url)) {
             return $element;
         }
 
         //Internal links
-        $file = $this->resolveInternalFile(ltrim($url, '!'));
+        $file = $this->resolveInternalFile($url);
 
         $link_props = [
             'ri:content-title' => trim($this->daux['confluence']['prefix']) . ' ' . $file->getTitle(),

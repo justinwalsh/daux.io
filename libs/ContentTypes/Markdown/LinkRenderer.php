@@ -58,6 +58,14 @@ class LinkRenderer extends \League\CommonMark\Inline\Renderer\LinkRenderer
         throw new LinkNotFoundException("Could not locate file '$url'");
     }
 
+    protected function isValidUrl($url) {
+        return !empty($url) && $url[0] != '#';
+    }
+
+    protected function isExternalUrl($url) {
+        return preg_match('|^(?:[a-z]+:)?//|', $url);
+    }
+
     /**
      * @param AbstractInline|Link $inline
      * @param ElementRendererInterface $htmlRenderer
@@ -83,12 +91,12 @@ class LinkRenderer extends \League\CommonMark\Inline\Renderer\LinkRenderer
 
         // empty urls and anchors should
         // not go through the url resolver
-        if (empty($url) || $url[0] == '#') {
+        if (!$this->isValidUrl($url)) {
             return $element;
         }
 
         // Absolute urls, shouldn't either
-        if (preg_match('|^(?:[a-z]+:)?//|', $url)) {
+        if ($this->isExternalUrl($url)) {
             $element->setAttribute('class', 'external');
             return $element;
         }
