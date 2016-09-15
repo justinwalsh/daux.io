@@ -42,9 +42,9 @@ class Serve extends DauxCommand
 
         putenv('DAUX_SOURCE=' . $daux->getParams()->getDocumentationDirectory());
         putenv('DAUX_THEME=' . $daux->getParams()->getThemesPath());
+        putenv('DAUX_CONFIGURATION=' . $daux->getParams()->getConfigurationOverrideFile());
 
-        //TODO :: support configuration and processor
-        //putenv('DAUX_CONFIGURATION=' . $daux->getParams()->getConfigurationFile());
+        //TODO :: support processor
         //putenv('DAUX_PROCESSOR=' . $daux->getParams()->getProcessorFile());
 
         $base = ProcessUtils::escapeArgument(__DIR__ . '/../../');

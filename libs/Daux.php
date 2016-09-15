@@ -68,7 +68,7 @@ class Daux
      * @param string $override_file
      * @throws Exception
      */
-    public function initializeConfiguration($override_file = 'config.json')
+    public function initializeConfiguration($override_file = null)
     {
         $params = $this->getParams();
 
@@ -79,8 +79,10 @@ class Daux
         $this->loadConfiguration($docs_path . DIRECTORY_SEPARATOR . 'config.json');
 
         // Read command line overrides
-        if (!is_null($override_file)) {
-            $this->loadConfiguration($this->local_base . DIRECTORY_SEPARATOR . $override_file);
+        $override_file = $this->getConfigurationOverride($override_file);
+        if ($override_file != null) {
+            $params->setConfigurationOverrideFile($override_file);
+            $this->loadConfiguration($override_file);
         }
 
         // Validate and set theme path
@@ -92,6 +94,30 @@ class Daux
         } elseif (!ini_get('date.timezone')) {
             date_default_timezone_set('GMT');
         }
+    }
+
+    public function getConfigurationOverride($override_file)
+    {
+        // When running through `daux --serve` we set an environment variable to know where we started from
+        $env = getenv('DAUX_CONFIGURATION');
+        if ($env && file_exists($env)) {
+            return $env;
+        }
+
+        if ($override_file == null) {
+            return null;
+        }
+
+        if (file_exists($override_file)) {
+            return getcwd() . '/' . $override_file;
+        }
+
+        $newPath = $this->local_base . DIRECTORY_SEPARATOR . $override_file;
+        if (file_exists($newPath)) {
+            return $newPath;
+        }
+
+        throw new Exception('The configuration override file does not exist. Check the path again : ' . $override_file);
     }
 
     public function normalizeThemePath($path)

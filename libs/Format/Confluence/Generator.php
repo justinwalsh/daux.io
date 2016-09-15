@@ -24,6 +24,34 @@ class Generator implements \Todaymade\Daux\Format\Base\Generator
     public function __construct(Daux $daux)
     {
         $this->daux = $daux;
+
+        $this->checkConfiguration();
+    }
+
+    public function checkConfiguration()
+    {
+        $config = $this->daux->getParams();
+        $confluence = $config->getConfluenceConfiguration();
+
+        if ($confluence == null) {
+            throw new \RuntimeException("You must specify your Confluence configuration");
+        }
+
+        $mandatory = ['space_id', 'base_url', 'user', 'pass', 'prefix'];
+        $errors = [];
+        foreach ($mandatory as $key) {
+            if (!array_key_exists($key, $confluence)) {
+                $errors[] = $key;
+            }
+        }
+
+        if (count($errors)) {
+            throw new \RuntimeException("The following options are mandatory for confluence : '" . join("', '", $errors) . "'");
+        }
+
+        if (!array_key_exists('ancestor_id', $confluence) && !array_key_exists('root_id', $confluence)) {
+            throw new \RuntimeException("You must specify an 'ancestor_id' or a 'root_id' for confluence.");
+        }
     }
 
     /**

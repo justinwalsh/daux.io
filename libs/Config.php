@@ -129,4 +129,23 @@ class Config extends ArrayObject
 
         return $this['html']['inherit_index'];
     }
+
+    public function setConfigurationOverrideFile($override_file)
+    {
+        $this['override_file'] = $override_file;
+    }
+
+    public function getConfigurationOverrideFile()
+    {
+        if (array_key_exists('override_file', $this)) {
+            return $this['override_file'];
+        }
+
+        return null;
+    }
+
+    public function getConfluenceConfiguration()
+    {
+        return $this['confluence'];
+    }
 }
