@@ -58,11 +58,13 @@ class LinkRenderer extends \League\CommonMark\Inline\Renderer\LinkRenderer
         throw new LinkNotFoundException("Could not locate file '$url'");
     }
 
-    protected function isValidUrl($url) {
+    protected function isValidUrl($url)
+    {
         return !empty($url) && $url[0] != '#';
     }
 
-    protected function isExternalUrl($url) {
+    protected function isExternalUrl($url)
+    {
         return preg_match('|^(?:[a-z]+:)?//|', $url);
     }
 
@@ -101,15 +103,24 @@ class LinkRenderer extends \League\CommonMark\Inline\Renderer\LinkRenderer
             return $element;
         }
 
+        // if there's a hash component in the url, ensure we
+        // don't put that part through the resolver.
+        $urlAndHash = explode("#", $url);
+        $url = $urlAndHash[0];
+
         try {
             $file = $this->resolveInternalFile($url);
             $url = DauxHelper::getRelativePath($this->daux->getCurrentPage()->getUrl(), $file->getUrl());
-        } catch(LinkNotFoundException $e) {
+        } catch (LinkNotFoundException $e) {
             if ($this->daux->isStatic()) {
                 throw $e;
             }
 
             $element->setAttribute('class', 'broken');
+        }
+
+        if (isset($urlAndHash[1])) {
+            $url .= "#" . $urlAndHash[1];
         }
 
         $element->setAttribute('href', $url);

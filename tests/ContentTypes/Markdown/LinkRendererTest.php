@@ -45,6 +45,9 @@ class LinkRendererTest extends \PHPUnit_Framework_TestCase
             ['<a href="Button.html">Link</a>', '[Link](./Button)', 'Widgets/Page.html'],
             ['<a href="Button.html">Link</a>', '[Link](!Widgets/Button)', 'Widgets/Page.html'],
 
+            ['<a href="Button.html#Test">Link</a>', '[Link](./Button#Test)', 'Widgets/Page.html'],
+            ['<a href="Button.html#Test">Link</a>', '[Link](!Widgets/Button#Test)', 'Widgets/Page.html'],
+
             // /Content/Page
             ['<a href="../Widgets/Button.html">Link</a>', '[Link](../Widgets/Button.md)', 'Content/Page.html'],
             ['<a href="../Widgets/Button.html">Link</a>', '[Link](!Widgets/Button)', 'Content/Page.html'],
