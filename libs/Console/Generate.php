@@ -19,6 +19,7 @@ class Generate extends DauxCommand
             ->addOption('source', 's', InputOption::VALUE_REQUIRED, 'Where to take the documentation from')
             ->addOption('format', 'f', InputOption::VALUE_REQUIRED, 'Output format, html or confluence', 'html')
             ->addOption('processor', 'p', InputOption::VALUE_REQUIRED, 'Manipulations on the tree')
+            ->addOption('themes', 't', InputOption::VALUE_REQUIRED, 'Set a different themes directory')
 
             // Confluence format only
             ->addOption('delete', null, InputOption::VALUE_NONE, 'Delete pages not linked to a documentation page (confluence)')

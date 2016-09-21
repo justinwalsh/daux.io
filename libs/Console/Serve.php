@@ -21,6 +21,7 @@ class Serve extends DauxCommand
             ->addOption('configuration', 'c', InputOption::VALUE_REQUIRED, 'Configuration file')
             ->addOption('source', 's', InputOption::VALUE_REQUIRED, 'Where to take the documentation from')
             ->addOption('processor', 'p', InputOption::VALUE_REQUIRED, 'Manipulations on the tree')
+            ->addOption('themes', 't', InputOption::VALUE_REQUIRED, 'Set a different themes directory')
 
             // Serve the current documentation
             ->addOption('serve', null, InputOption::VALUE_NONE, 'Serve the current directory')

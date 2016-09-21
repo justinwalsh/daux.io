@@ -20,6 +20,10 @@ class DauxCommand extends SymfonyCommand
             $daux->getParams()->setDocumentationDirectory($input->getOption('source'));
         }
 
+        if ($input->getOption('themes')) {
+            $daux->getParams()->setThemesDirectory($input->getOption('themes'));
+        }
+
         $daux->initializeConfiguration($input->getOption('configuration'));
 
         if ($input->hasOption('delete') && $input->getOption('delete')) {
