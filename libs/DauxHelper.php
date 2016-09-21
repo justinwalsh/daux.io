@@ -24,7 +24,7 @@ class DauxHelper
         $config['image'] = str_replace('<base_url>', $base_url, $config['image']);
     }
 
-    public static function resolveVariant(Config $params)
+    protected static function resolveVariant(Config $params)
     {
         if (array_key_exists('theme-variant', $params['html'])) {
             return;
@@ -54,7 +54,7 @@ class DauxHelper
      * @param string $current_url
      * @return array
      */
-    public static function getTheme(Config $params, $current_url)
+    protected static function getTheme(Config $params, $current_url)
     {
         self::resolveVariant($params);
 
@@ -437,5 +437,35 @@ class DauxHelper
         }
 
         return implode('/', $relPath);
+    }
+
+    public static function isAbsolutePath($path)
+    {
+        if (!is_string($path)) {
+            $mess = sprintf('String expected but was given %s', gettype($path));
+            throw new \InvalidArgumentException($mess);
+        }
+
+        if (!ctype_print($path)) {
+            $mess = 'Path can NOT have non-printable characters or be empty';
+            throw new \DomainException($mess);
+        }
+
+        // Optional wrapper(s).
+        $regExp = '%^(?<wrappers>(?:[[:print:]]{2,}://)*)';
+
+        // Optional root prefix.
+        $regExp .= '(?<root>(?:[[:alpha:]]:/|/)?)';
+
+        // Actual path.
+        $regExp .= '(?<path>(?:[[:print:]]*))$%';
+
+        $parts = [];
+        if (!preg_match($regExp, $path, $parts)) {
+            $mess = sprintf('Path is NOT valid, was given %s', $path);
+            throw new \DomainException($mess);
+        }
+
+        return '' !== $parts['root'];
     }
 }

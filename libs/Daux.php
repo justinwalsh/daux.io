@@ -73,7 +73,9 @@ class Daux
         $params = $this->getParams();
 
         // Validate and set theme path
-        $params->setDocumentationDirectory($docs_path = $this->normalizeDocumentationPath());
+        $params->setDocumentationDirectory(
+            $docs_path = $this->normalizeDocumentationPath($this->getParams()->getDocumentationDirectory())
+        );
 
         // Read documentation overrides
         $this->loadConfiguration($docs_path . DIRECTORY_SEPARATOR . 'config.json');
@@ -109,6 +111,10 @@ class Daux
         }
 
         if (file_exists($override_file)) {
+            if (DauxHelper::isAbsolutePath($override_file)) {
+                return $override_file;
+            }
+
             return getcwd() . '/' . $override_file;
         }
 
@@ -129,6 +135,10 @@ class Daux
         }
 
         if (is_dir($path)) {
+            if (DauxHelper::isAbsolutePath($path)) {
+                return $path;
+            }
+
             return getcwd() . '/' . $path;
         }
 
@@ -140,7 +150,7 @@ class Daux
         throw new Exception('The Themes directory does not exist. Check the path again : ' . $path);
     }
 
-    public function normalizeDocumentationPath()
+    public function normalizeDocumentationPath($path)
     {
         // When running through `daux --serve` we set an environment variable to know where we started from
         $env = getenv('DAUX_SOURCE');
@@ -148,8 +158,11 @@ class Daux
             return $env;
         }
 
-        $path = $this->getParams()->getDocumentationDirectory();
         if (is_dir($path)) {
+            if (DauxHelper::isAbsolutePath($path)) {
+                return $path;
+            }
+
             return getcwd() . '/' . $path;
         }
 
