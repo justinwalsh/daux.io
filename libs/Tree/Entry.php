@@ -147,11 +147,11 @@ abstract class Entry
     public function getRelativePath()
     {
         $root = $this;
-        while($root->getParent() != null) {
+        while ($root->getParent() != null) {
             $root = $root->getParent();
         }
 
-        return substr($this->path, strlen($root->getPath()) +1);
+        return substr($this->path, strlen($root->getPath()) + 1);
     }
 
     /**

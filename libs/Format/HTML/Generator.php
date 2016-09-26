@@ -41,7 +41,8 @@ class Generator implements \Todaymade\Daux\Format\Base\Generator, LiveGenerator
         ];
     }
 
-    protected function ensureEmptyDestination($destination) {
+    protected function ensureEmptyDestination($destination)
+    {
         if (is_dir($destination)) {
             GeneratorHelper::rmdir($destination);
         } else {

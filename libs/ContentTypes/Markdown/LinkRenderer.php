@@ -100,12 +100,13 @@ class LinkRenderer extends \League\CommonMark\Inline\Renderer\LinkRenderer
         // Absolute urls, shouldn't either
         if ($this->isExternalUrl($url)) {
             $element->setAttribute('class', 'external');
+
             return $element;
         }
 
         // if there's a hash component in the url, ensure we
         // don't put that part through the resolver.
-        $urlAndHash = explode("#", $url);
+        $urlAndHash = explode('#', $url);
         $url = $urlAndHash[0];
 
         try {
@@ -120,7 +121,7 @@ class LinkRenderer extends \League\CommonMark\Inline\Renderer\LinkRenderer
         }
 
         if (isset($urlAndHash[1])) {
-            $url .= "#" . $urlAndHash[1];
+            $url .= '#' . $urlAndHash[1];
         }
 
         $element->setAttribute('href', $url);

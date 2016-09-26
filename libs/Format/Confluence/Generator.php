@@ -34,7 +34,7 @@ class Generator implements \Todaymade\Daux\Format\Base\Generator
         $confluence = $config->getConfluenceConfiguration();
 
         if ($confluence == null) {
-            throw new \RuntimeException("You must specify your Confluence configuration");
+            throw new \RuntimeException('You must specify your Confluence configuration');
         }
 
         $mandatory = ['space_id', 'base_url', 'user', 'pass', 'prefix'];
@@ -46,7 +46,7 @@ class Generator implements \Todaymade\Daux\Format\Base\Generator
         }
 
         if (count($errors)) {
-            throw new \RuntimeException("The following options are mandatory for confluence : '" . join("', '", $errors) . "'");
+            throw new \RuntimeException("The following options are mandatory for confluence : '" . implode("', '", $errors) . "'");
         }
 
         if (!array_key_exists('ancestor_id', $confluence) && !array_key_exists('root_id', $confluence)) {

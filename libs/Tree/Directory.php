@@ -2,7 +2,6 @@
 
 use ArrayIterator;
 use RuntimeException;
-use Todaymade\Daux\Daux;
 
 class Directory extends Entry implements \ArrayAccess, \IteratorAggregate
 {
