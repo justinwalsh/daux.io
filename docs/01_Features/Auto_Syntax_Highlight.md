@@ -1,4 +1,6 @@
-With the help of [highlight.js](https://highlightjs.org/) We can higlight more than 50 languages.
+With the help of [highlight.js](https://highlightjs.org/) We can highlight more than 150 languages.
+
+To be precise, we support all languages supported by highlight.js `9.7.0`.
 
 Here is a quick example :
 
@@ -18,4 +20,4 @@ Here is a quick example :
       <!-- here goes the rest of the page -->
     </body>
 
-[See the full list of supported languages in Daux.io](../02_Examples/Code_Highlighting.md)
+[See more examples of supported languages](../02_Examples/Code_Highlighting.md)
