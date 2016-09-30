@@ -1,5 +1,7 @@
 <?php namespace Todaymade\Daux\Console;
 
+use Symfony\Component\Console\Input\ArgvInput;
+use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -31,6 +33,17 @@ class Generate extends DauxCommand
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        // When used as a default command,
+        // Symfony doesn't read the default parameters.
+        // This will parse the parameters
+        if ($input instanceof ArrayInput) {
+            $argv = $_SERVER['argv'];
+            $argv[0] = $this->getName();
+            array_unshift($argv, 'binary_name');
+
+            $input = new ArgvInput($argv, $this->getDefinition());
+        }
+
         $daux = $this->prepareDaux($input);
 
         $width = $this->getApplication()->getTerminalDimensions()[0];
