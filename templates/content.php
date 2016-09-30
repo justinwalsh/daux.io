@@ -8,9 +8,11 @@
             <?= date("l, F j, Y g:i A", $page['modified_time']); ?>
         </span>
         <?php } ?>
-        <?php if (array_key_exists('edit_on_github', $params['html']) && $params['html']['edit_on_github']) { ?>
+        <?php
+        $edit_on = $params->getHTML()->getEditOn();
+        if ($edit_on) { ?>
         <span style="float: right; font-size: 10px; color: gray;">
-            <a href="https://github.com/<?= $params['html']['edit_on_github'] ?>/<?= $page['relative_path'] ?>" target="_blank">Edit on GitHub</a>
+            <a href="<?= $edit_on['basepath'] ?>/<?= $page['relative_path'] ?>" target="_blank">Edit on <?= $edit_on['name'] ?></a>
         </span>
         <?php } ?>
     </div>
