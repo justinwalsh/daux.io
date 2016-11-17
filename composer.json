@@ -26,7 +26,6 @@
     },
     "autoload": {
         "psr-4": {
-            "Todaymade\\Daux\\Extension\\": "daux/",
             "Todaymade\\Daux\\": "libs/"
         }
     },

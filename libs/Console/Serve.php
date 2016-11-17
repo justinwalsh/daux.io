@@ -17,7 +17,6 @@ class Serve extends DauxCommand
             ->setName('serve')
             ->setDescription('Serve documentation')
 
-
             ->addOption('configuration', 'c', InputOption::VALUE_REQUIRED, 'Configuration file')
             ->addOption('source', 's', InputOption::VALUE_REQUIRED, 'Where to take the documentation from')
             ->addOption('processor', 'p', InputOption::VALUE_REQUIRED, 'Manipulations on the tree')
@@ -44,9 +43,7 @@ class Serve extends DauxCommand
         putenv('DAUX_SOURCE=' . $daux->getParams()->getDocumentationDirectory());
         putenv('DAUX_THEME=' . $daux->getParams()->getThemesPath());
         putenv('DAUX_CONFIGURATION=' . $daux->getParams()->getConfigurationOverrideFile());
-
-        //TODO :: support processor
-        //putenv('DAUX_PROCESSOR=' . $daux->getParams()->getProcessorFile());
+		putenv('DAUX_EXTENSION=' . DAUX_EXTENSION);
 
         $base = ProcessUtils::escapeArgument(__DIR__ . '/../../');
         $binary = ProcessUtils::escapeArgument((new PhpExecutableFinder)->find(false));
@@ -61,18 +58,6 @@ class Serve extends DauxCommand
             }
         } else {
             passthru("{$binary} -S {$host}:{$port} {$base}/index.php");
-        }
-    }
-
-    protected function prepareProcessor(Daux $daux, InputInterface $input, OutputInterface $output, $width)
-    {
-        if ($input->getOption('processor')) {
-            $daux->getParams()['processor'] = $input->getOption('processor');
-        }
-
-        $class = $daux->getProcessorClass();
-        if (!empty($class)) {
-            $daux->setProcessor(new $class($daux, $output, $width));
         }
     }
 }
