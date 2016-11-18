@@ -31,7 +31,7 @@ class ConfigTest extends \PHPUnit_Framework_TestCase
             // Support any provider
             [
                 ['edit_on' => ['name' => 'Bitbucket', 'basepath' => 'https://bitbucket.org/onigoetz/daux.io/src/master/docs/']],
-                ['name' => 'Bitbucket', 'basepath' => 'https://bitbucket.org/onigoetz/daux.io/src/master/docs/']
+                ['name' => 'Bitbucket', 'basepath' => 'https://bitbucket.org/onigoetz/daux.io/src/master/docs']
             ]
         ];
     }
