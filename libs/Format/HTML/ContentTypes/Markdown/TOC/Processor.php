@@ -113,6 +113,8 @@ class Processor implements DocumentProcessorInterface
     }
 
     /**
+     * Make a tree of the list of headings
+     *
      * @param Entry[] $headings
      * @return RootEntry
      */
@@ -125,7 +127,7 @@ class Processor implements DocumentProcessorInterface
                 $parent = $previous;
                 do {
                     $parent = $parent->getParent();
-                } while ($heading->getLevel() <= $parent->getLevel() || $parent->getLevel() != 0);
+                } while ($heading->getLevel() <= $parent->getLevel() && $parent->getLevel() != 0);
 
                 $parent->addChild($heading);
                 $previous = $heading;
