@@ -106,7 +106,7 @@ class Processor implements DocumentProcessorInterface
             }
         }
 
-        $text = 'page_' . DauxHelper::slug(trim($text));
+        $text = 'page_' . urlencode(trim($text));
 
         // TODO :: check for uniqueness
         $node->data['attributes']['id'] = $text;
