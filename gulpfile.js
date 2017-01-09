@@ -4,7 +4,6 @@ var cssnano = require('cssnano'),
     rename = require('gulp-rename'),
     plumber = require('gulp-plumber'),
     postcss = require('gulp-postcss'),
-    sourcemaps = require('gulp-sourcemaps'),
     stylelint = require('gulp-stylelint');
 
 var resources = {
@@ -40,15 +39,11 @@ var cssnanoOptions = {
 
 function createCSSTask(source, dest) {
     return function () {
-
-
         return gulp.src(source)
-            //.pipe(sourcemaps.init())
             .pipe(plumber())
             .pipe(less())
             .pipe(postcss([cssnano(cssnanoOptions)]))
             .pipe(rename({suffix: '.min'}))
-            //.pipe(sourcemaps.write())
             .pipe(gulp.dest(dest));
     }
 }
