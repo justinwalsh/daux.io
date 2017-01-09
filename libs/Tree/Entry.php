@@ -189,4 +189,8 @@ abstract class Entry
             'path' => $this->path,
         ];
     }
+
+    public function isHotPath(Entry $node = null) {
+        return $this->parent->isHotPath($node ?: $this);
+    }
 }

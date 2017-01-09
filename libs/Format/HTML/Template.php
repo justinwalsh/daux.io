@@ -119,18 +119,16 @@ class Template
                 $nav[] = [
                     'title' => $node->getTitle(),
                     'href' => $base_page . $link,
-                    'class' => $current_url === $link ? 'Nav__item--active' : '',
+                    'class' => $node->isHotPath() ? 'Nav__item--active' : '',
                 ];
             } elseif ($node instanceof Directory) {
                 if (!$node->hasContent()) {
                     continue;
                 }
 
-                $link = ($path === '') ? $url : $path . '/' . $url;
-
                 $folder = [
                     'title' => $node->getTitle(),
-                    'class' => strpos($current_url, $link) === 0 ? 'Nav__item--open' : '',
+                    'class' => $node->isHotPath() ? 'Nav__item--open' : '',
                 ];
 
                 if ($index = $node->getIndexPage()) {

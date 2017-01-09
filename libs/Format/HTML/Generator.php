@@ -189,6 +189,8 @@ class Generator implements \Todaymade\Daux\Format\Base\Generator, LiveGenerator
                             return;
                         }
 
+                        $this->daux->tree->setActiveNode($node);
+
                         $generated = $this->generateOne($node, $params);
                         file_put_contents($output_dir . DIRECTORY_SEPARATOR . $key, $generated->getContent());
                         if ($index_pages) {

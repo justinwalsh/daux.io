@@ -157,6 +157,8 @@ class Server
             throw new NotFoundException('The Page you requested is yet to be made. Try again later.');
         }
 
+        $this->daux->tree->setActiveNode($file);
+
         $generator = $this->daux->getGenerator();
 
         if (!$generator instanceof LiveGenerator) {
