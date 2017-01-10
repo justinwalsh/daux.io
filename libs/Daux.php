@@ -229,7 +229,8 @@ class Daux
         $this->tree = new Root($this->getParams());
         Builder::build($this->tree, $this->options['ignore']);
 
-        if (!empty($this->options['languages'])) {
+        // Apply the language name as Section title
+        if ($this->options->isMultilanguage()) {
             foreach ($this->options['languages'] as $key => $node) {
                 $this->tree->getEntries()[$key]->setTitle($node);
             }

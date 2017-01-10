@@ -9,18 +9,17 @@ class ContentPage extends \Todaymade\Daux\Format\Base\ContentPage
 
     private function isHomepage()
     {
+        // If we don't have the auto_landing parameter, we don't want any homepage
         if (array_key_exists('auto_landing', $this->params['html']) && !$this->params['html']['auto_landing']) {
             return false;
         }
 
+        // If the current page isn't the index, no chance it is the landing page
         if ($this->file->getParent()->getIndexPage() != $this->file) {
             return false;
         }
 
-        if ($this->params->isMultilanguage()) {
-            return $this->file->getParent()->getParent() instanceof Root;
-        }
-
+        // If the direct parent is root, this is the homage
         return $this->file->getParent() instanceof Root;
     }
 

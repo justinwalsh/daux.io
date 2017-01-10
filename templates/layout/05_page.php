@@ -20,7 +20,7 @@
             $path = '';
 
             if ($page['language'] !== '') {
-                $rendertree = $tree->value[$page['language']];
+                $rendertree = $tree[$page['language']];
                 $path = $page['language'];
             }
 
