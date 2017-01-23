@@ -65,7 +65,7 @@ class LinkRenderer extends \League\CommonMark\Inline\Renderer\LinkRenderer
 
     protected function isExternalUrl($url)
     {
-        return preg_match('|^(?:[a-z]+:)?//|', $url);
+        return preg_match('|^(?:[a-z]+:)?//|', $url) || substr($url, 0, 7) == "mailto:";
     }
 
     /**
