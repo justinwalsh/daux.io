@@ -51,6 +51,9 @@ class LinkRendererTest extends \PHPUnit_Framework_TestCase
             // /Content/Page
             ['<a href="../Widgets/Button.html">Link</a>', '[Link](../Widgets/Button.md)', 'Content/Page.html'],
             ['<a href="../Widgets/Button.html">Link</a>', '[Link](!Widgets/Button)', 'Content/Page.html'],
+
+            // Mailto links
+            ['<a href="mailto:me@mydomain.com" class="external">me@mydomain.com</a>', '[me@mydomain.com](mailto:me@mydomain.com)', 'Content/Page.html'],
         ];
     }
 
