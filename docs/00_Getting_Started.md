@@ -132,7 +132,7 @@ If you encounter an error similar to `utf8_decode() not found` this means that y
 
 ## Known Issues
 
-- __Windows UTF-8 files support__ Files with UTF-8 characters cannot be handled on windows, this issue has no known fix yet.
+- __Windows UTF-8 files support__ Files with UTF-8 characters cannot be handled on windows with PHP5, PHP7 should work fine.
 
 
 ## Support
