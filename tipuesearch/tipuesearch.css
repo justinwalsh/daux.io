@@ -5,6 +5,10 @@ Tipue Search is released under the MIT License
 http://www.tipue.com/search
 */
 
+body.with-search {
+    overflow: hidden;
+}
+
 /* bootstrap overrides the search field so let's undo that */
 input[type="search"] {
     -webkit-appearance: searchfield;
@@ -28,8 +32,7 @@ input[type="search"]::-webkit-search-cancel-button {
     z-index: 100;
     position:absolute;
     top: 50px;
-    left: 50%;
-    margin-left: -300px;
+    left: 0;
     bottom: 0;
 
     overflow: auto;
@@ -71,6 +74,18 @@ input[type="search"]::-webkit-search-cancel-button {
     font-size:15px;
     line-height: 1.7;
     color: #555;
+}
+
+.tipue_close {
+    border: 0 transparent solid;
+    background: none;
+
+    float: right;
+    font-size: 2em;
+    cursor: pointer;
+    padding: 0;
+    margin: 0;
+    line-height: .8em;
 }
 
 .tipue_search_content_title {
@@ -197,6 +212,14 @@ input[type="search"]::-webkit-search-cancel-button {
     }
 }
 
+@media (min-width: 650px) {
+    #tipue_search_content {
+        width: 650px;
+
+        left: 50%;
+        margin-left: -325px;
+    }
+}
 
 
 
