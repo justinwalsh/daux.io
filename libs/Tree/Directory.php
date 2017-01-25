@@ -25,6 +25,11 @@ class Directory extends Entry implements \ArrayAccess, \IteratorAggregate
         foreach ($this->children as $key => $entry) {
             $name = $entry->getName();
 
+            if ($name == '_directory' && $entry->getTitle() != '') {
+              $this->title = $entry->getTitle();
+              continue;
+            }
+
             if ($name == 'index' || $name == '_index') {
                 $buckets['index'][$key] = $entry;
                 continue;
