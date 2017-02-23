@@ -32,22 +32,17 @@ html, body {
 }
 
 .Collapsible {
-    &__container {
-        padding: 10px 15px;
-        display: block;
-        background-color: @lines;
-        border-bottom: 1px solid @lines;
-    }
-
     //mobile friendly sub-nav
     &__content {
         display: none;
     }
 
     &__trigger {
+        margin: 12px;
         padding: 7px 10px;
-        background-color: @sidebar-hover;
+        background-color: transparent;
         border: none;
+        float: right;
 
         .kill-background-image;
         .kill-box-shadow;
@@ -58,16 +53,16 @@ html, body {
             height: 2px;
             margin-top: 2px;
             margin-bottom: 3px;
-            background-color: @dark;
+            background-color: @light;
             .kill-box-shadow;
         }
 
         &:hover {
-            background-color: @dark;
+            background-color: @sidebar-hover;
             .kill-box-shadow;
 
-            .icon-bar {
-                background-color: @light;
+            .Collapsible__trigger--bar {
+                background-color: @dark;
                 .kill-box-shadow;
             }
         }
@@ -82,13 +77,13 @@ html, body {
 
     .Navbar {
         position: fixed;
-        z-index: @zindex-navbar-fixed;
+        z-index: 1030;
         width: 100%;
     }
 
     .Collapsible {
-        &__container {
-            display: none;
+        &__trigger {
+            display: none !important;
         }
 
         &__content {
@@ -98,7 +93,6 @@ html, body {
 
     .Columns {
         height: 100%;
-        padding-top: @navbar-height;
 
         &::after,
         &::before {
@@ -128,7 +122,7 @@ html, body {
             width: 75%;
 
             &__content {
-                padding: 20px;
+                padding: 0 20px 20px;
                 min-height: 100%;
             }
         }

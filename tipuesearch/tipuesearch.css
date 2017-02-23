@@ -9,21 +9,7 @@ body.with-search {
     overflow: hidden;
 }
 
-/* bootstrap overrides the search field so let's undo that */
-input[type="search"] {
-    -webkit-appearance: searchfield;
-}
-
-input[type="search"]::-webkit-search-cancel-button {
-    -webkit-appearance: searchfield-cancel-button;
-}
-
-#tipue_search_input {
-    width: 170px;
-    font-size: medium;
-}
-
-#tipue_search_content {
+.SearchResults {
     background: #fff;
     max-width: 650px;
     padding: 15px;
@@ -31,20 +17,20 @@ input[type="search"]::-webkit-search-cancel-button {
 
     z-index: 100;
     position:absolute;
-    top: 50px;
+    top: 0;
     left: 0;
     bottom: 0;
 
     overflow: auto;
 }
 
-#tipue_search_backdrop {
+.SearchResultsBackdrop {
     z-index: 90;
 
     width:100%;
 
     position:absolute;
-    top: 50px;
+    top: 0;
     left: 0;
     bottom: 0;
 
@@ -52,7 +38,22 @@ input[type="search"]::-webkit-search-cancel-button {
     opacity: .6;
 }
 
-#tipue_search_warning {
+
+.homepage .SearchResults,
+.homepage .SearchResultsBackdrop {
+    top: 50px;
+}
+
+.homepage .SearchResults .Search__field {
+    display: none;
+}
+
+.SearchResults .Search__field {
+    width: 40%;
+    float: left;
+}
+
+.SearchResults__warning {
     font-weight:300;
     font-size:15px;
     line-height: 1.6;
@@ -60,23 +61,23 @@ input[type="search"]::-webkit-search-cancel-button {
     margin: 7px 0;
 }
 
-#tipue_search_warning a {
+.SearchResults__warning a {
     color: #396;
     text-decoration: none;
 }
 
-#tipue_search_warning a:hover {
+.SearchResults__warning a:hover {
     color: #555;
 }
 
-#tipue_search_results_count {
+.SearchResults__count {
     font-weight:300;
     font-size:15px;
     line-height: 1.7;
     color: #555;
 }
 
-.tipue_close {
+.SearchResults__close {
     border: 0 transparent solid;
     background: none;
 
@@ -88,23 +89,23 @@ input[type="search"]::-webkit-search-cancel-button {
     line-height: .8em;
 }
 
-.tipue_search_content_title {
+.SearchResults__title {
     font-weight:300;
     font-size:21px;
     line-height: 1.7;
     margin-top: 23px;
 }
 
-.tipue_search_content_title a {
+.SearchResults__title a {
     color: #333;
     text-decoration: none;
 }
 
-.tipue_search_content_title a:hover {
+.SearchResults__title a:hover {
     color: #555;
 }
 
-.tipue_search_content_url {
+.SearchResults__url {
     font-weight:300;
     font-size:14px;
     line-height: 1.9;
@@ -112,16 +113,16 @@ input[type="search"]::-webkit-search-cancel-button {
     hyphens: auto;
 }
 
-.tipue_search_content_url a {
+.SearchResults__url a {
     color: #396;
     text-decoration: none;
 }
 
-.tipue_search_content_url a:hover {
+.SearchResults__url a:hover {
     color: #555;
 }
 
-.tipue_search_content_text {
+.SearchResults__text {
     font-weight:300;
     font-size:15px;
     line-height: 1.6;
@@ -131,7 +132,7 @@ input[type="search"]::-webkit-search-cancel-button {
     margin-top: 3px;
 }
 
-.tipue_search_content_debug {
+.SearchResults__debug {
     font-weight:300;
     font-size:13px;
     line-height: 1.6;
@@ -139,21 +140,21 @@ input[type="search"]::-webkit-search-cancel-button {
     margin: 5px 0;
 }
 
-.h01 {
+.SearchResults__highlight {
     color: #333;
     font-weight: 400;
 }
 
-#tipue_search_foot {
+.SearchResults__footer {
     margin: 51px 0 21px 0;
     padding: 0 10px;
 }
 
-#tipue_search_foot_boxes li {
+.SearchResults__footer__links li {
     margin: 0 4px;
 }
 
-#tipue_search_foot_boxes li.current {
+.SearchResults__footer__links li.current {
     display: inline-block;
     padding: 5px 14px;
     border-radius: 15px;
@@ -166,54 +167,8 @@ input[type="search"]::-webkit-search-cancel-button {
 
 /* spinner */
 
-.tipue_search_spinner {
-    padding: 31px 0;
-    width: 50px;
-    height: 28px;
-}
-
-.tipue_search_spinner > div {
-    background-color: #777;
-    height: 100%;
-    width: 3px;
-    display: inline-block;
-    margin-right: 2px;
-    -webkit-animation: stretchdelay 1.2s infinite ease-in-out;
-    animation: stretchdelay 1.2s infinite ease-in-out;
-}
-
-.tipue_search_spinner .tipue_search_rect2 {
-    -webkit-animation-delay: -1.1s;
-    animation-delay: -1.1s;
-}
-
-.tipue_search_spinner .tipue_search_rect3 {
-    -webkit-animation-delay: -1.0s;
-    animation-delay: -1.0s;
-}
-
-@-webkit-keyframes stretchdelay {
-    0%, 40%, 100% {
-        -webkit-transform: scaleY(0.4)
-    }
-    20% {
-        -webkit-transform: scaleY(1.0)
-    }
-}
-
-@keyframes stretchdelay {
-    0%, 40%, 100% {
-        transform: scaleY(0.4);
-        -webkit-transform: scaleY(0.4);
-    }
-    20% {
-        transform: scaleY(1.0);
-        -webkit-transform: scaleY(1.0);
-    }
-}
-
 @media (min-width: 650px) {
-    #tipue_search_content {
+    .SearchResults {
         width: 650px;
 
         left: 50%;

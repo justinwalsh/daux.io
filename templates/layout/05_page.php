@@ -1,17 +1,13 @@
 <?php $this->layout('theme::layout/00_layout') ?>
-
-<header class="Navbar hidden-print">
-    <?php $this->insert('theme::partials/navbar_content', ['params' => $params]); ?>
-</header>
 <div class="Columns content">
     <aside class="Columns__left Collapsible">
-        <div class="Collapsible__container">
-            <button type="button" class="Button Collapsible__trigger">
-                <span class="Collapsible__trigger--bar"></span>
-                <span class="Collapsible__trigger--bar"></span>
-                <span class="Collapsible__trigger--bar"></span>
-            </button>
-        </div>
+        <button type="button" class="Button Collapsible__trigger">
+            <span class="Collapsible__trigger--bar"></span>
+            <span class="Collapsible__trigger--bar"></span>
+            <span class="Collapsible__trigger--bar"></span>
+        </button>
+
+        <?php $this->insert('theme::partials/navbar_content', ['params' => $params]); ?>
 
         <div class="Collapsible__content">
             <!-- Navigation -->
