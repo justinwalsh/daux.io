@@ -27,6 +27,9 @@
             foreach ($page['entry_page'] as $key => $node) {
                 echo '<a href="' . $node . '" class="Button Button--primary Button--hero">' . $key . '</a>';
             }
+            foreach ($params['html']['buttons'] as $name => $link ) {
+                echo '<a href="' . $link . '" class="Button Button--primary Button--hero">' . $name . '</a>';
+            }
             ?>
             <div class="clearfix"></div>
         </div>
