@@ -33,6 +33,7 @@
         "search": true,
         "auto_toc": false,
         "inherit_index": false,
+        "jump_buttons": true,
 
         "repo": "",
         "twitter": [],
