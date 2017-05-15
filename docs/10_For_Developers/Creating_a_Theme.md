@@ -8,20 +8,20 @@ Here is an example `config.json` file :
 
 ```json
 {
-    "favicon": "<theme_url>img/favicon.png",
-    "css": ["<theme_url>css/theme.min.css"],
-    "js": [],
-    "fonts": ["https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700&subset=latin,cyrillic-ext,cyrillic"],
-    "variants": {
-        "blue": {
-            "favicon": "<theme_url>img/favicon-blue.png",
-            "css": ["<theme_url>css/theme-blue.min.css"]
-        },
-        "green": {
-            "favicon": "<theme_url>img/favicon-green.png",
-            "css": ["<theme_url>css/theme-green.min.css"]
-        }
+  "favicon": "<theme_url>img/favicon.png",
+  "css": ["<theme_url>css/theme.min.css"],
+  "js": [],
+  "fonts": ["https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700&subset=latin,cyrillic-ext,cyrillic"],
+  "variants": {
+    "blue": {
+      "favicon": "<theme_url>img/favicon-blue.png",
+      "css": ["<theme_url>css/theme-blue.min.css"]
+    },
+    "green": {
+      "favicon": "<theme_url>img/favicon-green.png",
+      "css": ["<theme_url>css/theme-green.min.css"]
     }
+  }
 }
 ```
 
@@ -63,9 +63,9 @@ Change the `theme` option inside `html`
 
 ```json
 {
-    "html": {
-        "theme": "{theme}-{variant}"
-    }
+  "html": {
+    "theme": "{theme}-{variant}"
+  }
 }
 ```
 

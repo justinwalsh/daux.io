@@ -5,7 +5,7 @@ Change the title bar in the docs
 
 ```json
 {
-    "title": "Daux.io"
+  "title": "Daux.io"
 }
 ```
 
@@ -14,7 +14,7 @@ Change the tagline bar in the docs
 
 ```json
 {
-    "tagline": "The Easiest Way To Document Your Project"
+  "tagline": "The Easiest Way To Document Your Project"
 }
 ```
 
@@ -23,7 +23,7 @@ Change the documentation's author
 
 ```json
 {
-    "author": "Stéphane Goetz"
+  "author": "Stéphane Goetz"
 }
 ```
 
@@ -31,12 +31,12 @@ Change the documentation's author
 Set custom files and entire folders to ignore within your `/docs` folder. For files make sure to include the file extension in the name. For both files and folders, names are case-sensitive.
 
 ```json
-    {
-        "ignore": {
-            "files": ["Work_In_Progress.md"],
-            "folders": ["99_Not_Ready"]
-        }
-    }
+{
+  "ignore": {
+    "files": ["Work_In_Progress.md"],
+    "folders": ["99_Not_Ready"]
+  }
+}
 ```
 
 ### Timezone
@@ -44,7 +44,7 @@ If your server does not have a default timezone set in php.ini, it may return er
 
 ```json
 {
-    "timezone": "America/Los_Angeles"
+  "timezone": "America/Los_Angeles"
 }
 ```
 
@@ -53,7 +53,7 @@ Enables multi-language support which needs separate directories for each languag
 
 ```json
 {
-    "languages": { "en": "English", "de": "German" }
+  "languages": {"en": "English", "de": "German"}
 }
 ```
 
@@ -85,7 +85,7 @@ be read by the integrated web server. And you set the other formats (like conflu
 
 ```json
 {
-    "format": "html"
+  "format": "html"
 }
 ```
 
@@ -96,6 +96,6 @@ More information on how to create a Processor can be found [here](!For_Developer
  
 ```json
 {
-    "processor": "MyProcessor"
+  "processor": "MyProcessor"
 }
 ```

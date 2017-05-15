@@ -20,9 +20,9 @@ To enable the same, set the toggle in the `config.json` file in the `/docs` fold
 
 ```json
 {
-    "live": {
-	    "clean_urls": true
-	}
+  "live": {
+    "clean_urls": true
+  }
 }
 ```
 

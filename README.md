@@ -137,9 +137,7 @@ We have 4 built-in Bootstrap themes. To use one of the themes, just set the `the
 
 ```json
 {
-  "html": {
-    "theme": "daux-green"
-  }
+  "html": { "theme": "daux-green" }
 }
 ```
 
@@ -148,7 +146,7 @@ To use a custom theme, just copy over the theme folder as well as the `.thm` fil
 
 ```json
 {
-	"theme": "new-theme",
+  "html": { "theme": "new-theme" }
 }
 ```
 
@@ -157,7 +155,7 @@ By default your code blocks will be floated to a column on the right side of you
 
 ```json
 {
-	"float": false
+  "html": { "float": false }
 }
 ```
 
@@ -166,7 +164,7 @@ Some users might wish to hide the code blocks & view just the documentation. By 
 
 ```json
 {
-	"toggle_code": true
+  "html": { "toggle_code": true }
 }
 ```
 
@@ -176,7 +174,7 @@ Add a 'Fork me on GitHub' ribbon.
 
 ```json
 {
-	"repo": "justinwalsh/daux.io"
+  "html": { "repo": "justinwalsh/daux.io" }
 }
 ```
 
@@ -185,7 +183,7 @@ Include twitter follow buttons in the sidebar.
 
 ```json
 {
-	"twitter": ["justin_walsh", "todaymade"]
+  "html": { "twitter": ["justin_walsh", "todaymade"] }
 }
 ```
 
@@ -194,11 +192,13 @@ Include custom links in the sidebar.
 
 ```json
 {
-	"links": {
-		"GitHub Repo": "https://github.com/justinwalsh/daux.io",
-		"Help/Support/Bugs": "https://github.com/justinwalsh/daux.io/issues",
-		"Made by Todaymade": "http://todaymade.com"
-	}
+  "html": {
+    "links": {
+      "GitHub Repo": "https://github.com/justinwalsh/daux.io",
+      "Help/Support/Bugs": "https://github.com/justinwalsh/daux.io/issues",
+      "Made by Todaymade": "http://todaymade.com"
+    }
+  }
 }
 ```
 
@@ -207,7 +207,7 @@ This will embed the google analytics tracking code.
 
 ```json
 {
-	"google_analytics": "UA-XXXXXXXXX-XX"
+  "html": { "google_analytics": "UA-XXXXXXXXX-XX" }
 }
 ```
 
@@ -216,7 +216,7 @@ This will embed the piwik tracking code.
 
 ```json
 {
-	"piwik_analytics": "my-url-for-piwik.com"
+  "html": { "piwik_analytics": "my-url-for-piwik.com" }
 }
 ```
 
@@ -224,20 +224,8 @@ You can Also give a specific Piwik ID as well.
 
 ```json
 {
-	"piwik_analytics_id": "43"
+  "html": { "piwik_analytics_id": "43" }
 }
-```
-
-### Ignore
-Set custom files and entire folders to ignore within your `/docs` folder. For files make sure to include the file extension in the name. For both files and folders, names are case-sensitive.
-
-```json
-	{
-		"ignore": {
-			"files": ["Work_In_Progress.md"],
-			"folders": ["99_Not_Ready"]
-		}
-	}
 ```
 
 ### Breadcrumb titles
@@ -245,8 +233,10 @@ Daux.io provides the option to present page titles as breadcrumb navigation. You
 
 ```json
 {
-		"breadcrumbs": true,
-		"breadcrumb_separator" : " > "
+  "html": {
+    "breadcrumbs": true,
+    "breadcrumb_separator" : " > "
+  }
 }
 ```
 
@@ -255,16 +245,7 @@ By default, daux.io will display the last modified time as reported by the syste
 
 ```json
 {
-	"date_modified": false
-}
-```
-
-### Timezone
-If your server does not have a default timezone set in php.ini, it may return errors when it tries to generate the last modified date/time for docs. To fix these errors, specify a timezone in your config file. Valid options are available in the [PHP Manual](http://php.net/manual/en/timezones.php).
-
-```json
-{
-        "timezone": "America/Los_Angeles"
+  "html": { "date_modified": false }
 }
 ```
 
@@ -273,9 +254,28 @@ This feature will instructs the navigation generator to seek the first available
 
 ```json
 {
-        "html": {
-        	"inherit_index": true
-        }
+  "html": { "inherit_index": true }
+}
+```
+
+### Ignore
+Set custom files and entire folders to ignore within your `/docs` folder. For files make sure to include the file extension in the name. For both files and folders, names are case-sensitive.
+
+```json
+{
+  "ignore": {
+    "files": ["Work_In_Progress.md"],
+    "folders": ["99_Not_Ready"]
+  }
+}
+```
+
+### Timezone
+If your server does not have a default timezone set in php.ini, it may return errors when it tries to generate the last modified date/time for docs. To fix these errors, specify a timezone in your config file. Valid options are available in the [PHP Manual](http://php.net/manual/en/timezones.php).
+
+```json
+{
+  "timezone": "America/Los_Angeles"
 }
 ```
 
@@ -284,7 +284,7 @@ Enables multi-language support which needs seperate directories for each languag
 
 ```json
 {
-        "languages": { "en": "English", "de": "German" }
+  "languages": { "en": "English", "de": "German" }
 }
 ```
 

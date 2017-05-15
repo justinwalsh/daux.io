@@ -4,7 +4,7 @@ Add this to your config.json :
 
 ```json
 {
-    "languages": { "en": "English", "de": "German" }
+  "languages": { "en": "English", "de": "German" }
 }
 ```
 

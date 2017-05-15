@@ -18,9 +18,9 @@ You can enable this feature in your configuration
 
 ```json
 {
-    "html": {
-        "auto_toc": true
-    }
+  "html": {
+    "auto_toc": true
+  }
 }
 ```
 
