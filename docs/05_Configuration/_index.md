@@ -1,5 +1,9 @@
 To customize the look and feel of your documentation, you can create a `config.json` file in the of the `/docs` folder. The `config.json` file is a JSON object that you can use to change some of the basic settings of the documentation.
 
+__Table of contents__
+
+[TOC]
+
 ### Title
 Change the title bar in the docs
 
@@ -26,6 +30,30 @@ Change the documentation's author
   "author": "Stéphane Goetz"
 }
 ```
+
+### Image
+An image to show on the landing page. A relative path from the documentation root.
+
+```json
+{
+  "image": "image.png"
+}
+```
+
+### Format
+Change the output format. It is recommended you set only formats that support the live mode as this will also
+be read by the integrated web server. And you set the other formats (like confluence) only by command line
+
+```json
+{
+  "format": "html"
+}
+```
+
+- __html__ with [its options](./Html_export.md)
+- __confluence__ with [its options](./Confluence_upload.md)
+
+Available formats are __HTML__ and __Confluence__
 
 ### Ignore
 Set custom files and entire folders to ignore within your `/docs` folder. For files make sure to include the file extension in the name. For both files and folders, names are case-sensitive.
@@ -77,16 +105,6 @@ Directory structure:
 │   │   ├── 05_More_Examples
 │   │   │   ├── Hello_World.md
 │   │   │   ├── 05_Code_Highlighting.md
-```
-
-### Format
-Change the output format. It is recommended you set only formats that support the live mode as this will also
-be read by the integrated web server. And you set the other formats (like confluence) only by command line
-
-```json
-{
-  "format": "html"
-}
 ```
 
 ### Processor

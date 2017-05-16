@@ -1,3 +1,7 @@
+__Table of contents__
+
+[TOC]
+
 ## Configuring the connection
 The connection requires three parameters `base_url`, `user` and `pass`. While `user` and `pass` don't really need an explanation, for `base_url` you need to set the path to the server without `rest/api`, this will be added automatically.
 
@@ -36,7 +40,7 @@ Because confluence can't have two pages with the same name in a space, I recomme
 
 ```json
 {
-  "confluence": { "prefix": "[DAUX]" }
+  "confluence": { "prefix": "DAUX -" }
 }
 ```
 
