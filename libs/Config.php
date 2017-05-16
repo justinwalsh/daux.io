@@ -5,6 +5,11 @@ use Todaymade\Daux\Format\HTML\Config as HTMLConfig;
 
 class Config extends BaseConfig
 {
+    public function getTitle()
+    {
+        return $this['title'];
+    }
+
     public function getCurrentPage()
     {
         return $this['current_page'];

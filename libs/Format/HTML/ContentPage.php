@@ -9,11 +9,6 @@ class ContentPage extends \Todaymade\Daux\Format\Base\ContentPage
 
     private function isHomepage()
     {
-        // If we don't have the auto_landing parameter, we don't want any homepage
-        if (array_key_exists('auto_landing', $this->params['html']) && !$this->params['html']['auto_landing']) {
-            return false;
-        }
-
         // If the current page isn't the index, no chance it is the landing page
         if ($this->file->getParent()->getIndexPage() != $this->file) {
             return false;
@@ -21,6 +16,15 @@ class ContentPage extends \Todaymade\Daux\Format\Base\ContentPage
 
         // If the direct parent is root, this is the homage
         return $this->file->getParent() instanceof Root;
+    }
+
+    private function isLanding() {
+        // If we don't have the auto_landing parameter, we don't want any homepage
+        if (array_key_exists('auto_landing', $this->params['html']) && !$this->params['html']['auto_landing']) {
+            return false;
+        }
+
+        return $this->homepage;
     }
 
     private function initialize()
@@ -91,12 +95,16 @@ class ContentPage extends \Todaymade\Daux\Format\Base\ContentPage
         if ($page['breadcrumbs']) {
             $page['breadcrumb_trail'] = $this->getBreadcrumbTrail($this->file->getParents(), $params->isMultilanguage());
             $page['breadcrumb_separator'] = $params['html']['breadcrumb_separator'];
+
+            if ($this->homepage) {
+                $page['breadcrumb_trail'] = [$this->file->getTitle() => ''];
+            }
         }
 
         $context = ['page' => $page, 'params' => $params];
 
         $template = new Template($params['templates'], $params['theme']['templates']);
 
-        return $template->render($this->homepage ? 'theme::home' : 'theme::content', $context);
+        return $template->render($this->isLanding() ? 'theme::home' : 'theme::content', $context);
     }
 }

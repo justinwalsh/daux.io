@@ -117,7 +117,7 @@ class Builder
 
         if ($entry->getUri() == $config['index_key']) {
             if ($parent instanceof Root) {
-                $entry->setTitle($config['title']);
+                $entry->setTitle($config->getTitle());
             } else {
                 $entry->setTitle($parent->getTitle());
             }
