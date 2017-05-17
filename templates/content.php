@@ -22,8 +22,7 @@
         <?= $page['content']; ?>
     </div>
 
-    <?php if ($params['html']['jump_buttons'] && (!empty($page['prev']) || !empty($page['next']))) {
-    ?>
+    <?php if ((!isset($params['html']['jump_buttons']) || $params['html']['jump_buttons']) && (!empty($page['prev']) || !empty($page['next']))) {?>
     <nav>
         <ul class="Pager">
             <?php if (!empty($page['prev'])) {
