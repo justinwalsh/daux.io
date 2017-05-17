@@ -22,7 +22,10 @@
         <?= $page['content']; ?>
     </div>
 
-    <?php if ($params['html']['jump_buttons'] && (!empty($page['prev']) || !empty($page['next']))) {
+    <?php
+    $buttons = (!empty($page['prev']) || !empty($page['next']));
+    $has_option = array_key_exists('jump_buttons', $params['html']);
+    if ($buttons && (($has_option && $params['html']['jump_buttons']) || !$has_option)) {
     ?>
     <nav>
         <ul class="Pager">
