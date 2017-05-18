@@ -1,8 +1,8 @@
 # Daux.io
 
 
-[![Latest Version](https://img.shields.io/github/release/justinlwalsh/daux.io.svg?style=flat-square)](https://github.com/justinlwalsh/daux.io/releases)
-[![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](https://github.com/justinlwalsh/daux.io/blob/master/LICENSE.md)
+[![Latest Version](https://img.shields.io/github/release/justinwalsh/daux.io.svg?style=flat-square)](https://github.com/justinwalsh/daux.io/releases)
+[![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](https://github.com/justinwalsh/daux.io/blob/master/LICENSE.md)
 [![Build Status](https://img.shields.io/travis/onigoetz/daux.io/master.svg?style=flat-square)](https://travis-ci.org/onigoetz/daux.io)
 [![Coverage Status](https://img.shields.io/scrutinizer/coverage/g/onigoetz/daux.io.svg?style=flat-square)](https://scrutinizer-ci.com/g/onigoetz/daux.io/code-structure)
 [![Quality Score](https://img.shields.io/scrutinizer/g/onigoetz/daux.io.svg?style=flat-square)](https://scrutinizer-ci.com/g/onigoetz/daux.io)
