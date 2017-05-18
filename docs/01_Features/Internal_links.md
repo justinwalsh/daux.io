@@ -10,13 +10,13 @@ If your file structure looks like this:
 ```
 ├── 00_Getting_Started.md
 ├── 01_Features
-│   ├── 01_GitHub_Flavored_Markdown.md
+│   ├── CommonMark_compliant.md
 ├── 02_Examples
 │   ├── Hello_World.md
 │   ├── 05_Code_Highlighting.md
 ```
 
-From the page `01_Features/01_GitHub_Flavored_Markdown.md`, all the following links would be valid:
+From the page `01_Features/CommonMark_compliant.md`, all the following links would be valid:
 
     [Getting Started](../00_Getting_Started.md)
     [Getting Started](../00_Getting_Started.html)

@@ -9,12 +9,13 @@
 [![Total Downloads](https://img.shields.io/packagist/dt/justinwalsh/daux.io.svg?style=flat-square)](https://packagist.org/packages/justinwalsh/daux.io)
 
 
-**Daux.io** is an documentation generator that uses a simple folder structure and Markdown files to create custom documentation on the fly. It helps you create great looking documentation in a developer friendly way.
+**Daux.io** is a documentation generator that uses a simple folder structure and Markdown files to create custom documentation on the fly. It helps you create great looking documentation in a developer friendly way.
 
 ## Features
 
 * 100% Mobile Responsive
-* Supports GitHub Flavored Markdown
+* CommonMark compliant (a Markdown specification)
+* Supports Markdown tables
 * Auto created homepage/landing page
 * Auto Syntax Highlighting
 * Auto Generated Navigation

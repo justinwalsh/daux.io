@@ -8,7 +8,7 @@
 
 * [Auto Generated Navigation / Page sorting](01_Features/Navigation_and_Sorting.md)
 * [Internal documentation links](01_Features/Internal_links.md)
-* [Github Flavored Markdown](01_Features/GitHub_Flavored_Markdown.md)
+* [CommonMark compliant](01_Features/CommonMark_compliant.md)
 * [Auto created homepage/landing page](01_Features/Landing_page.md)
 * [Multiple Output Formats](01_Features/Multiple_Output_Formats.md)
 * [Multiple Languages Support](01_Features/Multilanguage.md)

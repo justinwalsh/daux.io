@@ -15,7 +15,7 @@ You will the need separate directories for each language in `docs/` folder.
 │   ├── en
 │   │   ├── 00_Getting_Started.md
 │   │   ├── 01_Examples
-│   │   │   ├── 01_GitHub_Flavored_Markdown.md
+│   │   │   ├── 01_CommonMark_compliant.md
 │   │   │   ├── 05_Code_Highlighting.md
 │   │   ├── 05_More_Examples
 │   │   │   ├── Hello_World.md
@@ -23,7 +23,7 @@ You will the need separate directories for each language in `docs/` folder.
 │   ├── de
 │   │   ├── 00_Getting_Started.md
 │   │   ├── 01_Examples
-│   │   │   ├── 01_GitHub_Flavored_Markdown.md
+│   │   │   ├── 01_CommonMark_compliant.md
 │   │   │   ├── 05_Code_Highlighting.md
 │   │   ├── 05_More_Examples
 │   │   │   ├── Hello_World.md
