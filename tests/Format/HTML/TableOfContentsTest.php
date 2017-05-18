@@ -31,14 +31,56 @@ EXPECTED;
     function testUnicodeTOC() {
         $converter = new CommonMarkConverter(['daux' => new MainConfig]);
 
-        $source = "[TOC]\n# 基础操作";
+        $source = "[TOC]\n# 基础操作\n# 操作基础";
         $expected = <<<EXPECTED
 <ul class="TableOfContents">
 <li>
-<p><a href="#page_%E5%9F%BA%E7%A1%80%E6%93%8D%E4%BD%9C">基础操作</a></p>
+<p><a href="#page_section_1">基础操作</a></p>
+</li>
+<li>
+<p><a href="#page_section_2">操作基础</a></p>
 </li>
 </ul>
-<h1 id="page_%E5%9F%BA%E7%A1%80%E6%93%8D%E4%BD%9C">基础操作</h1>
+<h1 id="page_section_1">基础操作</h1>
+<h1 id="page_section_2">操作基础</h1>
+
+EXPECTED;
+
+        $this->assertEquals($expected, $converter->convertToHtml($source));
+    }
+
+    function testDuplicatedTOC() {
+        $converter = new CommonMarkConverter(['daux' => new MainConfig]);
+
+        $source = "[TOC]\n# Test\n# Test";
+        $expected = <<<EXPECTED
+<ul class="TableOfContents">
+<li>
+<p><a href="#page_Test">Test</a></p>
+</li>
+<li>
+<p><a href="#page_Test-2">Test</a></p>
+</li>
+</ul>
+<h1 id="page_Test">Test</h1>
+<h1 id="page_Test-2">Test</h1>
+
+EXPECTED;
+
+        $this->assertEquals($expected, $converter->convertToHtml($source));
+    }
+
+    function testEscapedTOC() {
+        $converter = new CommonMarkConverter(['daux' => new MainConfig]);
+
+        $source = "[TOC]\n# TEST : Test";
+        $expected = <<<EXPECTED
+<ul class="TableOfContents">
+<li>
+<p><a href="#page_TEST-Test">TEST : Test</a></p>
+</li>
+</ul>
+<h1 id="page_TEST-Test">TEST : Test</h1>
 
 EXPECTED;
 

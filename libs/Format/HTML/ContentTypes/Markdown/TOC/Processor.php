@@ -42,6 +42,7 @@ class Processor implements DocumentProcessorInterface
 
         $headings = [];
 
+        $document->heading_ids = [];
         $walker = $document->walker();
         while ($event = $walker->next()) {
             $node = $event->getNode();
@@ -55,7 +56,7 @@ class Processor implements DocumentProcessorInterface
                 continue;
             }
 
-            $this->ensureHeadingHasId($node);
+            $this->ensureHeadingHasId($document, $node);
             $headings[] = new Entry($node);
         }
 
@@ -72,21 +73,49 @@ class Processor implements DocumentProcessorInterface
         }
     }
 
+    protected function escaped($url) {
+        $url = trim($url);
+        $url = preg_replace('~[^\\pL0-9_]+~u', '-', $url);
+        $url = trim($url, "-");
+        $url = iconv("utf-8", "us-ascii//TRANSLIT", $url);
+        $url = preg_replace('~[^-a-zA-Z0-9_]+~', '', $url);
+
+        return $url;
+    }
+
+    protected function getUniqueId(Document $document, $proposed) {
+        if ($proposed == "page_") {
+            $proposed = "page_section_" . (count($document->heading_ids) + 1);
+        }
+
+        // Quick path, it's a unique ID
+        if (!in_array($proposed, $document->heading_ids)) {
+            $document->heading_ids[] = $proposed;
+            return $proposed;
+        }
+
+        $extension = 1; // Initialize the variable at one, so on the first iteration we have 2
+        do {
+            $extension++;
+        } while (in_array("$proposed-$extension", $document->heading_ids));
+
+        return "$proposed-$extension";
+    }
+
     /**
      * @param Heading $node
      */
-    protected function ensureHeadingHasId(Heading $node)
+    protected function ensureHeadingHasId(Document $document, Heading $node)
     {
-        // If the node has an ID, no need to generate it
+        // If the node has an ID, no need to generate it, just check it's unique
         $attributes = $node->getData('attributes', []);
         if (array_key_exists('id', $attributes) && !empty($attributes['id'])) {
-            // TODO :: check for uniqueness
+            $node->data['attributes']['id'] =  $this->getUniqueId($document, $attributes['id']);
 
             return;
         }
 
         // Well, seems we have to generate an ID
-
         $walker = $node->walker();
         $inside = [];
         while ($event = $walker->next()) {
@@ -106,10 +135,7 @@ class Processor implements DocumentProcessorInterface
             }
         }
 
-        $text = 'page_' . urlencode(trim($text));
-
-        // TODO :: check for uniqueness
-        $node->data['attributes']['id'] = $text;
+        $node->data['attributes']['id'] =  $this->getUniqueId($document,'page_'. $this->escaped($text));
     }
 
     /**
