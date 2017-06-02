@@ -1,0 +1,7 @@
+{
+  "name": "Credoc",
+  "description": "Test",
+  "repository": "https://github.com/duonglna/daux.io",
+  "logo": "http://credoc.herokuapp.com/node.png",
+  "keywords": ["node", "express", "static"]
+}
