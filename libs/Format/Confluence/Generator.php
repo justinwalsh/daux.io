@@ -121,10 +121,6 @@ class Generator implements \Todaymade\Daux\Format\Base\Generator
                     'page' => ContentPage::fromFile($node, $params, $contentType),
                 ];
 
-                // As the page is lazily generated
-                // We do it now to fail fast in case of problem
-                $data['page']->getContent();
-
                 if ($key == 'index.html') {
                     $final['title'] = $this->prefix . $tree->getTitle();
                     $final['file'] = $node;

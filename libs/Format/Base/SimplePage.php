@@ -4,7 +4,6 @@ abstract class SimplePage implements Page
 {
     protected $title;
     protected $content;
-    protected $generated = null;
 
     public function __construct($title, $content)
     {
@@ -18,11 +17,7 @@ abstract class SimplePage implements Page
 
     public function getContent()
     {
-        if (is_null($this->generated)) {
-            $this->generated = $this->generatePage();
-        }
-
-        return $this->generated;
+        return $this->generatePage();
     }
 
     protected function initializePage($title, $content)

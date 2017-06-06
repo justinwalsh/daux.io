@@ -1,5 +1,6 @@
 <?php namespace Todaymade\Daux\Tree;
 
+use RuntimeException;
 use Webuni\FrontMatter\FrontMatter;
 
 class Content extends ContentAbstract
@@ -19,20 +20,32 @@ class Content extends ContentAbstract
     /** @var bool */
     protected $manuallySetContent = false;
 
+    protected function getFrontMatter()
+    {
+        $content = null;
+        if ($this->manuallySetContent) {
+            $content = $this->content;
+        } else if (!$this->getPath()) {
+            throw new RuntimeException("Empty content");
+        } else {
+            $content = file_get_contents($this->getPath());
+        }
+
+        $frontMatter = new FrontMatter();
+
+        if (substr($content, 0, 3) == "\xef\xbb\xbf") {
+            $content = substr($content, 3);
+        }
+
+        return $frontMatter->parse($content);
+    }
+
     /**
      * @return string
      */
     public function getContent()
     {
-        if (!$this->content && !$this->manuallySetContent) {
-            $this->content = file_get_contents($this->getPath());
-        }
-
-        if ($this->attributes === null) {
-            $this->parseAttributes();
-        }
-
-        return $this->content;
+        return $this->getFrontMatter()->getContent();
     }
 
     /**
@@ -101,17 +114,8 @@ class Content extends ContentAbstract
         // is called in "getContent"
         $this->attributes = [];
 
-        $frontMatter = new FrontMatter();
-
-        $content = $this->getContent();
-        if (substr($content, 0, 3) == "\xef\xbb\xbf") {
-            $content = substr($content, 3);
-        }
-
-        $document = $frontMatter->parse($content);
-
+        $document = $this->getFrontMatter();
         $this->attributes = array_replace_recursive($this->attributes, $document->getData());
-        $this->setContent($document->getContent());
     }
 
     public function setAttributes(array $attributes)

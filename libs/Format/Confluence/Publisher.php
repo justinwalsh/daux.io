@@ -219,13 +219,13 @@ class Publisher
         }
     }
 
-    protected function shouldUpdate($local, $published)
+    protected function shouldUpdate($local, $local_content, $published)
     {
         if (!array_key_exists('content', $published)) {
             return true;
         }
 
-        $trimmed_local = trim($local->getContent());
+        $trimmed_local = trim($local_content);
         $trimmed_distant = trim($published['content']);
 
         if ($trimmed_local == $trimmed_distant) {
@@ -272,13 +272,14 @@ class Publisher
         $this->run(
             '- ' . $this->niceTitle($entry['file']->getUrl()),
             function () use ($entry, $published, $parent_id) {
-                if ($this->shouldUpdate($entry['page'], $published)) {
+                $generated_content = $entry['page']->getContent();
+                if ($this->shouldUpdate($entry['page'], $generated_content, $published)) {
                     $this->client->updatePage(
                         $parent_id,
                         $published['id'],
                         $published['version'] + 1,
                         $entry['title'],
-                        $entry['page']->getContent()
+                        $generated_content
                     );
                 }
             }
