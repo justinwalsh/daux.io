@@ -1,4 +1,7 @@
 <?php $this->layout('theme::layout/00_layout') ?>
+
+<?php $this->start('classes') ?>homepage<?php $this->stop() ?>
+
 <div class="Navbar hidden-print">
     <div class="container">
         <?php $this->insert('theme::partials/navbar_content', ['params' => $params]); ?>

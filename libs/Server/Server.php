@@ -4,6 +4,7 @@ use Symfony\Component\Console\Output\NullOutput;
 use Todaymade\Daux\Daux;
 use Todaymade\Daux\DauxHelper;
 use Todaymade\Daux\Exception;
+use Todaymade\Daux\Format\Base\ComputedRawPage;
 use Todaymade\Daux\Format\Base\LiveGenerator;
 use Todaymade\Daux\Format\HTML\RawPage;
 
@@ -59,7 +60,12 @@ class Server
             return;
         }
 
-        header('Content-type: text/html; charset=utf-8');
+        if ($page instanceof ComputedRawPage) {
+            header('Content-type: ' . MimeType::get($page->getFilename()));
+        } else {
+            header('Content-type: text/html; charset=utf-8');
+        }
+
         echo $page->getContent();
     }
 

@@ -11,6 +11,11 @@ abstract class ComputedRawPage implements Page
         $this->raw = $content;
     }
 
+    public function getFilename()
+    {
+        return $this->raw->getUri();
+    }
+
     public function getContent()
     {
         return $this->raw->getContent();

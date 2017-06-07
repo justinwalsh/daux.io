@@ -229,7 +229,8 @@ class Api
         // Check if an attachment with
         // this name is uploaded
         try {
-            $result = json_decode($this->getClient()->get("content/$id/child/attachment?filename=$attachment[filename]")->getBody(), true);
+            $url = "content/$id/child/attachment?filename=" . urlencode($attachment['filename']);
+            $result = json_decode($this->getClient()->get($url)->getBody(), true);
         } catch (BadResponseException $e) {
             throw $this->handleError($e);
         }
@@ -242,11 +243,13 @@ class Api
             $url .= "/{$result['results'][0]['id']}/data";
         }
 
+        $contents = array_key_exists('file', $attachment) ? fopen($attachment['file']->getPath(), 'r') : $attachment['content'];
+
         try {
             $this->getClient()->post(
                 $url,
                 [
-                    'multipart' => [['name' => 'file', 'contents' => fopen($attachment['file']->getPath(), 'r')]],
+                    'multipart' => [['name' => 'file', 'contents' => $contents, 'filename' => $attachment['filename']]],
                     'headers' => ['X-Atlassian-Token' => 'nocheck'],
                 ]
             );

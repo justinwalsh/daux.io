@@ -78,7 +78,7 @@ style_tasks.push('lint-css');
 
 gulp.task("styles", style_tasks);
 
-gulp.task('watch', function () {
+gulp.task('watch', ['default'], function () {
     // Watch .less files
     gulp.watch('themes/**/less/**/*.less', ['styles']);
 });

@@ -37,7 +37,7 @@
     <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
 </head>
-<body class="<?= $params['html']['float'] ? 'with-float' : ''; ?>">
+<body class="<?= $params['html']['float'] ? 'with-float' : ''; ?> <?= $this->section('classes'); ?>">
     <?= $this->section('content'); ?>
 
     <?php
