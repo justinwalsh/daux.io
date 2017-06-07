@@ -163,7 +163,7 @@ The Grunt.js task uses the built in web server in PHP 5.4 to host the docs on yo
 * Node.js
 * npm
 * Grunt.js
-* PHP 5.5 or greater
+* PHP 5.6 or greater
 
 This project contains a package.json file, so once you have the requirements installed, you can simply run a `npm install` and then `grunt` in the projects folder to start the local web server. By default the server will run at: <a href="http://localhost:8085" target="_blank">http://localhost:8085</a>
 
@@ -222,7 +222,7 @@ You can then point your browser to http://localhost:8086
 
 ## PHP Requirements
 
-Daux.io is compatible with PHP 5.5 and up.
+Daux.io is compatible with PHP 5.6 and up.
 
 The reason is because some dependencies we have (mainly Symfony and Guzzle) do not support php 5.4 anymore.
 

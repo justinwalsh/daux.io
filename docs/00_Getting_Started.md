@@ -120,9 +120,9 @@ Now that you got the basics, you can also [see what you can configure](05_Config
 
 ## PHP Requirements
 
-Daux.io is compatible with PHP 5.5 and up.
+Daux.io is compatible with PHP 5.6 and up.
 
-The reason is because some dependencies we have (mainly Symfony and Guzzle) do not support php 5.4 anymore.
+The reason is because some dependencies we have do not support php 5.5 anymore.
 
 ### Extensions
 
