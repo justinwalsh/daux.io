@@ -22,7 +22,6 @@ class Content extends ContentAbstract
 
     protected function getFrontMatter()
     {
-        $content = null;
         if ($this->manuallySetContent) {
             $content = $this->content;
         } else if (!$this->getPath()) {
@@ -123,6 +122,12 @@ class Content extends ContentAbstract
         $this->attributes = $attributes;
     }
 
+    /**
+     * Get one or all attributes for the content
+     *
+     * @param string|null $key
+     * @return array|mixed|null
+     */
     public function getAttribute($key = null)
     {
         if ($this->attributes === null) {

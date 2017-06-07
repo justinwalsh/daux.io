@@ -14,7 +14,6 @@ use League\CommonMark\Node\Node;
 use ReflectionMethod;
 use Todaymade\Daux\Config;
 use Todaymade\Daux\ContentTypes\Markdown\TableOfContents;
-use Todaymade\Daux\DauxHelper;
 
 class Processor implements DocumentProcessorInterface
 {
@@ -73,6 +72,11 @@ class Processor implements DocumentProcessorInterface
         }
     }
 
+    /**
+     * Get an escaped version of the link
+     * @param string $url
+     * @return string
+     */
     protected function escaped($url) {
         $url = trim($url);
         $url = preg_replace('~[^\\pL0-9_]+~u', '-', $url);

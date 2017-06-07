@@ -98,6 +98,13 @@ class Daux
         }
     }
 
+    /**
+     * Get the file requested for configuration overrides
+     *
+     * @param string|null $override_file
+     * @return string|null the path to a file to load for configuration overrides
+     * @throws Exception
+     */
     public function getConfigurationOverride($override_file)
     {
         // When running through `daux --serve` we set an environment variable to know where we started from

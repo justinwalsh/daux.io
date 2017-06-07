@@ -137,6 +137,7 @@ class Server
     /**
      * Handle a request on custom themes
      *
+     * @param string $request
      * @return \Todaymade\Daux\Format\Base\Page
      * @throws NotFoundException
      */

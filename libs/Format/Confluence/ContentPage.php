@@ -43,6 +43,13 @@ class ContentPage extends \Todaymade\Daux\Format\Base\ContentPage
         return $intro . $content;
     }
 
+    /**
+     * Create an image tag for the specified filename
+     *
+     * @param string $filename
+     * @param array $attributes
+     * @return string
+     */
     private function createImageTag($filename, $attributes)
     {
         $img = '<ac:image';
