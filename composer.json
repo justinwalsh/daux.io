@@ -22,7 +22,8 @@
         "symfony/finder": "~3.0",
         "webuni/commonmark-table-extension": "0.6.*",
         "webuni/front-matter": "^1.0.0",
-        "symfony/process": "^3.1"
+        "symfony/process": "^3.1",
+        "symfony/http-foundation": "^3.3"
     },
     "autoload": {
         "psr-4": {

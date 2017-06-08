@@ -1,18 +1,21 @@
 <?php namespace Todaymade\Daux\Server;
 
 use Symfony\Component\Console\Output\NullOutput;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Todaymade\Daux\Daux;
 use Todaymade\Daux\DauxHelper;
 use Todaymade\Daux\Exception;
 use Todaymade\Daux\Format\Base\ComputedRawPage;
 use Todaymade\Daux\Format\Base\LiveGenerator;
+use Todaymade\Daux\Format\Base\Page;
 use Todaymade\Daux\Format\HTML\RawPage;
 
 class Server
 {
     private $daux;
     private $params;
-    private $host;
     private $base_url;
 
     /**
@@ -42,50 +45,60 @@ class Server
         try {
             $page = $server->handle();
         } catch (NotFoundException $e) {
-            http_response_code(404);
             $page = new ErrorPage('An error occured', $e->getMessage(), $daux->getParams());
         }
 
-        if ($page instanceof RawPage) {
-            header('Content-type: ' . MimeType::get($page->getFile()));
-
-            // Transfer file in 1024 byte chunks to save memory usage.
-            if ($fd = fopen($page->getFile(), 'rb')) {
-                while (!feof($fd)) {
-                    echo fread($fd, 1024);
-                }
-                fclose($fd);
-            }
-
-            return;
-        }
-
-        if ($page instanceof ComputedRawPage) {
-            header('Content-type: ' . MimeType::get($page->getFilename()));
-        } else {
-            header('Content-type: text/html; charset=utf-8');
-        }
-
-        echo $page->getContent();
+        $server->createResponse($page)->prepare($server->request)->send();
     }
 
     public function __construct(Daux $daux)
     {
         $this->daux = $daux;
 
-        $this->host = $_SERVER['HTTP_HOST'];
+        $this->request = Request::createFromGlobals();
+        $this->base_url = $this->request->getHttpHost() . $this->request->getBaseUrl() . "/";
+    }
 
-        // The path has a special treatment on windows, revert the slashes
-        $dir = dirname($_SERVER['PHP_SELF']);
-        $this->base_url = $_SERVER['HTTP_HOST'] . (DIRECTORY_SEPARATOR == '\\' ? str_replace('\\', '/', $dir) : $dir);
+    /**
+     * Create a temporary file with the file suffix, for mime type detection.
+     *
+     * @param string $postfix
+     * @return string
+     */
+    function getTemporaryFile($postfix) {
+        $sysFileName = tempnam(sys_get_temp_dir(), 'daux');
+        if ($sysFileName === false) {
+            throw new \RuntimeException("Could not create temporary file");
+        }
 
-        $t = strrpos($this->base_url, '/index.php');
-        if ($t != false) {
-            $this->base_url = substr($this->base_url, 0, $t);
+        $newFileName = $sysFileName . $postfix;
+        if ($sysFileName == $newFileName) {
+            return $sysFileName;
         }
-        if (substr($this->base_url, -1) !== '/') {
-            $this->base_url .= '/';
+
+        if (DIRECTORY_SEPARATOR == '\\' ? rename($sysFileName, $newFileName) : link($sysFileName, $newFileName)) {
+            return $newFileName;
         }
+
+        throw new \RuntimeException("Could not create temporary file");
+    }
+
+    /**
+     * @param Page $page
+     * @return Response
+     */
+    public function createResponse(Page $page) {
+        if ($page instanceof RawPage) {
+            return new BinaryFileResponse($page->getFile());
+        }
+
+        if ($page instanceof ComputedRawPage) {
+            $file = $this->getTemporaryFile($page->getFilename());
+            file_put_contents($file, $page->getContent());
+            return new BinaryFileResponse($file);
+        }
+
+        return new Response($page->getContent(), $page instanceof ErrorPage ? 404 : 200);
     }
 
     /**
@@ -94,8 +107,6 @@ class Server
     public function getParams()
     {
         $params = $this->daux->getParams();
-
-        $params['host'] = $this->host;
 
         DauxHelper::rebaseConfiguration($params, '//' . $this->base_url);
         $params['base_page'] = '//' . $this->base_url;
@@ -120,14 +131,13 @@ class Server
     {
         $this->params = $this->getParams();
 
-        $request = $this->getRequest();
-        $request = urldecode($request);
+        $request = substr($this->request->getRequestUri(), 1);
 
         if (substr($request, 0, 7) == 'themes/') {
             return $this->serveTheme(substr($request, 6));
         }
 
-        if ($request == 'index_page') {
+        if ($request == '') {
             $request = $this->daux->tree->getIndexPage()->getUri();
         }
 
@@ -176,40 +186,5 @@ class Server
         }
 
         return $this->daux->getGenerator()->generateOne($file, $this->params);
-    }
-
-    public function getRequest()
-    {
-        if (isset($_SERVER['PATH_INFO'])) {
-            $uri = $_SERVER['PATH_INFO'];
-        } elseif (isset($_SERVER['REQUEST_URI'])) {
-            $uri = $_SERVER['REQUEST_URI'];
-            if (strpos($uri, $_SERVER['SCRIPT_NAME']) === 0) {
-                $uri = substr($uri, strlen($_SERVER['SCRIPT_NAME']));
-            } elseif (strpos($uri, dirname($_SERVER['SCRIPT_NAME'])) === 0) {
-                $uri = substr($uri, strlen(dirname($_SERVER['SCRIPT_NAME'])));
-            }
-            if (strncmp($uri, '?/', 2) === 0) {
-                $uri = substr($uri, 2);
-            }
-            $parts = preg_split('#\?#i', $uri, 2);
-            $uri = $parts[0];
-            if (isset($parts[1])) {
-                $_SERVER['QUERY_STRING'] = $parts[1];
-                parse_str($_SERVER['QUERY_STRING'], $_GET);
-            } else {
-                $_SERVER['QUERY_STRING'] = '';
-                $_GET = [];
-            }
-            $uri = parse_url($uri, PHP_URL_PATH);
-        } else {
-            return false;
-        }
-        $uri = str_replace(['//', '../'], '/', trim($uri, '/'));
-        if ($uri == '') {
-            $uri = 'index_page';
-        }
-
-        return $uri;
     }
 }
