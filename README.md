@@ -11,6 +11,8 @@
 
 **Daux.io** is a documentation generator that uses a simple folder structure and Markdown files to create custom documentation on the fly. It helps you create great looking documentation in a developer friendly way.
 
+The website www.daux.io is actually down, please use this website for the moment : https://dauxio.github.io/ .
+
 ## Features
 
 * 100% Mobile Responsive
@@ -37,7 +39,7 @@ This is a list of sites using Daux.io:
     * [Vulkan Tutorial](https://vulkan-tutorial.com)
     * [TrackJs](http://docs.trackjs.com)
 - With the default Theme
-    * [Daux.io](http://daux.io)
+    * [Daux.io](https://dauxio.github.io/)
     * [Gltn - An open-source word processor webapp](http://felkerdigitalmedia.com/gltn/docs/)
     * [Invade & Annex 3 - An Arma 3 Co-operative Mission](http://ia3.ahoyworld.co.uk/)
     * [Munee: Standalone PHP 5.3 Asset Optimisation & Manipulation](http://mun.ee)
