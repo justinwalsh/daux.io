@@ -63,6 +63,7 @@ Change the `theme` option inside `html`
 
 ```json
 {
+  "themes_directory": "/home/user/themes",
   "html": {
     "theme": "{theme}-{variant}"
   }
@@ -71,7 +72,7 @@ Change the `theme` option inside `html`
 
 The name of the theme, is the folder name.
 
-You can use the `themes_path` setting if you want to specify a custom location of your theme folder.
+You can use the `themes_directory` setting if you want to specify a custom location of your `themes` folder.
 
 A variant is optional, if you want to add one, separate it from the theme with a dash.
 
