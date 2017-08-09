@@ -279,4 +279,22 @@ class Directory extends Entry implements \ArrayAccess, \IteratorAggregate
     {
         return new ArrayIterator($this->children);
     }
+
+    /**
+     * Use index title first.
+     * @return string
+     */
+    public function getTitle()
+    {
+        $indexPage = $this->getIndexPage();
+        if ($indexPage != null) {
+            $indexTitle = $indexPage->getTitle();
+            if ($indexTitle != null) {
+                return $indexTitle;
+            }
+        }
+
+        // If index has no any title yaml information, use directory default title.
+        return $this->title;
+    }
 }
