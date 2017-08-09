@@ -75,6 +75,14 @@ You can nest folders any number of levels to get the exact structure you want. T
 
 If you'd prefer to keep your docs somewhere else (like outside of the daux.io root directory) you can specify your docs path in the `global.json` file.
 
+If you need change folder's title in document, you could create a `_index.md` at target folder, and change title property by [Front Matter](http://daux.io/Features/Front_Matter).
+
+```
+---
+title: You Custom Title
+---
+```
+
 ## Files
 
 The generator will look for Markdown files (`*.md` and `*.markdown`) inside the `docs` folder and any of the subfolders within `docs`.
