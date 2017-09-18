@@ -1,7 +1,0 @@
-node_modules
-.DS_Store
-.idea
-/sftp-config.json
-static
-
-/vendor

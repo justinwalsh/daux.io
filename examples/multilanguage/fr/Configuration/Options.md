@@ -1,1 +1,0 @@
-Quelques options de configuration
